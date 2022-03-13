@@ -1,0 +1,41 @@
+{
+  "name": "helveczia",
+  "title": "Helvéczia",
+  "description": "Unofficial Implementation of the picaresque fantasy RPG",
+  "version": "This is auto replaced",
+  "author": "chrisesharp",
+  "authors": [
+    {
+      "name": "chrisesharp",
+      "email": "",
+      "discord": ""
+    }
+  ],
+  "minimumCoreVersion": "9",
+  "compatibleCoreVersion": "9",
+  "scripts": [],
+  "esmodules": ["module/helveczia.js"],
+  "styles": ["styles/helveczia.css"],
+  "packs": [],
+  "dependencies": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "socket": false,
+  "url": "This is auto replaced",
+  "manifest": "This is auto replaced",
+  "download": "This is auto replaced",
+  "license": "",
+  "readme": "",
+  "bugs": "",
+  "changelog": "",
+  "initiative": "",
+  "gridDistance": 1,
+  "gridUnits": "",
+  "primaryTokenAttribute": "",
+  "secondaryTokenAttribute": ""
+}

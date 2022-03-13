@@ -1,0 +1,15 @@
+.resource-label {
+  font-weight: bold;
+  text-align: center;
+  font-style: italic;
+}
+
+.resource-balance {
+  .fa-balance-scale-left {
+    text-shadow: 0 0 10px blue;
+  }
+
+  .fa-balance-scale-right {
+    text-shadow: 0 0 10px red;
+  }
+}

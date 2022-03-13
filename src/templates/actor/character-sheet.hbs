@@ -1,0 +1,31 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    {{!-- Sheet Header --}}
+    <header class="sheet-header">
+      {{> "systems/helveczia/templates/actor/partials/actor-header.hbs"}}
+    </header>
+
+    {{!-- Sheet Tab Navigation --}}
+    <nav class="sheet-tabs tabs side character" data-group="primary">
+        <a class="item" data-tab="abilities">{{ localize 'HV.tabs.abilities'}}</a>
+        <a class="item" data-tab="skills">{{ localize 'HV.tabs.skills'}}</a>
+        <a class="item" data-tab="editor">{{ localize 'HV.tabs.notes'}}</a>
+    </nav>
+
+    {{!-- Sheet Body --}}
+    <section class="sheet-body">
+        {{!-- Abilities Tab --}}
+        <div class="tab abilities" data-group="primary" data-tab="abilities">
+            {{> "systems/helveczia/templates/actor/partials/actor-abilities.hbs"}}
+        </div>
+        {{!-- Skills Tab --}}
+        <div class="tab skills" data-group="primary" data-tab="skills">
+            {{> "systems/helveczia/templates/actor/partials/actor-skills.hbs"}}
+        </div>
+        {{!-- Notes --}}
+        <div class="tab editor agent-editor" data-group="primary" data-tab="editor">
+            {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+        </div>
+    </section>
+</form>
+

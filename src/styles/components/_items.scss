@@ -1,0 +1,82 @@
+@import '../utils/_variables.scss';
+
+.items-list {
+  list-style: none;
+  margin: 7px 0;
+  padding: 0;
+  // overflow-y: auto;
+
+  .item-header {
+    font-weight: bold;
+  }
+
+  .item-summary {
+    font-size: 13px;
+    padding: 0 4px;
+    line-height: 20px;
+    box-shadow: 0 0 3px $colorDark;
+    .tag-list {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      display: flex;
+      .tag {
+        margin: 1px 2px;
+        border: 1px solid $colorFaint;
+        font-size: 11px;
+        line-height: 14px;
+        background: $colorOlive;
+        padding: 1px 4px;
+        color: whitesmoke;
+        border-radius: 3px;
+        box-shadow: 0 0 1px $colorFaint;
+      }
+    }
+  }
+
+  .item {
+    height: 30px;
+    line-height: 24px;
+    padding: 3px 0;
+    border-bottom: 1px solid #bbb;
+
+    .item-image {
+      flex: 0 0 24px;
+      margin-right: 5px;
+    }
+
+    img {
+      display: block;
+    }
+  }
+
+  .item-name {
+    margin: 0;
+  }
+
+  li.item-entry .item-controls {
+    flex: 0 0 36px;
+    text-align: right;
+    display: none;
+  }
+  li.item-entry:hover .item-controls {
+    flex: 0 0 36px;
+    text-align: right;
+    display: block;
+    border-bottom: 1px;
+  }
+
+  li.item-header .item-controls {
+    flex: 0 0 26px;
+    text-align: right;
+    display: none;
+    border-bottom: 1px;
+  }
+
+  li.item-header:hover .item-controls {
+    flex: 0 0 26px;
+    text-align: right;
+    display: block;
+    border-bottom: 1px;
+  }
+}

@@ -1,0 +1,186 @@
+export class HVActorSheet extends ActorSheet {
+  /** @override */
+  getData() {
+    const data: any = {
+      owner: this.actor.isOwner,
+      options: this.options,
+      editable: this.isEditable,
+      isToken: this.token && !this.token.data.actorLink,
+      config: CONFIG.HV,
+      user: game.user,
+    };
+
+    // Add actor, actor data and item
+    data.actor = duplicate(this.actor.data);
+    data.data = data.actor.data;
+    data.items = this.actor.items.map((i) => i.data);
+    data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+
+    return data;
+  }
+
+  /** @override */
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    // Item summaries
+    // html.find('.item .item-name').click((event) => this._onItemSummary(event));
+
+    // Rollable abilities.
+    html.find('.rollable').click(this._onRoll.bind(this));
+
+    // Everything below here is only needed if the sheet is editable
+    if (!this.options.editable) return;
+
+    // lock sheet
+    // html.find('#padlock').click(this._onToggleLock.bind(this));
+
+    // Random Mannerism
+    // html.find('#manner-roll').click(this._onGenerate.bind(this));
+
+    // Add Inventory Item
+    html.find('.item-create').click(this._onItemCreate.bind(this));
+
+    // Add Inventory Item
+    // html.find('.item-rnd').click(this._onRandomPossession.bind(this));
+
+    // Update Inventory Item
+    html.find('.item-edit').click((ev) => {
+      const li = $(ev.currentTarget).parents('.item-entry');
+      const item = this.actor.items.get(li.data('item-id'));
+      if (item) item.sheet?.render(true);
+    });
+
+    // Delete Inventory Item
+    html.find('.item-delete').click((ev) => {
+      const li = $(ev.currentTarget).parents('.item-entry');
+      const itemID = li.data('item-id');
+      this.actor.deleteEmbeddedDocuments('Item', [itemID]);
+      li.slideUp(200, () => this.render(false));
+    });
+
+    // Active Effect management
+    // html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
+  }
+
+  /**
+   * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  _onItemCreate(event) {
+    event.preventDefault();
+    const header = event.currentTarget;
+    // Get the type of item to create.
+    const type = header.dataset.type;
+    // Grab any data associated with this control.
+    const data = duplicate(header.dataset);
+    // Initialize a default name.
+    const name = `New ${type.capitalize()}`;
+    // Prepare the item object.
+    const itemData = {
+      name: name,
+      type: type,
+      data: data,
+    };
+    // // Remove the type from the dataset since it's in the itemData.type prop.
+    delete itemData.data['type'];
+
+    // Finally, create the item!
+    return this.actor.createEmbeddedDocuments('Item', [itemData]);
+  }
+
+  /**
+   * Handle clickable rolls.
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  _onRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let target;
+    if (game.user) {
+      for (const t of game.user.targets.values()) {
+        const data = t.actor?.data;
+        if (data?.type === 'npc') {
+          target = {
+            id: data._id,
+            // armour: data.data.armour.value,
+          };
+          // target.potency = data.data.resistance.potency;
+          // target.hitresolution = data.data.hitresolution;
+          // target.consequences = data.data.consequences;
+        }
+        if (target) break;
+      }
+    }
+
+    if (dataset.roll) {
+      // switch (resource) {
+      //     case "armour":
+      //         this.actor.rollResistance(resource, dataset.roll);
+      //         break;
+      //     case "unravel":
+      //         this.actor.rollUnravelling(dataset.roll);
+      //         break;
+      //     default:
+      //         this.actor.rollChallenge(resource, dataset.roll, target);
+      // }
+    }
+  }
+
+  /**
+   * Handle adding a summary description for an Item
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  _onItemSummary(event) {
+    // const empty = `<span class="fa-stack" style="font-size: 0.5em;">
+    //                 <i class="far fa-square fa-stack-2x" style="vertical-align:middle;"></i>
+    //             </span>`;
+    // const check = `<span class="fa-stack" style="font-size: 0.5em;">
+    //                 <i class="fas fa-square fa-stack-2x" style="vertical-align:middle;"></i>
+    //                 <i class="fas fa-check fa-stack-1x fa-inverse" style="vertical-align:middle;"></i>
+    //             </span>`;
+    event.preventDefault();
+    const li = $(event.currentTarget).parents('.item-entry');
+    const item = this.actor.items.get(li.data('item-id'));
+    if (!item) return;
+    const description = TextEditor.enrichHTML(item.data.data.description);
+    // const abilities = this.actor.getAbilities();
+    const options = '';
+
+    // if (item.type === "consequence") {
+    // const resource = game.i18n.localize(`DEE.resource.${item.data.data.resource}.long`);
+    // options += `<label>${resource} </label>`;
+    // options += `<i class="fas fa-caret-down" style="font-size: small;text-align: right;"></i>${Math.abs(item.data.data.potency)}`;
+    // }
+
+    // if (["association","focus","occupation"].includes(item.type)) {
+    //     item.data.data.abilities.forEach((i)=> {
+    //         const ability = abilities.filter(e => e.name===i.name);
+    //         const checked = (ability.length > 0) ? check : empty;
+    //         options += `${checked}&nbsp;<label style="font-size: 0.9em;" for="${i.id}" >${i.name}</label>&nbsp;`;
+    //     });
+    // }
+    // Toggle summary
+    if (li.hasClass('expanded')) {
+      const summary = li.children('.item-summary');
+      summary.slideUp(200, () => summary.remove());
+    } else {
+      // Add item tags
+      const div = $(
+        `<div class="item-summary">
+            <div>
+                ${description}
+            </div>
+            ${options}
+            </div>`,
+      );
+      li.append(div.hide());
+      div.slideDown(200);
+    }
+    li.toggleClass('expanded');
+  }
+}

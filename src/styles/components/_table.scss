@@ -1,0 +1,28 @@
+.sheet-header-table {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: repeat(5, 1fr);
+  grid-gap: 1px;
+  padding: 1px;
+}
+
+.sheet-logo {
+  grid-area: 1 / 1 / 2 / 3;
+}
+.actor-portrait {
+  grid-area: 2 / 1 / 6 / 2;
+}
+.actor-name {
+  grid-area: 2 / 2 / 3 / 3;
+}
+.actor-level {
+  grid-area: 3 / 2 / 4 / 3;
+}
+.actor-people {
+  grid-area: 4 / 2 / 5 / 3;
+}
+.actor-class {
+  grid-area: 5 / 2 / 6 / 3;
+}

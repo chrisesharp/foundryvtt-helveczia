@@ -1,0 +1,19 @@
+<div class="header-fields">
+    <div class="sheet-header-table">
+        <div class="sheet-logo">
+            <h2>~ Helvéczia ~</h2>
+        </div>
+        <div class="actor-portrait">
+            <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+        </div>
+        <div class="actor-name" style="display: inline-flex;">
+            <h3 style="display: contents;"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>,</h3>
+        </div>
+        <div class="actor-level" style="display: inline-flex;">
+            <h3>a {{ordinal data.level }}  level {{data.people}} {{data.class}}</h3>
+        </div>
+        <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.experience' }}">
+            <h3 style="display: contents; width: 40px;">{{ localize 'HV.experience' }}<input name="data.experience" type="text" data-dtype="Number" value="{{data.experience}}"></h3>
+        </div>
+    </div>
+</div>
