@@ -1,3 +1,6 @@
+import { ActorData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/module.mjs';
+import { HVActorData } from './actor-types';
+
 export class HVActor extends Actor {
   /**
    * Augment the basic actor data with additional dynamic data.
@@ -37,7 +40,7 @@ export class HVActor extends Actor {
   /**
    * Prepare Character type specific data
    */
-  async _prepareCharacterData(actorData) {
+  async _prepareCharacterData(actorData: ActorData) {
     const data = actorData.data;
     const categories = this._categoriseItems(actorData.items);
     data.possessions = {
@@ -49,6 +52,10 @@ export class HVActor extends Actor {
     data.peoples = categories['people'];
     data.classes = categories['class'];
     data.level = this._calculateLevel(data.experience);
+    for (const key of Object.keys(data.scores)) {
+      this._updateAbility(data.scores[key]);
+    }
+
     await actorData.update({ data: data });
     await actorData.token.update({ disposition: 1, actorLink: true });
   }
@@ -56,7 +63,7 @@ export class HVActor extends Actor {
   /**
    * Prepare NPC type specific data
    */
-  async _prepareNPCData(actorData) {
+  async _prepareNPCData(actorData: ActorData) {
     await actorData.token.update({ disposition: -1 });
   }
 
@@ -69,5 +76,23 @@ export class HVActor extends Actor {
       level = 2;
     }
     return level;
+  }
+
+  /**
+   * Update current bonus for ability
+   */
+  _updateAbility(ability: { value: number; mod: number }) {
+    ability.value = Math.min(Math.max(ability.value, 0), 18);
+    ability.mod = Math.round(ability.value / 3) - 3;
+  }
+}
+
+declare global {
+  interface DocumentClassConfig {
+    Actor: typeof HVActor;
+  }
+
+  interface DataConfig {
+    Actor: HVActorData;
   }
 }

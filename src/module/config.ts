@@ -2,8 +2,14 @@ import { BaseItem } from './items/base-item';
 import { BaseComponent } from './components/base';
 import { SkillItem } from './items/skill/skill-item';
 import { PossessionItem } from './items/possesion/possession-item';
+import { HVActor } from './actor/actor';
 
 export interface HelvecziaConfig {
+  actorClasses: {
+    [key: string]: typeof HVActor;
+    [key: number]: typeof HVActor;
+  };
+
   itemClasses: {
     [key: string]: typeof BaseItem;
     [key: number]: typeof BaseItem;
@@ -33,6 +39,10 @@ export interface HelvecziaConfig {
 }
 
 export const HV: HelvecziaConfig = {
+  actorClasses: {
+    character: HVActor,
+    npc: HVActor,
+  },
   itemClasses: {
     skill: SkillItem,
     possession: PossessionItem,
