@@ -52,6 +52,7 @@ export class HVActor extends Actor {
     data.peoples = categories['people'];
     data.classes = categories['class'];
     data.level = this._calculateLevel(data.experience);
+
     for (const key of Object.keys(data.scores)) {
       this._updateAbility(data.scores[key]);
     }
