@@ -14,6 +14,38 @@
         </div>
         <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.experience' }}">
             <h3 style="display: contents; width: 40px;">{{ localize 'HV.experience' }}<input name="data.experience" type="text" data-dtype="Number" value="{{data.experience}}"></h3>
+             <h3 style="display: contents; width: 40px;">{{ localize 'HV.virtue' }}<input name="data.virtue" type="text" data-dtype="Number" value="{{data.virtue}}"></h3>
         </div>
+        <div class="actor-virtue" style="display:flex">
+                <div class="virtue-mark"><i class="fas fa-book-dead"></i></div>
+                <div class="virtue-balance">
+                    <i class="{{balance data.virtue}}" title="{{balanceTip data.virtue}}"></i>
+                </div>
+                <div class="virtue-mark"><i class="fas fa-book-medical"></i></div>
+                <div class="consumable-counter" title="{{localize 'HV.virtue'}}">
+            {{#times (reds data.virtue)}}
+            <div class="full-mark-red"></div>
+            {{/times}} 
+            {{#times (subtract 7 (reds data.virtue))}}
+            <div class="empty-mark"></div>
+            {{/times}}
+
+            {{#times (blues data.virtue)}}
+            <div class="full-mark-blue"></div>
+            {{/times}} 
+            {{#times (subtract 7 (blues data.virtue))}}
+            <div class="empty-mark"></div>
+            {{/times}}
+
+            {{#times (greens data.virtue)}}
+            <div class="full-mark-green"></div>
+            {{/times}} 
+            {{#times (subtract 7 (greens data.virtue))}}
+            <div class="empty-mark"></div>
+            {{/times}}
+        </div>
+        </div>
+        <div></div>
+        
     </div>
 </div>

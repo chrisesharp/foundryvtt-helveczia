@@ -4,12 +4,74 @@
   font-style: italic;
 }
 
-.resource-balance {
+.virtue-balance {
   .fa-balance-scale-left {
-    text-shadow: 0 0 10px blue;
+    text-shadow: 0 0 10px $colorRed;
   }
 
   .fa-balance-scale-right {
-    text-shadow: 0 0 10px red;
+    text-shadow: 0 0 10px $colorGreen;
+  }
+
+  .fa-balance-scale {
+    text-shadow: 0 0 10px $colorBlue;
+  }
+}
+
+// .virtue-mark {
+//   .fa-book-dead {
+//     text-shadow: 0 0 10px rgb(255, 0, 34);
+//   }
+
+//   .fa-book-medical {
+//     text-shadow: 0 0 10px rgb(128, 255, 0);
+//   }
+// }
+
+.actor-virtue {
+  display: flex;
+  flex-wrap: wrap;
+  width: 170px;
+  justify-content: space-between;
+}
+
+.consumable-counter {
+  height: 14px;
+  display: flex;
+  flex-wrap: nowrap;
+  width: 170px;
+  line-height: 10px;
+  label {
+    flex: 0 30px;
+    font-size: 11px;
+    color: $colorDark;
+    text-indent: 3px;
+  }
+  .full-mark,
+  .full-mark-red,
+  .full-mark-green,
+  .full-mark-blue,
+  .empty-mark {
+    cursor: pointer;
+    flex: 0 8px;
+    margin: 1px;
+    box-shadow: inset 0 0 2px $colorTan;
+    &:hover {
+      background: $colorTan;
+    }
+  }
+  .full-mark-red {
+    background: $colorRed;
+    border: 1px inset $colorTan;
+  }
+
+  .full-mark-green {
+    background: $colorGreen;
+    border: 1px inset $colorTan;
+  }
+
+  .full-mark-blue {
+    background: $colorBlue;
+    border: 1px inset $colorTan;
   }
 }

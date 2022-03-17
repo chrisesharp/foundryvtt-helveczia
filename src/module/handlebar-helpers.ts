@@ -13,21 +13,59 @@ export const registerHandlebarHelpers = async function () {
 
   Handlebars.registerHelper('ordinal', function (a) {
     const level: number = parseInt(a);
-    let result: string;
+    let suffix: string;
     switch (level) {
       case 1:
-        result = '1st';
+        suffix = 'st';
         break;
       case 2:
-        result = '2nd';
+        suffix = 'nd';
         break;
       case 3:
-        result = '3rd';
+        suffix = 'rd';
         break;
       default:
-        result = `${level}th`;
+        suffix = 'th';
     }
-    return result;
+    return `${level}${suffix}`;
+  });
+
+  Handlebars.registerHelper('largest', function (lh, rh) {
+    return Math.max(parseInt(lh), parseInt(rh));
+  });
+
+  Handlebars.registerHelper('smallest', function (lh, rh) {
+    return Math.min(parseInt(lh), parseInt(rh));
+  });
+
+  Handlebars.registerHelper('subtract', function (lh, rh) {
+    return parseInt(lh) - parseInt(rh);
+  });
+
+  Handlebars.registerHelper('divide', function (lh, rh) {
+    return Math.floor(parseFloat(lh) / parseFloat(rh));
+  });
+
+  Handlebars.registerHelper('mult', function (lh, rh) {
+    return Math.round(100 * parseFloat(lh) * parseFloat(rh)) / 100;
+  });
+
+  Handlebars.registerHelper('times', function (n, block) {
+    let accum = '';
+    for (let i = 0; i < n; ++i) accum += block.fn(i);
+    return accum;
+  });
+
+  Handlebars.registerHelper('reds', function (n) {
+    return Math.min(7, n);
+  });
+
+  Handlebars.registerHelper('blues', function (n) {
+    return Math.max(0, Math.min(7, n - 7));
+  });
+
+  Handlebars.registerHelper('greens', function (n) {
+    return Math.max(0, Math.min(7, n - 14));
   });
 
   // Handlebars.registerHelper("player", function (id) {
@@ -91,29 +129,34 @@ export const registerHandlebarHelpers = async function () {
   //     return item;
   // });
 
-  // Handlebars.registerHelper('balance', function(resources) {
-  //     const total = Math.sign(resources.phy.value + resources.int.value + resources.sup.value - 6);
-  //     switch (total) {
-  //         case -1:
-  //             return "fas fa-balance-scale-left";
-  //         case 0:
-  //             return "fas fa-balance-scale";
-  //         case 1:
-  //             return "fas fa-balance-scale-right";
-  //     }
-  // });
+  Handlebars.registerHelper('balance', function (virtue) {
+    const total = Math.sign(Math.floor(virtue / 7) - 1);
+    switch (total) {
+      case -1:
+        return 'fas fa-balance-scale-left';
+      case 1:
+        return 'fas fa-balance-scale-right';
+      default:
+        return 'fas fa-balance-scale';
+    }
+  });
 
-  // Handlebars.registerHelper('balanceTip', function(resources) {
-  //     const total = Math.sign(resources.phy.value + resources.int.value + resources.sup.value - 6);
-  //     switch (total) {
-  //         case -1:
-  //             return "are too low";
-  //         case 0:
-  //             return "balanced";
-  //         case 1:
-  //             return "are too high";
-  //     }
-  // });
+  Handlebars.registerHelper('balanceTip', function (virtue) {
+    const total = Math.sign(Math.floor(virtue / 7) - 1);
+    let state = '';
+    switch (total) {
+      case -1:
+        state = 'Low';
+        break;
+      case 0:
+        state = 'Average';
+        break;
+      case 1:
+        state = 'High';
+        break;
+    }
+    return `${state} Virtue`;
+  });
 
   Handlebars.registerHelper('contains', function (e, arr) {
     return arr.includes(e);
