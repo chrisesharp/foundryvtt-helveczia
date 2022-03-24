@@ -24,6 +24,13 @@ type BaseData = {
   class: string;
   virtue: number;
   experience: number;
+  wealth:
+    | any
+    | {
+        th: number;
+        pf: number;
+        gr: number;
+      };
 
   saves:
     | any
@@ -62,6 +69,7 @@ type BaseData = {
   skills: [];
   peoples: [];
   classes: [];
+  deeds: [];
 };
 
 // type CharacterData = BaseData | {experience: number};

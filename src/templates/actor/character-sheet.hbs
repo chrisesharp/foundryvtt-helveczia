@@ -8,7 +8,10 @@
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs side character" data-group="primary">
         <a class="item" data-tab="abilities">{{ localize 'HV.tabs.abilities'}}</a>
+        <a class="item" data-tab="combat">{{ localize 'HV.tabs.combat'}}</a>
         <a class="item" data-tab="skills">{{ localize 'HV.tabs.skills'}}</a>
+        <a class="item" data-tab="possessions">{{ localize 'HV.tabs.possessions'}}</a>
+        <a class="item" data-tab="deeds">{{ localize 'HV.tabs.deeds'}}</a>
         <a class="item" data-tab="editor">{{ localize 'HV.tabs.notes'}}</a>
     </nav>
 
@@ -22,9 +25,24 @@
         <div class="tab skills" data-group="primary" data-tab="skills">
             {{> "systems/helveczia/templates/actor/partials/actor-skills.hbs"}}
         </div>
+        {{!-- Combat Tab --}}
+        <div class="tab combat" data-group="primary" data-tab="combat">
+            {{> "systems/helveczia/templates/actor/partials/actor-combat.hbs"}}
+        </div>
+        {{!-- Possessions Tab --}}
+        <div class="tab possessions" data-group="primary" data-tab="possessions">
+            {{> "systems/helveczia/templates/actor/partials/actor-equipment.hbs"}}
+        </div>
+        {{!-- Deeds Tab --}}
+        <div class="tab deeds" data-group="primary" data-tab="deeds">
+            {{> "systems/helveczia/templates/actor/partials/actor-deeds.hbs"}}
+        </div>
         {{!-- Notes --}}
-        <div class="tab editor agent-editor" data-group="primary" data-tab="editor">
-            {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+        <div class="tab editor" data-group="primary" data-tab="editor">
+            <h2>{{ localize 'HV.tabs.notes' }}</h2>
+            <div class="agent-editor">
+                {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+            </div>
         </div>
     </section>
 </form>

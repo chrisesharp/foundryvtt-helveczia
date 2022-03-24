@@ -1,0 +1,23 @@
+{{!-- Deeds --}}
+<div class="deeds">
+    <ol class="items-list">
+        <li class="flexrow item-header">
+            <h2 class="centred">~ {{ localize 'HV.tabs.deeds'}} ~</h2>
+            <div class="item-controls">
+            <a class="item-control item-create" title="{{localize 'HV.Add'}} {{localize 'HV.tabs.deeds'}}" data-type="deed"><i class="fas fa-plus"></i></a>
+            </div>
+        </li>
+    {{#each data.deeds as |item id|}}
+        <li class="item-entry flexcol" data-item-id="{{item._id}}">
+            <div class="item flexrow">
+                <div class="item-image"><img src="{{item.img}}" width="24" height="24"/></div>
+                <h4 class="item-name">{{item.name}}</h4>
+                <div class="item-controls">
+                    <a class="item-control item-edit" title="{{localize 'HV.Edit'}} {{localize 'HV.tabs.deeds'}}"><i class="fas fa-edit"></i></a>
+                    <a class="item-control item-delete" title="{{localize 'HV.Delete'}} {{localize 'HV.tabs.deeds'}}"><i class="fas fa-trash"></i></a>
+                </div>
+            </div>
+        </li>
+    {{/each}}
+    </ol>
+</div>

@@ -16,11 +16,18 @@ import { preloadTemplates } from './preloadTemplates';
 import { Logger } from './logger';
 import { HVCharacterSheet } from './actor/character-sheet';
 import { HVActor } from './actor/actor';
-import { SkillSheet } from './items/skill/skill-sheet';
+
 import { HVItem } from './items/item';
+import { SkillSheet } from './items/skill/skill-sheet';
+import { PossessionSheet } from './items/possesion/possession-sheet';
+import { ArmourSheet } from './items/armour/armour-sheet';
+import { WeaponSheet } from './items/weapon/weapon-sheet';
+import { DeedSheet } from './items/deed/deed-sheet';
+import { ClassSheet } from './items/class/class-sheet';
+import { PeopleSheet } from './items/people/people-sheet';
+
 import { HV } from './config';
 import { registerHandlebarHelpers } from './handlebar-helpers';
-import { PossessionSheet } from './items/possesion/possession-sheet';
 
 const log = new Logger();
 
@@ -52,6 +59,11 @@ Hooks.once('init', async () => {
   Actors.registerSheet('helveczia', HVCharacterSheet, { types: ['character', 'npc'], makeDefault: true });
   Items.registerSheet('helveczia', SkillSheet, { types: ['skill'] });
   Items.registerSheet('helveczia', PossessionSheet, { types: ['possession'] });
+  Items.registerSheet('helveczia', ArmourSheet, { types: ['armour'] });
+  Items.registerSheet('helveczia', WeaponSheet, { types: ['weapon'] });
+  Items.registerSheet('helveczia', ClassSheet, { types: ['class'] });
+  Items.registerSheet('helveczia', DeedSheet, { types: ['deed'] });
+  Items.registerSheet('helveczia', PeopleSheet, { types: ['people'] });
 });
 
 // Setup system

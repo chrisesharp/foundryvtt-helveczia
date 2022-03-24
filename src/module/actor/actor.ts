@@ -33,7 +33,7 @@ export class HVActor extends Actor {
         acc[item.type] = category;
         return acc;
       },
-      { possession: [], people: [], class: [], skill: [], armour: [], weapon: [] },
+      { possession: [], people: [], class: [], skill: [], armour: [], weapon: [], deed: [] },
     );
   }
 
@@ -51,6 +51,7 @@ export class HVActor extends Actor {
     data.skills = categories['skill'];
     data.peoples = categories['people'];
     data.classes = categories['class'];
+    data.deeds = categories['deed'];
     data.level = this._calculateLevel(data.experience);
 
     for (const key of Object.keys(data.scores)) {

@@ -1,0 +1,95 @@
+{{!-- Equipment --}}
+<div class="possessions">
+    <h2 class="centred">~ {{ localize 'HV.items.possessions'}} ~</h2>
+    <ol class="items-list">
+        <li class="flexrow item-header">
+            <h2>~ {{ localize 'HV.items.armour'}} ~</h2>
+            <div class="item-controls">
+            <a class="item-control item-create" title="{{localize 'HV.Add'}} {{localize 'HV.items.armour'}}" data-type="armour"><i class="fas fa-plus"></i></a>
+            </div>
+        </li>
+    {{#each data.possessions.armour as |item id|}}
+        <li class="item-entry flexcol" data-item-id="{{item._id}}">
+            <div class="item flexrow">
+                <div class="item-image"><img src="{{item.img}}" width="24" height="24"/></div>
+                <h4 class="item-name">{{item.name}}</h4>
+                <div class="item-controls">
+                    <a class="item-control item-edit" title="{{localize 'HV.Edit'}} {{localize 'HV.items.armour'}}"><i class="fas fa-edit"></i></a>
+                    <a class="item-control item-delete" title="{{localize 'HV.Delete'}} {{localize 'HV.items.armour'}}"><i class="fas fa-trash"></i></a>
+                </div>
+            </div>
+        </li>
+    {{/each}}
+        <li class="flexrow item-header">
+            <h2>~ {{ localize 'HV.items.weapons'}} ~</h2>
+            <div class="item-controls">
+            <a class="item-control item-create" title="{{localize 'HV.Add'}} {{localize 'HV.items.weapon'}}" data-type="weapon"><i class="fas fa-plus"></i></a>
+            </div>
+        </li>
+    {{#each data.possessions.weapons as |item id|}}
+        <li class="item-entry flexcol" data-item-id="{{item._id}}">
+            <div class="item flexrow">
+                <div class="item-image"><img src="{{item.img}}" width="24" height="24"/></div>
+                <h4 class="item-name">{{item.name}}</h4>
+                <div class="item-controls">
+                    <a class="item-control item-edit" title="{{localize 'HV.Edit'}} {{localize 'HV.items.weapon'}}"><i class="fas fa-edit"></i></a>
+                    <a class="item-control item-delete" title="{{localize 'HV.Delete'}} {{localize 'HV.items.weapon'}}"><i class="fas fa-trash"></i></a>
+                </div>
+            </div>
+        </li>
+    {{/each}}
+        <li class="flexrow item-header">
+            <h2>~ {{ localize 'HV.items.articles'}} ~</h2>
+            <div class="item-controls">
+            <a class="item-control item-create" title="{{localize 'HV.Add'}} {{localize 'HV.item.article'}}" data-type="possession"><i class="fas fa-plus"></i></a>
+            </div>
+        </li>
+    {{#each data.possessions.articles as |item id|}}
+        <li class="item-entry flexcol" data-item-id="{{item._id}}">
+            <div class="item flexrow">
+                <div class="item-image"><img src="{{item.img}}" width="24" height="24"/></div>
+                <h4 class="item-name">{{item.name}}</h4>
+                <div class="item-controls">
+                    <a class="item-control item-edit" title="{{localize 'HV.Edit'}} {{localize 'HV.items.article'}}"><i class="fas fa-edit"></i></a>
+                    <a class="item-control item-delete" title="{{localize 'HV.Delete'}} {{localize 'HV.items.article'}}"><i class="fas fa-trash"></i></a>
+                </div>
+            </div>
+        </li>
+    {{/each}}
+    </ol>
+    <div class="wealth">
+        <h2 class="centred">~ {{ localize 'HV.items.wealth'}} ~</h2>
+        <div class="attribute-group flexrow">
+            <ol class="attributes">
+                <li class="attribute">
+                    <h4 class="attribute-name box-title" title="{{ localize 'HV.Thalers.long' }}">
+                        <a>{{ localize 'HV.Thalers.long' }}</a>
+                    </h4>
+                    <div class="attribute-value">
+                        <input name="data.wealth.th" type="text" value="{{data.wealth.th}}" data-dtype="Number" />
+                    </div>
+                </li>
+            </ol>
+            <ol class="attributes">
+                <li class="attribute">
+                    <h4 class="attribute-name box-title" style="width:auto;" title="{{ localize 'HV.Pfennig.long' }}">
+                        <a>{{ localize 'HV.Pfennig.long' }}</a>
+                    </h4>
+                    <div class="attribute-value">
+                        <input name="data.wealth.pf" type="text" value="{{data.wealth.pf}}" data-dtype="Number" />
+                    </div>
+                </li>
+            </ol>
+            <ol class="attributes">
+                <li class="attribute">
+                    <h4 class="attribute-name box-title" style="width:auto;" title="{{ localize 'HV.Groschen.long' }}">
+                        <a>{{ localize 'HV.Groschen.long' }}</a>
+                    </h4>
+                    <div class="attribute-value">
+                        <input name="data.wealth.gr" type="text" value="{{data.wealth.gr}}" data-dtype="Number" />
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>

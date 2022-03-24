@@ -1,4 +1,5 @@
-{{!-- skills and abilities --}}
+{{!-- abilities --}}
+<h2 class="centred">{{ localize 'HV.tabs.abilities' }}</h2>
 <div class="attribute-group flexrow">
     <ol class="attributes">
         <li class="attribute ability-score" data-score="str">
@@ -7,10 +8,8 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.str.value" type="text" value="{{data.scores.str.value}}" data-dtype="Number" />
+                <input name="data.scores.str.mod" type="text" value="({{data.scores.str.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
-            <h4 class="attribute-mod" title="{{ localize 'HV.scores.modifier' }}">
-                <a>({{ data.scores.str.mod }})</a>
-            </h4>
         </li>
         <li class="attribute ability-score" data-score="dex">
             <h4 class="attribute-name box-title" title="{{ localize 'HV.scores.dex.long' }}">
@@ -18,10 +17,8 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.dex.value" type="text" value="{{data.scores.dex.value}}" data-dtype="Number" />
+                <input name="data.scores.dex.mod" type="text" value="({{data.scores.dex.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
-            <h4 class="attribute-mod" title="{{ localize 'HV.scores.modifier' }}">
-                <a>({{ data.scores.dex.mod }})</a>
-            </h4>
         </li>
     </ol>
     <ol class="attributes">
@@ -31,10 +28,8 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.con.value" type="text" value="{{data.scores.con.value}}" data-dtype="Number" />
+                <input name="data.scores.con.mod" type="text" value="({{data.scores.con.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
-            <h4 class="attribute-mod" title="{{ localize 'HV.scores.modifier' }}">
-                <a>({{ data.scores.con.mod }})</a>
-            </h4>
         </li>
         <li class="attribute ability-score" data-score="int">
             <h4 class="attribute-name box-title" title="{{ localize 'HV.scores.int.long' }}">
@@ -42,10 +37,8 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.int.value" type="text" value="{{data.scores.int.value}}"data-dtype="Number" />
+                <input name="data.scores.int.mod" type="text" value="({{data.scores.int.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
-            <h4 class="attribute-mod" title="{{ localize 'HV.scores.modifier' }}">
-                <a>({{ data.scores.int.mod }})</a>
-            </h4>
         </li>
     </ol>
     <ol class="attributes">
@@ -55,10 +48,8 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.wis.value" type="text" value="{{data.scores.wis.value}}" data-dtype="Number" />
+                <input name="data.scores.wis.mod" type="text" value="({{data.scores.wis.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
-            <h4 class="attribute-mod" title="{{ localize 'HV.scores.modifier' }}">
-                <a>({{ data.scores.wis.mod }})</a>
-            </h4>
         </li>
         <li class="attribute ability-score" data-score="cha">
             <h4 class="attribute-name box-title" title="{{ localize 'HV.scores.cha.long' }}">
@@ -66,13 +57,28 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.cha.value" type="text" value="{{data.scores.cha.value}}" data-dtype="Number" />
+                <input name="data.scores.cha.mod" type="text" value="({{data.scores.cha.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
-            <h4 class="attribute-mod" title="{{ localize 'HV.scores.modifier' }}">
-                <a>({{ data.scores.cha.mod }})</a>
-            </h4>
         </li>
     </ol>
 </div>
-<div class="saves">
-    
+<h2 class="centred">{{ localize 'HV.tabs.saves' }}</h2>
+<div class="sheet-saves-table">
+    <h3 class="saves-base-header">{{ localize 'HV.base' }}</h3>
+    <h3 class="saves-bonus-header">{{ localize 'HV.bonus' }}</h3>
+    <h3 class="saves-bravery-header">{{ localize 'HV.bravery' }}</h3>
+    <h3 class="saves-deftness-header">{{ localize 'HV.deftness' }}</h3>
+    <h3 class="saves-temptation-header">{{ localize 'HV.temptation' }}</h3>
+
+    <h3 class="saves-bravery-value">{{ data.saves.bravery.value }}</h3>
+    <h3 class="saves-bravery-base">{{ data.saves.bravery.base }}</h3>
+    <h3 class="saves-bravery-bonus">{{ data.saves.bravery.bonus }}</h3>
+
+    <h3 class="saves-deftness-value">{{ data.saves.deftness.value }}</h3>
+    <h3 class="saves-deftness-base">{{ data.saves.deftness.base }}</h3>
+    <h3 class="saves-deftness-bonus">{{ data.saves.deftness.bonus }}</h3>
+
+    <h3 class="saves-temptation-value">{{ data.saves.temptation.value }}</h3>
+    <h3 class="saves-temptation-base">{{ data.saves.temptation.base }}</h3>
+    <h3 class="saves-temptation-bonus">{{ data.saves.temptation.bonus }}</h3>
 </div>

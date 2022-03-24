@@ -65,6 +65,11 @@
             "value": 10,
             "mod": 0
           }
+        },
+        "wealth": {
+          "th": 0,
+          "pf": 0,
+          "gr": 0
         }
       }
     },
@@ -74,7 +79,7 @@
     }
   },
   "Item": {
-    "types": ["possession", "people", "class", "skill", "armour", "weapon"],
+    "types": ["possession", "people", "class", "skill", "armour", "weapon", "deed"],
     "templates": {
       "base": {
         "description": ""
@@ -97,6 +102,10 @@
     },
     "weapon": {
       "templates": ["base"]
+    },
+    "deed": {
+      "templates": ["base"],
+      "type": ["favour", "sin"]
     }
   }
 }

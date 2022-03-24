@@ -52,8 +52,8 @@
 nav.sheet-tabs.side {
   position: absolute;
   transform: rotate(90deg);
-  top: 255px;
-  right: -92px;
+  top: 465px;
+  right: -195px;
   border-top: none;
   height: 35px;
   z-index: -1;
@@ -82,10 +82,19 @@ nav.sheet-tabs.side {
 .sheet-body,
 .sheet-body .tab,
 .sheet-body .tab .editor {
-  height: 150px;
+  height: 250px;
+  overflow: unset;
 }
 
-.sheet-body {
+.sheet-body .wealth .attribute-group .attributes .attribute {
+  width: auto;
+  .attribute-value {
+    width: auto;
+  }
+}
+
+.sheet-body,
+.actor-computed {
   .attributes {
     list-style: none;
     margin: 0;
@@ -102,8 +111,9 @@ nav.sheet-tabs.side {
       .attribute {
         display: flex;
         flex-direction: row;
-        .attribute-name {
-          width: 40px;
+
+        .attribute-name,
+        .attribute-name-long {
           flex-grow: 0;
           margin: 1px;
           line-height: 35px;
@@ -111,8 +121,18 @@ nav.sheet-tabs.side {
             margin: auto;
           }
         }
-        .attribute-value {
+
+        .attribute-name {
           width: 40px;
+        }
+
+        .attribute-name-long {
+          width: 60px;
+        }
+
+        .attribute-value {
+          display: inline-flex;
+          width: 25px;
           flex-grow: 0;
           input {
             padding: 0;

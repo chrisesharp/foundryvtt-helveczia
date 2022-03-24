@@ -26,3 +26,73 @@
 .actor-virtue {
   grid-area: 5 / 2 / 6 / 3;
 }
+.actor-computed {
+  grid-area: 6 / 1 / 7 / 3;
+  width: -webkit-fill-available;
+}
+
+.sheet-saves-table {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: 3fr 2fr 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  grid-gap: 1px;
+  padding: 1px;
+}
+
+.saves-base-header {
+  grid-area: 1 / 3 / 2 / 3;
+}
+
+.saves-bonus-header {
+  grid-area: 1 / 4 / 2 / 5;
+}
+
+.saves-bravery-header {
+  grid-area: 2 / 1 / 3 / 2;
+}
+
+.saves-deftness-header {
+  grid-area: 3 / 1 / 4 / 2;
+}
+
+.saves-temptation-header {
+  grid-area: 4 / 1 / 5 / 2;
+}
+
+.saves-bravery-value {
+  grid-area: 2 / 2 / 3 / 3;
+}
+
+.saves-deftness-value {
+  grid-area: 3 / 2 / 4 / 3;
+}
+
+.saves-temptation-value {
+  grid-area: 4 / 2 / 5 / 3;
+}
+
+.saves-bravery-base {
+  grid-area: 2 / 3 / 3 / 4;
+}
+
+.saves-deftness-base {
+  grid-area: 3 / 3 / 4 / 4;
+}
+
+.saves-temptation-base {
+  grid-area: 4 / 3 / 5 / 4;
+}
+
+.saves-bravery-bonus {
+  grid-area: 2 / 4 / 3 / 5;
+}
+
+.saves-deftness-bonus {
+  grid-area: 3 / 4 / 4 / 5;
+}
+
+.saves-temptation-bonus {
+  grid-area: 4 / 4 / 5 / 5;
+}
