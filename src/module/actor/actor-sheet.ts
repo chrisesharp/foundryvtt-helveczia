@@ -1,6 +1,16 @@
+import { onManageActiveEffect, prepareActiveEffectCategories } from '../effects';
+
 export class HVActorSheet extends ActorSheet {
   /** @override */
-  getData() {
+  get template() {
+    return `systems/helveczia/templates/actor/${this.actor.data.type}-sheet.hbs`;
+  }
+
+  /** @override */
+  async getData() {
+    const baseData = await super.getData();
+    const actorData = baseData.actor;
+
     const data: any = {
       owner: this.actor.isOwner,
       options: this.options,
@@ -11,12 +21,56 @@ export class HVActorSheet extends ActorSheet {
     };
 
     // Add actor, actor data and item
-    data.actor = duplicate(this.actor.data);
+    data.actor = actorData.data;
     data.data = data.actor.data;
     data.items = this.actor.items.map((i) => i.data);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
-
+    data.effects = prepareActiveEffectCategories(this.actor.effects);
     return data;
+  }
+
+  /** @override */
+  async _onDrop(event) {
+    let item;
+    try {
+      const data = JSON.parse(event.dataTransfer.getData('text/plain'));
+      item = game.items?.get(data.id);
+    } catch (err) {
+      return false;
+    }
+    if (item) {
+      switch (item.type) {
+        case 'people':
+          this._removePeoples(item);
+          break;
+        case 'class':
+          this._removeClasses(item);
+          break;
+      }
+    }
+    return super._onDrop(event);
+  }
+
+  async _removePeoples(item): Promise<void> {
+    const peoples = this.actor.items.filter((i) => i.type == 'people');
+    await Promise.all(
+      peoples.map((p) => {
+        if (p.id) return this.actor.deleteEmbeddedDocuments('Item', [p.id]);
+        return Promise.resolve();
+      }),
+    );
+    this.actor.update({ data: { people: item.name } });
+  }
+
+  async _removeClasses(item): Promise<void> {
+    const classes = this.actor.items.filter((i) => i.type == 'class');
+    await Promise.all(
+      classes.map((p) => {
+        if (p.id) return this.actor.deleteEmbeddedDocuments('Item', [p.id]);
+        return Promise.resolve();
+      }),
+    );
+    this.actor.update({ data: { class: item.name } });
   }
 
   /** @override */
@@ -60,7 +114,7 @@ export class HVActorSheet extends ActorSheet {
     });
 
     // Active Effect management
-    // html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
+    html.find('.effect-control').click((ev) => onManageActiveEffect(ev, this.actor));
   }
 
   /**

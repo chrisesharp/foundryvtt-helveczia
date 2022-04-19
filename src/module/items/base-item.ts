@@ -1,3 +1,6 @@
+import { Logger } from '../logger.js';
+const log = new Logger();
+
 export abstract class BaseItem {
   static documentName = '';
 
@@ -6,6 +9,15 @@ export abstract class BaseItem {
    * This can be used to add additional information right before rendering.
    */
   static prepareItemData(itemData, _itemDocument) {
+    if (itemData.effects) {
+      itemData.effects.forEach(async (e) => {
+        try {
+          e.data.origin = _itemDocument.uuid;
+        } catch (err) {
+          log.error('prepareItemData() |', err);
+        }
+      });
+    }
     return itemData;
   }
 

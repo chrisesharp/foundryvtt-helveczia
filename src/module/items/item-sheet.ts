@@ -1,3 +1,5 @@
+import { prepareActiveEffectCategories } from '../effects';
+
 export class HVItemSheet extends ItemSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
@@ -27,6 +29,9 @@ export class HVItemSheet extends ItemSheet {
         data = CONFIG.HV.sheetComponents.item[sheetComponent].getSheetData(data, this);
       }
     }
+
+    data.config = CONFIG.HV;
+    data.effects = prepareActiveEffectCategories(this.item.effects);
 
     return data;
   }

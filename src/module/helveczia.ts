@@ -42,6 +42,7 @@ Hooks.once('init', async () => {
   CONFIG.HV = HV;
   CONFIG.Actor.documentClass = HVActor;
   CONFIG.Item.documentClass = HVItem;
+  CONFIG.HV.showEffects = true;
 
   // Register custom system settings
   registerSettings();

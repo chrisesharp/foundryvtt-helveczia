@@ -8,7 +8,17 @@ export class HVActor extends Actor {
   /** @override */
   prepareData() {
     super.prepareData();
+  }
 
+  /** @override */
+  prepareBaseData(): void {
+    const actorData = this.data;
+    const data = actorData.data;
+    // const flags = actorData.flags;
+    data.ac = 10;
+  }
+
+  prepareDerivedData(): void {
     const actorData = this.data;
     // const data = actorData.data;
     // const flags = actorData.flags;
@@ -58,8 +68,9 @@ export class HVActor extends Actor {
       this._updateAbility(data.scores[key]);
     }
 
-    await actorData.update({ data: data });
-    await actorData.token.update({ disposition: 1, actorLink: true });
+    this._updateAC(data);
+    // await actorData.update({ data: data });
+    // await actorData.token.update({ disposition: 1, actorLink: true });
   }
 
   /**
@@ -81,11 +92,47 @@ export class HVActor extends Actor {
   }
 
   /**
+   * Prepare AC based on mods
+   * @param data
+   */
+
+  _updateAC(data: any): void {
+    data.ac += data.scores.dex.mod;
+  }
+
+  /**
    * Update current bonus for ability
    */
   _updateAbility(ability: { value: number; mod: number }) {
     ability.value = Math.min(Math.max(ability.value, 0), 18);
     ability.mod = Math.round(ability.value / 3) - 3;
+  }
+
+  // Armour is not cumulative in effect, so disable the weaker ones
+  // Effectiveness is measured as larger negative number
+  /** @override */
+  applyActiveEffects() {
+    // const armourEffects = {};
+    // let mostEffective = 0;
+    // let mostEffectiveId = "not set";
+    // this.effects.forEach ((e) => {
+    //   let armourChanges = e.data.changes.filter(x=>(x.key === "data.ac"));
+    //   if (armourChanges.length) {
+    //     if (e.id) {
+    //       armourEffects[e.id] = e;
+    //       let value = parseInt(e.data.changes[0].value)
+    //       if (value < mostEffective) {
+    //         mostEffective = value;
+    //         mostEffectiveId = e.id;
+    //       }
+    //     }
+    //   }
+    // });
+
+    // Object.keys(armourEffects).forEach((id) => {
+    //   armourEffects[id].data.disabled = (mostEffectiveId != id);
+    // });
+    super.applyActiveEffects();
   }
 }
 

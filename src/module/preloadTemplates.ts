@@ -10,6 +10,7 @@ export async function preloadTemplates(): Promise<Handlebars.TemplateDelegate[]>
     'systems/helveczia/templates/actor/partials/actor-combat.hbs',
     'systems/helveczia/templates/actor/partials/actor-equipment.hbs',
     'systems/helveczia/templates/actor/partials/actor-deeds.hbs',
+    'systems/helveczia/templates/actor/partials/actor-effects.hbs',
     // Item Sheets
     'systems/helveczia/templates/item/armour-sheet.hbs',
     'systems/helveczia/templates/item/class-sheet.hbs',

@@ -36,9 +36,12 @@ export interface HelvecziaConfig {
   global: {
     useMarkdown: boolean;
   };
+
+  showEffects: boolean;
 }
 
 export const HV: HelvecziaConfig = {
+  showEffects: false,
   actorClasses: {
     character: HVActor,
     npc: HVActor,

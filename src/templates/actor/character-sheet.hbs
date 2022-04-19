@@ -6,12 +6,16 @@
     </header>
 
     {{!-- Sheet Tab Navigation --}}
-    <nav class="sheet-tabs tabs side character" data-group="primary">
+    {{!-- <nav class="sheet-tabs tabs side character" data-group="primary"> --}}
+    <nav class="sheet-tabs tabs character" data-group="primary">
         <a class="item" data-tab="abilities">{{ localize 'HV.tabs.abilities'}}</a>
         <a class="item" data-tab="combat">{{ localize 'HV.tabs.combat'}}</a>
         <a class="item" data-tab="skills">{{ localize 'HV.tabs.skills'}}</a>
         <a class="item" data-tab="possessions">{{ localize 'HV.tabs.possessions'}}</a>
         <a class="item" data-tab="deeds">{{ localize 'HV.tabs.deeds'}}</a>
+        {{#if config.showEffects }}
+        <a class="item" data-tab="effects">{{ localize 'HV.tabs.effects'}}</a>
+        {{/if}}
         <a class="item" data-tab="editor">{{ localize 'HV.tabs.notes'}}</a>
     </nav>
 
@@ -37,6 +41,11 @@
         <div class="tab deeds" data-group="primary" data-tab="deeds">
             {{> "systems/helveczia/templates/actor/partials/actor-deeds.hbs"}}
         </div>
+        {{#if config.showEffects}}
+        <div class="tab effects" data-group="primary" data-tab="effects">
+            {{> "systems/helveczia/templates/actor/partials/actor-effects.hbs"}}
+        </div>
+        {{/if }}
         {{!-- Notes --}}
         <div class="tab editor" data-group="primary" data-tab="editor">
             <h2>{{ localize 'HV.tabs.notes' }}</h2>

@@ -5,6 +5,12 @@ type Ability =
       mod: number;
     };
 
+type Item =
+  | any
+  | {
+      type: string;
+    };
+
 type RollTarget = {
   value: number;
   base: number;
@@ -18,7 +24,7 @@ type BaseData = {
         value: number;
         max: number;
       };
-
+  ac: number;
   level: number;
   people: string;
   class: string;
@@ -61,15 +67,15 @@ type BaseData = {
   possessions:
     | any
     | {
-        articles: [];
-        weapons: [];
-        armour: [];
+        articles: [Item];
+        weapons: [Item];
+        armour: [Item];
       };
 
-  skills: [];
-  peoples: [];
-  classes: [];
-  deeds: [];
+  skills: [Item];
+  peoples: [Item];
+  classes: [Item];
+  deeds: [Item];
 };
 
 // type CharacterData = BaseData | {experience: number};
