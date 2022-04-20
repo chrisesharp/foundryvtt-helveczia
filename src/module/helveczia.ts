@@ -79,3 +79,6 @@ Hooks.once('ready', async () => {
 });
 
 // Add any additional hooks if necessary
+Hooks.on('applyActiveEffect', async (actor, changeData) => {
+  actor.applyCustomEffect(changeData);
+});

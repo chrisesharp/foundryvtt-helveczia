@@ -1,6 +1,8 @@
 import { ActorData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/module.mjs';
 import { HVActorData } from './actor-types';
-import { SaveModifier } from '../items/item';
+import { Logger } from '../logger';
+
+const log = new Logger();
 
 export class HVActor extends Actor {
   /**
@@ -17,6 +19,7 @@ export class HVActor extends Actor {
     const data = actorData.data;
     // const flags = actorData.flags;
     data.ac = 10;
+    data.level = this._calculateLevel(data.experience);
   }
 
   prepareDerivedData(): void {
@@ -63,7 +66,7 @@ export class HVActor extends Actor {
     data.peoples = categories['people'];
     data.classes = categories['class'];
     data.deeds = categories['deed'];
-    data.level = this._calculateLevel(data.experience);
+    // data.level = this._calculateLevel(data.experience);
 
     for (const key of Object.keys(data.scores)) {
       this._updateAbility(data.scores[key]);
@@ -106,28 +109,9 @@ export class HVActor extends Actor {
    * Update base & bonus for saves
    */
   _updateSaves(data: any) {
-    data.saves.bravery.base = 0;
     data.saves.bravery.bonus = data.scores.con.mod;
-    data.saves.deftness.base = 0;
     data.saves.deftness.bonus = data.scores.dex.mod;
-    data.saves.temptation.base = 0;
     data.saves.temptation.bonus = data.scores.wis.mod;
-
-    // data.peoples.forEach(p => {
-    //   console.log("People:",p);
-    //   const saves: SaveModifier[] = p.getSaves();
-    //   for (const s of saves) {
-    //     data.saves[s.type].base += s.val
-    //   }
-    // });
-
-    // data.classes.forEach(c => {
-    //   console.log("Class:",c);
-    //   const saves: SaveModifier[] = c.getSaves();
-    //   for (const s of saves) {
-    //     data.saves[s.type].base += s.val
-    //   }
-    // });
   }
 
   /**
@@ -165,6 +149,39 @@ export class HVActor extends Actor {
     super.applyActiveEffects();
   }
 
+  applyCustomEffect(changeData) {
+    const key = changeData.key;
+    let change: { type?: string; primary?: boolean } = {};
+    try {
+      change = changeData.value ? JSON.parse(changeData.value) : {};
+    } catch (err) {
+      log.debug('applyCustomEffect() | error: ', err);
+    }
+    switch (change?.type) {
+      case 'save':
+        this._applySave({ key: key, primary: change.primary });
+        break;
+    }
+  }
+
+  _applySave(change) {
+    const { key, primary } = change;
+    const current = foundry.utils.getProperty(this.data, key) ?? null;
+    log.debug(`_applySave() | current value of ${key} is ${current}`);
+    let update = '';
+    const lvl = foundry.utils.getProperty(this.data, 'data.level') ?? null;
+    log.debug(`_applySave() | level is ${lvl}`);
+    if (!isNaN(lvl)) {
+      console.log('Primary?:', primary);
+      update =
+        primary === 'true' || primary === true ? current + Math.floor(lvl / 2) + 2 : current + Math.floor(lvl / 2);
+    }
+    log.debug('_applySave() | update is ', key, update);
+    if (update !== '') {
+      foundry.utils.setProperty(this.data, key, update);
+    }
+  }
+
   /**
    * Override getRollData() supplied to roll
    */
@@ -178,12 +195,12 @@ export class HVActor extends Actor {
 
   _getCharacterRollData(data: object): void {
     if (this.data.type !== 'character') return;
-    console.log('Character RollData:', data);
+    log.debug('Character RollData:', data);
   }
 
   _getNPCRollData(data: object): void {
     if (this.data.type !== 'npc') return;
-    console.log('NPC RollData:', data);
+    log.debug('NPC RollData:', data);
   }
 }
 

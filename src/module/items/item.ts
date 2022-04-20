@@ -1,10 +1,5 @@
 import { HVItemData } from './item-types';
 
-export type SaveModifier = {
-  type: string;
-  val: number;
-};
-
 export class HVItem extends Item {
   prepareData() {
     super.prepareData();
@@ -15,16 +10,6 @@ export class HVItem extends Item {
         CONFIG.HV.itemClasses[this.data.type].prepareItemData(this.data, this);
       }
     }
-  }
-
-  /**
-   * get saving throw modifiers for this item
-   */
-  getSaves(): SaveModifier[] {
-    if (CONFIG.HV.itemClasses[this.data.type]) {
-      return CONFIG.HV.itemClasses[this.data.type].getSaves(this);
-    }
-    return [];
   }
 }
 
