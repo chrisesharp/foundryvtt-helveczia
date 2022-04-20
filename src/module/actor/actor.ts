@@ -1,5 +1,6 @@
 import { ActorData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/module.mjs';
 import { HVActorData } from './actor-types';
+import { SaveModifier } from '../items/item';
 
 export class HVActor extends Actor {
   /**
@@ -68,9 +69,10 @@ export class HVActor extends Actor {
       this._updateAbility(data.scores[key]);
     }
 
+    this._updateSaves(data);
+
     this._updateAC(data);
-    // await actorData.update({ data: data });
-    // await actorData.token.update({ disposition: 1, actorLink: true });
+    await actorData.token.update({ disposition: 1, actorLink: true });
   }
 
   /**
@@ -98,6 +100,34 @@ export class HVActor extends Actor {
 
   _updateAC(data: any): void {
     data.ac += data.scores.dex.mod;
+  }
+
+  /**
+   * Update base & bonus for saves
+   */
+  _updateSaves(data: any) {
+    data.saves.bravery.base = 0;
+    data.saves.bravery.bonus = data.scores.con.mod;
+    data.saves.deftness.base = 0;
+    data.saves.deftness.bonus = data.scores.dex.mod;
+    data.saves.temptation.base = 0;
+    data.saves.temptation.bonus = data.scores.wis.mod;
+
+    // data.peoples.forEach(p => {
+    //   console.log("People:",p);
+    //   const saves: SaveModifier[] = p.getSaves();
+    //   for (const s of saves) {
+    //     data.saves[s.type].base += s.val
+    //   }
+    // });
+
+    // data.classes.forEach(c => {
+    //   console.log("Class:",c);
+    //   const saves: SaveModifier[] = c.getSaves();
+    //   for (const s of saves) {
+    //     data.saves[s.type].base += s.val
+    //   }
+    // });
   }
 
   /**
@@ -133,6 +163,27 @@ export class HVActor extends Actor {
     //   armourEffects[id].data.disabled = (mostEffectiveId != id);
     // });
     super.applyActiveEffects();
+  }
+
+  /**
+   * Override getRollData() supplied to roll
+   */
+  /** @override */
+  getRollData() {
+    const data = super.getRollData();
+    this._getCharacterRollData(data);
+    this._getNPCRollData(data);
+    return data;
+  }
+
+  _getCharacterRollData(data: object): void {
+    if (this.data.type !== 'character') return;
+    console.log('Character RollData:', data);
+  }
+
+  _getNPCRollData(data: object): void {
+    if (this.data.type !== 'npc') return;
+    console.log('NPC RollData:', data);
   }
 }
 

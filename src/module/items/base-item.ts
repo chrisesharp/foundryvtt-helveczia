@@ -1,4 +1,6 @@
-import { Logger } from '../logger.js';
+import { Logger } from '../logger';
+import { HVItem, SaveModifier } from './item';
+
 const log = new Logger();
 
 export abstract class BaseItem {
@@ -19,6 +21,10 @@ export abstract class BaseItem {
       });
     }
     return itemData;
+  }
+
+  static getSaves(item: HVItem): SaveModifier[] {
+    return [];
   }
 
   /**

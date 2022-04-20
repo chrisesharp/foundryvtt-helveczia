@@ -1,6 +1,11 @@
 import { BaseItem } from './items/base-item';
 import { BaseComponent } from './components/base';
 import { SkillItem } from './items/skill/skill-item';
+import { ClassItem } from './items/class/class-item';
+import { PeopleItem } from './items/people/people-item';
+import { DeedItem } from './items/deed/deed-item';
+import { ArmourItem } from './items/armour/armour-item';
+import { WeaponItem } from './items/weapon/weapon-item';
 import { PossessionItem } from './items/possesion/possession-item';
 import { HVActor } from './actor/actor';
 
@@ -49,6 +54,11 @@ export const HV: HelvecziaConfig = {
   itemClasses: {
     skill: SkillItem,
     possession: PossessionItem,
+    class: ClassItem,
+    people: PeopleItem,
+    deed: DeedItem,
+    armour: ArmourItem,
+    weapon: WeaponItem,
   },
   sheetComponents: {
     actor: {

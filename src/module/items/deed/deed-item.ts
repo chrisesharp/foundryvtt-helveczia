@@ -2,7 +2,7 @@ import { BaseItem } from '../base-item';
 
 export class DeedItem extends BaseItem {
   static get documentName() {
-    return 'possession';
+    return 'deed';
   }
 
   /**
