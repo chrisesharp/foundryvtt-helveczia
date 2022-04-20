@@ -90,7 +90,15 @@ export class HVActor extends Actor {
    */
   _calculateLevel(experience: number) {
     let level = 1;
-    if (experience >= 5000) {
+    if (experience >= 30000) {
+      level = 6;
+    } else if (experience >= 20000) {
+      level = 5;
+    } else if (experience >= 12000) {
+      level = 4;
+    } else if (experience >= 6000) {
+      level = 3;
+    } else if (experience >= 2000) {
       level = 2;
     }
     return level;
@@ -172,7 +180,7 @@ export class HVActor extends Actor {
     const lvl = foundry.utils.getProperty(this.data, 'data.level') ?? null;
     log.debug(`_applySave() | level is ${lvl}`);
     if (!isNaN(lvl)) {
-      console.log('Primary?:', primary);
+      log.debug('Primary?:', primary);
       update =
         primary === 'true' || primary === true ? current + Math.floor(lvl / 2) + 2 : current + Math.floor(lvl / 2);
     }
