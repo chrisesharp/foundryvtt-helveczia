@@ -70,6 +70,10 @@
     "character": {
       "templates": ["base"],
       "experience": 0
+    },
+    "npc": {
+      "templates": ["base"],
+      "experience": 0
     }
   },
   "Item": {

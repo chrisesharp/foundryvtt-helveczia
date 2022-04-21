@@ -1,0 +1,58 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    {{!-- Sheet Header --}}
+    <header class="sheet-header">
+      {{> "systems/helveczia/templates/actor/partials/actor-header.hbs"}}
+    </header>
+
+    {{!-- Sheet Tab Navigation --}}
+    {{!-- <nav class="sheet-tabs tabs side character" data-group="primary"> --}}
+    <nav class="sheet-tabs tabs character" data-group="primary">
+        <a class="item" data-tab="abilities">{{ localize 'HV.tabs.abilities'}}</a>
+        <a class="item" data-tab="combat">{{ localize 'HV.tabs.combat'}}</a>
+        <a class="item" data-tab="skills">{{ localize 'HV.tabs.skills'}}</a>
+        <a class="item" data-tab="possessions">{{ localize 'HV.tabs.possessions'}}</a>
+        <a class="item" data-tab="deeds">{{ localize 'HV.tabs.deeds'}}</a>
+        {{#if config.showEffects }}
+        <a class="item" data-tab="effects">{{ localize 'HV.tabs.effects'}}</a>
+        {{/if}}
+        <a class="item" data-tab="editor">{{ localize 'HV.tabs.notes'}}</a>
+    </nav>
+
+    {{!-- Sheet Body --}}
+    <section class="sheet-body">
+        {{!-- Abilities Tab --}}
+        <div class="tab abilities" data-group="primary" data-tab="abilities">
+            {{> "systems/helveczia/templates/actor/partials/actor-abilities.hbs"}}
+        </div>
+        {{!-- Skills Tab --}}
+        <div class="tab skills" data-group="primary" data-tab="skills">
+            {{> "systems/helveczia/templates/actor/partials/actor-skills.hbs"}}
+        </div>
+        {{!-- Combat Tab --}}
+        <div class="tab combat" data-group="primary" data-tab="combat">
+            {{> "systems/helveczia/templates/actor/partials/actor-combat.hbs"}}
+        </div>
+        {{!-- Possessions Tab --}}
+        <div class="tab possessions" data-group="primary" data-tab="possessions">
+            {{> "systems/helveczia/templates/actor/partials/actor-equipment.hbs"}}
+        </div>
+        {{!-- Deeds Tab --}}
+        <div class="tab deeds" data-group="primary" data-tab="deeds">
+            {{> "systems/helveczia/templates/actor/partials/actor-deeds.hbs"}}
+        </div>
+        {{#if config.showEffects}}
+        <div class="tab effects" data-group="primary" data-tab="effects">
+            {{> "systems/helveczia/templates/actor/partials/actor-effects.hbs"}}
+        </div>
+        {{/if }}
+        {{!-- Notes --}}
+        <div class="tab editor" data-group="primary" data-tab="editor">
+            <h2>{{ localize 'HV.tabs.notes' }}</h2>
+            <div class="agent-editor">
+                {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+            </div>
+        </div>
+    </section>
+</form>
+

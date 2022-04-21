@@ -66,7 +66,6 @@ export class HVActor extends Actor {
     data.peoples = categories['people'];
     data.classes = categories['class'];
     data.deeds = categories['deed'];
-    // data.level = this._calculateLevel(data.experience);
 
     for (const key of Object.keys(data.scores)) {
       this._updateAbility(data.scores[key]);
@@ -75,14 +74,31 @@ export class HVActor extends Actor {
     this._updateSaves(data);
 
     this._updateAC(data);
-    await actorData.token.update({ disposition: 1, actorLink: true });
   }
 
   /**
    * Prepare NPC type specific data
    */
   async _prepareNPCData(actorData: ActorData) {
-    await actorData.token.update({ disposition: -1 });
+    const data = actorData.data;
+    const categories = this._categoriseItems(actorData.items);
+    data.possessions = {
+      articles: categories['possession'],
+      weapons: categories['weapon'],
+      armour: categories['armour'],
+    };
+    data.skills = categories['skill'];
+    data.peoples = categories['people'];
+    data.classes = categories['class'];
+    data.deeds = categories['deed'];
+
+    for (const key of Object.keys(data.scores)) {
+      this._updateAbility(data.scores[key]);
+    }
+
+    this._updateSaves(data);
+
+    this._updateAC(data);
   }
 
   /**
@@ -209,6 +225,36 @@ export class HVActor extends Actor {
   _getNPCRollData(data: object): void {
     if (this.data.type !== 'npc') return;
     log.debug('NPC RollData:', data);
+  }
+
+  /** @override */
+  async _preCreate(data, options, user) {
+    await super._preCreate(data, options, user);
+    data.token = data.token || {};
+
+    const disposition = data.type === 'character' ? 1 : -1;
+    // Set basic token data for newly created actors.
+    mergeObject(
+      data.token,
+      {
+        vision: true,
+        dimSight: 30,
+        brightSight: 0,
+        actorLink: true,
+        disposition: disposition,
+      },
+      { overwrite: false },
+    );
+
+    // Overwrite specific token data (used for template actors)
+    mergeObject(
+      data.token,
+      {
+        img: CONST.DEFAULT_TOKEN,
+      },
+      { overwrite: true },
+    );
+    this.data.update(data);
   }
 }
 
