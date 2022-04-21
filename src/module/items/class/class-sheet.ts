@@ -12,7 +12,7 @@ export class ClassSheet extends HVItemSheet {
     });
   }
   /**
-   * Adds skill specifig actorsheet listeners.
+   * Adds skill specific actorsheet listeners.
    */
 
   /** @override */

@@ -1,5 +1,5 @@
 import { ActorData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/module.mjs';
-import { HVActorData } from './actor-types';
+import { CharacterActorData, HVActorData, NPCActorData } from './actor-types';
 import { Logger } from '../logger';
 
 const log = new Logger();
@@ -26,6 +26,7 @@ export class HVActor extends Actor {
     const actorData = this.data;
     // const data = actorData.data;
     // const flags = actorData.flags;
+    this._categoriseItems(actorData);
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
@@ -39,8 +40,9 @@ export class HVActor extends Actor {
     }
   }
 
-  _categoriseItems(items) {
-    return items.reduce(
+  _categoriseItems(actorData) {
+    const data = actorData.data;
+    const categories = actorData.items.reduce(
       (acc, item) => {
         const category = acc[item.type] || [];
         category.push(item);
@@ -49,14 +51,7 @@ export class HVActor extends Actor {
       },
       { possession: [], people: [], class: [], skill: [], armour: [], weapon: [], deed: [] },
     );
-  }
 
-  /**
-   * Prepare Character type specific data
-   */
-  async _prepareCharacterData(actorData: ActorData) {
-    const data = actorData.data;
-    const categories = this._categoriseItems(actorData.items);
     data.possessions = {
       articles: categories['possession'],
       weapons: categories['weapon'],
@@ -66,6 +61,13 @@ export class HVActor extends Actor {
     data.peoples = categories['people'];
     data.classes = categories['class'];
     data.deeds = categories['deed'];
+  }
+
+  /**
+   * Prepare Character type specific data
+   */
+  async _prepareCharacterData(actorData: ActorData) {
+    const data = actorData.data;
 
     for (const key of Object.keys(data.scores)) {
       this._updateAbility(data.scores[key]);
@@ -81,16 +83,6 @@ export class HVActor extends Actor {
    */
   async _prepareNPCData(actorData: ActorData) {
     const data = actorData.data;
-    const categories = this._categoriseItems(actorData.items);
-    data.possessions = {
-      articles: categories['possession'],
-      weapons: categories['weapon'],
-      armour: categories['armour'],
-    };
-    data.skills = categories['skill'];
-    data.peoples = categories['people'];
-    data.classes = categories['class'];
-    data.deeds = categories['deed'];
 
     for (const key of Object.keys(data.scores)) {
       this._updateAbility(data.scores[key]);
@@ -136,6 +128,11 @@ export class HVActor extends Actor {
     data.saves.bravery.bonus = data.scores.con.mod;
     data.saves.deftness.bonus = data.scores.dex.mod;
     data.saves.temptation.bonus = data.scores.wis.mod;
+
+    for (const saveType of Object.keys(data.saves)) {
+      const save = data.saves[saveType];
+      save.value = save.base + save.bonus;
+    }
   }
 
   /**
@@ -206,25 +203,39 @@ export class HVActor extends Actor {
     }
   }
 
+  async rollAbility(attribute: string): Promise<any> {
+    console.log('Rolling ', attribute);
+    return;
+  }
   /**
    * Override getRollData() supplied to roll
    */
   /** @override */
   getRollData() {
     const data = super.getRollData();
-    this._getCharacterRollData(data);
-    this._getNPCRollData(data);
+    this._getCharacterRollData(data as CharacterActorData['data']);
+    this._getNPCRollData(data as NPCActorData['data']);
     return data;
   }
 
-  _getCharacterRollData(data: object): void {
+  _getCharacterRollData(data: CharacterActorData['data']): void {
     if (this.data.type !== 'character') return;
-    log.debug('Character RollData:', data);
+    // log.debug('Character RollData:', data);
+    if (data?.scores) {
+      for (const [k, v] of Object.entries(data.scores)) {
+        data[k] = v;
+      }
+    }
   }
 
-  _getNPCRollData(data: object): void {
+  _getNPCRollData(data: NPCActorData['data']): void {
     if (this.data.type !== 'npc') return;
-    log.debug('NPC RollData:', data);
+    // log.debug('NPC RollData:', data);
+    if (data?.scores) {
+      for (const [k, v] of Object.entries(data.scores)) {
+        data[k] = v;
+      }
+    }
   }
 
   /** @override */

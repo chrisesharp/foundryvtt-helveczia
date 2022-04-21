@@ -2,7 +2,7 @@
 <h2 class="centred">{{ localize 'HV.tabs.abilities' }}</h2>
 <div class="attribute-group flexrow">
     <ol class="attributes">
-        <li class="attribute ability-score" data-score="str">
+        <li class="attribute ability-score rollable" data-roll="attr" data-attr="str">
             <h4 class="attribute-name box-title" title="{{ localize 'HV.scores.str.long' }}">
                 <a>{{ localize 'HV.scores.str.short' }}</a>
             </h4>
@@ -11,7 +11,7 @@
                 <input name="data.scores.str.mod" type="text" value="({{data.scores.str.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
         </li>
-        <li class="attribute ability-score" data-score="dex">
+        <li class="attribute ability-score rollable" data-roll="attr" data-attr="dex">
             <h4 class="attribute-name box-title" title="{{ localize 'HV.scores.dex.long' }}">
                 <a>{{ localize 'HV.scores.dex.short' }}</a>
             </h4>
@@ -22,7 +22,7 @@
         </li>
     </ol>
     <ol class="attributes">
-        <li class="attribute ability-score" data-score="con">
+        <li class="attribute ability-score rollable" data-roll="attr" data-attr="con">
             <h4 class="attribute-name box-title" title="{{ localize 'HV.scores.con.long' }}">
                 <a>{{ localize 'HV.scores.con.short' }}</a>
             </h4>
@@ -31,7 +31,7 @@
                 <input name="data.scores.con.mod" type="text" value="({{data.scores.con.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
         </li>
-        <li class="attribute ability-score" data-score="int">
+        <li class="attribute ability-score rollable" data-roll="attr" data-attr="int">
             <h4 class="attribute-name box-title" title="{{ localize 'HV.scores.int.long' }}">
                 <a>{{ localize 'HV.scores.int.short' }}</a>
             </h4>
@@ -42,7 +42,7 @@
         </li>
     </ol>
     <ol class="attributes">
-        <li class="attribute ability-score" data-score="wis">
+        <li class="attribute ability-score rollable" data-roll="attr" data-attr="wis">
             <h4 class="attribute-name box-title" title="{{ localize 'HV.scores.wis.long' }}">
                 <a>{{ localize 'HV.scores.wis.short' }}</a>
             </h4>
@@ -51,7 +51,7 @@
                 <input name="data.scores.wis.mod" type="text" value="({{data.scores.wis.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
         </li>
-        <li class="attribute ability-score" data-score="cha">
+        <li class="attribute ability-score rollable" data-roll="attr" data-attr="cha">
             <h4 class="attribute-name box-title" title="{{ localize 'HV.scores.cha.long' }}">
                 <a>{{ localize 'HV.scores.cha.short' }}</a>
             </h4>
@@ -64,6 +64,7 @@
 </div>
 <h2 class="centred">{{ localize 'HV.tabs.saves' }}</h2>
 <div class="sheet-saves-table">
+    <h3 class="saves-value-header">+/-</h3>
     <h3 class="saves-base-header">{{ localize 'HV.base' }}</h3>
     <h3 class="saves-bonus-header">{{ localize 'HV.bonus' }}</h3>
     <h3 class="saves-bravery-header">{{ localize 'HV.bravery' }}</h3>
@@ -71,14 +72,20 @@
     <h3 class="saves-temptation-header">{{ localize 'HV.temptation' }}</h3>
 
     <h3 class="saves-bravery-value">{{ data.saves.bravery.value }}</h3>
+    <h3 class="saves-bravery-lb">(</h3>
     <h3 class="saves-bravery-base">{{ data.saves.bravery.base }}</h3>
     <h3 class="saves-bravery-bonus">{{ data.saves.bravery.bonus }}</h3>
+    <h3 class="saves-bravery-rb">)</h3>
 
     <h3 class="saves-deftness-value">{{ data.saves.deftness.value }}</h3>
+    <h3 class="saves-deftness-lb">(</h3>
     <h3 class="saves-deftness-base">{{ data.saves.deftness.base }}</h3>
     <h3 class="saves-deftness-bonus">{{ data.saves.deftness.bonus }}</h3>
+    <h3 class="saves-deftness-rb">)</h3>
 
     <h3 class="saves-temptation-value">{{ data.saves.temptation.value }}</h3>
+    <h3 class="saves-temptation-lb">(</h3>
     <h3 class="saves-temptation-base">{{ data.saves.temptation.base }}</h3>
     <h3 class="saves-temptation-bonus">{{ data.saves.temptation.bonus }}</h3>
+    <h3 class="saves-temptation-rb">)</h3>
 </div>

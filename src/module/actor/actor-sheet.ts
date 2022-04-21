@@ -153,11 +153,11 @@ export class HVActorSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const dataset = element.dataset;
-    let target;
+    let target: { id?: string } = {};
     if (game.user) {
       for (const t of game.user.targets.values()) {
         const data = t.actor?.data;
-        if (data?.type === 'npc') {
+        if (data?.type === 'npc' && data._id) {
           target = {
             id: data._id,
             // armour: data.data.armour.value,
@@ -166,21 +166,16 @@ export class HVActorSheet extends ActorSheet {
           // target.hitresolution = data.data.hitresolution;
           // target.consequences = data.data.consequences;
         }
-        if (target) break;
+        if (target?.id) break;
       }
     }
 
-    if (dataset.roll) {
-      // switch (resource) {
-      //     case "armour":
-      //         this.actor.rollResistance(resource, dataset.roll);
-      //         break;
-      //     case "unravel":
-      //         this.actor.rollUnravelling(dataset.roll);
-      //         break;
-      //     default:
-      //         this.actor.rollChallenge(resource, dataset.roll, target);
-      // }
+    switch (dataset.roll) {
+      case 'attr':
+        this.actor.rollAbility(dataset.attr);
+        break;
+      default:
+      // this.actor.rollChallenge(resource, dataset.roll, target);
     }
   }
 

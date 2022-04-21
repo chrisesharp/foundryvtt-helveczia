@@ -34,65 +34,131 @@
 .sheet-saves-table {
   display: grid;
   align-items: center;
-  justify-items: center;
-  grid-template-columns: 3fr 2fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: repeat(3, 1fr);
   grid-gap: 1px;
   padding: 1px;
 }
 
-.saves-base-header {
-  grid-area: 1 / 3 / 2 / 3;
+.saves-value-header {
+  display: flex;
+  justify-content: center;
+  grid-area: 1 / 2 / 2 / 3;
 }
 
-.saves-bonus-header {
+.saves-base-header {
+  display: flex;
+  justify-content: center;
   grid-area: 1 / 4 / 2 / 5;
 }
 
+.saves-bonus-header {
+  display: flex;
+  justify-content: center;
+  grid-area: 1 / 5 / 2 / 6;
+}
+
 .saves-bravery-header {
+  display: flex;
+  justify-content: center;
   grid-area: 2 / 1 / 3 / 2;
 }
 
 .saves-deftness-header {
+  display: flex;
+  justify-content: center;
   grid-area: 3 / 1 / 4 / 2;
 }
 
 .saves-temptation-header {
+  display: flex;
+  justify-content: center;
   grid-area: 4 / 1 / 5 / 2;
 }
 
 .saves-bravery-value {
+  display: flex;
+  justify-content: center;
   grid-area: 2 / 2 / 3 / 3;
 }
 
+.saves-bravery-lb {
+  display: flex;
+  justify-content: right;
+  grid-area: 2 / 3 / 3 / 4;
+}
+
+.saves-deftness-lb {
+  display: flex;
+  justify-content: right;
+  grid-area: 3 / 3 / 4 / 4;
+}
+
+.saves-temptation-lb {
+  display: flex;
+  justify-content: right;
+  grid-area: 4 / 3 / 5 / 4;
+}
+
+.saves-bravery-rb {
+  display: flex;
+  grid-area: 2 / 6 / 3 / 7;
+}
+
+.saves-deftness-rb {
+  display: flex;
+  grid-area: 3 / 6 / 4 / 7;
+}
+
+.saves-temptation-rb {
+  display: flex;
+  grid-area: 4 / 6 / 5 / 7;
+}
+
 .saves-deftness-value {
+  display: flex;
+  justify-content: center;
   grid-area: 3 / 2 / 4 / 3;
 }
 
 .saves-temptation-value {
+  display: flex;
+  justify-content: center;
   grid-area: 4 / 2 / 5 / 3;
 }
 
 .saves-bravery-base {
-  grid-area: 2 / 3 / 3 / 4;
-}
-
-.saves-deftness-base {
-  grid-area: 3 / 3 / 4 / 4;
-}
-
-.saves-temptation-base {
-  grid-area: 4 / 3 / 5 / 4;
-}
-
-.saves-bravery-bonus {
+  display: flex;
+  justify-content: center;
   grid-area: 2 / 4 / 3 / 5;
 }
 
-.saves-deftness-bonus {
+.saves-deftness-base {
+  display: flex;
+  justify-content: center;
   grid-area: 3 / 4 / 4 / 5;
 }
 
-.saves-temptation-bonus {
+.saves-temptation-base {
+  display: flex;
+  justify-content: center;
   grid-area: 4 / 4 / 5 / 5;
+}
+
+.saves-bravery-bonus {
+  display: flex;
+  justify-content: center;
+  grid-area: 2 / 5 / 3 / 6;
+}
+
+.saves-deftness-bonus {
+  display: flex;
+  justify-content: center;
+  grid-area: 3 / 5 / 4 / 6;
+}
+
+.saves-temptation-bonus {
+  display: flex;
+  justify-content: center;
+  grid-area: 4 / 5 / 5 / 6;
 }
