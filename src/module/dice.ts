@@ -202,7 +202,9 @@ export class HVDice {
       cancel: {
         icon: '<i class="fas fa-times"></i>',
         label: game.i18n.localize('HV.Cancel'),
-        callback: () => {},
+        callback: () => {
+          /*noop */
+        },
       },
     };
 
