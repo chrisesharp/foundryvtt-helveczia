@@ -62,7 +62,7 @@
                             <a>{{ localize 'HV.initiative' }}:</a>
                         </h4>
                         <div class="attribute-value" title="{{ localize 'HV.initiative_bonus'}}">
-                            <input name="data.initiative" type="text" data-dtype="Number" value="{{data.initiative}}">
+                            <input name="data.initiative" type="text" data-dtype="Number" value="{{ plusminus data.initiative}}" disabled>
                         </div>
                     </li>
                 </ol>

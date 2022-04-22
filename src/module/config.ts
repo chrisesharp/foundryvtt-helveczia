@@ -38,11 +38,13 @@ export interface HelvecziaConfig {
     //     [key: number]: Application | null;
   };
 
-  global: {
-    useMarkdown: boolean;
-  };
-
   showEffects: boolean;
+  XPLevels: {
+    [key: number]: number;
+  };
+  difficulties: {
+    [key: string]: number;
+  };
 }
 
 export const HV: HelvecziaConfig = {
@@ -75,7 +77,19 @@ export const HV: HelvecziaConfig = {
     templateSettings: null,
     templatePicker: null,
   },
-  global: {
-    useMarkdown: false,
+
+  XPLevels: {
+    6: 30000,
+    5: 20000,
+    4: 12000,
+    3: 6000,
+    2: 2000,
+    1: 0,
+  },
+
+  difficulties: {
+    Normal: 12,
+    Hard: 18,
+    Heroic: 24,
   },
 };

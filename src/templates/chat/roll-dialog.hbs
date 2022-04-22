@@ -1,0 +1,30 @@
+<form class="helveczia roll-dialog">
+    {{#if data.rollData.details}}
+    <div class="roll-details">
+        {{data.rollData.details}}
+    </div>
+    {{/if}}
+    <div class="form-group">
+        <input type="text" name="formula" value="{{formula}}" hidden />
+        <label>{{ localize "HV.Difficulty" }}</label>
+        <select name="difficulty">
+            {{#each diffs as | dc label|}}
+            <option value="{{dc}}">{{localize label}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="form-group">
+        <label>{{localize "HV.SitMod"}}</label>
+        <input type="text" name="bonus" value="" placeholder="0" />
+    </div>
+    <div class="form-group">
+        <label>{{localize "HV.RollMode"}}</label>
+        <select name="rollMode">
+            {{#select rollMode}}
+            {{#each rollModes as |label mode|}}
+            <option value="{{mode}}">{{localize label}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+</form>

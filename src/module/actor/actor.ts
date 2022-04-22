@@ -1,6 +1,7 @@
 import { ActorData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/module.mjs';
 import { CharacterActorData, HVActorData, NPCActorData } from './actor-types';
 import { Logger } from '../logger';
+import { HVDice } from '../dice';
 
 const log = new Logger();
 
@@ -74,8 +75,7 @@ export class HVActor extends Actor {
     }
 
     this._updateSaves(data);
-
-    this._updateAC(data);
+    this._updateCombatValues(data);
   }
 
   /**
@@ -89,29 +89,30 @@ export class HVActor extends Actor {
     }
 
     this._updateSaves(data);
-
-    this._updateAC(data);
+    this._updateCombatValues(data);
   }
 
   /**
    * Calculate current level from experience
    */
-  _calculateLevel(experience: number) {
-    let level = 1;
-    if (experience >= 30000) {
-      level = 6;
-    } else if (experience >= 20000) {
-      level = 5;
-    } else if (experience >= 12000) {
-      level = 4;
-    } else if (experience >= 6000) {
-      level = 3;
-    } else if (experience >= 2000) {
-      level = 2;
-    }
-    return level;
+  _calculateLevel(experience: number): number {
+    return (
+      Object.entries(CONFIG.HV.XPLevels)
+        .filter((x) => x[1] <= experience)
+        .map((e) => parseInt(e[0]))
+        .sort()
+        .pop() ?? 1
+    );
   }
 
+  /**
+   * Prepare Combat related values
+   */
+  _updateCombatValues(data) {
+    data.initiative = data.scores.dex.mod;
+    this._updateAC(data);
+    this._updateAttackMods(data);
+  }
   /**
    * Prepare AC based on mods
    * @param data
@@ -122,16 +123,30 @@ export class HVActor extends Actor {
   }
 
   /**
+   * Prepare attack mods based on mods
+   * @param data
+   */
+
+  _updateAttackMods(data: any): void {
+    data.attack.melee.bonus = data.scores.str.mod;
+    data.attack.ranged.bonus = data.scores.dex.mod;
+    data.attack.melee.mod = data.attack.melee.base + data.attack.melee.bonus;
+    data.attack.ranged.mod = data.attack.ranged.base + data.attack.ranged.bonus;
+  }
+
+  /**
    * Update base & bonus for saves
    */
   _updateSaves(data: any) {
     data.saves.bravery.bonus = data.scores.con.mod;
     data.saves.deftness.bonus = data.scores.dex.mod;
     data.saves.temptation.bonus = data.scores.wis.mod;
+    const virtue = data.virtue > 14 ? 1 : 0;
 
     for (const saveType of Object.keys(data.saves)) {
       const save = data.saves[saveType];
-      save.value = save.base + save.bonus;
+      save.bonus += virtue;
+      save.mod = save.base + save.bonus;
     }
   }
 
@@ -143,30 +158,9 @@ export class HVActor extends Actor {
     ability.mod = Math.round(ability.value / 3) - 3;
   }
 
-  // Armour is not cumulative in effect, so disable the weaker ones
-  // Effectiveness is measured as larger negative number
+  // Manage potential effect collisions here
   /** @override */
   applyActiveEffects() {
-    // const armourEffects = {};
-    // let mostEffective = 0;
-    // let mostEffectiveId = "not set";
-    // this.effects.forEach ((e) => {
-    //   let armourChanges = e.data.changes.filter(x=>(x.key === "data.ac"));
-    //   if (armourChanges.length) {
-    //     if (e.id) {
-    //       armourEffects[e.id] = e;
-    //       let value = parseInt(e.data.changes[0].value)
-    //       if (value < mostEffective) {
-    //         mostEffective = value;
-    //         mostEffectiveId = e.id;
-    //       }
-    //     }
-    //   }
-    // });
-
-    // Object.keys(armourEffects).forEach((id) => {
-    //   armourEffects[id].data.disabled = (mostEffectiveId != id);
-    // });
     super.applyActiveEffects();
   }
 
@@ -203,10 +197,35 @@ export class HVActor extends Actor {
     }
   }
 
-  async rollAbility(attribute: string): Promise<any> {
-    console.log('Rolling ', attribute);
-    return;
+  async rollCheck(data, opponent): Promise<any> {
+    const attribute = data.attr;
+    const resource = data.resource;
+    const mod = this.data.data[resource][attribute].mod;
+    const longName = game.i18n.format(`HV.${resource}.${attribute}.long`);
+    const label = `Rolling ${longName} check`;
+    const rollParts = ['1d20', mod];
+    const rollData = {
+      actor: this,
+      roll: {
+        type: 'check',
+        target: CONFIG.HV.difficulties['Normal'],
+      },
+      opponent: opponent,
+    };
+
+    const skip = false;
+
+    return HVDice.Roll({
+      parts: rollParts,
+      data: rollData,
+      skipDialog: skip,
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      flavour: label,
+      title: label,
+      chatMessage: true,
+    });
   }
+
   /**
    * Override getRollData() supplied to roll
    */

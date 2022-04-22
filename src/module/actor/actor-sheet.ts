@@ -172,11 +172,14 @@ export class HVActorSheet extends ActorSheet {
 
     switch (dataset.roll) {
       case 'attr':
-        this.actor.rollAbility(dataset.attr);
+        dataset.resource = 'scores';
+        break;
+      case 'save':
+        dataset.resource = 'saves';
         break;
       default:
-      // this.actor.rollChallenge(resource, dataset.roll, target);
     }
+    this.actor.rollCheck(dataset, target);
   }
 
   /**

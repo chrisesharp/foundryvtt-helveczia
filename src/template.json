@@ -13,29 +13,24 @@
         "virtue": 10,
         "saves": {
           "bravery": {
-            "value": 0,
             "base": 0,
             "bonus": 0
           },
           "deftness": {
-            "value": 0,
             "base": 0,
             "bonus": 0
           },
           "temptation": {
-            "value": 0,
             "base": 0,
             "bonus": 0
           }
         },
         "attack": {
           "melee": {
-            "value": 0,
             "base": 0,
             "bonus": 0
           },
           "ranged": {
-            "value": 0,
             "base": 0,
             "bonus": 0
           }

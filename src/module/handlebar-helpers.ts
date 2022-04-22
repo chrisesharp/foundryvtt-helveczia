@@ -129,8 +129,12 @@ export const registerHandlebarHelpers = async function () {
   //     return item;
   // });
 
+  Handlebars.registerHelper('plusminus', function (value) {
+    return value > 0 ? `+${value}` : value;
+  });
+
   Handlebars.registerHelper('balance', function (virtue) {
-    const total = Math.sign(Math.floor(virtue / 7) - 1);
+    const total = Math.sign(Math.floor((virtue - 1) / 7) - 1);
     switch (total) {
       case -1:
         return 'fas fa-balance-scale-left';
@@ -142,7 +146,7 @@ export const registerHandlebarHelpers = async function () {
   });
 
   Handlebars.registerHelper('balanceTip', function (virtue) {
-    const total = Math.sign(Math.floor(virtue / 7) - 1);
+    const total = Math.sign(Math.floor((virtue - 1) / 7) - 1);
     let state = '';
     switch (total) {
       case -1:

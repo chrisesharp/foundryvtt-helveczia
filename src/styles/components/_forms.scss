@@ -162,3 +162,203 @@ nav.sheet-tabs.side {
     padding: 0 8px;
   }
 }
+
+.helveczia.chat-block {
+  margin: 0;
+  .chat-header {
+    height: 46px;
+    margin: 4px 0;
+    background: $darkBackground;
+    border: 1px solid black;
+    border-radius: 3px;
+    color: white;
+    padding: 2px;
+    box-shadow: 0 0 2px #fff inset;
+    .chat-title {
+      margin: 4px 0;
+      height: 30px;
+      overflow: hidden;
+      h2 {
+        border: none;
+        line-height: 34px;
+        margin: 0;
+        text-indent: 10px;
+        font-size: 16px;
+        word-break: break-all;
+      }
+    }
+    .chat-img {
+      flex: 0 0 42px;
+      background-size: cover;
+    }
+  }
+  .chat-target {
+    text-align: right;
+    font-style: italic;
+    padding: 2px;
+  }
+  .chat-details {
+    padding: 4px;
+    font-size: 13px;
+  }
+  .roll-result {
+    font-size: 13px;
+    text-align: center;
+    &.roll-success {
+      color: #18520b;
+    }
+    &.roll-fail {
+      color: #aa0200;
+    }
+  }
+  .damage-roll {
+    position: relative;
+    .dice-damage {
+      display: none;
+      position: absolute;
+      line-height: 24px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 3px;
+      box-shadow: 0 0 2px #fff inset;
+      bottom: 1px;
+      right: 10px;
+      button {
+        padding: 2px 5px;
+        width: 22px;
+        line-height: 14px;
+        height: 22px;
+        cursor: pointer;
+      }
+    }
+    &:hover {
+      .dice-damage {
+        display: block;
+      }
+    }
+  }
+}
+
+.helveczia.chat-card {
+  font-style: normal;
+  font-size: 12px;
+
+  .card-header {
+    padding: 3px 0;
+    border-top: 2px groove #fff;
+    border-bottom: 2px groove #fff;
+
+    img {
+      flex: 0 0 36px;
+      margin-right: 5px;
+      border: none;
+    }
+
+    h3 {
+      flex: 1;
+      margin: 0;
+      line-height: 36px;
+      color: $colorOlive;
+      &:hover {
+        color: #111;
+      }
+    }
+  }
+
+  .card-content {
+    margin: 5px 0;
+    .treasure-list {
+      padding: 0;
+      list-style: none;
+      .treasure {
+        img {
+          flex: 0 0 36px;
+          border: none;
+        }
+        div {
+          text-indent: 10px;
+          font-size: 14px;
+          font-weight: bold;
+        }
+        line-height: 36px;
+      }
+      .sub {
+        padding-left: 25px;
+        line-height: 28px;
+        img {
+          flex: 0 0 28px;
+          border: none;
+        }
+        div {
+          text-indent: 10px;
+          font-size: 14px;
+        }
+      }
+    }
+    h3 {
+      font-size: 12px;
+      margin: 0;
+      font-weight: bold;
+    }
+
+    > * {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
+    }
+  }
+
+  .card-buttons {
+    margin: 5px 0;
+
+    span {
+      display: block;
+      line-height: 28px;
+      text-align: center;
+      border: 1px solid $colorTan;
+    }
+
+    button {
+      font-size: 12px;
+      height: 24px;
+      line-height: 20px;
+      margin: 2px 0;
+    }
+  }
+
+  .card-footer {
+    padding: 3px 0 0;
+    border-top: 2px groove #fff;
+
+    span {
+      border-right: 2px groove #fff;
+      padding: 0 5px 0 0;
+      font-size: 10px;
+
+      &:last-child {
+        border-right: none;
+        padding-right: 0;
+      }
+    }
+  }
+}
+
+.dice-roll .dice-total {
+  &.success {
+    color: inherit;
+    background: #c7d0c0;
+    border: 1px solid #006c00;
+  }
+  &.failure {
+    color: inherit;
+    background: #ffdddd;
+    border: 1px solid #6e0000;
+  }
+  &.critical {
+    color: green;
+  }
+  &.fumble {
+    color: red;
+  }
+}

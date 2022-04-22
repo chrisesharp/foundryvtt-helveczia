@@ -1,5 +1,19 @@
 {{!-- skills and abilities --}}
 <div class="combat">
+    <div class="combat-bonuses">
+        <div class="combat-melee">
+             <h4 class="attribute-name" title="{{ localize 'HV.Melee' }}">
+                {{ localize 'HV.Melee' }}
+            </h4>
+            {{ data.attack.melee.mod }} = [ {{data.attack.melee.base}}] + [ {{ data.attack.melee.bonus }} ]
+        </div>
+        <div class="combat-ranged">
+             <h4 class="attribute-name" title="{{ localize 'HV.Ranged' }}">
+                {{ localize 'HV.Ranged' }}
+            </h4>
+            {{ data.attack.ranged.mod }} = [ {{data.attack.ranged.base}}] + [ {{ data.attack.ranged.bonus }} ]
+        </div>
+    </div>
     <ol class="items-list">
         <li class="flexrow item-header">
             <h2 class="centred">~ {{ localize 'HV.tabs.combat'}} ~</h2>
