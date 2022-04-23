@@ -138,9 +138,9 @@ export class HVActor extends Actor {
    * Update base & bonus for saves
    */
   _updateSaves(data: any) {
-    data.saves.bravery.bonus = data.scores.con.mod;
-    data.saves.deftness.bonus = data.scores.dex.mod;
-    data.saves.temptation.bonus = data.scores.wis.mod;
+    data.saves.bravery.bonus += data.scores.con.mod;
+    data.saves.deftness.bonus += data.scores.dex.mod;
+    data.saves.temptation.bonus += data.scores.wis.mod;
     const virtue = data.virtue > 14 ? 1 : 0;
 
     for (const saveType of Object.keys(data.saves)) {
@@ -202,13 +202,15 @@ export class HVActor extends Actor {
 
   _applyAttackBonus(change) {
     const { key, value } = change;
+    const melee = `${key}.melee.base`;
+    const ranged = `${key}.ranged.base`;
     const lvl = foundry.utils.getProperty(this.data, 'data.level') ?? 1;
+    const currentMelee = foundry.utils.getProperty(this.data, melee) ?? null;
+    const currentRanged = foundry.utils.getProperty(this.data, ranged) ?? null;
     if (!isNaN(lvl)) {
-      const melee = `${key}.melee.base`;
-      const ranged = `${key}.ranged.base`;
       const base = value === 'fighter' ? lvl : Math.floor((lvl * 2) / 3);
-      foundry.utils.setProperty(this.data, melee, base);
-      foundry.utils.setProperty(this.data, ranged, base);
+      foundry.utils.setProperty(this.data, melee, currentMelee + base);
+      foundry.utils.setProperty(this.data, ranged, currentRanged + base);
     }
   }
 
