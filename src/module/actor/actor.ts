@@ -166,7 +166,7 @@ export class HVActor extends Actor {
 
   applyCustomEffect(changeData) {
     const key = changeData.key;
-    let change: { type?: string; primary?: boolean } = {};
+    let change: { type?: string; primary?: boolean; value?: string } = {};
     try {
       change = changeData.value ? JSON.parse(changeData.value) : {};
     } catch (err) {
@@ -175,6 +175,9 @@ export class HVActor extends Actor {
     switch (change?.type) {
       case 'save':
         this._applySave({ key: key, primary: change.primary });
+        break;
+      case 'attack_bonus':
+        this._applyAttackBonus({ key: key, value: change.value });
         break;
     }
   }
@@ -194,6 +197,18 @@ export class HVActor extends Actor {
     log.debug('_applySave() | update is ', key, update);
     if (update !== '') {
       foundry.utils.setProperty(this.data, key, update);
+    }
+  }
+
+  _applyAttackBonus(change) {
+    const { key, value } = change;
+    const lvl = foundry.utils.getProperty(this.data, 'data.level') ?? 1;
+    if (!isNaN(lvl)) {
+      const melee = `${key}.melee.base`;
+      const ranged = `${key}.ranged.base`;
+      const base = value === 'fighter' ? lvl : Math.floor((lvl * 2) / 3);
+      foundry.utils.setProperty(this.data, melee, base);
+      foundry.utils.setProperty(this.data, ranged, base);
     }
   }
 

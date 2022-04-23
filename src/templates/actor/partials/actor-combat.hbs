@@ -2,16 +2,30 @@
 <div class="combat">
     <div class="combat-bonuses">
         <div class="combat-melee">
-             <h4 class="attribute-name" title="{{ localize 'HV.Melee' }}">
-                {{ localize 'HV.Melee' }}
-            </h4>
-            {{ data.attack.melee.mod }} = [ {{data.attack.melee.base}}] + [ {{ data.attack.melee.bonus }} ]
+            <div>
+                <h3 class="attribute-name" title="{{ localize 'HV.Melee' }}">
+                    {{ localize 'HV.Melee' }} :
+                </h3>
+            </div>
+            <div>
+                <h3 title="{{ localize 'HV.MeleeMod' }}">{{ plusminus data.attack.melee.mod }}</h3>
+            </div>
+            <div>
+                <h4> = [ {{ plusminus data.attack.melee.base}} ] + [ {{ plusminus data.attack.melee.bonus }} ]</h4>
+            </div>
         </div>
         <div class="combat-ranged">
-             <h4 class="attribute-name" title="{{ localize 'HV.Ranged' }}">
-                {{ localize 'HV.Ranged' }}
-            </h4>
-            {{ data.attack.ranged.mod }} = [ {{data.attack.ranged.base}}] + [ {{ data.attack.ranged.bonus }} ]
+            <div>
+                <h3 class="attribute-name" title="{{ localize 'HV.Ranged' }}">
+                    {{ localize 'HV.Ranged' }} :
+                </h3>
+            </div>
+            <div>
+                <h4 title="{{ localize 'HV.RangeMod' }}">{{ plusminus data.attack.ranged.mod }}</h4>
+            </div>
+            <div>
+                <h4> = [ {{ plusminus data.attack.ranged.base}} ] + [ {{ plusminus data.attack.ranged.bonus }} ]</h4>
+            </div>
         </div>
     </div>
     <ol class="items-list">

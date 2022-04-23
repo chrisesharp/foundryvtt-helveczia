@@ -362,3 +362,20 @@ nav.sheet-tabs.side {
     color: red;
   }
 }
+
+.sheet-body .tab .combat .combat-bonuses {
+  display: flex;
+  justify-content: space-evenly;
+
+  .combat-melee {
+    display: flex;
+    width: -webkit-fill-available;
+    justify-content: space-evenly;
+  }
+
+  .combat-ranged {
+    display: flex;
+    width: -webkit-fill-available;
+    justify-content: space-evenly;
+  }
+}
