@@ -5,7 +5,7 @@ import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 
 export class PeopleItem extends BaseItem {
-  static races: Record<string, unknown> = {
+  static races: { [key: string]: ((item: HVItem) => void) | null } = {
     German: null,
     French: PeopleItem.addFrenchEffects,
     Italian: null,
@@ -42,7 +42,8 @@ export class PeopleItem extends BaseItem {
     _userId: string,
   ) {
     if (item.parent) return;
-    if (PeopleItem.peoples[data.name]) this.peoples[data.name](item);
+    const func = PeopleItem.races[data.name];
+    if (func) func(item);
   }
 
   static peoples(): string[] {
@@ -50,7 +51,6 @@ export class PeopleItem extends BaseItem {
   }
 
   static async addFrenchEffects(item: HVItem) {
-    // console.log('Adding French effects');
     const armourEffect = { key: 'data.ac', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: '1' };
     const deftnessEffect = { key: 'data.saves.deftness.bonus', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: '1' };
     const effect = await ActiveEffect.create(

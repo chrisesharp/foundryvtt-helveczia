@@ -16,8 +16,10 @@ export class HVActorSheet extends ActorSheet {
     const data: any = {
       owner: this.actor.isOwner,
       initialized:
-        this.actor.getFlag('helveczia', 'abilities-initialized') && this.actor.getFlag('helveczia', 'initialized'),
+        this.actor.getFlag('helveczia', 'abilities-initialized') &&
+        this.actor.getFlag('helveczia', 'origins-initialized'),
       no_abilities: !this.actor.getFlag('helveczia', 'abilities-initialized'),
+      no_origins: !this.actor.getFlag('helveczia', 'origins-initialized'),
       options: this.options,
       editable: this.isEditable,
       isToken: this.token && !this.token.data.actorLink,
@@ -45,17 +47,17 @@ export class HVActorSheet extends ActorSheet {
     if (item) {
       switch (item.type) {
         case 'people':
-          this._removePeoples(item);
+          this._removePeoples();
           break;
         case 'class':
-          this._removeClasses(item);
+          this._removeClasses();
           break;
       }
     }
     return super._onDrop(event);
   }
 
-  async _removePeoples(item): Promise<void> {
+  async _removePeoples(): Promise<void> {
     const peoples = this.actor.items.filter((i) => i.type == 'people');
     await Promise.all(
       peoples.map((p) => {
@@ -63,10 +65,9 @@ export class HVActorSheet extends ActorSheet {
         return Promise.resolve();
       }),
     );
-    this.actor.update({ data: { people: item.name } });
   }
 
-  async _removeClasses(item): Promise<void> {
+  async _removeClasses(): Promise<void> {
     const classes = this.actor.items.filter((i) => i.type == 'class');
     await Promise.all(
       classes.map((p) => {
@@ -74,7 +75,6 @@ export class HVActorSheet extends ActorSheet {
         return Promise.resolve();
       }),
     );
-    this.actor.update({ data: { class: item.name } });
   }
 
   /** @override */
@@ -274,7 +274,27 @@ export class HVActorSheet extends ActorSheet {
             icon: '<i class="fas fa-check"></i>',
             label: game.i18n.localize('HV.Confirm'),
             callback: async () => {
-              // item.delete();
+              // TODO get items from compendium if necessary
+              const peopleName = $('#orig').val() as string;
+              const className = $('#class').val() as string;
+              const ppl = game.items?.filter((i) => i.name === peopleName && i.type === 'people');
+              const prof = game.items?.filter((i) => i.name === className && i.type === 'class');
+              if (ppl && prof) {
+                const p = ppl[0];
+                const c = prof[0];
+                // Flag the source GUID
+                if (p && !p.getFlag('core', 'sourceId')) {
+                  p.data.update({ 'flags.core.sourceId': p.uuid });
+                  p.prepareData();
+                }
+                if (c && !c.getFlag('core', 'sourceId')) {
+                  c.data.update({ 'flags.core.sourceId': c.uuid });
+                  c.prepareData();
+                }
+                await this.actor.createEmbeddedDocuments('Item', [p.toObject(), c.toObject()]);
+              }
+              await this.actor.setFlag('helveczia', 'origins-initialized', true);
+              this.actor.sheet?.render(true);
             },
           },
         },

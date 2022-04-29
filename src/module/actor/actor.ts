@@ -62,6 +62,8 @@ export class HVActor extends Actor {
     data.peoples = categories['people'];
     data.classes = categories['class'];
     data.deeds = categories['deed'];
+    data.people = data.peoples[0]?.name;
+    data.class = data.classes[0]?.name;
   }
 
   /**
