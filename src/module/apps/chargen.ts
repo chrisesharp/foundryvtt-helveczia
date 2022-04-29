@@ -63,6 +63,7 @@ export class HVCharacterCreator extends FormApplication {
       }),
     );
   }
+
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
@@ -85,11 +86,13 @@ export class HVCharacterCreator extends FormApplication {
 
   async _onSubmit(event: Event): Promise<any> {
     event.preventDefault();
-    const choiceA = $('#A').prop('checked');
-    const choice = choiceA ? this.scores.A : this.scores.B;
+    const choice = $('#A').prop('checked') ? this.scores.A : this.scores.B;
     const updateData = { scores: {} };
     Object.keys(choice).forEach((key) => {
-      updateData.scores[key] = { value: choice[key] };
+      updateData.scores[key] = {
+        value: choice[key],
+        base: choice[key],
+      };
     });
     super._onSubmit(event, {
       updateData: updateData,
@@ -119,7 +122,7 @@ export class HVCharacterCreator extends FormApplication {
    * @param formData {Object}   The object of validated form data with which to update the object
    * @private
    */
-  async _updateObject(event, formData) {
+  async _updateObject(event: Event, formData: object) {
     event.preventDefault();
     const actor = this.object as HVActor;
     // // Update the actor

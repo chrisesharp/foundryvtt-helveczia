@@ -37,22 +37,28 @@
         },
         "scores": {
           "str": {
-            "value": 10
+            "value": 10,
+            "base": 10
           },
           "dex": {
-            "value": 10
+            "value": 10,
+            "base": 10
           },
           "con": {
-            "value": 10
+            "value": 10,
+            "base": 10
           },
           "int": {
-            "value": 10
+            "value": 10,
+            "base": 10
           },
           "wis": {
-            "value": 10
+            "value": 10,
+            "base": 10
           },
           "cha": {
-            "value": 10
+            "value": 10,
+            "base": 10
           }
         },
         "wealth": {
