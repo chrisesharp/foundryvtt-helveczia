@@ -289,17 +289,17 @@ export class HVActor extends Actor {
         brightSight: 0,
         actorLink: true,
         disposition: disposition,
+        img: CONFIG.HV.DEFAULT_TOKEN,
       },
       { overwrite: false },
     );
 
-    // Overwrite specific token data (used for template actors)
     mergeObject(
-      data.token,
+      data,
       {
-        img: CONST.DEFAULT_TOKEN,
+        img: CONFIG.HV.DEFAULT_TOKEN,
       },
-      { overwrite: true },
+      { overwrite: false },
     );
     this.data.update(data);
   }

@@ -20,12 +20,12 @@ export class SkillItem extends BaseItem {
   }
 
   static async onCreate(
-    item: HVItem,
-    data: PropertiesToSource<ItemDataBaseProperties>,
-    options: DocumentModificationOptions,
-    userId: string,
+    _item: HVItem,
+    _data: PropertiesToSource<ItemDataBaseProperties>,
+    _options: DocumentModificationOptions,
+    _userId: string,
   ) {
-    console.log('in SkillItem.onCreate():', item, data, options, userId);
+    // console.log('in SkillItem.onCreate():', item, data, options, userId);
   }
 
   static async _onRollSkill(e, sheet) {

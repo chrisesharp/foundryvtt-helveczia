@@ -1,0 +1,13 @@
+<form autocomplete="off" onsubmit="event.preventDefault();">
+  <h2>Choose your Origin</h2>
+  <select id="orig" name="orig">
+    {{#each peoples as |people|}}
+      <option>{{people}}</option>
+    {{/each}}
+  </select>
+  <select id="class" name="class">
+    {{#each classes as |class|}}
+      <option>{{class}}</option>
+    {{/each}}
+  </select>
+</form>

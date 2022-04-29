@@ -1,11 +1,26 @@
 import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
-// import { EffectChangeData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/effectChangeData';
 import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
 import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 
 export class PeopleItem extends BaseItem {
+  static races: Record<string, unknown> = {
+    German: null,
+    French: PeopleItem.addFrenchEffects,
+    Italian: null,
+    Dutch: null,
+    Czech: null,
+    English: null,
+    Gypsy: null,
+    Hungarian: null,
+    Jewish: null,
+    Cossack: null,
+    Polish: null,
+    Spanish: null,
+    Swedish: null,
+  };
+
   static get documentName() {
     return 'people';
   }
@@ -27,41 +42,15 @@ export class PeopleItem extends BaseItem {
     _userId: string,
   ) {
     if (item.parent) return;
-    switch (data.name) {
-      case 'German':
-        break;
-      case 'French':
-        await PeopleItem.addFrenchEffects(item);
-        break;
-      case 'Italian':
-        break;
-      case 'Dutch':
-        break;
-      case 'Czech':
-        break;
-      case 'English':
-        break;
-      case 'Gypsy':
-        break;
-      case 'Hungarian':
-        break;
-      case 'Jew':
-        break;
-      case 'Cossack':
-        break;
-      case 'Pole':
-        break;
-      case 'Spaniard':
-        break;
-      case 'Swede':
-        break;
-      default:
-        break;
-    }
+    if (PeopleItem.peoples[data.name]) this.peoples[data.name](item);
+  }
+
+  static peoples(): string[] {
+    return Object.keys(PeopleItem.races);
   }
 
   static async addFrenchEffects(item: HVItem) {
-    console.log('Adding French effects');
+    // console.log('Adding French effects');
     const armourEffect = { key: 'data.ac', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: '1' };
     const deftnessEffect = { key: 'data.saves.deftness.bonus', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: '1' };
     const effect = await ActiveEffect.create(
@@ -76,8 +65,6 @@ export class PeopleItem extends BaseItem {
     );
     if (effect) {
       await item.updateEmbeddedDocuments('ActiveEffect', [{ _id: effect.id, effects: [effect] }]);
-    } else {
-      console.log('Effect was undefined!');
     }
     return item.update();
   }

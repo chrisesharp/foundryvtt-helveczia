@@ -1,5 +1,7 @@
 import { HVCharacterCreator } from '../apps/chargen';
 import { onManageActiveEffect, prepareActiveEffectCategories } from '../effects';
+import { ClassItem } from '../items/class/class-item';
+import { PeopleItem } from '../items/people/people-item';
 
 export class HVActorSheet extends ActorSheet {
   /** @override */
@@ -13,7 +15,9 @@ export class HVActorSheet extends ActorSheet {
     const actorData = baseData.actor;
     const data: any = {
       owner: this.actor.isOwner,
-      initialized: this.actor.getFlag('helveczia', 'initialized'),
+      initialized:
+        this.actor.getFlag('helveczia', 'abilities-initialized') && this.actor.getFlag('helveczia', 'initialized'),
+      no_abilities: !this.actor.getFlag('helveczia', 'abilities-initialized'),
       options: this.options,
       editable: this.isEditable,
       isToken: this.token && !this.token.data.actorLink,
@@ -88,6 +92,7 @@ export class HVActorSheet extends ActorSheet {
 
     // Character generation to initialize
     html.find('.generate-abilities').click(this._generateAbilities.bind(this));
+    html.find('.choose-race-class').click(this._generateRaceClass.bind(this));
     // lock sheet
     // html.find('#padlock').click(this._onToggleLock.bind(this));
 
@@ -244,5 +249,39 @@ export class HVActorSheet extends ActorSheet {
       top: (this.position.top ?? 0) + 40,
       left: (this.position.left ?? 0) + ((this.position.width ?? 0) - 400) / 2,
     }).render(true);
+  }
+
+  async _generateRaceClass(event) {
+    event.preventDefault();
+    const templateData = {
+      peoples: PeopleItem.peoples(),
+      classes: ClassItem.classes(),
+    };
+
+    const content = await renderTemplate('systems/helveczia/templates/actor/dialogs/choose-origin.hbs', templateData);
+    new Dialog(
+      {
+        title: `${game.i18n.localize('Choose Origin and Class')}`,
+        content: content,
+        default: 'submit',
+        buttons: {
+          cancel: {
+            icon: '<i class="fas fa-times"></i>',
+            label: game.i18n.localize('HV.Cancel'),
+            callback: () => null,
+          },
+          submit: {
+            icon: '<i class="fas fa-check"></i>',
+            label: game.i18n.localize('HV.Confirm'),
+            callback: async () => {
+              // item.delete();
+            },
+          },
+        },
+      },
+      {
+        classes: ['helveczia', 'helveczia-dialog'],
+      },
+    ).render(true);
   }
 }

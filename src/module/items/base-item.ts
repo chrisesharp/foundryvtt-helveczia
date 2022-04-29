@@ -43,16 +43,16 @@ export abstract class BaseItem {
    * Allows every item to register its own listeners for rendered actor sheets.
    * Implements base listeners for adding, configuring and deleting embedded items.
    */
-  static activateActorSheetListeners(html, sheet) {
+  static activateActorSheetListeners(_html, _sheet) {
     if (!this.documentName) {
       throw new Error(
         'A subclass of the BaseItem must provide an documentName field or implement their own _onItemAdd() method.',
       );
     }
 
-    html.find(`.fatex-js-${this.documentName}-add`).click((e) => this._onItemAdd.call(this, e, sheet));
-    html.find(`.fatex-js-${this.documentName}-settings`).click((e) => this._onItemSettings.call(this, e, sheet));
-    html.find(`.fatex-js-${this.documentName}-delete`).click((e) => this._onItemDelete.call(this, e, sheet));
+    // html.find(`.fatex-js-${this.documentName}-add`).click((e) => this._onItemAdd.call(this, e, sheet));
+    // html.find(`.fatex-js-${this.documentName}-settings`).click((e) => this._onItemSettings.call(this, e, sheet));
+    // html.find(`.fatex-js-${this.documentName}-delete`).click((e) => this._onItemDelete.call(this, e, sheet));
   }
 
   /**
@@ -135,12 +135,12 @@ export abstract class BaseItem {
         buttons: {
           cancel: {
             icon: '<i class="fas fa-times"></i>',
-            label: game.i18n.localize('FAx.Dialog.Cancel'),
+            label: game.i18n.localize('HV.Cancel'),
             callback: () => null,
           },
           submit: {
             icon: '<i class="fas fa-check"></i>',
-            label: game.i18n.localize('FAx.Dialog.Confirm'),
+            label: game.i18n.localize('HV.Confirm'),
             callback: async () => {
               item.delete();
             },

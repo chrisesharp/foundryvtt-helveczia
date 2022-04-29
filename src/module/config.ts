@@ -8,8 +8,10 @@ import { ArmourItem } from './items/armour/armour-item';
 import { WeaponItem } from './items/weapon/weapon-item';
 import { PossessionItem } from './items/possesion/possession-item';
 import { HVActor } from './actor/actor';
+import { HVCharacterCreator } from './apps/chargen';
 
 export interface HelvecziaConfig {
+  DEFAULT_TOKEN: string;
   actorClasses: {
     [key: string]: typeof HVActor;
     [key: number]: typeof HVActor;
@@ -32,10 +34,8 @@ export interface HelvecziaConfig {
   };
 
   applications: {
-    //     templatePicker: TemplateActorPicker | null;
-    //     templateSettings: TemplateActorSettings | null;
-    //     [key: string]: Application | null;
-    //     [key: number]: Application | null;
+    peoplePicker: HVCharacterCreator | null;
+    // classPicker: ClassPicker | null;
   };
 
   showEffects: boolean;
@@ -48,6 +48,7 @@ export interface HelvecziaConfig {
 }
 
 export const HV: HelvecziaConfig = {
+  DEFAULT_TOKEN: 'systems/helveczia/assets/man.png',
   showEffects: false,
   actorClasses: {
     character: HVActor,
@@ -74,8 +75,8 @@ export const HV: HelvecziaConfig = {
     },
   },
   applications: {
-    templateSettings: null,
-    templatePicker: null,
+    peoplePicker: null,
+    // classPicker: ClassPicker,
   },
 
   XPLevels: {

@@ -127,7 +127,7 @@ export class HVCharacterCreator extends FormApplication {
     const actor = this.object as HVActor;
     // // Update the actor
     await actor.update({ data: formData });
-    await actor.setFlag('helveczia', 'initialized', true);
+    await actor.setFlag('helveczia', 'abilities-initialized', true);
 
     // // Re-draw the updated sheet
     actor?.sheet?.render(true);

@@ -15,6 +15,7 @@
   "HV.Add": "Add",
   "HV.Delete": "Delete",
   "HV.Cancel": "Cancel",
+  "HV.Confirm": "Confirm",
   "HV.Roll": "Roll",
   "HV.Success": "Success",
   "HV.Failure": "Failure",
