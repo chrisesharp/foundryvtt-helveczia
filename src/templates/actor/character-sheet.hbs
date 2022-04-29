@@ -4,6 +4,7 @@
     <header class="sheet-header">
       {{> "systems/helveczia/templates/actor/partials/actor-header.hbs"}}
     </header>
+    {{#if initialized }}
 
     {{!-- Sheet Tab Navigation --}}
     {{!-- <nav class="sheet-tabs tabs side character" data-group="primary"> --}}
@@ -54,5 +55,6 @@
             </div>
         </div>
     </section>
+    {{/if}}
 </form>
 

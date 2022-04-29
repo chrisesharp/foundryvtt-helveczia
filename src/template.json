@@ -64,7 +64,7 @@
     },
     "character": {
       "templates": ["base"],
-      "experience": 0
+      "experience": 2000
     },
     "npc": {
       "templates": ["base"],

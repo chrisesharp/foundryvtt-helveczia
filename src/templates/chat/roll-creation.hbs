@@ -1,0 +1,18 @@
+<section class="helveczia chat-card">
+    <div class="helveczia chat-block">
+        <div class="flexrow chat-header">
+            <div class="chat-title"><h2>{{title}}</h2></div>
+            <div class="chat-img" style="background-image:url('{{actor.img}}')"></div>
+        </div>
+        <div class="attribute-group flexrow">
+            <ol class="attributes">
+                {{#each scores as |val ability|}}
+                <li class="attribute ability-score">
+                    <h3 class="attribute-name">{{ ability }}</h3>
+                    <h3 class="attribute-name">{{ val }}</h3>
+                </li>
+                {{/each}}
+            </ol>
+        </div>
+    </div>
+</section>

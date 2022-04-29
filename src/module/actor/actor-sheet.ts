@@ -1,3 +1,4 @@
+import { HVCharacterCreator } from '../apps/chargen';
 import { onManageActiveEffect, prepareActiveEffectCategories } from '../effects';
 
 export class HVActorSheet extends ActorSheet {
@@ -10,16 +11,15 @@ export class HVActorSheet extends ActorSheet {
   async getData() {
     const baseData = await super.getData();
     const actorData = baseData.actor;
-
     const data: any = {
       owner: this.actor.isOwner,
+      initialized: this.actor.getFlag('helveczia', 'initialized'),
       options: this.options,
       editable: this.isEditable,
       isToken: this.token && !this.token.data.actorLink,
       config: CONFIG.HV,
       user: game.user,
     };
-
     // Add actor, actor data and item
     data.actor = actorData.data;
     data.data = data.actor.data;
@@ -86,6 +86,8 @@ export class HVActorSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
+    // Character generation to initialize
+    html.find('.generate-abilities').click(this._generateAbilities.bind(this));
     // lock sheet
     // html.find('#padlock').click(this._onToggleLock.bind(this));
 
@@ -234,5 +236,13 @@ export class HVActorSheet extends ActorSheet {
       div.slideDown(200);
     }
     li.toggleClass('expanded');
+  }
+
+  _generateAbilities(event) {
+    event.preventDefault();
+    new HVCharacterCreator(this.actor, {
+      top: (this.position.top ?? 0) + 40,
+      left: (this.position.left ?? 0) + ((this.position.width ?? 0) - 400) / 2,
+    }).render(true);
   }
 }

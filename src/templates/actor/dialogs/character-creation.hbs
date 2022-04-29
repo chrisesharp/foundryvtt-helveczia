@@ -1,0 +1,51 @@
+<form autocomplete="off" onsubmit="event.preventDefault();">
+  <h2>Choose one</h2>
+  <div style="display:flex; justify-content:space-evenly;">
+    <div style="display:flex; justify-content:space-evenly;">
+      <h2>A</h2>
+      <input type="radio" id="A" name="choice" value="A" checked>
+    </div>
+    <div style="display:flex; justify-content:space-evenly;">
+      <h2>B</h2>
+      <input type="radio" id="B" name="choice" value="B" >
+    </div>
+  </div>
+  <div class="flexrow">
+    <div class="attribute-list">
+      {{#each scores.A as |score id| }}
+      <div data-score="{{id}}" class="form-group">
+        <label>{{id}}</label>
+        <div class="form-fields">
+          <input
+            class="score-value"
+            name="scores.{{id}}"
+            type="text"
+            value="{{score}}"
+            data-dtype="Number"
+          />
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    <div class="attribute-list">
+      {{#each scores.B as |score id| }}
+      <div data-score="{{id}}" class="form-group">
+        <div class="form-fields">
+          <input
+            class="score-value"
+            name="scores.{{id}}"
+            type="text"
+            value="{{score}}"
+            data-dtype="Number"
+          />
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  <footer class="sheet-footer">
+    <button class="choice" type="button">
+      <i class="fas fa-save"></i>{{localize "Choose"}}
+    </button>
+  </footer>
+</form>

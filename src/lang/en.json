@@ -9,6 +9,8 @@
   "HV.tabs.deeds": "Deeds",
   "HV.tabs.notes": "Notes",
   "HV.tabs.effects": "Effects",
+  "HV.apps.chargen": "Character Generator",
+  "HV.apps.scores": "{actor} has chosen...",
   "HV.Edit": "Edit",
   "HV.Add": "Add",
   "HV.Delete": "Delete",

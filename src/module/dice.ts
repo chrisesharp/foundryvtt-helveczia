@@ -166,7 +166,7 @@ export class HVDice {
     title,
     flavour,
     speaker,
-  }: HVRollData) {
+  }: HVRollData): Promise<Evaluated<Roll<any>>> {
     let rolled = false;
     const template = `${templatePath}/roll-dialog.hbs`;
     const dialogData = {
@@ -219,7 +219,11 @@ export class HVDice {
         buttons: buttons,
         default: 'ok',
         close: () => {
-          resolve(rolled ? roll : false);
+          if (rolled) {
+            resolve(roll);
+          } else {
+            PromiseRejectionEvent;
+          }
         },
       }).render(true);
     });

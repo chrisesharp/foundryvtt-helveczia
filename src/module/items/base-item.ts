@@ -1,9 +1,26 @@
+import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
+import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
+import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
 import { Logger } from '../logger';
+import { HVItem } from './item';
 
 const log = new Logger();
 
 export abstract class BaseItem {
   static documentName = '';
+
+  /**
+   * Called by HVItem in _onCreate()
+   * @param data
+   * @param options
+   * @param userId
+   */
+  static async onCreate(
+    _item: HVItem,
+    _data: PropertiesToSource<ItemDataBaseProperties>,
+    _options: DocumentModificationOptions,
+    _userId: string,
+  ): Promise<void> {}
 
   /**
    * Allows each item to prepare its data before its rendered.

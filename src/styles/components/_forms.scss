@@ -93,6 +93,7 @@ nav.sheet-tabs.side {
   }
 }
 
+.helveczia.chat-block,
 .sheet-body,
 .actor-computed {
   .attributes {
@@ -237,77 +238,15 @@ nav.sheet-tabs.side {
       }
     }
   }
+  .scores-list {
+    padding: 0;
+    list-style: none;
+  }
 }
 
 .helveczia.chat-card {
   font-style: normal;
   font-size: 12px;
-
-  .card-header {
-    padding: 3px 0;
-    border-top: 2px groove #fff;
-    border-bottom: 2px groove #fff;
-
-    img {
-      flex: 0 0 36px;
-      margin-right: 5px;
-      border: none;
-    }
-
-    h3 {
-      flex: 1;
-      margin: 0;
-      line-height: 36px;
-      color: $colorOlive;
-      &:hover {
-        color: #111;
-      }
-    }
-  }
-
-  .card-content {
-    margin: 5px 0;
-    .treasure-list {
-      padding: 0;
-      list-style: none;
-      .treasure {
-        img {
-          flex: 0 0 36px;
-          border: none;
-        }
-        div {
-          text-indent: 10px;
-          font-size: 14px;
-          font-weight: bold;
-        }
-        line-height: 36px;
-      }
-      .sub {
-        padding-left: 25px;
-        line-height: 28px;
-        img {
-          flex: 0 0 28px;
-          border: none;
-        }
-        div {
-          text-indent: 10px;
-          font-size: 14px;
-        }
-      }
-    }
-    h3 {
-      font-size: 12px;
-      margin: 0;
-      font-weight: bold;
-    }
-
-    > * {
-      -webkit-user-select: text;
-      -moz-user-select: text;
-      -ms-user-select: text;
-      user-select: text;
-    }
-  }
 
   .card-buttons {
     margin: 5px 0;
