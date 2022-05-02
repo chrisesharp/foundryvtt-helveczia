@@ -7,7 +7,7 @@ import { HVItem } from '../item';
 export class PeopleItem extends BaseItem {
   static races: { [key: string]: ((item: HVItem) => void) | null } = {
     German: null,
-    French: PeopleItem.addFrenchEffects,
+    French: null,
     Italian: null,
     Dutch: null,
     Czech: null,
@@ -50,22 +50,22 @@ export class PeopleItem extends BaseItem {
     return Object.keys(PeopleItem.races);
   }
 
-  static async addFrenchEffects(item: HVItem) {
-    const armourEffect = { key: 'data.ac', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: '1' };
-    const deftnessEffect = { key: 'data.saves.deftness.bonus', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: '1' };
-    const effect = await ActiveEffect.create(
-      {
-        label: 'Finesse',
-        icon: 'icons/svg/aura.svg',
-        origin: item.uuid,
-        transfer: true,
-        changes: [armourEffect, deftnessEffect],
-      },
-      { parent: item },
-    );
-    if (effect) {
-      await item.updateEmbeddedDocuments('ActiveEffect', [{ _id: effect.id, effects: [effect] }]);
-    }
-    return item.update();
-  }
+  // static async addFrenchEffects(item: HVItem) {
+  //   const armourEffect = { key: 'data.ac', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: '1' };
+  //   const deftnessEffect = { key: 'data.saves.deftness.bonus', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: '1' };
+  //   const effect = await ActiveEffect.create(
+  //     {
+  //       label: 'Finesse',
+  //       icon: 'icons/svg/aura.svg',
+  //       origin: item.uuid,
+  //       transfer: true,
+  //       changes: [armourEffect, deftnessEffect],
+  //     },
+  //     { parent: item },
+  //   );
+  //   if (effect) {
+  //     await item.updateEmbeddedDocuments('ActiveEffect', [{ _id: effect.id, effects: [effect] }]);
+  //   }
+  //   return item.update();
+  // }
 }

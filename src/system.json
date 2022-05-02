@@ -16,7 +16,15 @@
   "scripts": [],
   "esmodules": ["module/helveczia.js"],
   "styles": ["styles/helveczia.css"],
-  "packs": [],
+  "packs": [
+    {
+      "name": "peoples",
+      "label": "Peoples",
+      "package": "helveczia",
+      "path": "packs/peoples.db",
+      "type": "Item"
+    }
+  ],
   "dependencies": [],
   "languages": [
     {

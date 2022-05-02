@@ -132,4 +132,27 @@ export class HVCharacterCreator extends FormApplication {
     // // Re-draw the updated sheet
     actor?.sheet?.render(true);
   }
+
+  static async setOrigins(actor, peopleName, className) {
+    const professions = game.packs.find((p) => p.metadata.name == 'classes');
+    const peoples = game.packs.find((p) => p.metadata.name == 'peoples');
+    const p = await HVCharacterCreator.getDocument(peopleName, peoples);
+    const c = await HVCharacterCreator.getDocument(className, professions);
+    if (p && c) await actor.createEmbeddedDocuments('Item', [p.toObject(), c.toObject()]);
+    await actor.setFlag('helveczia', 'origins-initialized', true);
+    actor.sheet?.render(true);
+  }
+
+  static async getDocument(name, pack) {
+    const index = await pack?.getIndex();
+    const pId = index?.find((p) => p.name === name)?._id;
+    if (pId) {
+      return pack?.getDocument(pId);
+    } else {
+      const items = game.items?.filter((i) => i.name === name);
+      if (items?.length) {
+        return items[0];
+      }
+    }
+  }
 }

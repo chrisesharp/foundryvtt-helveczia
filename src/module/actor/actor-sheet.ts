@@ -274,27 +274,9 @@ export class HVActorSheet extends ActorSheet {
             icon: '<i class="fas fa-check"></i>',
             label: game.i18n.localize('HV.Confirm'),
             callback: async () => {
-              // TODO get items from compendium if necessary
-              const peopleName = $('#orig').val() as string;
-              const className = $('#class').val() as string;
-              const ppl = game.items?.filter((i) => i.name === peopleName && i.type === 'people');
-              const prof = game.items?.filter((i) => i.name === className && i.type === 'class');
-              if (ppl && prof) {
-                const p = ppl[0];
-                const c = prof[0];
-                // Flag the source GUID
-                if (p && !p.getFlag('core', 'sourceId')) {
-                  p.data.update({ 'flags.core.sourceId': p.uuid });
-                  p.prepareData();
-                }
-                if (c && !c.getFlag('core', 'sourceId')) {
-                  c.data.update({ 'flags.core.sourceId': c.uuid });
-                  c.prepareData();
-                }
-                await this.actor.createEmbeddedDocuments('Item', [p.toObject(), c.toObject()]);
-              }
-              await this.actor.setFlag('helveczia', 'origins-initialized', true);
-              this.actor.sheet?.render(true);
+              const people = $('#orig').val() as string;
+              const profession = $('#class').val() as string;
+              HVCharacterCreator.setOrigins(this.actor, people, profession);
             },
           },
         },
