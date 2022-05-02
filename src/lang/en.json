@@ -11,6 +11,8 @@
   "HV.tabs.effects": "Effects",
   "HV.apps.chargen": "Character Generator",
   "HV.apps.scores": "{actor} has chosen...",
+  "HV.apps.summaryWealth": "With a virtue of {virtue} and {wealth} Thalers to their name.",
+  "HV.apps.summaryNoble": "With a virtue of {virtue} and a noble endowment of {wealth} Thalers.",
   "HV.Edit": "Edit",
   "HV.Add": "Add",
   "HV.Delete": "Delete",

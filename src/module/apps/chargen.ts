@@ -57,7 +57,7 @@ export class HVCharacterCreator extends FormApplication {
       options.map(async (key) => {
         Promise.all(
           stats.map(async (ability) => {
-            this.scores[key][ability] = (await this.rollScore()).result;
+            this.scores[key][ability] = (await this.rollAbility()).result;
           }),
         );
       }),
@@ -73,8 +73,20 @@ export class HVCharacterCreator extends FormApplication {
     });
   }
 
-  rollScore(): Promise<Evaluated<Roll<any>>> {
-    const rollParts = ['4d6kh3'];
+  rollAbility(): Promise<Evaluated<Roll<any>>> {
+    return this.rollScore(['4d6kh3']);
+  }
+
+  rollVirtue(): Promise<Evaluated<Roll<any>>> {
+    return this.rollScore(['3d6']);
+  }
+
+  async rollWealth(): Promise<Evaluated<Roll<any>>> {
+    const wealthRoll = await this.rollScore(['2d6']);
+    return wealthRoll._total < 12 ? wealthRoll : this.rollScore(['2d6*100']);
+  }
+
+  rollScore(rollParts): Promise<Evaluated<Roll<any>>> {
     const data = {
       roll: {
         type: 'result',
@@ -87,7 +99,17 @@ export class HVCharacterCreator extends FormApplication {
   async _onSubmit(event: Event): Promise<any> {
     event.preventDefault();
     const choice = $('#A').prop('checked') ? this.scores.A : this.scores.B;
-    const updateData = { scores: {} };
+    const wealth = (await this.rollWealth()).total;
+    const virtue = (await this.rollVirtue()).total;
+    const updateData = {
+      scores: {},
+      wealth: {
+        th: wealth,
+        pf: 0,
+        gr: 0,
+      },
+      virtue: virtue,
+    };
     Object.keys(choice).forEach((key) => {
       updateData.scores[key] = {
         value: choice[key],
@@ -101,9 +123,12 @@ export class HVCharacterCreator extends FormApplication {
     });
     const speaker = ChatMessage.getSpeaker({ actor: this.object as HVActor });
     const actor = game.actors?.get(speaker.actor ?? '');
+    const msg = wealth < 12 ? 'HV.apps.summaryWealth' : 'HV.apps.summaryNoble';
+    const summary = game.i18n.format(msg, { virtue: virtue, wealth: wealth });
     const templateData = {
       config: CONFIG.HV,
       scores: choice,
+      summary: summary,
       actor: actor,
       title: game.i18n.format('HV.apps.scores', { actor: actor?.name }),
     };
