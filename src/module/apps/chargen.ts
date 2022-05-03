@@ -81,6 +81,21 @@ export class HVCharacterCreator extends FormApplication {
     return this.rollScore(['3d6']);
   }
 
+  async rollHitPoints(actorData) {
+    const data = actorData.data;
+    const level = data.level;
+    const hd = data.hp.hd;
+    const con = data.scores.con.base;
+    const rollParts = `${level - 1}d${hd}+${hd}+${con}`;
+    const roll = await this.rollScore([rollParts]);
+    console.log('hitpoints:', rollParts, roll.total);
+    return {
+      max: roll.total,
+      value: roll.total,
+      hd: hd,
+    };
+  }
+
   async rollWealth(): Promise<Evaluated<Roll<any>>> {
     const wealthRoll = await this.rollScore(['2d6']);
     return wealthRoll._total < 12 ? wealthRoll : this.rollScore(['2d6*100']);
@@ -98,9 +113,11 @@ export class HVCharacterCreator extends FormApplication {
 
   async _onSubmit(event: Event): Promise<any> {
     event.preventDefault();
+    const actor = this.object as HVActor;
     const choice = $('#A').prop('checked') ? this.scores.A : this.scores.B;
     const wealth = (await this.rollWealth()).total;
     const virtue = (await this.rollVirtue()).total;
+    const hitpoints = await this.rollHitPoints(actor.data);
     const updateData = {
       scores: {},
       wealth: {
@@ -109,6 +126,7 @@ export class HVCharacterCreator extends FormApplication {
         gr: 0,
       },
       virtue: virtue,
+      hp: hitpoints,
     };
     Object.keys(choice).forEach((key) => {
       updateData.scores[key] = {
@@ -121,8 +139,8 @@ export class HVCharacterCreator extends FormApplication {
       preventClose: false,
       preventRender: false,
     });
-    const speaker = ChatMessage.getSpeaker({ actor: this.object as HVActor });
-    const actor = game.actors?.get(speaker.actor ?? '');
+
+    const speaker = ChatMessage.getSpeaker({ actor: actor });
     const msg = wealth < 12 ? 'HV.apps.summaryWealth' : 'HV.apps.summaryNoble';
     const summary = game.i18n.format(msg, { virtue: virtue, wealth: wealth });
     const templateData = {

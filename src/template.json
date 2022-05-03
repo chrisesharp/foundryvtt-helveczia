@@ -5,7 +5,8 @@
       "base": {
         "hp": {
           "value": 1,
-          "max": 1
+          "max": 1,
+          "hd": 8
         },
         "level": 1,
         "people": "",

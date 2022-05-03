@@ -5,9 +5,9 @@ export class PeopleSheet extends HVItemSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ['helveczia', 'sheet', 'item'],
-      width: 350,
-      height: 375,
-      resizable: false,
+      width: 375,
+      height: 650,
+      resizable: true,
       tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'editor' }],
     });
   }

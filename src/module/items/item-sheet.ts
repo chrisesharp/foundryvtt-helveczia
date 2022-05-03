@@ -4,9 +4,9 @@ export class HVItemSheet extends ItemSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ['helveczia', 'sheet', 'item'],
-      width: 350,
-      height: 375,
-      resizable: false,
+      width: 400,
+      height: 510,
+      resizable: true,
     });
   }
 

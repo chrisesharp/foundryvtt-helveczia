@@ -130,8 +130,8 @@ export class HVActor extends Actor {
    */
 
   _updateAttackMods(data: any): void {
-    data.attack.melee.bonus = data.scores.str.mod;
-    data.attack.ranged.bonus = data.scores.dex.mod;
+    data.attack.melee.bonus += data.scores.str.mod;
+    data.attack.ranged.bonus += data.scores.dex.mod;
     data.attack.melee.mod = data.attack.melee.base + data.attack.melee.bonus;
     data.attack.ranged.mod = data.attack.ranged.base + data.attack.ranged.bonus;
   }
@@ -179,8 +179,13 @@ export class HVActor extends Actor {
         this._applySave({ key: key, primary: change.primary });
         break;
       case 'attack_bonus':
-        this._applyAttackBonus({ key: key, value: change.value });
+        this._applyAttackBase({ key: key, value: change.value });
         break;
+      case 'random_save':
+        this._applyRandomSaveBonus({ key: key, value: change.value });
+        break;
+      case 'czech_prowess':
+        if (this.isFighter() || this.isVagabond()) this._applyBonus({ key: key, value: change.value });
     }
   }
 
@@ -202,18 +207,29 @@ export class HVActor extends Actor {
     }
   }
 
-  _applyAttackBonus(change) {
+  _applyAttackBase(change) {
     const { key, value } = change;
     const melee = `${key}.melee.base`;
     const ranged = `${key}.ranged.base`;
     const lvl = foundry.utils.getProperty(this.data, 'data.level') ?? 1;
-    const currentMelee = foundry.utils.getProperty(this.data, melee) ?? null;
-    const currentRanged = foundry.utils.getProperty(this.data, ranged) ?? null;
+    const currentMelee = foundry.utils.getProperty(this.data, melee) ?? 0;
+    const currentRanged = foundry.utils.getProperty(this.data, ranged) ?? 0;
     if (!isNaN(lvl)) {
       const base = value === 'fighter' ? lvl : Math.floor((lvl * 2) / 3);
       foundry.utils.setProperty(this.data, melee, currentMelee + base);
       foundry.utils.setProperty(this.data, ranged, currentRanged + base);
     }
+  }
+
+  _applyBonus(change) {
+    const { key, value } = change;
+    const currentBonus = foundry.utils.getProperty(this.data, key) ?? 0;
+    foundry.utils.setProperty(this.data, key, currentBonus + parseInt(value));
+  }
+
+  _applyRandomSaveBonus(change) {
+    // TODO implement Hungarian Fate
+    console.log('Apply random save bonus:', change);
   }
 
   async rollCheck(data, opponent): Promise<any> {
@@ -304,6 +320,18 @@ export class HVActor extends Actor {
       { overwrite: false },
     );
     this.data.update(data);
+  }
+
+  isFighter(): boolean {
+    const actorData = this.data;
+    const fighter = actorData.items.find((i) => i.type === 'class' && i.name === 'Fighter');
+    return fighter !== undefined;
+  }
+
+  isVagabond(): boolean {
+    const actorData = this.data;
+    const fighter = actorData.items.find((i) => i.type === 'class' && i.name === 'Vagabond');
+    return fighter !== undefined;
   }
 }
 
