@@ -95,7 +95,9 @@
       "templates": ["base"]
     },
     "skill": {
-      "templates": ["base"]
+      "templates": ["base"],
+      "ability": ["str", "int", "wis", "con", "dex", "cha"],
+      "type": ["craft", "science", "practical", "vagabond", "esoteric"]
     },
     "armour": {
       "templates": ["base"]
