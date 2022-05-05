@@ -5,15 +5,12 @@
       </div>
       <div class="header-fields">
           <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
-          <div class="grid grid-2col">
-            <div class="resource">
-              <label class="resource-label">{{ localize 'HV.item.quantity'}}</label>
-                <input type="text" name="data.quantity" value="{{data.quantity}}" data-dtype="Number"/>
-            </div>
-            <div class="resource">
-              <label class="resource-label">{{ localize 'HV.item.weight'}}</label>
-                <input type="text" name="data.weight" value="{{data.weight}}" data-dtype="Number"/>
-            </div>
+          <div class="form-group">
+            <h2 class="cost">Cost: </h2>
+            <input name="data.cost.value" type="text" value="{{data.cost.value}}">
+            <select name="data.cost.coin" type="text">
+             {{selectOptions coins selected=data.cost.coin}}
+            </select>
           </div>
       </div>
     </header>
@@ -32,7 +29,7 @@
         </div>
       {{/if }}
       {{!-- Description Tab --}}
-      <div class="tab editor item-editor" data-group="primary" data-tab="editor">
+      <div class="tab editor " data-group="primary" data-tab="editor">
             {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
       </div>
     </section>

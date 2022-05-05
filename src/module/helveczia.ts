@@ -28,6 +28,7 @@ import { PeopleSheet } from './items/people/people-sheet';
 
 import { HV } from './config';
 import { registerHandlebarHelpers } from './handlebar-helpers';
+// import { HVItemSheetConfig } from './items/item-config';
 
 const log = new Logger();
 
@@ -42,6 +43,7 @@ Hooks.once('init', async () => {
   CONFIG.HV = HV;
   CONFIG.Actor.documentClass = HVActor;
   CONFIG.Item.documentClass = HVItem;
+
   CONFIG.HV.showEffects = true;
 
   // Register custom system settings
@@ -55,6 +57,7 @@ Hooks.once('init', async () => {
 
   // Register custom sheets (if any)
   // Register sheet application classes
+
   Actors.unregisterSheet('core', ActorSheet);
   Items.unregisterSheet('core', ItemSheet);
   Actors.registerSheet('helveczia', HVCharacterSheet, { types: ['character', 'npc'], makeDefault: true });
@@ -65,6 +68,7 @@ Hooks.once('init', async () => {
   Items.registerSheet('helveczia', ClassSheet, { types: ['class'] });
   Items.registerSheet('helveczia', DeedSheet, { types: ['deed'] });
   Items.registerSheet('helveczia', PeopleSheet, { types: ['people'] });
+  // DocumentSheetConfig.registerSheet(DocumentSheetConfig, "helveczia", HVItemSheetConfig, {makeDefault: true});
 });
 
 // Setup system
@@ -82,3 +86,12 @@ Hooks.once('ready', async () => {
 Hooks.on('applyActiveEffect', async (actor, changeData) => {
   actor.applyCustomEffect(changeData);
 });
+
+// Hooks.on("renderDialog", (dialog, html) => {
+// Array.from(html.find("#document-create option")).forEach(i => {
+//     if (i.value == "your-item-type")
+//     {
+//         i.remove()
+//     }
+// })
+// })

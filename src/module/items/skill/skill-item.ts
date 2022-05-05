@@ -38,4 +38,15 @@ export class SkillItem extends BaseItem {
       // await this.rollSkill(sheet, skill);
     }
   }
+
+  /** @override */
+  static getSheetData(sheetData, _item) {
+    sheetData.skillTypes = CONFIG.HV.skillTypes;
+    const abilities = {};
+    CONFIG.HV.abilities.forEach((a) => {
+      abilities[a] = `HV.scores.${a}.long`;
+    });
+    sheetData.abilities = abilities;
+    return sheetData;
+  }
 }

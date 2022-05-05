@@ -4,25 +4,30 @@
         <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
       </div>
       <div class="header-fields">
-          <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+        <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+          {{#if isGM }}
+            <select name="data.subtype" type="text">
+            {{selectOptions skillTypes selected=data.subtype localize=true}}
+            </select> {{ localize 'HV.skill' }}
+            <select name="data.ability" type="text">
+            {{selectOptions abilities selected=data.ability localize=true}}
+            </select> {{ localize 'HV.ability' }}
+          {{else}}
+          <h3>{{ typeOfSkill data.subtype }}, {{ usingAbility data.ability }}</h3>
+          {{/if}}
       </div>
     </header>
-    {{!-- Sheet Tab Navigation --}}
-    <nav class="sheet-tabs tabs" data-group="primary">
-      <a class="item" data-tab="editor">{{ localize 'HV.tabs.notes'}}</a>
-      {{#if config.showEffects }}
-      <a class="item" data-tab="effects">{{ localize 'HV.tabs.effects'}}</a>
-      {{/if}}
-    </nav>
     {{!-- Sheet Body --}}
     <section class="sheet-body">
-      {{#if config.showEffects}}
-        <div class="tab effects" data-group="primary" data-tab="effects">
-            {{> "systems/helveczia/templates/item/partials/item-effects.hbs"}}
-        </div>
-      {{/if }}
+      {{!-- Sheet Tab Navigation --}}
+      <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="editor">{{ localize 'HV.tabs.notes'}}</a>
+        {{#if config.showEffects }}
+        <a class="item" data-tab="effects">{{ localize 'HV.tabs.effects'}}</a>
+        {{/if}}
+      </nav>
       {{!-- Description Tab --}}
-      <div class="tab editor item-editor" data-group="primary" data-tab="editor">
+      <div class="tab editor " data-group="primary" data-tab="editor">
             {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
       </div>
     </section>

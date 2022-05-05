@@ -27,4 +27,10 @@ export class ArmourItem extends BaseItem {
   ) {
     // console.log('in ArmourItem.onCreate():', item, data, options, userId);
   }
+
+  /** @override */
+  static getSheetData(sheetData, _item) {
+    sheetData.coins = CONFIG.HV.coins;
+    return sheetData;
+  }
 }

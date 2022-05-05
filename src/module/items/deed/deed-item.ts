@@ -27,4 +27,10 @@ export class DeedItem extends BaseItem {
   ) {
     // console.log('in DeedItem.onCreate():', item, data, options, userId);
   }
+
+  /** @override */
+  static getSheetData(sheetData, _item) {
+    sheetData.deedTypes = CONFIG.HV.deedTypes;
+    return sheetData;
+  }
 }

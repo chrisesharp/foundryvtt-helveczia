@@ -27,4 +27,10 @@ export class PossessionItem extends BaseItem {
   ) {
     // console.log('in PossessionItem.onCreate():', item, data, options, userId);
   }
+
+  /** @override */
+  static getSheetData(sheetData, _item) {
+    sheetData.coins = CONFIG.HV.coins;
+    return sheetData;
+  }
 }

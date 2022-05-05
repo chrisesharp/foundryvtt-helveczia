@@ -4,12 +4,22 @@ export class HVItemSheet extends ItemSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ['helveczia', 'sheet', 'item'],
-      width: 400,
-      height: 510,
+      width: 450,
+      height: 500,
       resizable: true,
     });
   }
 
+  /** @override */
+  activateEditor(target, editorOptions, initialContent) {
+    // remove some controls to the editor as the space is lacking
+    if (target == 'data.description') {
+      editorOptions.toolbar = 'styleselect bullist hr table removeFormat save';
+    }
+    super.activateEditor(target, editorOptions, initialContent);
+  }
+
+  /** @ooverride */
   getData() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let data: any = super.getData();
@@ -20,15 +30,17 @@ export class HVItemSheet extends ItemSheet {
     // Set owner name if possible
     data.isOwnedBy = this.actor ? this.actor.name : false;
 
+    data.isGM = game.user?.isGM;
+
     // Let every item type manipulate its own sheet data
     data = CONFIG.HV.itemClasses[this.item.type]?.getSheetData(data, this) || data;
 
     // Let every component manipulate an items' sheet data
-    for (const sheetComponent in CONFIG.HV.sheetComponents.item) {
-      if (Object.prototype.hasOwnProperty.call(CONFIG.HV.sheetComponents.item, sheetComponent)) {
-        data = CONFIG.HV.sheetComponents.item[sheetComponent].getSheetData(data, this);
-      }
-    }
+    // for (const sheetComponent in CONFIG.HV.sheetComponents.item) {
+    //   if (Object.prototype.hasOwnProperty.call(CONFIG.HV.sheetComponents.item, sheetComponent)) {
+    //     data = CONFIG.HV.sheetComponents.item[sheetComponent].getSheetData(data, this);
+    //   }
+    // }
 
     data.config = CONFIG.HV;
     data.effects = prepareActiveEffectCategories(this.item.effects);

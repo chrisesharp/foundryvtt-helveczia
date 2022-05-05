@@ -86,7 +86,11 @@
       }
     },
     "possession": {
-      "templates": ["base"]
+      "templates": ["base"],
+      "cost": {
+        "value": 0,
+        "coin": ""
+      }
     },
     "people": {
       "templates": ["base"]
@@ -96,18 +100,18 @@
     },
     "skill": {
       "templates": ["base"],
-      "ability": ["str", "int", "wis", "con", "dex", "cha"],
-      "type": ["craft", "science", "practical", "vagabond", "esoteric"]
+      "ability": "",
+      "subtype": ""
     },
     "armour": {
-      "templates": ["base"]
+      "templates": ["base", "possession"]
     },
     "weapon": {
-      "templates": ["base"]
+      "templates": ["base", "possession"]
     },
     "deed": {
       "templates": ["base"],
-      "type": ["favour", "sin"]
+      "subtype": ""
     }
   }
 }

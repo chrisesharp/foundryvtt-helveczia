@@ -133,6 +133,14 @@ export const registerHandlebarHelpers = async function () {
     return value > 0 ? `+${value}` : value;
   });
 
+  Handlebars.registerHelper('typeOfSkill', function (value) {
+    return game.i18n.format('HV.skillType', { type: value });
+  });
+
+  Handlebars.registerHelper('usingAbility', function (value) {
+    return game.i18n.format('HV.usingAbility', { ability: game.i18n.localize(`HV.scores.${value}.long`) });
+  });
+
   Handlebars.registerHelper('balance', function (virtue) {
     const total = Math.sign(Math.floor((virtue - 1) / 7) - 1);
     switch (total) {

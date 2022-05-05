@@ -42,8 +42,23 @@ export interface HelvecziaConfig {
   XPLevels: {
     [key: number]: number;
   };
+
   difficulties: {
     [key: string]: number;
+  };
+
+  skillTypes: {
+    [key: string]: string;
+  };
+
+  deedTypes: {
+    [key: string]: string;
+  };
+
+  abilities: string[];
+
+  coins: {
+    [key: string]: string;
   };
 }
 
@@ -92,5 +107,26 @@ export const HV: HelvecziaConfig = {
     Normal: 12,
     Hard: 18,
     Heroic: 24,
+  },
+
+  skillTypes: {
+    craft: 'HV.skills.craft',
+    science: 'HV.skills.science',
+    practical: 'HV.skills.practical',
+    vagabond: 'HV.skills.vagabond',
+    esoteric: 'HV.skills.esoteric',
+  },
+
+  deedTypes: {
+    favour: 'HV.deeds.favour',
+    sin: 'HV.deeds.sin',
+  },
+
+  abilities: ['str', 'int', 'wis', 'dex', 'con', 'cha'],
+
+  coins: {
+    th: 'Th',
+    pf: 'Pf',
+    gr: 'Gr',
   },
 };

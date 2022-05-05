@@ -6,7 +6,7 @@ export class DeedSheet extends HVItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ['helveczia', 'sheet', 'item'],
       width: 350,
-      height: 375,
+      height: 450,
       resizable: false,
       tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'editor' }],
     });

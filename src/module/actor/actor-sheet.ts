@@ -10,6 +10,15 @@ export class HVActorSheet extends ActorSheet {
   }
 
   /** @override */
+  activateEditor(target, editorOptions, initialContent) {
+    // remove some controls to the editor as the space is lacking
+    if (target == 'data.description') {
+      editorOptions.toolbar = 'styleselect bullist hr table removeFormat save';
+    }
+    super.activateEditor(target, editorOptions, initialContent);
+  }
+
+  /** @override */
   async getData() {
     const baseData = await super.getData();
     const actorData = baseData.actor;
