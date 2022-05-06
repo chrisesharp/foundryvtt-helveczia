@@ -29,6 +29,8 @@ export class HVActorSheet extends ActorSheet {
         this.actor.getFlag('helveczia', 'origins-initialized'),
       no_abilities: !this.actor.getFlag('helveczia', 'abilities-initialized'),
       no_origins: !this.actor.getFlag('helveczia', 'origins-initialized'),
+      german_skill: this.actor.getFlag('helveczia', 'german-skill'),
+      german_skill_generated: this.actor.getFlag('helveczia', 'german-skill-generated'),
       options: this.options,
       editable: this.isEditable,
       isToken: this.token && !this.token.data.actorLink,

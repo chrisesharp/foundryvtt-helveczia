@@ -1,25 +1,34 @@
 import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
 import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
 import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
+import { HVActor } from '../../actor/actor';
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 
 export class PeopleItem extends BaseItem {
-  static races: { [key: string]: ((item: HVItem) => void) | null } = {
-    German: null,
-    French: null,
-    Italian: null,
-    Dutch: null,
-    Czech: null,
-    English: null,
-    Gypsy: null,
-    Hungarian: null,
-    Jewish: null,
-    Cossack: null,
-    Polish: null,
-    Spanish: null,
-    Swedish: null,
+  static races: {
+    [key: string]: { onCreate?: (item: HVItem) => void; skillBonus?: (actor: HVActor) => Promise<number> };
+  } = {
+    German: { skillBonus: PeopleItem.getGermanSkill },
+    French: {},
+    Italian: {},
+    Dutch: {},
+    Czech: {},
+    English: {},
+    Gypsy: {},
+    Hungarian: {},
+    Jewish: {},
+    Cossack: {},
+    Polish: {},
+    Spanish: {},
+    Swedish: {},
   };
+
+  static async getGermanSkill(actor: HVActor): Promise<number> {
+    await actor.setFlag('helveczia', 'german-skill', true);
+    console.log('german-skill:', actor.getFlag('helveczia', 'german-skill'));
+    return Promise.resolve(1);
+  }
 
   static get documentName() {
     return 'people';
@@ -42,12 +51,21 @@ export class PeopleItem extends BaseItem {
     _userId: string,
   ) {
     if (item.parent) return;
-    const func = PeopleItem.races[data.name];
+    const func = PeopleItem.races[data.name].onCreate;
     if (func) func(item);
   }
 
   static peoples(): string[] {
     return Object.keys(PeopleItem.races);
+  }
+
+  static async getSkillBonus(actor, itemData) {
+    let bonus = 0;
+    const func = PeopleItem.races[itemData.name].skillBonus;
+    if (func) {
+      bonus += await func(actor);
+    }
+    return bonus;
   }
 
   // static async addFrenchEffects(item: HVItem) {

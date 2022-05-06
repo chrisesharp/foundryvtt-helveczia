@@ -76,6 +76,16 @@ export abstract class BaseItem {
     // Do nothing by default
   }
 
+  /**
+   *
+   * @param e
+   * @param sheet
+   */
+
+  static async getSkillBonus(_actor, _itemData) {
+    return 0;
+  }
+
   /*************************
    * EVENT HANDLER
    *************************/

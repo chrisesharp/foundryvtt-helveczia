@@ -12,6 +12,7 @@
         "people": "",
         "class": "",
         "virtue": 10,
+        "maxskills": 3,
         "saves": {
           "bravery": {
             "base": 0,
@@ -107,7 +108,12 @@
       "templates": ["base", "possession"]
     },
     "weapon": {
-      "templates": ["base", "possession"]
+      "templates": ["base", "possession"],
+      "damage": "1d3",
+      "critical": {
+        "range": "20",
+        "multiple": 2
+      }
     },
     "deed": {
       "templates": ["base"],

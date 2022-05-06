@@ -7,6 +7,10 @@
             <a class="item-control item-create" title="{{localize 'HV.Add'}} {{localize 'HV.tabs.skills'}}" data-type="skill"><i class="fas fa-plus"></i></a>
             </div>
         </li>
+        <h3>( 0 / {{ data.maxskills }} )</h3>
+        {{#if german_skill }}
+        <h3>German Craft skill: {{#if german_skill_generated}} satisfied {{else}} needed {{/if}}</h3>
+        {{/if}}
     {{#each data.skills as |item id|}}
         <li class="item-entry flexcol" data-item-id="{{item.id}}">
             <div class="item flexrow">

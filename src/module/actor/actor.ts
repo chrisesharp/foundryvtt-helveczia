@@ -77,6 +77,7 @@ export class HVActor extends Actor {
     }
 
     this._updateSaves(data);
+    this._updateSkills(data);
     this._updateCombatValues(data);
   }
 
@@ -91,6 +92,7 @@ export class HVActor extends Actor {
     }
 
     this._updateSaves(data);
+    this._updateSkills(data);
     this._updateCombatValues(data);
   }
 
@@ -150,6 +152,15 @@ export class HVActor extends Actor {
       save.bonus += virtue;
       save.mod = save.base + save.bonus;
     }
+  }
+
+  /**
+   * Update base & bonus for saves
+   */
+  async _updateSkills(data: any) {
+    const peopleBonus = (await data.peoples[0]?.getSkillBonus(this)) ?? 0;
+    const classBonus = (await data.classes[0]?.getSkillBonus(this)) ?? 0;
+    data.maxskills += data.scores.int.mod + peopleBonus + classBonus;
   }
 
   /**
