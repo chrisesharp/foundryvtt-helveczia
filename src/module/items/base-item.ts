@@ -86,7 +86,7 @@ export abstract class BaseItem {
     return 0;
   }
 
-  static cleanup(_actor, _itemData) {}
+  static onDelete(_actor, _itemData) {}
 
   /*************************
    * EVENT HANDLER

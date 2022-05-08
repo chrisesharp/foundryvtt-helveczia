@@ -11,22 +11,22 @@ export class PeopleItem extends BaseItem {
     [key: string]: {
       onCreate?: (item: HVItem) => void;
       skillBonus?: (actor: HVActor) => number;
-      cleanup?: (actor: HVActor) => void;
+      onDelete?: (actor: HVActor) => void;
     };
   } = {
-    German: { skillBonus: PeopleItem.getGermanSkill, cleanup: PeopleItem.cleanupGermanSkill },
-    French: { skillBonus: PeopleItem.getDefaultSkill },
-    Italian: { skillBonus: PeopleItem.getDefaultSkill },
-    Dutch: { skillBonus: PeopleItem.getDefaultSkill },
-    Czech: { skillBonus: PeopleItem.getDefaultSkill },
-    English: { skillBonus: PeopleItem.getDefaultSkill },
-    Gypsy: { skillBonus: PeopleItem.getDefaultSkill },
-    Hungarian: { skillBonus: PeopleItem.getDefaultSkill },
-    Jewish: { skillBonus: PeopleItem.getDefaultSkill },
-    Cossack: { skillBonus: PeopleItem.getDefaultSkill },
-    Polish: { skillBonus: PeopleItem.getDefaultSkill },
-    Spanish: { skillBonus: PeopleItem.getDefaultSkill },
-    Swedish: { skillBonus: PeopleItem.getDefaultSkill },
+    German: { skillBonus: PeopleItem.getGermanSkill, onDelete: PeopleItem.cleanupGermanSkill },
+    French: {},
+    Italian: {},
+    Dutch: {},
+    Czech: {},
+    English: {},
+    Gypsy: {},
+    Hungarian: {},
+    Jewish: {},
+    Cossack: {},
+    Polish: {},
+    Spanish: {},
+    Swedish: {},
   };
 
   static getGermanSkill(actor: HVActor): number {
@@ -86,8 +86,8 @@ export class PeopleItem extends BaseItem {
     return bonus;
   }
 
-  static cleanup(actor, itemData) {
-    const func = PeopleItem.races[itemData.name].cleanup;
+  static onDelete(actor, itemData) {
+    const func = PeopleItem.races[itemData.name].onDelete;
     if (func) {
       func(actor);
     }

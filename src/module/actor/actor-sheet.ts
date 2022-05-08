@@ -1,7 +1,6 @@
 import { HVCharacterCreator } from '../apps/chargen';
 import { onManageActiveEffect, prepareActiveEffectCategories } from '../effects';
 import { ClassItem } from '../items/class/class-item';
-import { HVItem } from '../items/item';
 import { PeopleItem } from '../items/people/people-item';
 
 export class HVActorSheet extends ActorSheet {
@@ -94,7 +93,7 @@ export class HVActorSheet extends ActorSheet {
     super.activateListeners(html);
 
     // Item summaries
-    // html.find('.item .item-name').click((event) => this._onItemSummary(event));
+    html.find('.item .item-name').click((event) => this._onItemSummary(event));
 
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
@@ -248,7 +247,7 @@ export class HVActorSheet extends ActorSheet {
                 ${description}
             </div>
             ${options}
-            </div>`,
+        </div>`,
       );
       li.append(div.hide());
       div.slideDown(200);

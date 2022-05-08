@@ -1,7 +1,6 @@
 import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
 import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
 import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
-import { HVActor } from '../actor/actor';
 import { HVItemData } from './item-types';
 
 export class HVItem extends Item {
@@ -27,9 +26,11 @@ export class HVItem extends Item {
     }
   }
 
-  cleanup(actor: HVActor) {
-    // TODO finish cleanup
-    CONFIG.HV.itemClasses[this.data.type]?.cleanup(actor, this.data);
+  //** @override */
+  protected _onDelete(_options: DocumentModificationOptions, _userId: string): void {
+    if (this.isOwned) {
+      CONFIG.HV.itemClasses[this.data.type]?.onDelete(this.actor, this.data);
+    }
   }
 
   /** Augment actor skills  */
