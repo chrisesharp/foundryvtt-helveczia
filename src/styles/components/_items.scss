@@ -84,11 +84,21 @@
     &:hover .item-image {
       background-image: url('/icons/svg/d20-grey.svg') !important;
       background-size: cover;
+      img {
+        width: 0px;
+        height: 0px;
+        padding: 8px;
+      }
       cursor: pointer;
     }
     .item-image:hover {
       background-image: url('/icons/svg/d20-black.svg') !important;
       background-size: cover;
+      img {
+        width: 0px;
+        height: 0px;
+        padding: 8px;
+      }
     }
   }
 }

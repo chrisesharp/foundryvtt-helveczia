@@ -15,7 +15,7 @@
     {{#each data.skills as |item id|}}
         <li class="item-entry item-rollable flexcol" data-item-id="{{item.id}}">
             <div class="item flexrow">
-                <div class="item-image"><img src="{{item.img}}" width="24" height="24"/></div>
+                <div class="item-image rollable" data-roll="skill" data-item-id="{{item.id}}" data-attr="{{item.data.ability}}"><img src="{{item.img}}" width="24" height="24"/></div>
                 <h4 class="item-name">{{item.name}}</h4>
                 {{#unless (itemLocked item)}}
                 <div class="item-controls">

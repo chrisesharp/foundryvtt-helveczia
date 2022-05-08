@@ -2,6 +2,7 @@ import { ActorData } from '@league-of-foundry-developers/foundry-vtt-types/src/f
 import { CharacterActorData, HVActorData, NPCActorData } from './actor-types';
 import { Logger } from '../logger';
 import { HVDice } from '../dice';
+import { SkillItemData } from '../items/item-types';
 
 const log = new Logger();
 
@@ -247,9 +248,22 @@ export class HVActor extends Actor {
   async rollCheck(data, opponent): Promise<any> {
     const attribute = data.attr;
     const resource = data.resource;
-    const mod = this.data.data[resource][attribute].mod;
-    const longName = game.i18n.format(`HV.${resource}.${attribute}.long`);
-    const label = `Rolling ${longName} check`;
+    let mod = 0;
+    let longName = '';
+    if (resource !== '') {
+      mod = this.data.data[resource][attribute].mod;
+      longName = game.i18n.format(`HV.${resource}.${attribute}.long`);
+    } else {
+      const item = this.items.get(`${data.itemId}`);
+      if (item) {
+        const skill = item.data as SkillItemData;
+        const bonus = skill.data.bonus;
+        const ability = this.data.data.scores[skill.data.ability].mod;
+        mod = bonus + ability;
+        longName = item.name ?? game.i18n.localize('HV.skill');
+      }
+    }
+    const label = game.i18n.format('HV.rollCheck', { type: longName });
     const rollParts = ['1d20', mod];
     const rollData = {
       actor: this,

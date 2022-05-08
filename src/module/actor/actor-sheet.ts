@@ -196,6 +196,9 @@ export class HVActorSheet extends ActorSheet {
       case 'save':
         dataset.resource = 'saves';
         break;
+      case 'skill':
+        dataset.resource = '';
+        break;
       default:
     }
     this.actor.rollCheck(dataset, target);
