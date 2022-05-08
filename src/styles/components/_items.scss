@@ -79,4 +79,16 @@
     display: block;
     border-bottom: 1px;
   }
+
+  li.item-rollable {
+    &:hover .item-image {
+      background-image: url('/icons/svg/d20-grey.svg') !important;
+      background-size: cover;
+      cursor: pointer;
+    }
+    .item-image:hover {
+      background-image: url('/icons/svg/d20-black.svg') !important;
+      background-size: cover;
+    }
+  }
 }

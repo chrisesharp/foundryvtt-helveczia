@@ -2,8 +2,6 @@ import { ActorData } from '@league-of-foundry-developers/foundry-vtt-types/src/f
 import { CharacterActorData, HVActorData, NPCActorData } from './actor-types';
 import { Logger } from '../logger';
 import { HVDice } from '../dice';
-import { Metadata } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
-import { Document } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/module.mjs';
 
 const log = new Logger();
 
