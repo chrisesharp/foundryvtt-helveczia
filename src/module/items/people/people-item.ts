@@ -4,30 +4,48 @@ import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-ty
 import { HVActor } from '../../actor/actor';
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
+import { SkillItemData } from '../item-types';
 
 export class PeopleItem extends BaseItem {
   static races: {
-    [key: string]: { onCreate?: (item: HVItem) => void; skillBonus?: (actor: HVActor) => Promise<number> };
+    [key: string]: {
+      onCreate?: (item: HVItem) => void;
+      skillBonus?: (actor: HVActor) => number;
+      cleanup?: (actor: HVActor) => void;
+    };
   } = {
-    German: { skillBonus: PeopleItem.getGermanSkill },
-    French: {},
-    Italian: {},
-    Dutch: {},
-    Czech: {},
-    English: {},
-    Gypsy: {},
-    Hungarian: {},
-    Jewish: {},
-    Cossack: {},
-    Polish: {},
-    Spanish: {},
-    Swedish: {},
+    German: { skillBonus: PeopleItem.getGermanSkill, cleanup: PeopleItem.cleanupGermanSkill },
+    French: { skillBonus: PeopleItem.getDefaultSkill },
+    Italian: { skillBonus: PeopleItem.getDefaultSkill },
+    Dutch: { skillBonus: PeopleItem.getDefaultSkill },
+    Czech: { skillBonus: PeopleItem.getDefaultSkill },
+    English: { skillBonus: PeopleItem.getDefaultSkill },
+    Gypsy: { skillBonus: PeopleItem.getDefaultSkill },
+    Hungarian: { skillBonus: PeopleItem.getDefaultSkill },
+    Jewish: { skillBonus: PeopleItem.getDefaultSkill },
+    Cossack: { skillBonus: PeopleItem.getDefaultSkill },
+    Polish: { skillBonus: PeopleItem.getDefaultSkill },
+    Spanish: { skillBonus: PeopleItem.getDefaultSkill },
+    Swedish: { skillBonus: PeopleItem.getDefaultSkill },
   };
 
-  static async getGermanSkill(actor: HVActor): Promise<number> {
-    await actor.setFlag('helveczia', 'german-skill', true);
-    console.log('german-skill:', actor.getFlag('helveczia', 'german-skill'));
-    return Promise.resolve(1);
+  static getGermanSkill(actor: HVActor): number {
+    actor.setFlag('helveczia', 'german-skill', true);
+    return 1;
+  }
+
+  static async cleanupGermanSkill(actor: HVActor): Promise<void> {
+    actor.setFlag('helveczia', 'german-skill', false);
+    const craft = actor.items.find((i) => i.type === 'skill' && (i.data as SkillItemData).data.subtype === 'craft');
+    if (craft?.id) {
+      actor.setFlag('helveczia', 'german-skill-generated', false);
+      await actor.deleteEmbeddedDocuments('Item', [craft.id]);
+      await actor.sheet?.render(true);
+    }
+  }
+
+  static getDefaultSkill(_actor: HVActor): number {
+    return 0;
   }
 
   static get documentName() {
@@ -59,13 +77,20 @@ export class PeopleItem extends BaseItem {
     return Object.keys(PeopleItem.races);
   }
 
-  static async getSkillBonus(actor, itemData) {
+  static getSkillBonus(actor, itemData) {
     let bonus = 0;
     const func = PeopleItem.races[itemData.name].skillBonus;
     if (func) {
-      bonus += await func(actor);
+      bonus += func(actor);
     }
     return bonus;
+  }
+
+  static cleanup(actor, itemData) {
+    const func = PeopleItem.races[itemData.name].cleanup;
+    if (func) {
+      func(actor);
+    }
   }
 
   // static async addFrenchEffects(item: HVItem) {

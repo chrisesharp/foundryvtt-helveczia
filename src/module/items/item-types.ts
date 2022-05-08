@@ -9,7 +9,11 @@ export interface PossessionItemData {
   data: PossessionData;
 }
 
-type SkillData = BaseData;
+type SkillData = BaseData & {
+  subtype: string;
+  ability: string;
+  bonus: number;
+};
 
 export interface SkillItemData {
   type: 'skill';

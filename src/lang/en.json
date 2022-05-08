@@ -5,6 +5,8 @@
   "HV.skills.vagabond": "Vagabond",
   "HV.skills.esoteric": "Esoteric",
   "HV.skillType": "A {type} skill",
+  "HV.chooseOrigins": "Choose Origin and Class",
+  "HV.randomCraft": "Roll for Random Craft",
   "HV.deeds.favour": "Favour",
   "HV.deeds.sin": "Sin",
   "HV.Setting.debug": "Debug",

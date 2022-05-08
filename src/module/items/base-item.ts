@@ -82,9 +82,11 @@ export abstract class BaseItem {
    * @param sheet
    */
 
-  static async getSkillBonus(_actor, _itemData) {
+  static getSkillBonus(_actor, _itemData) {
     return 0;
   }
+
+  static cleanup(_actor, _itemData) {}
 
   /*************************
    * EVENT HANDLER

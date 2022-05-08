@@ -77,9 +77,13 @@ export const registerHandlebarHelpers = async function () {
     return 0 < a && a < 6;
   });
 
-  Handlebars.registerHelper('unlocked', function (actor) {
-    return actor.getFlag('dee', 'sheetlock');
+  Handlebars.registerHelper('itemLocked', function (item) {
+    return item.getFlag('helveczia', 'locked');
   });
+
+  // Handlebars.registerHelper('unlocked', function (actor) {
+  //   return actor.getFlag('dee', 'sheetlock');
+  // });
 
   Handlebars.registerHelper('concat', function (args) {
     let outStr = '';

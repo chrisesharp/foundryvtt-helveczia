@@ -1,6 +1,7 @@
 import { HVCharacterCreator } from '../apps/chargen';
 import { onManageActiveEffect, prepareActiveEffectCategories } from '../effects';
 import { ClassItem } from '../items/class/class-item';
+import { HVItem } from '../items/item';
 import { PeopleItem } from '../items/people/people-item';
 
 export class HVActorSheet extends ActorSheet {
@@ -104,6 +105,7 @@ export class HVActorSheet extends ActorSheet {
     // Character generation to initialize
     html.find('.generate-abilities').click(this._generateAbilities.bind(this));
     html.find('.choose-race-class').click(this._generateRaceClass.bind(this));
+    html.find('.generate-craft-skill').click(this._generateCraftSkill.bind(this));
     // lock sheet
     // html.find('#padlock').click(this._onToggleLock.bind(this));
 
@@ -296,5 +298,32 @@ export class HVActorSheet extends ActorSheet {
         classes: ['helveczia', 'helveczia-dialog'],
       },
     ).render(true);
+  }
+
+  async _generateCraftSkill(event) {
+    event.preventDefault();
+    const craft = { name: 'Apothecary', ability: 'int' };
+    const description =
+      'Due to their diligence, they learn an extra, randomly rolled Craft skill with a +2 bonus. In this trade, they are already considered journeymen by guild standards, and enjoy all attendant benefits.  Germans can become masters in their craft  at 4th level.';
+    const skill = {
+      name: craft.name,
+      type: 'skill',
+      data: {
+        ability: craft.ability,
+        subtype: 'craft',
+        bonus: 2,
+        description: description,
+      },
+    };
+    const itemData = await this.actor.createEmbeddedDocuments('Item', [skill]);
+    const id = (itemData[0] as Item).id;
+    if (id) {
+      const item = this.actor.items.get(id);
+      if (item) {
+        await item.setFlag('helveczia', 'locked', true);
+        await this.actor.setFlag('helveczia', 'german-skill-generated', craft.name);
+        await this.actor.update();
+      }
+    }
   }
 }

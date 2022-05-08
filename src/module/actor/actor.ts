@@ -2,6 +2,9 @@ import { ActorData } from '@league-of-foundry-developers/foundry-vtt-types/src/f
 import { CharacterActorData, HVActorData, NPCActorData } from './actor-types';
 import { Logger } from '../logger';
 import { HVDice } from '../dice';
+import { Metadata } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
+import { Document } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/module.mjs';
+import { HVItem } from '../items/item';
 
 const log = new Logger();
 
@@ -23,6 +26,7 @@ export class HVActor extends Actor {
     data.level = this._calculateLevel(data.experience);
   }
 
+  /** @override */
   prepareDerivedData(): void {
     const actorData = this.data;
     // const data = actorData.data;
@@ -41,6 +45,22 @@ export class HVActor extends Actor {
     }
   }
 
+  /** @override */
+  protected _onDeleteEmbeddedDocuments(
+    embeddedName: string,
+    _documents: Document<any, any, Metadata<any>>[],
+    _result: string[],
+    _options: DocumentModificationContext,
+    _userId: string,
+  ): void {
+    switch (embeddedName) {
+      case 'Item':
+        const origin = _documents.find((i) => (i as Item).type === 'people' || (i as Item).type === 'class');
+        if (origin) {
+          (origin as HVItem).cleanup(this);
+        }
+    }
+  }
   _categoriseItems(actorData) {
     const data = actorData.data;
     const categories = actorData.items.reduce(
@@ -158,8 +178,8 @@ export class HVActor extends Actor {
    * Update base & bonus for saves
    */
   async _updateSkills(data: any) {
-    const peopleBonus = (await data.peoples[0]?.getSkillBonus(this)) ?? 0;
-    const classBonus = (await data.classes[0]?.getSkillBonus(this)) ?? 0;
+    const peopleBonus = data.peoples[0]?.getSkillBonus(this) ?? 0;
+    const classBonus = data.classes[0]?.getSkillBonus(this) ?? 0;
     data.maxskills += data.scores.int.mod + peopleBonus + classBonus;
   }
 
