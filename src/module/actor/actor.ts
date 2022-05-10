@@ -2,7 +2,6 @@ import { ActorData } from '@league-of-foundry-developers/foundry-vtt-types/src/f
 import { CharacterActorData, HVActorData, NPCActorData } from './actor-types';
 import { Logger } from '../logger';
 import { HVDice } from '../dice';
-import { SkillItemData } from '../items/item-types';
 
 const log = new Logger();
 
@@ -245,24 +244,7 @@ export class HVActor extends Actor {
     console.log('Apply random save bonus:', change);
   }
 
-  async rollCheck(data, opponent): Promise<any> {
-    const attribute = data.attr;
-    const resource = data.resource;
-    let mod = 0;
-    let longName = '';
-    if (resource !== '') {
-      mod = this.data.data[resource][attribute].mod;
-      longName = game.i18n.format(`HV.${resource}.${attribute}.long`);
-    } else {
-      const item = this.items.get(`${data.itemId}`);
-      if (item) {
-        const skill = item.data as SkillItemData;
-        const bonus = skill.data.bonus;
-        const ability = this.data.data.scores[skill.data.ability].mod;
-        mod = bonus + ability;
-        longName = item.name ?? game.i18n.localize('HV.skill');
-      }
-    }
+  async rollCheck({ mod, longName }, opponent): Promise<any> {
     const label = game.i18n.format('HV.rollCheck', { type: longName });
     const rollParts = ['1d20', mod];
     const rollData = {

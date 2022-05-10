@@ -7,9 +7,7 @@
     {{!-- Sheet Tab Navigation --}}
     {{!-- <nav class="sheet-tabs tabs side character" data-group="primary"> --}}
     <nav class="sheet-tabs tabs character" data-group="primary">
-        {{#unless no_abilities }}
         <a class="item" data-tab="abilities">{{ localize 'HV.tabs.abilities'}}</a>
-        {{/unless}}
         {{#if initialized }}
             <a class="item" data-tab="combat">{{ localize 'HV.tabs.combat'}}</a>
             <a class="item" data-tab="skills">{{ localize 'HV.tabs.skills'}}</a>

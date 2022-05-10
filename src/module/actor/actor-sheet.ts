@@ -2,6 +2,7 @@ import { HVCharacterCreator } from '../apps/chargen';
 import { onManageActiveEffect, prepareActiveEffectCategories } from '../effects';
 import { ClassItem } from '../items/class/class-item';
 import { PeopleItem } from '../items/people/people-item';
+import { SkillItemData } from '../items/item-types';
 
 export class HVActorSheet extends ActorSheet {
   /** @override */
@@ -179,29 +180,47 @@ export class HVActorSheet extends ActorSheet {
         if (data?.type === 'npc' && data._id) {
           target = {
             id: data._id,
-            // armour: data.data.armour.value,
           };
-          // target.potency = data.data.resistance.potency;
-          // target.hitresolution = data.data.hitresolution;
-          // target.consequences = data.data.consequences;
         }
         if (target?.id) break;
       }
     }
 
-    switch (dataset.roll) {
+    const rollData = this.getRollMods(dataset);
+    this.actor.rollCheck(rollData, target);
+  }
+
+  getRollMods(data): { mod: number; longName: string } {
+    const attribute = data.attr;
+    switch (data.roll) {
       case 'attr':
-        dataset.resource = 'scores';
+        data.resource = 'scores';
         break;
       case 'save':
-        dataset.resource = 'saves';
+        data.resource = 'saves';
         break;
       case 'skill':
-        dataset.resource = '';
+        data.resource = '';
         break;
       default:
     }
-    this.actor.rollCheck(dataset, target);
+    const resource = data.resource;
+    let mod = 0;
+    let longName = '';
+    if (resource !== '') {
+      mod = this.actor.data.data[resource][attribute].mod;
+      longName = game.i18n.format(`HV.${resource}.${attribute}.long`);
+    } else {
+      const item = this.actor.items.get(`${data.itemId}`);
+      if (item) {
+        const skill = item.data as SkillItemData;
+        const bonus = skill.data.bonus;
+        const ability = this.actor.data.data.scores[skill.data.ability].mod;
+        mod = bonus + ability;
+        longName = item.name ?? game.i18n.localize('HV.skill');
+      }
+    }
+    return { mod: mod, longName: longName };
   }
 
   /**

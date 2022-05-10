@@ -1,5 +1,8 @@
 {{!-- abilities --}}
 <h2 class="centred">{{ localize 'HV.tabs.abilities' }}</h2>
+{{#if no_abilities }}
+    <button class="generate-abilities"><i class="fa fa-dice"></i>Roll for Abilities</button>
+{{else}}
 <div class="attribute-group flexrow">
     <ol class="attributes">
         <li class="attribute ability-score">
@@ -89,3 +92,4 @@
     <h3 class="saves-temptation-bonus">{{ plusminus data.saves.temptation.bonus }}</h3>
     <h3 class="saves-temptation-rb">)</h3>
 </div>
+{{/if}}

@@ -95,12 +95,11 @@
         </section>
         {{else}}
         <section class="chargen">
-            {{#if no_abilities }}
-            <button class="generate-abilities"><i class="fa fa-dice"></i>Roll for Abilities</button>
-            {{/if}}
-            {{#if no_origins }}
-            <button class="choose-race-class"><i class="fa fa-dice"></i>Choose Origin and Class</button>
-            {{/if}}
+            {{#unless no_abilities }}
+                {{#if no_origins }}
+                <button class="choose-race-class"><i class="fa fa-dice"></i>Choose Origin and Class</button>
+                {{/if}}
+            {{/unless}}
         </section>
         {{/if}}
     </div>

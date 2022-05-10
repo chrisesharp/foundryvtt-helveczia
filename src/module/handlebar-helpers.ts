@@ -81,6 +81,11 @@ export const registerHandlebarHelpers = async function () {
     return item.getFlag('helveczia', 'locked');
   });
 
+  Handlebars.registerHelper('getRollMods', function (sheet, roll, item) {
+    const data = sheet.getRollMods({ attr: item.data.data.attr, roll: roll, itemID: item.data.id });
+    return data.mod;
+  });
+
   // Handlebars.registerHelper('unlocked', function (actor) {
   //   return actor.getFlag('dee', 'sheetlock');
   // });
