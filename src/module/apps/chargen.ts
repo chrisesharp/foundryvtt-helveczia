@@ -1,5 +1,8 @@
 import { Evaluated } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/foundry.js/roll';
 import { HVActor } from '../actor/actor';
+import { Logger } from '../logger';
+
+const log = new Logger();
 
 export class HVCharacterCreator extends FormApplication {
   A = {
@@ -74,21 +77,21 @@ export class HVCharacterCreator extends FormApplication {
   }
 
   rollAbility(): Promise<Evaluated<Roll<any>>> {
-    return this.rollScore(['4d6kh3']);
+    return HVCharacterCreator.rollScore(['4d6kh3']);
   }
 
   rollVirtue(): Promise<Evaluated<Roll<any>>> {
-    return this.rollScore(['3d6']);
+    return HVCharacterCreator.rollScore(['3d6']);
   }
 
-  async rollHitPoints(actorData) {
+  static async rollHitPoints(actorData) {
     const data = actorData.data;
     const level = data.level;
     const hd = data.hp.hd;
-    const con = data.scores.con.base;
-    const rollParts = `${level - 1}d${hd}+${hd}+${con}`;
-    const roll = await this.rollScore([rollParts]);
-    console.log('hitpoints:', rollParts, roll.total);
+    const con = data.scores.con.mod;
+    const rollParts = [`${level - 1}d${hd}`, `${hd}+${con}`, `${con}*${level}`];
+    const roll = await HVCharacterCreator.rollScore(rollParts);
+    log.debug('Hitpoints rolled for :', actorData.name, rollParts.join('+'), roll.total);
     return {
       max: roll.total,
       value: roll.total,
@@ -97,11 +100,11 @@ export class HVCharacterCreator extends FormApplication {
   }
 
   async rollWealth(): Promise<Evaluated<Roll<any>>> {
-    const wealthRoll = await this.rollScore(['2d6']);
-    return wealthRoll._total < 12 ? wealthRoll : this.rollScore(['2d6*100']);
+    const wealthRoll = await HVCharacterCreator.rollScore(['2d6']);
+    return wealthRoll._total < 12 ? wealthRoll : HVCharacterCreator.rollScore(['2d6*100']);
   }
 
-  rollScore(rollParts): Promise<Evaluated<Roll<any>>> {
+  static rollScore(rollParts): Promise<Evaluated<Roll<any>>> {
     const data = {
       roll: {
         type: 'result',
@@ -117,7 +120,7 @@ export class HVCharacterCreator extends FormApplication {
     const choice = $('#A').prop('checked') ? this.scores.A : this.scores.B;
     const wealth = (await this.rollWealth()).total;
     const virtue = (await this.rollVirtue()).total;
-    const hitpoints = await this.rollHitPoints(actor.data);
+    // const hitpoints = await this.rollHitPoints(actor.data, choice);
     const updateData = {
       scores: {},
       wealth: {
@@ -126,7 +129,7 @@ export class HVCharacterCreator extends FormApplication {
         gr: 0,
       },
       virtue: virtue,
-      hp: hitpoints,
+      // hp: hitpoints,
     };
     Object.keys(choice).forEach((key) => {
       updateData.scores[key] = {
@@ -156,7 +159,6 @@ export class HVCharacterCreator extends FormApplication {
       speaker,
       blind: true,
     });
-    // this.object.createEmbeddedDocuments("Item", [itemData]);
   }
 
   /**
@@ -182,6 +184,11 @@ export class HVCharacterCreator extends FormApplication {
     const p = await HVCharacterCreator.getDocument(peopleName, peoples);
     const c = await HVCharacterCreator.getDocument(className, professions);
     if (p && c) await actor.createEmbeddedDocuments('Item', [p.toObject(), c.toObject()]);
+    const hitpoints = await this.rollHitPoints(actor.data);
+    const updateData = {
+      hp: hitpoints,
+    };
+    await actor.update({ data: updateData });
     await actor.setFlag('helveczia', 'origins-initialized', true);
     actor.sheet?.render(true);
   }
