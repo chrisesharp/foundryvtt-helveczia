@@ -83,7 +83,6 @@ export const registerHandlebarHelpers = async function () {
 
   Handlebars.registerHelper('getRollMods', function (sheet, roll, item) {
     const data = sheet.getRollMods({ attr: item.data.data.ability, roll: roll, itemId: item.id });
-    console.log('getRollMods:', roll, data.mod);
     const value = data.mod && data.mod.length ? data.mod.reduce((acc, n) => acc + n, 0) : 0;
     return value > 0 ? `+${value}` : value;
   });

@@ -21,7 +21,7 @@ export class PeopleItem extends BaseItem {
     French: {},
     Italian: {},
     Dutch: {},
-    Czech: {},
+    Czech: { skillBonus: PeopleItem.getCzechSkill, onDelete: PeopleItem.cleanupCzechSkill },
     English: {},
     Gypsy: {},
     Hungarian: {},
@@ -39,12 +39,26 @@ export class PeopleItem extends BaseItem {
 
   static async cleanupGermanSkill(actor: HVActor): Promise<void> {
     actor.setFlag('helveczia', 'german-skill', false);
-    const craft = actor.items.find((i) => i.type === 'skill' && (i.data as SkillItemData).data.subtype === 'craft');
-    if (craft?.id) {
-      actor.setFlag('helveczia', 'german-skill-generated', false);
-      await actor.deleteEmbeddedDocuments('Item', [craft.id]);
-      await actor.sheet?.render(true);
+    const crafts = actor.items.filter((i) => i.type === 'skill' && (i.data as SkillItemData).data.subtype === 'craft');
+    if (crafts.length > 0) {
+      for (const craft of crafts) {
+        if (craft.getFlag('helveczia', 'locked') && craft.id) {
+          actor.setFlag('helveczia', 'german-skill-generated', false);
+          await actor.deleteEmbeddedDocuments('Item', [craft.id]);
+          await actor.sheet?.render(true);
+        }
+      }
     }
+  }
+
+  static getCzechSkill(actor: HVActor): number {
+    const gainedSkill = actor.data.data.level >= 4 && (actor.isCleric() || actor.isStudent());
+    actor.setFlag('helveczia', 'czech-skill', gainedSkill);
+    return gainedSkill ? 1 : 0;
+  }
+
+  static async cleanupCzechSkill(actor: HVActor): Promise<void> {
+    actor.setFlag('helveczia', 'czech-skill', false);
   }
 
   static getDefaultSkill(_actor: HVActor): number {

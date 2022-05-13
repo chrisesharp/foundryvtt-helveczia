@@ -12,6 +12,9 @@
             <button class="generate-craft-skill"><i class="fa fa-dice"></i>{{ localize 'HV.randomCraft' }}</button>
             {{/unless}}
         {{/if}}
+        {{#if czech_skill }}
+            <h4>Bonus Science skill at 4th Level</h4>
+        {{/if}}
     {{#each data.skills as |item id|}}
         <li class="item-entry item-rollable flexcol" data-item-id="{{item.id}}">
             <div class="item flexrow">
