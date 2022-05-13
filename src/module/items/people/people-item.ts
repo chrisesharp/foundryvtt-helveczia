@@ -97,6 +97,24 @@ export class PeopleItem extends BaseItem {
     }
   }
 
+  static async enableHungarianFate(actor: HVActor): Promise<{ mod: number; attr: string }> {
+    if (!actor.getFlag('helveczia', 'fate-invoked')) {
+      actor.setFlag('helveczia', 'fate-invoked', true);
+      const randomSave = ['bravery', 'deftness', 'temptation'][Math.floor(Math.random() * 3)];
+      await actor.setFlag('helveczia', 'fate-save', randomSave);
+      ChatMessage.create({
+        user: game.user?.id,
+        speaker: ChatMessage.getSpeaker({ actor: actor }),
+        content: await renderTemplate('systems/helveczia/templates/chat/hungarian-fate.hbs', {
+          randomSave: randomSave,
+          actor: actor,
+        }),
+      });
+    }
+    const attr = (await actor.getFlag('helveczia', 'fate-save')) as string;
+    return { mod: -2, attr: attr };
+  }
+
   // static async addFrenchEffects(item: HVItem) {
   //   const armourEffect = { key: 'data.ac', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: '1' };
   //   const deftnessEffect = { key: 'data.saves.deftness.bonus', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: '1' };

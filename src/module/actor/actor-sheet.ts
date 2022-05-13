@@ -188,7 +188,8 @@ export class HVActorSheet extends ActorSheet {
   }
 
   async getRollMods(data): Promise<{ mod: number; longName: string }> {
-    const attribute = data.attr;
+    let longName = '';
+    let mod = 0;
     switch (data.roll) {
       case 'attr':
         data.resource = 'scores';
@@ -196,19 +197,8 @@ export class HVActorSheet extends ActorSheet {
       case 'save':
         data.resource = 'saves';
         if (this.actor.isHungarian()) {
-          if (!this.actor.getFlag('helveczia', 'fate-invoked')) {
-            this.actor.setFlag('helveczia', 'fate-invoked', true);
-            const randomSave = ['bravery', 'deftness', 'temptation'][Math.floor(Math.random() * 3)];
-            // TODO create and cleanup effect
-            ChatMessage.create({
-              user: game.user?.id,
-              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-              content: await renderTemplate('systems/helveczia/templates/chat/hungarian-fate.hbs', {
-                randomSave: randomSave,
-                actor: this.actor,
-              }),
-            });
-          }
+          const fate = await PeopleItem.enableHungarianFate(this.actor);
+          if (data.attr === fate.attr) mod = fate.mod;
         }
         break;
       case 'skill':
@@ -216,11 +206,10 @@ export class HVActorSheet extends ActorSheet {
         break;
       default:
     }
+    const attribute = data.attr;
     const resource = data.resource;
-    let mod = 0;
-    let longName = '';
     if (resource !== '') {
-      mod = this.actor.data.data[resource][attribute].mod;
+      mod += this.actor.data.data[resource][attribute].mod;
       longName = game.i18n.format(`HV.${resource}.${attribute}.long`);
       log.debug(`getRollMods() | name:${longName} - resource=${resource}, attribute=${attribute}, mod=${mod}`);
     } else {
@@ -230,7 +219,7 @@ export class HVActorSheet extends ActorSheet {
         const skill = item.data as SkillItemData;
         const bonus = skill.data.bonus;
         const ability = this.actor.data.data.scores[skill.data.ability].mod;
-        mod = bonus + ability;
+        mod += bonus + ability;
         longName = item.name ?? game.i18n.localize('HV.skill');
         log.debug(`getRollMods() | name:${longName} - ability=${skill.data.ability}, bonus=${bonus}`);
       } else {
