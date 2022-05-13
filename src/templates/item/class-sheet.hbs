@@ -9,11 +9,9 @@
     </header>
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
-      <a class="item" data-tab="editor">{{ localize 'HV.tabs.notes'}}</a>
-      {{#if config.showEffects }}
-      <a class="item" data-tab="effects">{{ localize 'HV.tabs.effects'}}</a>
-      {{/if}}
+      {{> "systems/helveczia/templates/item/partials/item-nav.hbs"}}
     </nav>
+    {{> "systems/helveczia/templates/item/partials/item-nav.hbs"}}
     {{!-- Sheet Body --}}
     <section class="sheet-body">
       {{#if config.showEffects}}

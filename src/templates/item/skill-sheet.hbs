@@ -17,15 +17,13 @@
           {{/if}}
       </div>
     </header>
+    {{!-- Sheet Tab Navigation --}}
+    <nav class="sheet-tabs tabs" data-group="primary">
+      {{> "systems/helveczia/templates/item/partials/item-nav.hbs"}}
+    </nav>
     {{!-- Sheet Body --}}
     <section class="sheet-body">
-      {{!-- Sheet Tab Navigation --}}
-      <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="editor">{{ localize 'HV.tabs.notes'}}</a>
-        {{#if config.showEffects }}
-        <a class="item" data-tab="effects">{{ localize 'HV.tabs.effects'}}</a>
-        {{/if}}
-      </nav>
+      
       {{!-- Description Tab --}}
       <div class="tab editor " data-group="primary" data-tab="editor">
             {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}

@@ -22,6 +22,7 @@ export async function preloadTemplates(): Promise<Handlebars.TemplateDelegate[]>
     'systems/helveczia/templates/item/weapon-sheet.hbs',
     // Item Partials
     'systems/helveczia/templates/item/partials/item-effects.hbs',
+    'systems/helveczia/templates/item/partials/item-nav.hbs',
   ];
 
   return loadTemplates(templatePaths);

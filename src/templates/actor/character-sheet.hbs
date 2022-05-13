@@ -14,7 +14,9 @@
             <a class="item" data-tab="possessions">{{ localize 'HV.tabs.possessions'}}</a>
             <a class="item" data-tab="deeds">{{ localize 'HV.tabs.deeds'}}</a>
             {{#if config.showEffects }}
-            <a class="item" data-tab="effects">{{ localize 'HV.tabs.effects'}}</a>
+                {{#if user.isGM }}
+                <a class="item" data-tab="effects">{{ localize 'HV.tabs.effects'}}</a>
+                {{/if}}
             {{/if}}
         {{/if}}
         <a class="item" data-tab="editor">{{ localize 'HV.tabs.notes'}}</a>

@@ -187,9 +187,9 @@ export class HVActorSheet extends ActorSheet {
     this.actor.rollCheck(rollData, target);
   }
 
-  async getRollMods(data): Promise<{ mod: number; longName: string }> {
+  async getRollMods(data): Promise<{ mods: number[]; longName: string }> {
     let longName = '';
-    let mod = 0;
+    const mod: number[] = [];
     switch (data.roll) {
       case 'attr':
         data.resource = 'scores';
@@ -198,7 +198,7 @@ export class HVActorSheet extends ActorSheet {
         data.resource = 'saves';
         if (this.actor.isHungarian()) {
           const fate = await PeopleItem.enableHungarianFate(this.actor);
-          if (data.attr === fate.attr) mod = fate.mod;
+          if (data.attr === fate.attr) mod.push(fate.mod);
         }
         break;
       case 'skill':
@@ -209,9 +209,11 @@ export class HVActorSheet extends ActorSheet {
     const attribute = data.attr;
     const resource = data.resource;
     if (resource !== '') {
-      mod += this.actor.data.data[resource][attribute].mod;
+      mod.push(this.actor.data.data[resource][attribute].mod);
       longName = game.i18n.format(`HV.${resource}.${attribute}.long`);
-      log.debug(`getRollMods() | name:${longName} - resource=${resource}, attribute=${attribute}, mod=${mod}`);
+      log.debug(
+        `getRollMods() | name:${longName} - resource=${resource}, attribute=${attribute}, mod=${mod.join('+')}`,
+      );
     } else {
       const item = this.actor.items.get(`${data.itemId}`);
       log.debug(`getRollMods() | itemId:${data.itemId}`);
@@ -219,14 +221,15 @@ export class HVActorSheet extends ActorSheet {
         const skill = item.data as SkillItemData;
         const bonus = skill.data.bonus;
         const ability = this.actor.data.data.scores[skill.data.ability].mod;
-        mod += bonus + ability;
+        mod.push(bonus);
+        mod.push(ability);
         longName = item.name ?? game.i18n.localize('HV.skill');
         log.debug(`getRollMods() | name:${longName} - ability=${skill.data.ability}, bonus=${bonus}`);
       } else {
         log.error('getRollMods() | itemId not found on actor');
       }
     }
-    return { mod: mod, longName: longName };
+    return { mods: mod, longName: longName };
   }
 
   /**

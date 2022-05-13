@@ -247,9 +247,10 @@ export class HVActor extends Actor {
     // console.log('Apply random save bonus:', change);
   }
 
-  async rollCheck({ mod, longName }, opponent): Promise<any> {
+  async rollCheck({ mods, longName }, opponent): Promise<any> {
     const label = game.i18n.format('HV.rollCheck', { type: longName });
-    const rollParts = ['1d20', mod];
+    const rollParts = ['1d20'];
+    mods.forEach((m) => rollParts.push(m));
     const rollData = {
       actor: this,
       roll: {
