@@ -5,6 +5,9 @@ import { HVActor } from '../../actor/actor';
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 import { SkillItemData } from '../item-types';
+import { Logger } from '../../logger';
+
+const log = new Logger();
 
 export class PeopleItem extends BaseItem {
   static races: {
@@ -83,6 +86,7 @@ export class PeopleItem extends BaseItem {
     if (func) {
       bonus += func(actor);
     }
+    log.debug(`PeopleItem.getSkillBonus() | skill bonus for ${itemData.name} is ${bonus}`);
     return bonus;
   }
 

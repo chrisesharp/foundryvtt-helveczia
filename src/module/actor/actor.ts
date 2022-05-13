@@ -162,6 +162,9 @@ export class HVActor extends Actor {
     const peopleBonus = data.peoples[0]?.getSkillBonus(this) ?? 0;
     const classBonus = data.classes[0]?.getSkillBonus(this) ?? 0;
     data.maxskills += data.scores.int.mod + peopleBonus + classBonus;
+    log.debug(
+      `HVActor._updateSkills() | max skills are int(${data.scores.int.mod}) + peoples(${peopleBonus}) + class(${classBonus})`,
+    );
   }
 
   /**
@@ -239,9 +242,9 @@ export class HVActor extends Actor {
     foundry.utils.setProperty(this.data, key, currentBonus + parseInt(value));
   }
 
-  _applyRandomSaveBonus(change) {
+  _applyRandomSaveBonus(_change) {
     // TODO implement Hungarian Fate
-    console.log('Apply random save bonus:', change);
+    // console.log('Apply random save bonus:', change);
   }
 
   async rollCheck({ mod, longName }, opponent): Promise<any> {
@@ -331,15 +334,29 @@ export class HVActor extends Actor {
   }
 
   isFighter(): boolean {
-    const actorData = this.data;
-    const fighter = actorData.items.find((i) => i.type === 'class' && i.name === 'Fighter');
-    return fighter !== undefined;
+    return this.isNamedType('Fighter', 'class');
   }
 
   isVagabond(): boolean {
+    return this.isNamedType('Vagabond', 'class');
+  }
+
+  isCleric(): boolean {
+    return this.isNamedType('Cleric', 'class');
+  }
+
+  isStudent(): boolean {
+    return this.isNamedType('Student', 'class');
+  }
+
+  isHungarian(): boolean {
+    return this.isNamedType('Hungarian', 'people');
+  }
+
+  isNamedType(name: string, type: string): boolean {
     const actorData = this.data;
-    const fighter = actorData.items.find((i) => i.type === 'class' && i.name === 'Vagabond');
-    return fighter !== undefined;
+    const namedClass = actorData.items.find((i) => i.type === type && i.name === name);
+    return namedClass !== undefined;
   }
 }
 

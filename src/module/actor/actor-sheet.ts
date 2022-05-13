@@ -3,6 +3,9 @@ import { onManageActiveEffect, prepareActiveEffectCategories } from '../effects'
 import { ClassItem } from '../items/class/class-item';
 import { PeopleItem } from '../items/people/people-item';
 import { SkillItemData } from '../items/item-types';
+import { Logger } from '../logger';
+
+const log = new Logger();
 
 export class HVActorSheet extends ActorSheet {
   /** @override */
@@ -109,14 +112,8 @@ export class HVActorSheet extends ActorSheet {
     // lock sheet
     // html.find('#padlock').click(this._onToggleLock.bind(this));
 
-    // Random Mannerism
-    // html.find('#manner-roll').click(this._onGenerate.bind(this));
-
     // Add Inventory Item
     html.find('.item-create').click(this._onItemCreate.bind(this));
-
-    // Add Inventory Item
-    // html.find('.item-rnd').click(this._onRandomPossession.bind(this));
 
     // Update Inventory Item
     html.find('.item-edit').click((ev) => {
@@ -169,7 +166,7 @@ export class HVActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-  _onRoll(event) {
+  async _onRoll(event) {
     event.preventDefault();
     const element = event.currentTarget;
     const dataset = element.dataset;
@@ -186,11 +183,11 @@ export class HVActorSheet extends ActorSheet {
       }
     }
 
-    const rollData = this.getRollMods(dataset);
+    const rollData = await this.getRollMods(dataset);
     this.actor.rollCheck(rollData, target);
   }
 
-  getRollMods(data): { mod: number; longName: string } {
+  async getRollMods(data): Promise<{ mod: number; longName: string }> {
     const attribute = data.attr;
     switch (data.roll) {
       case 'attr':
@@ -198,6 +195,21 @@ export class HVActorSheet extends ActorSheet {
         break;
       case 'save':
         data.resource = 'saves';
+        if (this.actor.isHungarian()) {
+          if (!this.actor.getFlag('helveczia', 'fate-invoked')) {
+            this.actor.setFlag('helveczia', 'fate-invoked', true);
+            const randomSave = ['bravery', 'deftness', 'temptation'][Math.floor(Math.random() * 3)];
+            // TODO create and cleanup effect
+            ChatMessage.create({
+              user: game.user?.id,
+              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+              content: await renderTemplate('systems/helveczia/templates/chat/hungarian-fate.hbs', {
+                randomSave: randomSave,
+                actor: this.actor,
+              }),
+            });
+          }
+        }
         break;
       case 'skill':
         data.resource = '';
@@ -210,14 +222,19 @@ export class HVActorSheet extends ActorSheet {
     if (resource !== '') {
       mod = this.actor.data.data[resource][attribute].mod;
       longName = game.i18n.format(`HV.${resource}.${attribute}.long`);
+      log.debug(`getRollMods() | name:${longName} - resource=${resource}, attribute=${attribute}, mod=${mod}`);
     } else {
       const item = this.actor.items.get(`${data.itemId}`);
+      log.debug(`getRollMods() | itemId:${data.itemId}`);
       if (item) {
         const skill = item.data as SkillItemData;
         const bonus = skill.data.bonus;
         const ability = this.actor.data.data.scores[skill.data.ability].mod;
         mod = bonus + ability;
         longName = item.name ?? game.i18n.localize('HV.skill');
+        log.debug(`getRollMods() | name:${longName} - ability=${skill.data.ability}, bonus=${bonus}`);
+      } else {
+        log.error('getRollMods() | itemId not found on actor');
       }
     }
     return { mod: mod, longName: longName };
@@ -244,19 +261,6 @@ export class HVActorSheet extends ActorSheet {
     // const abilities = this.actor.getAbilities();
     const options = '';
 
-    // if (item.type === "consequence") {
-    // const resource = game.i18n.localize(`DEE.resource.${item.data.data.resource}.long`);
-    // options += `<label>${resource} </label>`;
-    // options += `<i class="fas fa-caret-down" style="font-size: small;text-align: right;"></i>${Math.abs(item.data.data.potency)}`;
-    // }
-
-    // if (["association","focus","occupation"].includes(item.type)) {
-    //     item.data.data.abilities.forEach((i)=> {
-    //         const ability = abilities.filter(e => e.name===i.name);
-    //         const checked = (ability.length > 0) ? check : empty;
-    //         options += `${checked}&nbsp;<label style="font-size: 0.9em;" for="${i.id}" >${i.name}</label>&nbsp;`;
-    //     });
-    // }
     // Toggle summary
     if (li.hasClass('expanded')) {
       const summary = li.children('.item-summary');

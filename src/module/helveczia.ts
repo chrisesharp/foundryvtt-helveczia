@@ -80,6 +80,12 @@ Hooks.once('setup', async () => {
 // When ready
 Hooks.once('ready', async () => {
   // Do anything once the system is ready
+  if (game.user?.isGM) {
+    const hungarians = game.actors?.filter((i) => i.isHungarian());
+    if (hungarians)
+      Promise.all(hungarians?.map(async (actor) => await actor.setFlag('helveczia', 'fate-invoked', false)));
+    console.log('Fate of Hungarians reset');
+  }
 });
 
 // Add any additional hooks if necessary

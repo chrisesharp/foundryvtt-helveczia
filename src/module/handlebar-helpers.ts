@@ -82,8 +82,9 @@ export const registerHandlebarHelpers = async function () {
   });
 
   Handlebars.registerHelper('getRollMods', function (sheet, roll, item) {
-    const data = sheet.getRollMods({ attr: item.data.data.attr, roll: roll, itemID: item.data.id });
-    return data.mod;
+    const data = sheet.getRollMods({ attr: item.data.data.ability, roll: roll, itemId: item.id });
+    const value = data.mod;
+    return value > 0 ? `+${value}` : value;
   });
 
   // Handlebars.registerHelper('unlocked', function (actor) {
