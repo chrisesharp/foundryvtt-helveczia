@@ -4,6 +4,7 @@ import { ClassItem } from '../items/class/class-item';
 import { PeopleItem } from '../items/people/people-item';
 import { SkillItemData } from '../items/item-types';
 import { Logger } from '../logger';
+import { HVItem } from '../items/item';
 
 const log = new Logger();
 
@@ -36,6 +37,7 @@ export class HVActorSheet extends ActorSheet {
       german_skill: this.actor.getFlag('helveczia', 'german-skill'),
       german_skill_generated: this.actor.getFlag('helveczia', 'german-skill-generated'),
       czech_skill: this.actor.getFlag('helveczia', 'czech-skill'),
+      vagabond_skill: this.actor.getFlag('helveczia', 'vagabond-skill'),
       fighter_third_skill: this.actor.getFlag('helveczia', 'fighter-third-skill'),
       fighter_fifth_skill: this.actor.getFlag('helveczia', 'fighter-fifth-skill'),
       options: this.options,
@@ -320,29 +322,45 @@ export class HVActorSheet extends ActorSheet {
     ).render(true);
   }
 
+  async getRandomCraft(): Promise<StoredDocument<HVItem> | null> {
+    const craftPack = game.packs.find((p) => p.metadata.name === 'craft-skills');
+    if (craftPack) {
+      const craftNames = (await craftPack.getIndex()).map((e) => e._id);
+      const craftId = craftNames[Math.floor(Math.random() * craftNames.length)];
+      if (craftId) {
+        const craft = await craftPack.getDocument(craftId);
+        return craft ? (craft as StoredDocument<HVItem>) : null;
+      }
+    }
+    return null;
+  }
+
   async _generateCraftSkill(event) {
     event.preventDefault();
-    const craft = { name: 'Apothecary', ability: 'int' };
-    const description =
-      'Due to their diligence, they learn an extra, randomly rolled Craft skill with a +2 bonus. In this trade, they are already considered journeymen by guild standards, and enjoy all attendant benefits.  Germans can become masters in their craft  at 4th level.';
-    const skill = {
-      name: craft.name,
-      type: 'skill',
-      data: {
-        ability: craft.ability,
-        subtype: 'craft',
-        bonus: 2,
-        description: description,
-      },
-    };
-    const itemData = await this.actor.createEmbeddedDocuments('Item', [skill]);
-    const id = (itemData[0] as Item).id;
-    if (id) {
-      const item = this.actor.items.get(id);
-      if (item) {
-        await item.setFlag('helveczia', 'locked', true);
-        await this.actor.setFlag('helveczia', 'german-skill-generated', craft.name);
-        await this.actor.update();
+    const rndCraft = await this.getRandomCraft();
+    if (rndCraft) {
+      const craft = { name: rndCraft?.name, ability: (rndCraft.data as SkillItemData).data.ability };
+      const description =
+        'Due to their diligence, they learn an extra, randomly rolled Craft skill with a +2 bonus. In this trade, they are already considered journeymen by guild standards, and enjoy all attendant benefits.  Germans can become masters in their craft  at 4th level.';
+      const skill = {
+        name: craft.name,
+        type: 'skill',
+        data: {
+          ability: craft.ability,
+          subtype: 'craft',
+          bonus: 2,
+          description: description,
+        },
+      };
+      const itemData = await this.actor.createEmbeddedDocuments('Item', [skill]);
+      const id = (itemData[0] as Item).id;
+      if (id) {
+        const item = this.actor.items.get(id);
+        if (item) {
+          await item.setFlag('helveczia', 'locked', true);
+          await this.actor.setFlag('helveczia', 'german-skill-generated', skill.name);
+          await this.actor.update();
+        }
       }
     }
   }

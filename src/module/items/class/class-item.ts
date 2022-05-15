@@ -19,7 +19,7 @@ export class ClassItem extends BaseItem {
     Cleric: {},
     Student: {},
     Fighter: { skillBonus: ClassItem.getFighterSkill, onDelete: ClassItem.cleanupFighterSkill },
-    Vagabond: {},
+    Vagabond: { skillBonus: ClassItem.getVagabondSkill, onDelete: ClassItem.cleanupVagabondSkill },
   };
 
   static get documentName() {
@@ -48,8 +48,8 @@ export class ClassItem extends BaseItem {
   }
 
   static getFighterSkill(actor: HVActor): number {
-    const gainedThirdLevelSkill = actor.data.data.level >= 3 && actor.isFighter();
-    const gainedFifthLevelSkill = actor.data.data.level >= 5 && actor.isFighter();
+    const gainedThirdLevelSkill = actor.data.data.level === 3 || actor.data.data.level === 4;
+    const gainedFifthLevelSkill = actor.data.data.level >= 5;
     actor.setFlag('helveczia', 'fighter-third-skill', gainedThirdLevelSkill);
     actor.setFlag('helveczia', 'fighter-fifth-skill', gainedFifthLevelSkill);
     const gainedSkills = [gainedThirdLevelSkill, gainedFifthLevelSkill]
@@ -61,6 +61,16 @@ export class ClassItem extends BaseItem {
   static async cleanupFighterSkill(actor: HVActor): Promise<void> {
     actor.setFlag('helveczia', 'fighter-third-skill', false);
     actor.setFlag('helveczia', 'fighter-fifth-skill', false);
+  }
+
+  static getVagabondSkill(actor: HVActor): number {
+    const gainedSkills = actor.isVagabond();
+    actor.setFlag('helveczia', 'vagabond-skill', gainedSkills);
+    return gainedSkills ? 4 : 0;
+  }
+
+  static async cleanupVagabondSkill(actor: HVActor): Promise<void> {
+    actor.setFlag('helveczia', 'vagabond-skill', false);
   }
 
   /**

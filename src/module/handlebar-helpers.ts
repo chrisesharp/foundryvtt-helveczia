@@ -17,9 +17,9 @@ export const registerHandlebarHelpers = async function () {
     return `${level}${suffix}`;
   });
 
-  Handlebars.registerHelper('bonusSkills', function (skill, role, lvl) {
+  Handlebars.registerHelper('bonusSkills', function (num, skill, role, lvl) {
     const level = `${lvl}${getOrdinal(parseInt(lvl))}`;
-    return game.i18n.format('HV.bonusSkills', { skill: skill, role: role, level: level });
+    return game.i18n.format('HV.bonusSkills', { num: num, skill: skill, role: role, level: level });
   });
 
   Handlebars.registerHelper('largest', function (lh, rh) {
