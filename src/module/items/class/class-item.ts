@@ -3,13 +3,23 @@ import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vt
 import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
+import { Logger } from '../../logger';
+import { HVActor } from '../../actor/actor';
+
+const log = new Logger();
 
 export class ClassItem extends BaseItem {
-  static professions: Record<string, unknown> = {
-    Cleric: null,
-    Student: null,
-    Fighter: null,
-    Vagabond: null,
+  static professions: {
+    [key: string]: {
+      onCreate?: (item: HVItem) => void;
+      skillBonus?: (actor: HVActor) => number;
+      onDelete?: (actor: HVActor) => void;
+    };
+  } = {
+    Cleric: {},
+    Student: {},
+    Fighter: { skillBonus: ClassItem.getFighterSkill, onDelete: ClassItem.cleanupFighterSkill },
+    Vagabond: {},
   };
 
   static get documentName() {
@@ -18,6 +28,39 @@ export class ClassItem extends BaseItem {
 
   static classes(): string[] {
     return Object.keys(ClassItem.professions);
+  }
+
+  static getSkillBonus(actor, itemData) {
+    let bonus = 0;
+    const func = ClassItem.professions[itemData.name].skillBonus;
+    if (func) {
+      bonus += func(actor);
+    }
+    log.debug(`PeopleItem.getSkillBonus() | skill bonus for ${itemData.name} is ${bonus}`);
+    return bonus;
+  }
+
+  static onDelete(actor, itemData) {
+    const func = ClassItem.professions[itemData.name].onDelete;
+    if (func) {
+      func(actor);
+    }
+  }
+
+  static getFighterSkill(actor: HVActor): number {
+    const gainedThirdLevelSkill = actor.data.data.level >= 3 && actor.isFighter();
+    const gainedFifthLevelSkill = actor.data.data.level >= 5 && actor.isFighter();
+    actor.setFlag('helveczia', 'fighter-third-skill', gainedThirdLevelSkill);
+    actor.setFlag('helveczia', 'fighter-fifth-skill', gainedFifthLevelSkill);
+    const gainedSkills = [gainedThirdLevelSkill, gainedFifthLevelSkill]
+      .map((i) => (i ? 1 : 0))
+      .reduce((acc: number, n) => acc + n, 0);
+    return gainedSkills;
+  }
+
+  static async cleanupFighterSkill(actor: HVActor): Promise<void> {
+    actor.setFlag('helveczia', 'fighter-third-skill', false);
+    actor.setFlag('helveczia', 'fighter-fifth-skill', false);
   }
 
   /**
@@ -31,11 +74,13 @@ export class ClassItem extends BaseItem {
   }
 
   static async onCreate(
-    _item: HVItem,
-    _data: PropertiesToSource<ItemDataBaseProperties>,
+    item: HVItem,
+    data: PropertiesToSource<ItemDataBaseProperties>,
     _options: DocumentModificationOptions,
     _userId: string,
   ) {
-    //console.log('in ClassItem.onCreate():', item, data, options, userId);
+    if (item.parent) return;
+    const func = ClassItem.professions[data.name].onCreate;
+    if (func) func(item);
   }
 }

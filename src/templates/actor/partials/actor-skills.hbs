@@ -13,7 +13,13 @@
             {{/unless}}
         {{/if}}
         {{#if czech_skill }}
-            <h4>Bonus Science skill at 4th Level</h4>
+            <h4>{{bonusSkills 'Science' 'Czech' '4'}}</h4>
+        {{/if}}
+        {{#if fighter_third_skill }}
+            <h4>{{bonusSkills '' 'Fighter' '3'}}</h4>
+        {{/if}}
+        {{#if fighter_fifth_skill }}
+            <h4>{{bonusSkills '' 'Fighter' '5'}}</h4>
         {{/if}}
     {{#each data.skills as |item id|}}
         <li class="item-entry item-rollable flexcol" data-item-id="{{item.id}}">

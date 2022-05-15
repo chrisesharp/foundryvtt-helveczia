@@ -36,6 +36,8 @@ export class HVActorSheet extends ActorSheet {
       german_skill: this.actor.getFlag('helveczia', 'german-skill'),
       german_skill_generated: this.actor.getFlag('helveczia', 'german-skill-generated'),
       czech_skill: this.actor.getFlag('helveczia', 'czech-skill'),
+      fighter_third_skill: this.actor.getFlag('helveczia', 'fighter-third-skill'),
+      fighter_fifth_skill: this.actor.getFlag('helveczia', 'fighter-fifth-skill'),
       options: this.options,
       editable: this.isEditable,
       isToken: this.token && !this.token.data.actorLink,

@@ -4,6 +4,7 @@
   "HV.skills.practical": "Practical",
   "HV.skills.vagabond": "Vagabond",
   "HV.skills.esoteric": "Esoteric",
+  "HV.bonusSkills": "Bonus {skill} skill, as a {role}, at {level}",
   "HV.skillType": "A {type} skill",
   "HV.chooseOrigins": "Choose Origin and Class",
   "HV.randomCraft": "Roll for Random Craft",

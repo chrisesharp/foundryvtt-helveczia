@@ -13,21 +13,13 @@ export const registerHandlebarHelpers = async function () {
 
   Handlebars.registerHelper('ordinal', function (a) {
     const level: number = parseInt(a);
-    let suffix: string;
-    switch (level) {
-      case 1:
-        suffix = 'st';
-        break;
-      case 2:
-        suffix = 'nd';
-        break;
-      case 3:
-        suffix = 'rd';
-        break;
-      default:
-        suffix = 'th';
-    }
+    const suffix = getOrdinal(level);
     return `${level}${suffix}`;
+  });
+
+  Handlebars.registerHelper('bonusSkills', function (skill, role, lvl) {
+    const level = `${lvl}${getOrdinal(parseInt(lvl))}`;
+    return game.i18n.format('HV.bonusSkills', { skill: skill, role: role, level: level });
   });
 
   Handlebars.registerHelper('largest', function (lh, rh) {
@@ -184,3 +176,21 @@ export const registerHandlebarHelpers = async function () {
     return arr.includes(e);
   });
 };
+
+function getOrdinal(level: number): string {
+  let suffix: string;
+  switch (level) {
+    case 1:
+      suffix = 'st';
+      break;
+    case 2:
+      suffix = 'nd';
+      break;
+    case 3:
+      suffix = 'rd';
+      break;
+    default:
+      suffix = 'th';
+  }
+  return suffix;
+}
