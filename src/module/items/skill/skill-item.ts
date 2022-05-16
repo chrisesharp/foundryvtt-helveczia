@@ -28,6 +28,15 @@ export class SkillItem extends BaseItem {
     // console.log('in SkillItem.onCreate():', item, data, options, userId);
   }
 
+  static prepareItemData(itemDocument) {
+    const data = super.prepareItemData(itemDocument);
+    if (itemDocument.isOwned && itemDocument.parent instanceof Actor) {
+      const extraData = CONFIG.HV.itemClasses['people']?.augmentOwnedItem(itemDocument.parent, data);
+      mergeObject(data, extraData);
+    }
+    return data;
+  }
+
   static async _onRollSkill(e, sheet) {
     e.preventDefault();
 

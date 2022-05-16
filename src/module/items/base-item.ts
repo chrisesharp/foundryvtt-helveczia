@@ -26,17 +26,22 @@ export abstract class BaseItem {
    * Allows each item to prepare its data before its rendered.
    * This can be used to add additional information right before rendering.
    */
-  static prepareItemData(itemData, _itemDocument) {
+  static prepareItemData(itemDocument) {
+    const itemData = itemDocument.data;
     if (itemData.effects) {
       itemData.effects.forEach(async (e) => {
         try {
-          e.data.origin = _itemDocument.uuid;
+          e.data.origin = itemDocument.uuid;
         } catch (err) {
           log.error('prepareItemData() |', err);
         }
       });
     }
     return itemData;
+  }
+
+  static augmentOwnedItem(_actor, data) {
+    return data;
   }
 
   /**
@@ -82,7 +87,7 @@ export abstract class BaseItem {
    * @param sheet
    */
 
-  static getSkillBonus(_actor, _itemData) {
+  static getSkillsBonus(_actor, _itemData) {
     return 0;
   }
 

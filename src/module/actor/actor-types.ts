@@ -30,6 +30,7 @@ type BaseData = {
   class: string;
   virtue: number;
   experience: number;
+  maxskills: number;
   wealth:
     | any
     | {

@@ -90,5 +90,6 @@
   "HV.item.quantity": "Quantity",
   "HV.item.weight": "Weight",
   "HV.messages.AttackFailure": "failed in their attack against",
-  "HV.messages.AttackSuccess": "was successful in their attack"
+  "HV.messages.AttackSuccess": "was successful in their attack",
+  "HV.errors.fullSkills": "You have a full quota of skills already!"
 }

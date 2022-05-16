@@ -159,8 +159,8 @@ export class HVActor extends Actor {
    * Update base & bonus for saves
    */
   async _updateSkills(data: any) {
-    const peopleBonus = data.peoples[0]?.getSkillBonus(this) ?? 0;
-    const classBonus = data.classes[0]?.getSkillBonus(this) ?? 0;
+    const peopleBonus = data.peoples[0]?.getSkillsBonus(this) ?? 0;
+    const classBonus = data.classes[0]?.getSkillsBonus(this) ?? 0;
     data.maxskills += data.scores.int.mod + peopleBonus + classBonus;
     log.debug(
       `HVActor._updateSkills() | max skills are int(${data.scores.int.mod}) + peoples(${peopleBonus}) + class(${classBonus})`,
@@ -352,6 +352,10 @@ export class HVActor extends Actor {
 
   isHungarian(): boolean {
     return this.isNamedType('Hungarian', 'people');
+  }
+
+  isDutch(): boolean {
+    return this.isNamedType('Dutch', 'people');
   }
 
   isNamedType(name: string, type: string): boolean {

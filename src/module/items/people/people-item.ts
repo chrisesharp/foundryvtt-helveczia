@@ -20,7 +20,7 @@ export class PeopleItem extends BaseItem {
     German: { skillBonus: PeopleItem.getGermanSkill, onDelete: PeopleItem.cleanupGermanSkill },
     French: {},
     Italian: {},
-    Dutch: {},
+    Dutch: { onCreate: PeopleItem.onCreateDutch, onDelete: PeopleItem.cleanupDutch },
     Czech: { skillBonus: PeopleItem.getCzechSkill, onDelete: PeopleItem.cleanupCzechSkill },
     English: {},
     Gypsy: {},
@@ -51,6 +51,14 @@ export class PeopleItem extends BaseItem {
     }
   }
 
+  static async onCreateDutch(item: HVItem): Promise<void> {
+    item.actor?.setFlag('helveczia', 'dutch-skill', true);
+  }
+
+  static async cleanupDutch(actor: HVActor): Promise<void> {
+    actor?.setFlag('helveczia', 'dutch-skill', false);
+  }
+
   static getCzechSkill(actor: HVActor): number {
     const gainedSkill = actor.data.data.level >= 4 && (actor.isCleric() || actor.isStudent());
     actor.setFlag('helveczia', 'czech-skill', gainedSkill);
@@ -61,12 +69,19 @@ export class PeopleItem extends BaseItem {
     actor.setFlag('helveczia', 'czech-skill', false);
   }
 
-  static getDefaultSkill(_actor: HVActor): number {
-    return 0;
-  }
-
   static get documentName() {
     return 'people';
+  }
+
+  static augmentOwnedItem(actor, data) {
+    if (data.type === 'skill') {
+      if (actor.isDutch()) {
+        if (data.name === 'Sail' || data.name === 'Appraise') {
+          data.data.bonus += 2;
+        }
+      }
+    }
+    return data;
   }
 
   /**
@@ -85,22 +100,23 @@ export class PeopleItem extends BaseItem {
     _options: DocumentModificationOptions,
     _userId: string,
   ) {
-    if (item.parent) return;
-    const func = PeopleItem.races[data.name].onCreate;
-    if (func) func(item);
+    if (item.parent) {
+      const func = PeopleItem.races[data.name].onCreate;
+      if (func) func(item);
+    }
   }
 
   static peoples(): string[] {
     return Object.keys(PeopleItem.races);
   }
 
-  static getSkillBonus(actor, itemData) {
+  static getSkillsBonus(actor, itemData) {
     let bonus = 0;
     const func = PeopleItem.races[itemData.name].skillBonus;
     if (func) {
       bonus += func(actor);
     }
-    log.debug(`PeopleItem.getSkillBonus() | skill bonus for ${itemData.name} is ${bonus}`);
+    log.debug(`PeopleItem.getSkillsBonus() | skill bonus for ${itemData.name} is ${bonus}`);
     return bonus;
   }
 

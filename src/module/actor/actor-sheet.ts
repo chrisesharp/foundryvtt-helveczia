@@ -37,6 +37,7 @@ export class HVActorSheet extends ActorSheet {
       german_skill: this.actor.getFlag('helveczia', 'german-skill'),
       german_skill_generated: this.actor.getFlag('helveczia', 'german-skill-generated'),
       czech_skill: this.actor.getFlag('helveczia', 'czech-skill'),
+      dutch_skill: this.actor.getFlag('helveczia', 'dutch-skill'),
       vagabond_skill: this.actor.getFlag('helveczia', 'vagabond-skill'),
       fighter_third_skill: this.actor.getFlag('helveczia', 'fighter-third-skill'),
       fighter_fifth_skill: this.actor.getFlag('helveczia', 'fighter-fifth-skill'),
@@ -72,6 +73,10 @@ export class HVActorSheet extends ActorSheet {
         case 'class':
           this._removeClasses();
           break;
+        case 'skill':
+          if (this.actor.data.data.skills.length == this.actor.data.data.maxskills) {
+            return ui.notifications.error(game.i18n.localize('HV.errors.fullSkills'));
+          }
       }
     }
     return super._onDrop(event);
@@ -218,8 +223,8 @@ export class HVActorSheet extends ActorSheet {
       case 'save':
         data.resource = 'saves';
         if (this.actor.isHungarian()) {
-          const fate = await PeopleItem.enableHungarianFate(this.actor);
-          if (data.attr === fate.attr) mod.push(fate.mod);
+          const fated = await PeopleItem.enableHungarianFate(this.actor);
+          if (data.attr === fated.attr) mod.push(fated.mod);
         }
         break;
       case 'skill':
@@ -260,13 +265,6 @@ export class HVActorSheet extends ActorSheet {
    * @private
    */
   _onItemSummary(event) {
-    // const empty = `<span class="fa-stack" style="font-size: 0.5em;">
-    //                 <i class="far fa-square fa-stack-2x" style="vertical-align:middle;"></i>
-    //             </span>`;
-    // const check = `<span class="fa-stack" style="font-size: 0.5em;">
-    //                 <i class="fas fa-square fa-stack-2x" style="vertical-align:middle;"></i>
-    //                 <i class="fas fa-check fa-stack-1x fa-inverse" style="vertical-align:middle;"></i>
-    //             </span>`;
     event.preventDefault();
     const li = $(event.currentTarget).parents('.item-entry');
     const item = this.actor.items.get(li.data('item-id'));

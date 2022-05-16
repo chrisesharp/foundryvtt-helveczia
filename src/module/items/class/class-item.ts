@@ -30,13 +30,13 @@ export class ClassItem extends BaseItem {
     return Object.keys(ClassItem.professions);
   }
 
-  static getSkillBonus(actor, itemData) {
+  static getSkillsBonus(actor, itemData) {
     let bonus = 0;
     const func = ClassItem.professions[itemData.name].skillBonus;
     if (func) {
       bonus += func(actor);
     }
-    log.debug(`PeopleItem.getSkillBonus() | skill bonus for ${itemData.name} is ${bonus}`);
+    log.debug(`PeopleItem.getSkillsBonus() | skill bonus for ${itemData.name} is ${bonus}`);
     return bonus;
   }
 

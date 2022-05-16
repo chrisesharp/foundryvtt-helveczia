@@ -21,7 +21,7 @@ export class HVItem extends Item {
     // Let every itemType prepare itself
     if (this.actor?.data) {
       if (CONFIG.HV.itemClasses[this.data.type]) {
-        CONFIG.HV.itemClasses[this.data.type].prepareItemData(this.data, this);
+        CONFIG.HV.itemClasses[this.data.type].prepareItemData(this);
       }
     }
   }
@@ -34,9 +34,9 @@ export class HVItem extends Item {
   }
 
   /** Augment actor skills  */
-  getSkillBonus(actor) {
+  getSkillsBonus(actor) {
     return CONFIG.HV.itemClasses[this.data.type]
-      ? CONFIG.HV.itemClasses[this.data.type].getSkillBonus(actor, this.data)
+      ? CONFIG.HV.itemClasses[this.data.type].getSkillsBonus(actor, this.data)
       : 0;
   }
 }
