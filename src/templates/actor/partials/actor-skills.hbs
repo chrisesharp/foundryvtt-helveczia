@@ -29,7 +29,7 @@
             <div class="item flexrow">
                 <div class="item-image rollable" data-roll="skill" data-item-id="{{item.id}}" data-attr="{{item.data.data.ability}}"><img src="{{item.img}}" width="24" height="24"/></div>
                 <h4 class="item-name">{{item.name}}</h4>
-                <div>{{ getRollMods actor._sheet 'skill' item }}</div>
+                <div class="item-roll-mod"></div>
                 {{#unless (itemLocked item)}}
                 <div class="item-controls">
                     <a class="item-control item-edit" title="{{localize 'HV.Edit'}} {{localize 'HV.tabs.skills'}}"><i class="fas fa-edit"></i></a>

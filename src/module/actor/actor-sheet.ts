@@ -135,10 +135,26 @@ export class HVActorSheet extends ActorSheet {
       li.slideUp(200, () => this.render(false));
     });
 
+    // Update Item Roll Mods
+    html.find('.item-roll-mod').each(this._getItemRollMod.bind(this));
+
     // Active Effect management
     html.find('.effect-control').click((ev) => onManageActiveEffect(ev, this.actor));
   }
 
+  async _getItemRollMod(_idx, div) {
+    const itemDiv = $(div).parent().children('.rollable');
+    const itemID = itemDiv.data('item-id');
+    const item = this.actor.items.get(itemID);
+    let mods = '0';
+    if (item) {
+      const itemData = item.data as SkillItemData;
+      const data = await this.getRollMods({ attr: itemData.data.ability, roll: itemData.type, itemId: item.id });
+      const value = data.mods.reduce((acc, n) => acc + n, 0);
+      mods = value > 0 ? `+${value}` : `${value}`;
+    }
+    $(div).text(mods);
+  }
   /**
    * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
    * @param {Event} event   The originating click event
@@ -208,6 +224,7 @@ export class HVActorSheet extends ActorSheet {
         break;
       case 'skill':
         data.resource = '';
+        mod.push(this.actor.data.data.level);
         break;
       default:
     }
