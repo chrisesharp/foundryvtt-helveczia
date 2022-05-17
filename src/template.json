@@ -106,7 +106,8 @@
       "bonus": 0
     },
     "armour": {
-      "templates": ["base", "possession"]
+      "templates": ["base", "possession"],
+      "bonus": 0
     },
     "weapon": {
       "templates": ["base", "possession"],

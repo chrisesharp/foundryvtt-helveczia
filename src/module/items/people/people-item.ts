@@ -60,6 +60,18 @@ export class PeopleItem extends BaseItem {
 
   static async onCreateDutch(item: HVItem): Promise<void> {
     item.actor?.setFlag('helveczia', 'dutch-skill', true);
+    if (!item.actor?.getFlag('helveczia', 'dutch-onions')) {
+      const onions = {
+        name: 'Onions',
+        type: 'possession',
+        data: {
+          description:
+            'The Dutch begin their career with 1d3+1 onions. <p> Why this strange junk is so important to the Dutch, only the Lord knows.',
+        },
+      };
+      await item.actor?.createEmbeddedDocuments('Item', [onions]);
+      await item.actor?.setFlag('helveczia', 'dutch-onions', true);
+    }
   }
 
   static async cleanupDutch(actor: HVActor): Promise<void> {

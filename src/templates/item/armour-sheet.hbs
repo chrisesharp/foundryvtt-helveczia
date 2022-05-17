@@ -7,10 +7,20 @@
           <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
           <div class="form-group">
             <h2 class="cost">Cost: </h2>
-            <input name="data.cost.value" type="text" value="{{data.cost.value}}">
-            <select name="data.cost.coin" type="text">
-             {{selectOptions coins selected=data.cost.coin}}
-            </select>
+            {{#if isGM }}
+              <input name="data.cost.value" type="text" value="{{data.cost.value}}">
+              <select name="data.cost.coin" type="text">
+              {{selectOptions coins selected=data.cost.coin}}
+              </select>
+              <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.AC' }}">
+              <h3 style="display: contents; width: 40px;">{{ localize 'HV.AC' }}<input name="data.bonus" type="text" data-dtype="Number" value="{{ plusminus data.bonus}}"></h3>
+              </div>
+            {{else}}
+              <h3>{{ data.cost.value }} {{ data.cost.coin }}</h3>
+              <div style="display: inline-flex;" title="{{ localize 'HV.AC' }}">
+              <h2>{{ localize 'HV.AC' }}: {{ plusminus data.bonus }}</h2>
+              </div>
+            {{/if}}
           </div>
       </div>
     </header>
