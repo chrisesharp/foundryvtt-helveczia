@@ -133,8 +133,9 @@ export class HVActor extends Actor {
    */
 
   _updateAttackMods(data: any): void {
-    data.attack.melee.bonus += data.scores.str.mod;
-    data.attack.ranged.bonus += data.scores.dex.mod;
+    const virtue = this.isLowVirtue() ? 1 : 0;
+    data.attack.melee.bonus += data.scores.str.mod + virtue;
+    data.attack.ranged.bonus += data.scores.dex.mod + virtue;
     data.attack.melee.mod = data.attack.melee.base + data.attack.melee.bonus;
     data.attack.ranged.mod = data.attack.ranged.base + data.attack.ranged.bonus;
   }
@@ -146,7 +147,7 @@ export class HVActor extends Actor {
     data.saves.bravery.bonus += data.scores.con.mod;
     data.saves.deftness.bonus += data.scores.dex.mod;
     data.saves.temptation.bonus += data.scores.wis.mod;
-    const virtue = data.virtue > 14 ? 1 : 0;
+    const virtue = this.isHighVirtue() ? 1 : 0;
 
     for (const saveType of Object.keys(data.saves)) {
       const save = data.saves[saveType];
@@ -367,6 +368,14 @@ export class HVActor extends Actor {
     const actorData = this.data;
     const namedClass = actorData.items.find((i) => i.type === type && i.name === name);
     return namedClass !== undefined;
+  }
+
+  isLowVirtue(): boolean {
+    return this.data.data.virtue < 7;
+  }
+
+  isHighVirtue(): boolean {
+    return this.data.data.virtue > 14;
   }
 }
 
