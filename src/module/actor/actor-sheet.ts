@@ -5,6 +5,7 @@ import { PeopleItem } from '../items/people/people-item';
 import { SkillItemData } from '../items/item-types';
 import { Logger } from '../logger';
 import { HVItem } from '../items/item';
+import { CharacterActorData } from './actor-types';
 
 const log = new Logger();
 
@@ -41,6 +42,10 @@ export class HVActorSheet extends ActorSheet {
       vagabond_skill: this.actor.getFlag('helveczia', 'vagabond-skill'),
       fighter_third_skill: this.actor.getFlag('helveczia', 'fighter-third-skill'),
       fighter_fifth_skill: this.actor.getFlag('helveczia', 'fighter-fifth-skill'),
+      student_skill: this.actor.getFlag('helveczia', 'student-skill'),
+      student_skills_generated:
+        this.actor.getFlag('helveczia', 'student-skill-generated-1') &&
+        this.actor.getFlag('helveczia', 'student-skill-generated-2'),
       options: this.options,
       editable: this.isEditable,
       isToken: this.token && !this.token.data.actorLink,
@@ -74,8 +79,15 @@ export class HVActorSheet extends ActorSheet {
           this._removeClasses();
           break;
         case 'skill':
+          if (this.actor.items.getName(item.name)) return;
           if (this.actor.data.data.skills.length == this.actor.data.data.maxskills) {
             return ui.notifications.error(game.i18n.localize('HV.errors.fullSkills'));
+          }
+          if (item.data.data.subtype === 'esoteric' && !(this.actor.isCleric() || this.actor.isStudent())) {
+            return ui.notifications.error(game.i18n.localize('HV.errors.notEsoteric'));
+          }
+          if (item.data.data.subtype === 'vagabond' && !this.actor.isVagabond()) {
+            return ui.notifications.error(game.i18n.localize('HV.errors.notVagabond'));
           }
       }
     }
@@ -119,6 +131,7 @@ export class HVActorSheet extends ActorSheet {
     html.find('.generate-abilities').click(this._generateAbilities.bind(this));
     html.find('.choose-race-class').click(this._generateRaceClass.bind(this));
     html.find('.generate-craft-skill').click(this._generateCraftSkill.bind(this));
+    html.find('.generate-science-skills').click(this._generateScienceSkills.bind(this));
     // lock sheet
     // html.find('#padlock').click(this._onToggleLock.bind(this));
 
@@ -337,14 +350,25 @@ export class HVActorSheet extends ActorSheet {
     ).render(true);
   }
 
-  async getRandomCraft(): Promise<StoredDocument<HVItem> | null> {
+  async getRandomCraft(existingSkills: string[]): Promise<StoredDocument<HVItem> | null> {
     const craftPack = game.packs.find((p) => p.metadata.name === 'craft-skills');
-    if (craftPack) {
-      const craftNames = (await craftPack.getIndex()).map((e) => e._id);
-      const craftId = craftNames[Math.floor(Math.random() * craftNames.length)];
-      if (craftId) {
-        const craft = await craftPack.getDocument(craftId);
-        return craft ? (craft as StoredDocument<HVItem>) : null;
+    return this.getRandomSkill(craftPack, existingSkills);
+  }
+
+  async getRandomScience(existingSkills: string[]): Promise<StoredDocument<HVItem> | null> {
+    const sciencePack = game.packs.find((p) => p.metadata.name === 'science-skills');
+    return this.getRandomSkill(sciencePack, existingSkills);
+  }
+
+  async getRandomSkill(pack, existingSkills: string[]): Promise<StoredDocument<HVItem> | null> {
+    if (pack) {
+      const skillNames = (await pack.getIndex()).map((e) => {
+        if (!existingSkills.includes(e.name)) return e._id;
+      });
+      const skillId = skillNames[Math.floor(Math.random() * skillNames.length)];
+      if (skillId) {
+        const skill = await pack.getDocument(skillId);
+        return skill ? (skill as StoredDocument<HVItem>) : null;
       }
     }
     return null;
@@ -352,7 +376,8 @@ export class HVActorSheet extends ActorSheet {
 
   async _generateCraftSkill(event) {
     event.preventDefault();
-    const rndCraft = await this.getRandomCraft();
+    const existingSkills = (this.actor.data as CharacterActorData).data.skills.map((i) => i.name);
+    const rndCraft = await this.getRandomCraft(existingSkills);
     if (rndCraft) {
       const craft = { name: rndCraft?.name, ability: (rndCraft.data as SkillItemData).data.ability };
       const description =
@@ -378,5 +403,44 @@ export class HVActorSheet extends ActorSheet {
         }
       }
     }
+  }
+
+  async _generateScienceSkills(event) {
+    event.preventDefault();
+    const existingSkills = (this.actor.data as CharacterActorData).data.skills.map((i) => i.name);
+    existingSkills.push(await this._genRndScienceSkill(1, existingSkills));
+    await this._genRndScienceSkill(2, existingSkills);
+    await this.actor.update();
+  }
+
+  async _genRndScienceSkill(idx, existingSkills): Promise<string | null> {
+    const rndSkill = await this.getRandomScience(existingSkills);
+    if (rndSkill != null) {
+      const skillData = { name: rndSkill.name, ability: (rndSkill.data as SkillItemData).data.ability };
+      const description = 'Random science known from their Student studies.';
+      const skill = {
+        name: skillData.name,
+        type: 'skill',
+        data: {
+          ability: skillData.ability,
+          subtype: 'science',
+          bonus: 0,
+          description: description,
+        },
+      };
+      const itemData = await this.actor.createEmbeddedDocuments('Item', [skill]);
+      const id = (itemData[0] as Item).id;
+      if (id) {
+        const item = this.actor.items.get(id);
+        if (item) {
+          await item.setFlag('helveczia', 'locked', true);
+          const flag = `student-skill-generated-${idx}`;
+          await this.actor.setFlag('helveczia', flag, skill.name);
+          log.debug(`getRndScienceSkill() | Set flag: ${flag} to ${this.actor.getFlag('helveczia', flag)}`);
+        }
+        return rndSkill.name;
+      }
+    }
+    return null;
   }
 }

@@ -17,7 +17,11 @@ export class PeopleItem extends BaseItem {
       onDelete?: (actor: HVActor) => void;
     };
   } = {
-    German: { skillBonus: PeopleItem.getGermanSkill, onDelete: PeopleItem.cleanupGermanSkill },
+    German: {
+      onCreate: PeopleItem.onCreateGerman,
+      skillBonus: PeopleItem.getGermanSkill,
+      onDelete: PeopleItem.cleanupGermanSkill,
+    },
     French: {},
     Italian: {},
     Dutch: { onCreate: PeopleItem.onCreateDutch, onDelete: PeopleItem.cleanupDutch },
@@ -32,8 +36,11 @@ export class PeopleItem extends BaseItem {
     Swedish: {},
   };
 
-  static getGermanSkill(actor: HVActor): number {
-    actor.setFlag('helveczia', 'german-skill', true);
+  static async onCreateGerman(item: HVItem): Promise<void> {
+    item.actor?.setFlag('helveczia', 'german-skill', true);
+  }
+
+  static getGermanSkill(_actor: HVActor): number {
     return 1;
   }
 

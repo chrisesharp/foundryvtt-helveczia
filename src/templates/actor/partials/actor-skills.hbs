@@ -12,6 +12,11 @@
             <button class="generate-craft-skill"><i class="fa fa-dice"></i>{{ localize 'HV.randomCraft' }}</button>
             {{/unless}}
         {{/if}}
+        {{#if student_skill }}
+            {{#unless student_skills_generated}}
+            <button class="generate-science-skills"><i class="fa fa-dice"></i>{{ localize 'HV.randomScience' }}</button>
+            {{/unless}}
+        {{/if}}
         {{#if czech_skill }}
             <h4>{{bonusSkills '1' 'Science' 'Czech' '4'}}</h4>
         {{/if}}

@@ -5,6 +5,7 @@ import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 import { Logger } from '../../logger';
 import { HVActor } from '../../actor/actor';
+import { SkillItemData } from '../item-types';
 
 const log = new Logger();
 
@@ -17,7 +18,11 @@ export class ClassItem extends BaseItem {
     };
   } = {
     Cleric: {},
-    Student: {},
+    Student: {
+      onCreate: ClassItem.onCreateStudent,
+      skillBonus: ClassItem.getStudentSkill,
+      onDelete: ClassItem.cleanupStudent,
+    },
     Fighter: { skillBonus: ClassItem.getFighterSkill, onDelete: ClassItem.cleanupFighterSkill },
     Vagabond: { skillBonus: ClassItem.getVagabondSkill, onDelete: ClassItem.cleanupVagabondSkill },
   };
@@ -71,6 +76,36 @@ export class ClassItem extends BaseItem {
 
   static async cleanupVagabondSkill(actor: HVActor): Promise<void> {
     actor.setFlag('helveczia', 'vagabond-skill', false);
+  }
+
+  static async onCreateStudent(item: HVItem): Promise<void> {
+    item.actor?.setFlag('helveczia', 'student-skill', true);
+  }
+
+  static getStudentSkill(actor: HVActor): number {
+    const gainedSkills = actor.isStudent();
+    actor.setFlag('helveczia', 'student-skill', gainedSkills);
+    return gainedSkills ? 2 : 0;
+  }
+
+  static async cleanupStudent(actor: HVActor): Promise<void> {
+    actor.setFlag('helveczia', 'student-skill', false);
+    const sciences = actor.items.filter(
+      (i) => i.type === 'skill' && (i.data as SkillItemData).data.subtype === 'science',
+    );
+    if (sciences.length > 0) {
+      for (const science of sciences) {
+        if (science.getFlag('helveczia', 'locked') && science.id) {
+          const flag =
+            actor.getFlag('helveczia', 'student-skill-generated-1') === science.name
+              ? 'student-skill-generated-1'
+              : 'student-skill-generated-2';
+          await actor.setFlag('helveczia', flag, false);
+          await actor.deleteEmbeddedDocuments('Item', [science.id]);
+          await actor.sheet?.render(true);
+        }
+      }
+    }
   }
 
   /**
