@@ -11,7 +11,17 @@
         </div>
         {{#unless no_origins }}
         <div class="actor-level" style="display: inline-flex;">
-            <h3>{{ordinal data.level }}  level {{data.people}} {{data.class}}</h3>
+            <h3>{{ordinal data.level }}  level {{data.people}}
+                {{#if fighter_class}}
+                    {{#if fighter_specialism }}
+                    <h3>({{ fighter_specialism }})
+                    {{else}}
+                     <button style="width: 85px;" data-class="fighter" class="choose-specialism">Specialism</button>
+                    {{/if}}
+                {{else}}
+                {{data.class}}
+                {{/if}}
+            </h3>
         </div>
         {{/unless}}
         <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.experience' }}">

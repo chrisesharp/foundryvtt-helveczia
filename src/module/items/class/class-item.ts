@@ -23,8 +23,15 @@ export class ClassItem extends BaseItem {
       skillBonus: ClassItem.getStudentSkill,
       onDelete: ClassItem.cleanupStudent,
     },
-    Fighter: { skillBonus: ClassItem.getFighterSkill, onDelete: ClassItem.cleanupFighterSkill },
-    Vagabond: { skillBonus: ClassItem.getVagabondSkill, onDelete: ClassItem.cleanupVagabondSkill },
+    Fighter: {
+      onCreate: ClassItem.onCreateFighter,
+      skillBonus: ClassItem.getFighterSkill,
+      onDelete: ClassItem.cleanupFighterSkill,
+    },
+    Vagabond: {
+      skillBonus: ClassItem.getVagabondSkill,
+      onDelete: ClassItem.cleanupVagabondSkill,
+    },
   };
 
   static get documentName() {
@@ -33,6 +40,13 @@ export class ClassItem extends BaseItem {
 
   static classes(): string[] {
     return Object.keys(ClassItem.professions);
+  }
+
+  static specialisms(profession: string): string[] {
+    const specialisms = {
+      fighter: ['Soldier', 'Weapon Master', 'Champion', 'Duellist', 'Hussar', 'Sharpshooter'],
+    };
+    return specialisms[profession];
   }
 
   static getSkillsBonus(actor, itemData) {
@@ -52,6 +66,11 @@ export class ClassItem extends BaseItem {
     }
   }
 
+  static async onCreateFighter(item: HVItem): Promise<void> {
+    console.log('HERE');
+    await item.actor?.setFlag('helveczia', 'fighter-class', true);
+  }
+
   static getFighterSkill(actor: HVActor): number {
     const gainedThirdLevelSkill = actor.data.data.level === 3 || actor.data.data.level === 4;
     const gainedFifthLevelSkill = actor.data.data.level >= 5;
@@ -64,6 +83,8 @@ export class ClassItem extends BaseItem {
   }
 
   static async cleanupFighterSkill(actor: HVActor): Promise<void> {
+    actor.setFlag('helveczia', 'fighter-class', false);
+    actor.setFlag('helveczia', 'fighter-specialism', false);
     actor.setFlag('helveczia', 'fighter-third-skill', false);
     actor.setFlag('helveczia', 'fighter-fifth-skill', false);
   }
@@ -124,8 +145,9 @@ export class ClassItem extends BaseItem {
     _options: DocumentModificationOptions,
     _userId: string,
   ) {
-    if (item.parent) return;
-    const func = ClassItem.professions[data.name].onCreate;
-    if (func) func(item);
+    if (item.parent) {
+      const func = ClassItem.professions[data.name].onCreate;
+      if (func) func(item);
+    }
   }
 }

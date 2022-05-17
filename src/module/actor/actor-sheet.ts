@@ -40,6 +40,8 @@ export class HVActorSheet extends ActorSheet {
       czech_skill: this.actor.getFlag('helveczia', 'czech-skill'),
       dutch_skill: this.actor.getFlag('helveczia', 'dutch-skill'),
       vagabond_skill: this.actor.getFlag('helveczia', 'vagabond-skill'),
+      fighter_class: this.actor.getFlag('helveczia', 'fighter-class'),
+      fighter_specialism: this.actor.getFlag('helveczia', 'fighter-specialism'),
       fighter_third_skill: this.actor.getFlag('helveczia', 'fighter-third-skill'),
       fighter_fifth_skill: this.actor.getFlag('helveczia', 'fighter-fifth-skill'),
       student_skill: this.actor.getFlag('helveczia', 'student-skill'),
@@ -130,6 +132,7 @@ export class HVActorSheet extends ActorSheet {
     // Character generation to initialize
     html.find('.generate-abilities').click(this._generateAbilities.bind(this));
     html.find('.choose-race-class').click(this._generateRaceClass.bind(this));
+    html.find('.choose-specialism').click(this._chooseSpecialism.bind(this));
     html.find('.generate-craft-skill').click(this._generateCraftSkill.bind(this));
     html.find('.generate-science-skills').click(this._generateScienceSkills.bind(this));
     // lock sheet
@@ -154,15 +157,27 @@ export class HVActorSheet extends ActorSheet {
     });
 
     // Update Item Roll Mods
-    html.find('.item-roll-mod').each(this._getItemRollMod.bind(this));
+    // html.find('.item-roll-mod').each(this._getItemRollMod.bind(this));
 
     // Active Effect management
     html.find('.effect-control').click((ev) => onManageActiveEffect(ev, this.actor));
   }
 
-  async _getItemRollMod(_idx, div) {
-    const itemDiv = $(div).parent().children('.rollable');
-    const itemID = itemDiv.data('item-id');
+  // async _getItemRollMod(_idx, div) {
+  //   const itemDiv = $(div).parent().children('.rollable');
+  //   const itemID = itemDiv.data('item-id');
+  //   const item = this.actor.items.get(itemID);
+  //   let mods = '0';
+  //   if (item) {
+  //     const itemData = item.data as SkillItemData;
+  //     const data = await this.getRollMods({ attr: itemData.data.ability, roll: itemData.type, itemId: item.id });
+  //     const value = data.mods.reduce((acc, n) => acc + n, 0);
+  //     mods = value > 0 ? `+${value}` : `${value}`;
+  //   }
+  //   $(div).text(mods);
+  // }
+
+  async _getItemRollMod(itemID: string): Promise<string> {
     const item = this.actor.items.get(itemID);
     let mods = '0';
     if (item) {
@@ -171,8 +186,9 @@ export class HVActorSheet extends ActorSheet {
       const value = data.mods.reduce((acc, n) => acc + n, 0);
       mods = value > 0 ? `+${value}` : `${value}`;
     }
-    $(div).text(mods);
+    return mods;
   }
+
   /**
    * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
    * @param {Event} event   The originating click event
@@ -277,7 +293,7 @@ export class HVActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-  _onItemSummary(event) {
+  async _onItemSummary(event) {
     event.preventDefault();
     const li = $(event.currentTarget).parents('.item-entry');
     const item = this.actor.items.get(li.data('item-id'));
@@ -294,6 +310,10 @@ export class HVActorSheet extends ActorSheet {
       // Add item tags
       const div = $(
         `<div class="item-summary">
+            <ol class="tag-list">
+              <li class="tag">${game.i18n.localize(`HV.scores.${(item.data as SkillItemData).data.ability}.short`)}</li>
+              <li class="tag">${await this._getItemRollMod(item.id ?? '')}</li>
+            </ol>
             <div>
                 ${description}
             </div>
@@ -340,6 +360,41 @@ export class HVActorSheet extends ActorSheet {
               const people = $('#orig').val() as string;
               const profession = $('#class').val() as string;
               HVCharacterCreator.setOrigins(this.actor, people, profession);
+            },
+          },
+        },
+      },
+      {
+        classes: ['helveczia', 'helveczia-dialog'],
+      },
+    ).render(true);
+  }
+
+  async _chooseSpecialism(event) {
+    event.preventDefault();
+    const button = $(event.currentTarget);
+    const profession = $(button).data('class');
+    const templateData = {
+      profession: profession,
+      specialisms: ClassItem.specialisms(profession),
+    };
+
+    const content = await renderTemplate(
+      'systems/helveczia/templates/actor/dialogs/choose-specialism.hbs',
+      templateData,
+    );
+    new Dialog(
+      {
+        title: `${game.i18n.localize('Choose Specialism')}`,
+        content: content,
+        default: 'submit',
+        buttons: {
+          submit: {
+            icon: '<i class="fas fa-check"></i>',
+            label: game.i18n.localize('HV.Confirm'),
+            callback: async () => {
+              const specialism = $('#specialism').val() as string;
+              HVCharacterCreator.setSpecialism(this.actor, specialism);
             },
           },
         },

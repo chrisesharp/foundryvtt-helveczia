@@ -1,0 +1,8 @@
+<form autocomplete="off" onsubmit="event.preventDefault();">
+  <h2>Choose your Specialism as a {{ profession }}</h2>
+  <select id="specialism">
+    {{#each specialisms as |specialism|}}
+      <option>{{specialism}}</option>
+    {{/each}}
+  </select>
+</form>
