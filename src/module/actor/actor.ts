@@ -201,6 +201,7 @@ export class HVActor extends Actor {
         break;
       case 'czech_prowess':
         if (this.isFighter() || this.isVagabond()) this._applyBonus({ key: key, value: change.value });
+        break;
     }
   }
 
@@ -356,6 +357,10 @@ export class HVActor extends Actor {
 
   isDutch(): boolean {
     return this.isNamedType('Dutch', 'people');
+  }
+
+  isItalian(): boolean {
+    return this.isNamedType('Italian', 'people');
   }
 
   isNamedType(name: string, type: string): boolean {

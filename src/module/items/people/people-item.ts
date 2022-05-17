@@ -6,6 +6,7 @@ import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 import { SkillItemData } from '../item-types';
 import { Logger } from '../../logger';
+import { HVActorData } from '../../actor/actor-types';
 
 const log = new Logger();
 
@@ -23,7 +24,7 @@ export class PeopleItem extends BaseItem {
       onDelete: PeopleItem.cleanupGermanSkill,
     },
     French: {},
-    Italian: {},
+    Italian: { onCreate: PeopleItem.onCreateItalian, onDelete: PeopleItem.cleanupItalian },
     Dutch: { onCreate: PeopleItem.onCreateDutch, onDelete: PeopleItem.cleanupDutch },
     Czech: { skillBonus: PeopleItem.getCzechSkill, onDelete: PeopleItem.cleanupCzechSkill },
     English: {},
@@ -42,6 +43,28 @@ export class PeopleItem extends BaseItem {
 
   static getGermanSkill(_actor: HVActor): number {
     return 1;
+  }
+
+  static async onCreateItalian(item: HVItem): Promise<void> {
+    const currenWealth = duplicate((item.actor?.data as HVActorData).data.wealth);
+    const fortune = Math.round(Math.random() * 5) + 1;
+    currenWealth.th += fortune;
+    await item.actor?.update({ data: { wealth: currenWealth } });
+    await item.actor?.setFlag('helveczia', 'italian-fortune', fortune);
+  }
+
+  static getItalianSkill(_actor: HVActor): number {
+    return 0;
+  }
+
+  static async cleanupItalian(actor: HVActor): Promise<void> {
+    const fortune = actor.getFlag('helveczia', 'italian-fortune') as number;
+    if (fortune) {
+      const currenWealth = duplicate((actor?.data as HVActorData).data.wealth);
+      currenWealth.th -= fortune;
+      await actor?.update({ data: { wealth: currenWealth } });
+    }
+    await actor?.setFlag('helveczia', 'italian-fortune', false);
   }
 
   static async cleanupGermanSkill(actor: HVActor): Promise<void> {
@@ -96,6 +119,10 @@ export class PeopleItem extends BaseItem {
     if (data.type === 'skill') {
       if (actor.isDutch()) {
         if (data.name === 'Sail' || data.name === 'Appraise') {
+          data.data.bonus += 2;
+        }
+      } else if (actor.isItalian()) {
+        if (data.name === 'Gambling') {
           data.data.bonus += 2;
         }
       }
