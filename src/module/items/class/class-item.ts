@@ -32,6 +32,11 @@ export class ClassItem extends BaseItem {
       skillBonus: ClassItem.getVagabondSkill,
       onDelete: ClassItem.cleanupVagabondSkill,
     },
+    Soldier: {
+      onCreate: ClassItem.onCreateFighter,
+      skillBonus: ClassItem.getFighterSkill,
+      onDelete: ClassItem.cleanupFighterSkill,
+    },
   };
 
   static get documentName() {
@@ -67,7 +72,6 @@ export class ClassItem extends BaseItem {
   }
 
   static async onCreateFighter(item: HVItem): Promise<void> {
-    console.log('HERE');
     await item.actor?.setFlag('helveczia', 'fighter-class', true);
   }
 
@@ -146,8 +150,17 @@ export class ClassItem extends BaseItem {
     _userId: string,
   ) {
     if (item.parent) {
-      const func = ClassItem.professions[data.name].onCreate;
+      const func = ClassItem.professions[data.name]?.onCreate;
       if (func) func(item);
     }
+  }
+
+  static getSheetData(data, _sheet) {
+    const classes = {};
+    ClassItem.classes().forEach((name) => {
+      classes[name.toLowerCase()] = name;
+    });
+    data.classes = classes;
+    return data;
   }
 }

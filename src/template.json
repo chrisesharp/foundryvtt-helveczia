@@ -97,7 +97,9 @@
       "templates": ["base"]
     },
     "class": {
-      "templates": ["base"]
+      "templates": ["base"],
+      "specialism": false,
+      "parent": ""
     },
     "skill": {
       "templates": ["base"],

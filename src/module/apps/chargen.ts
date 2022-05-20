@@ -196,14 +196,16 @@ export class HVCharacterCreator extends FormApplication {
   static async setSpecialism(actor, specialismName) {
     const specialisms = game.packs.find((p) => p.metadata.name == 'specialisms');
     const sp = await HVCharacterCreator.getDocument(specialismName, specialisms);
-    if (sp) await actor.createEmbeddedDocuments('Item', [sp.toObject()]);
-    const hitpoints = await this.rollHitPoints(actor.data);
-    const updateData = {
-      hp: hitpoints,
-    };
-    await actor.update({ data: updateData });
-    await actor.setFlag('helveczia', 'specialism', specialismName);
-    actor.sheet?.render(true);
+    if (sp) {
+      await actor.createEmbeddedDocuments('Item', [sp.toObject()]);
+      const hitpoints = await this.rollHitPoints(actor.data);
+      const updateData = {
+        hp: hitpoints,
+      };
+      await actor.update({ data: updateData });
+      await actor.setFlag('helveczia', `${sp.data.data.parent}-specialism`, specialismName);
+      actor.sheet?.render(true);
+    }
   }
 
   static async getDocument(name, pack) {

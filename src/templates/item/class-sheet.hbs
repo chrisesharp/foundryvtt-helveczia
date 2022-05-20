@@ -5,13 +5,16 @@
       </div>
       <div class="header-fields">
           <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+          <h4 class="specialism">Specialism:<input id="specialism" name="data.specialism" type="checkbox" {{ isChecked data.specialism}}/></h4>
+          <select id="parent" name="data.parent" {{#unless data.specialism }}style="display: none;"{{/unless}}>
+            {{selectOptions classes selected=data.parent}}
+          </select>
       </div>
     </header>
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
       {{> "systems/helveczia/templates/item/partials/item-nav.hbs"}}
     </nav>
-    {{> "systems/helveczia/templates/item/partials/item-nav.hbs"}}
     {{!-- Sheet Body --}}
     <section class="sheet-body">
       {{#if config.showEffects}}

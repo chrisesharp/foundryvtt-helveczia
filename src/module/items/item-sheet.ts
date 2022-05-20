@@ -60,8 +60,5 @@ export class HVItemSheet extends ItemSheet {
         CONFIG.HV.sheetComponents.item[sheetComponent].activateListeners(html, this);
       }
     }
-
-    // Let every item type add its own sheet listeners
-    CONFIG.HV.itemClasses[this.item.type]?.activateListeners(html, this);
   }
 }
