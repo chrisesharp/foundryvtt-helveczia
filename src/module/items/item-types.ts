@@ -27,7 +27,10 @@ export interface ArmourItemData {
   data: ArmourData;
 }
 
-type ClassData = BaseData;
+type ClassData = BaseData & {
+  parent: string;
+  specialism: boolean;
+};
 
 export interface ClassItemData {
   type: 'class';

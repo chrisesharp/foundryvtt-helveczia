@@ -18,8 +18,11 @@ export class ClassSheet extends HVItemSheet {
 
   /** @override */
   activateListeners(html) {
+    // Everything below here is only needed if the sheet is editable
+    if (!this.options.editable) return;
+
     // Active Effect management
-    html.find('.effect-control').click((ev) => onManageActiveEffect(ev, this));
+    html.find('.effect-control').click((ev) => onManageActiveEffect(ev, this.item));
 
     html.find('#specialism').click((ev) => {
       const specialism: boolean = $(ev.currentTarget).is(':checked');

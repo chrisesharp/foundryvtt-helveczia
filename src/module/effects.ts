@@ -41,7 +41,7 @@ export function onManageActiveEffect(event, owner) {
   event.preventDefault();
   const a = event.currentTarget;
   const li = a.closest('li');
-  const effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId) : null;
+  const effect = li.dataset.effectId ? owner.effects?.get(li.dataset.effectId) : null;
   switch (a.dataset.action) {
     case 'create':
       return ActiveEffect.create(
