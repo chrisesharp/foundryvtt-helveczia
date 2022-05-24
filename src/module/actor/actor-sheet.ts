@@ -2,7 +2,7 @@ import { HVCharacterCreator } from '../apps/chargen';
 import { onManageActiveEffect, prepareActiveEffectCategories } from '../effects';
 import { ClassItem } from '../items/class/class-item';
 import { PeopleItem } from '../items/people/people-item';
-import { SkillItemData } from '../items/item-types';
+import { ClassItemData, SkillItemData } from '../items/item-types';
 import { Logger } from '../logger';
 import { HVItem } from '../items/item';
 import { CharacterActorData } from './actor-types';
@@ -53,6 +53,7 @@ export class HVActorSheet extends ActorSheet {
       isToken: this.token && !this.token.data.actorLink,
       config: CONFIG.HV,
       user: game.user,
+      classes: this.actor.data.data.classes,
     };
     // Add actor, actor data and item
     data.actor = actorData.data;
@@ -66,19 +67,25 @@ export class HVActorSheet extends ActorSheet {
   /** @override */
   async _onDrop(event) {
     let item;
+    let data;
+    const actor = this.actor;
+    const allowed = Hooks.call('dropActorSheetData', actor, this, data);
+    if (allowed === false) return;
+    let shouldContinue = true;
     try {
-      const data = JSON.parse(event.dataTransfer.getData('text/plain'));
+      data = JSON.parse(event.dataTransfer.getData('text/plain'));
       item = game.items?.get(data.id);
     } catch (err) {
-      return false;
+      return;
     }
+
     if (item) {
       switch (item.type) {
         case 'people':
-          this._removePeoples();
+          shouldContinue = await this._removePeoples(item);
           break;
         case 'class':
-          this._removeClasses();
+          shouldContinue = await this._removeClasses(item);
           break;
         case 'skill':
           if (this.actor.items.getName(item.name)) return;
@@ -91,12 +98,26 @@ export class HVActorSheet extends ActorSheet {
           if (item.data.data.subtype === 'vagabond' && !this.actor.isVagabond()) {
             return ui.notifications.error(game.i18n.localize('HV.errors.notVagabond'));
           }
+          break;
       }
     }
-    return super._onDrop(event);
+    if (shouldContinue) {
+      switch (data.type) {
+        case 'ActiveEffect':
+          return this._onDropActiveEffect(event, data);
+        case 'Actor':
+          return this._onDropActor(event, data);
+        case 'Item':
+          return this._onDropItem(event, data);
+        // case "Folder":
+        // if (data.documentName === 'Item')
+        // return this._onDropFolder(event, data);
+      }
+    }
   }
 
-  async _removePeoples(): Promise<void> {
+  async _removePeoples(item): Promise<boolean> {
+    if (item.name === this.actor.data.data.people) return false;
     const peoples = this.actor.items.filter((i) => i.type == 'people');
     await Promise.all(
       peoples.map((p) => {
@@ -104,16 +125,45 @@ export class HVActorSheet extends ActorSheet {
         return Promise.resolve();
       }),
     );
+    return true;
   }
 
-  async _removeClasses(): Promise<void> {
-    const classes = this.actor.items.filter((i) => i.type == 'class');
-    await Promise.all(
-      classes.map((p) => {
-        if (p.id) return this.actor.deleteEmbeddedDocuments('Item', [p.id]);
-        return Promise.resolve();
-      }),
-    );
+  async _removeClasses(item): Promise<boolean> {
+    if (item.name === this.actor.data.data.class) return false;
+    const itemData = item.data as ClassItemData;
+    if (!itemData.data.specialism) {
+      log.debug('_removeClasses() | Removing previous classes');
+      const classes = this.actor.items.filter((i) => i.type == 'class');
+      await Promise.all(
+        classes.map((p) => {
+          if (p.id) return this.actor.deleteEmbeddedDocuments('Item', [p.id]);
+          return Promise.resolve();
+        }),
+      );
+      return true;
+    } else {
+      const requiredProfession = itemData.data.parent.toLowerCase();
+      const thisActorProfession = this.actor.data.data.class.toLowerCase();
+      if (thisActorProfession === requiredProfession) {
+        log.debug(`_removeClasses() | Removing specialisms for ${thisActorProfession} `);
+        const classes = this.actor.items.filter(
+          (i) =>
+            i.type == 'class' &&
+            (i.data as ClassItemData).data.specialism &&
+            (i.data as ClassItemData).data.parent.toLowerCase() === this.actor.data.data.class.toLowerCase(),
+        );
+        console.log('delete classes:', classes);
+        await Promise.all(
+          classes.map((p) => {
+            if (p.id) return this.actor.deleteEmbeddedDocuments('Item', [p.id]);
+            return Promise.resolve();
+          }),
+        );
+        return true;
+      }
+      ui.notifications.error(game.i18n.localize(`You must be a ${requiredProfession} for this specialism`));
+      return false;
+    }
   }
 
   /** @override */

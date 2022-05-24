@@ -1,5 +1,8 @@
 import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
-import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
+import {
+  ItemData,
+  ItemDataBaseProperties,
+} from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
 import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
@@ -9,17 +12,24 @@ import { Student } from './student';
 import { Vagabond } from './vagabond';
 import { Fighter } from './fighter';
 import { Cleric } from './cleric';
+import { ClassItemData } from '../item-types';
 
 const log = new Logger();
 
+type ProfEntry = {
+  onCreate: (item: HVItem) => void;
+  skillBonus: (actor: HVActor) => number;
+  onDelete: (actor: HVActor) => void;
+  specialisms?: () => string[];
+};
+
+function capitalize(word: string): string {
+  return word[0].toUpperCase() + word.slice(1).toLowerCase();
+}
+
 export class ClassItem extends BaseItem {
   static professions: {
-    [key: string]: {
-      onCreate: (item: HVItem) => void;
-      skillBonus: (actor: HVActor) => number;
-      onDelete: (actor: HVActor) => void;
-      specialisms?: () => string[];
-    };
+    [key: string]: ProfEntry;
   } = {
     Cleric: {
       onCreate: Cleric.onCreate,
@@ -42,11 +52,6 @@ export class ClassItem extends BaseItem {
       skillBonus: Vagabond.getSkillsBonus,
       onDelete: Vagabond.cleanup,
     },
-    Soldier: {
-      onCreate: Fighter.onCreate,
-      skillBonus: Fighter.getSkillsBonus,
-      onDelete: Fighter.cleanup,
-    },
   };
 
   static get documentName() {
@@ -57,15 +62,22 @@ export class ClassItem extends BaseItem {
     return Object.keys(ClassItem.professions);
   }
 
+  static findProfession(itemData: ItemData): ProfEntry | undefined {
+    const prof = ClassItem.professions[itemData.name];
+    if (prof) return prof;
+    const parent = capitalize((itemData as ClassItemData).data.parent);
+    return ClassItem.professions[parent];
+  }
+
   static specialisms(profession: string): string[] {
-    const key = profession[0].toUpperCase() + profession.slice(1).toLowerCase();
-    const func = ClassItem.professions[key]?.specialisms;
+    const func = ClassItem.professions[capitalize(profession)]?.specialisms;
     return func ? func() : [];
   }
 
   static getSkillsBonus(actor, itemData) {
     let bonus = 0;
-    const func = ClassItem.professions[itemData.name].skillBonus;
+    const prof = ClassItem.findProfession(itemData);
+    const func = prof?.skillBonus;
     if (func) {
       bonus += func(actor);
     }
@@ -74,7 +86,8 @@ export class ClassItem extends BaseItem {
   }
 
   static onDelete(actor, itemData) {
-    const func = ClassItem.professions[itemData.name].onDelete;
+    const prof = ClassItem.findProfession(itemData);
+    const func = prof?.onDelete;
     if (func) {
       func(actor);
     }
@@ -92,12 +105,13 @@ export class ClassItem extends BaseItem {
 
   static async onCreate(
     item: HVItem,
-    data: PropertiesToSource<ItemDataBaseProperties>,
+    _data: PropertiesToSource<ItemDataBaseProperties>,
     _options: DocumentModificationOptions,
     _userId: string,
   ) {
     if (item.parent) {
-      const func = ClassItem.professions[data.name]?.onCreate;
+      const prof = ClassItem.findProfession(item.data);
+      const func = prof?.onCreate;
       if (func) func(item);
     }
   }

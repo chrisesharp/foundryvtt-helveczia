@@ -203,7 +203,6 @@ export class HVCharacterCreator extends FormApplication {
         hp: hitpoints,
       };
       await actor.update({ data: updateData });
-      await actor.setFlag('helveczia', `${sp.data.data.parent}-specialism`, specialismName);
       actor.sheet?.render(true);
     }
   }

@@ -12,9 +12,13 @@ export class Fighter {
 
   static async onCreate(item: HVItem): Promise<void> {
     const itemData = item.data as ClassItemData;
-    console.log('itemData.data:', itemData.data);
     if (itemData.data.specialism) {
-      console.log(`${item.name} is a specialism class of ${itemData.data.parent}`);
+      if (!item.actor?.isFighter()) {
+        ui.notifications.error(game.i18n.localize('You must be a fighter for this specialism'));
+        return;
+      }
+      log.debug(`Fighter.onCreate() | fighter-specialism flag set to ${item.name}`);
+      await item.actor?.setFlag('helveczia', 'fighter-specialism', item.name);
     }
     log.debug('Fighter.onCreate() | fighter-class flag set to true');
     await item.actor?.setFlag('helveczia', 'fighter-class', true);
@@ -36,13 +40,13 @@ export class Fighter {
   }
 
   static async cleanup(actor: HVActor): Promise<void> {
-    actor.setFlag('helveczia', 'fighter-class', false);
+    await actor.setFlag('helveczia', 'fighter-class', false);
     log.debug('Fighter.getSkillsBonus() |  fighter-class flag set to false');
-    actor.setFlag('helveczia', 'fighter-specialism', false);
+    await actor.setFlag('helveczia', 'fighter-specialism', false);
     log.debug('Fighter.getSkillsBonus() |  fighter-specialism flag set to false');
-    actor.setFlag('helveczia', 'fighter-third-skill', false);
+    await actor.setFlag('helveczia', 'fighter-third-skill', false);
     log.debug('Fighter.getSkillsBonus() |  fighter-third-skill flag set to false');
-    actor.setFlag('helveczia', 'fighter-fifth-skill', false);
+    await actor.setFlag('helveczia', 'fighter-fifth-skill', false);
     log.debug('Fighter.getSkillsBonus() |  fighter-fifth-skill flag set to false');
   }
 }
