@@ -22,6 +22,7 @@ type BaseData = {
     | any
     | {
         value: number;
+        hd: number;
         max: number;
       };
   ac: number;

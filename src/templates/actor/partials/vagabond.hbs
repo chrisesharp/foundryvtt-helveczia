@@ -1,0 +1,40 @@
+{{!-- skills and abilities --}}
+<div class="vagabond">
+    <ol class="items-list">
+        <li class="flexrow item-header">
+            <h2 class="centred">~ {{ localize "HV.skills.vagabond"}} ( {{ data.specialisms.length }} / {{ data.maxspecialisms }} ) ~</h2>
+            <div class="item-controls">
+            <a class="item-control item-create" title="{{localize 'HV.Add'}} {{localize 'HV.tabs.skills'}}" data-type="skill"><i class="fas fa-plus"></i></a>
+            </div>
+        </li>
+        {{#if vagabond_skills }}
+            <h4>{{bonusSkills '4' '' 'Vagabond' '1'}}</h4>
+        {{/if}}
+    {{#each data.classes as |item id|}}
+        <li class="item-entry flexcol" data-item-id="{{item.id}}">
+            <div class="item flexrow">
+                <div class="item-image" data-item-id="{{item.id}}"><img src="{{item.img}}" width="24" height="24"/></div>
+                <h4 class="item-name">{{item.name}}</h4>
+            </div>
+        </li>
+    {{/each}}
+    {{#each data.specialisms as |item id|}}
+        <li class="item-entry flexcol" data-item-id="{{item.id}}">
+            <div class="item flexrow">
+                <div class="item-image" data-item-id="{{item.id}}"><img src="{{item.img}}" width="24" height="24"/></div>
+                <h4 class="item-name">{{item.name}}</h4>
+                {{#unless (itemLocked item)}}
+                <div class="item-controls">
+                    <a class="item-control item-edit" title="{{localize 'HV.Edit'}} {{localize 'HV.tabs.skills'}}"><i class="fas fa-edit"></i></a>
+                    <a class="item-control item-delete" title="{{localize 'HV.Delete'}} {{localize 'HV.tabs.skills'}}"><i class="fas fa-trash"></i></a>
+                </div>
+                {{else}}
+                <div class="item-controls">
+                    <i id="padlock" class="fas fa-lock" style="padding-top: 4px;"></i>
+                </div>
+                {{/unless}}
+            </div>
+        </li>
+    {{/each}}
+    </ol>
+</div>

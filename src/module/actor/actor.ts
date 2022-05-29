@@ -61,7 +61,8 @@ export class HVActor extends Actor {
     };
     data.skills = categories['skill'];
     data.peoples = categories['people'];
-    data.classes = categories['class'];
+    data.classes = categories['class'].filter((i) => i.data.data.specialism === false);
+    data.specialisms = categories['class'].filter((i) => i.data.data.specialism);
     data.deeds = categories['deed'];
     data.people = data.peoples[0]?.name;
     data.class = data.classes[0]?.name;
@@ -114,7 +115,7 @@ export class HVActor extends Actor {
    * Prepare Combat related values
    */
   _updateCombatValues(data) {
-    data.initiative = data.scores.dex.mod;
+    data.initiative += data.scores.dex.mod;
     this._updateAC(data);
     this._updateAttackMods(data);
   }

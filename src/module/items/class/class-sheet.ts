@@ -7,7 +7,7 @@ export class ClassSheet extends HVItemSheet {
       classes: ['helveczia', 'sheet', 'item'],
       width: 350,
       height: 450,
-      resizable: false,
+      resizable: true,
       tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'editor' }],
     });
   }
@@ -18,6 +18,7 @@ export class ClassSheet extends HVItemSheet {
 
   /** @override */
   activateListeners(html) {
+    super.activateListeners(html);
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 

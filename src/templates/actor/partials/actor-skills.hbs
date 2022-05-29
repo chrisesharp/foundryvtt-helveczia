@@ -29,8 +29,8 @@
         {{#if fighter_fifth_skill }}
             <h4>{{bonusSkills '2' '' 'Fighter' '5'}}</h4>
         {{/if}}
-        {{#if vagabond_skill }}
-            <h4>{{bonusSkills '4' '' 'Vagabond' '1'}}</h4>
+        {{#if vagabond_skills }}
+            <h4>{{bonusSkills '4' '' 'Vagabond' data.level }}</h4>
         {{/if}}
     {{#each data.skills as |item id|}}
         <li class="item-entry item-rollable flexcol" data-item-id="{{item.id}}">

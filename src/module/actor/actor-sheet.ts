@@ -39,8 +39,9 @@ export class HVActorSheet extends ActorSheet {
       german_skill_generated: this.actor.getFlag('helveczia', 'german-skill-generated'),
       czech_skill: this.actor.getFlag('helveczia', 'czech-skill'),
       dutch_skill: this.actor.getFlag('helveczia', 'dutch-skill'),
-      vagabond_skill: this.actor.getFlag('helveczia', 'vagabond-skill'),
+      vagabond_skills: this.actor.getFlag('helveczia', 'vagabond-skills'),
       fighter_class: this.actor.getFlag('helveczia', 'fighter-class'),
+      vagabond_class: this.actor.getFlag('helveczia', 'vagabond-class'),
       fighter_specialism: this.actor.getFlag('helveczia', 'fighter-specialism'),
       fighter_third_skill: this.actor.getFlag('helveczia', 'fighter-third-skill'),
       fighter_fifth_skill: this.actor.getFlag('helveczia', 'fighter-fifth-skill'),
@@ -152,7 +153,6 @@ export class HVActorSheet extends ActorSheet {
             (i.data as ClassItemData).data.specialism &&
             (i.data as ClassItemData).data.parent.toLowerCase() === this.actor.data.data.class.toLowerCase(),
         );
-        console.log('delete classes:', classes);
         await Promise.all(
           classes.map((p) => {
             if (p.id) return this.actor.deleteEmbeddedDocuments('Item', [p.id]);
@@ -314,7 +314,7 @@ export class HVActorSheet extends ActorSheet {
     }
     const attribute = data.attr;
     const resource = data.resource;
-    if (resource !== '') {
+    if (resource !== '' && attribute) {
       mod.push(this.actor.data.data[resource][attribute].mod);
       longName = game.i18n.format(`HV.${resource}.${attribute}.long`);
       log.debug(
@@ -326,7 +326,7 @@ export class HVActorSheet extends ActorSheet {
       if (item) {
         const skill = item.data as SkillItemData;
         const bonus = skill.data.bonus;
-        const ability = this.actor.data.data.scores[skill.data.ability].mod;
+        const ability = this.actor.data.data.scores[skill.data.ability]?.mod;
         mod.push(bonus);
         mod.push(ability);
         longName = item.name ?? game.i18n.localize('HV.skill');
@@ -358,18 +358,21 @@ export class HVActorSheet extends ActorSheet {
       summary.slideUp(200, () => summary.remove());
     } else {
       // Add item tags
-      const div = $(
-        `<div class="item-summary">
-            <ol class="tag-list">
-              <li class="tag">${game.i18n.localize(`HV.scores.${(item.data as SkillItemData).data.ability}.short`)}</li>
-              <li class="tag">${await this._getItemRollMod(item.id ?? '')}</li>
-            </ol>
-            <div>
-                ${description}
-            </div>
-            ${options}
-        </div>`,
-      );
+      let tags = `
+      <div class="item-summary">`;
+      if (item.type === 'skill')
+        tags += `
+      <ol class="tag-list">
+        <li class="tag">${game.i18n.localize(`HV.scores.${(item.data as SkillItemData).data.ability}.short`)}</li>
+        <li class="tag">${await this._getItemRollMod(item.id ?? '')}</li>
+      </ol>`;
+      tags += `
+          <div>
+              ${description}
+          </div>
+          ${options}
+      </div>`;
+      const div = $(tags);
       li.append(div.hide());
       div.slideDown(200);
     }

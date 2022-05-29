@@ -95,7 +95,6 @@ export class HVCharacterCreator extends FormApplication {
     return {
       max: roll.total,
       value: roll.total,
-      hd: hd,
     };
   }
 
@@ -120,7 +119,6 @@ export class HVCharacterCreator extends FormApplication {
     const choice = $('#A').prop('checked') ? this.scores.A : this.scores.B;
     const wealth = (await this.rollWealth()).total;
     const virtue = (await this.rollVirtue()).total;
-    // const hitpoints = await this.rollHitPoints(actor.data, choice);
     const updateData = {
       scores: {},
       wealth: {

@@ -51,6 +51,7 @@ export class ClassItem extends BaseItem {
       onCreate: Vagabond.onCreate,
       skillBonus: Vagabond.getSkillsBonus,
       onDelete: Vagabond.cleanup,
+      specialisms: Vagabond.specialisms,
     },
   };
 

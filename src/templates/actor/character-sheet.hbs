@@ -17,6 +17,9 @@
                 <a class="item" data-tab="effects">{{ localize 'HV.tabs.effects'}}</a>
                 {{/if}}
             {{/if}}
+            {{#if vagabond_class }}
+            <a class="item" data-tab="vagabond">{{ localize 'HV.skills.vagabond'}}</a>
+            {{/if}}
         {{/if}}
         <a class="item" data-tab="editor">{{ localize 'HV.tabs.notes'}}</a>
     </nav>
@@ -46,6 +49,12 @@
         {{#if config.showEffects}}
         <div class="tab effects" data-group="primary" data-tab="effects">
             {{> "systems/helveczia/templates/actor/partials/actor-effects.hbs"}}
+        </div>
+        {{/if }}
+
+        {{#if vagabond_class}}
+        <div class="tab vagabond" data-group="primary" data-tab="vagabond">
+            {{> "systems/helveczia/templates/actor/partials/vagabond.hbs"}}
         </div>
         {{/if }}
         {{!-- Notes --}}
