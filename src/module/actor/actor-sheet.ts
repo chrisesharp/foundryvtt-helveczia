@@ -62,6 +62,9 @@ export class HVActorSheet extends ActorSheet {
     data.items = this.actor.items.map((i) => i.data);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.effects = prepareActiveEffectCategories(this.actor.effects);
+    if (this.actor.isVagabond()) {
+      data.maxspecialisms = (actorData.data as CharacterActorData).data.level >= 5 ? 3 : 2;
+    }
     return data;
   }
 
