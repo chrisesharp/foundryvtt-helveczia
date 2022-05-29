@@ -1,7 +1,7 @@
 import { HVItem } from '../item';
 import { Logger } from '../../logger';
 import { HVActor } from '../../actor/actor';
-import { ClassItemData } from '../item-types';
+import { ClassItemData, SkillItemData } from '../item-types';
 
 const log = new Logger();
 
@@ -17,13 +17,32 @@ export class Vagabond {
         ui.notifications.error(game.i18n.localize('You must be a vagabond for this specialism'));
         return;
       }
-      // TODO implement this properly
-      // log.debug(`Vagabond.onCreate() | vagabond-specialism flag set to ${item.name}`);
-      // await item.actor?.setFlag('helveczia', 'fighter-specialism', item.name);
       switch (item.name) {
         case 'Vagabond Skills':
           log.debug('Vagabond.onCreate() | vagabond-skills flag set to true');
           item.actor?.setFlag('helveczia', 'vagabond-skills', true);
+          break;
+        case 'Legends':
+          const description =
+            'On a successful check, learn something about the selected location, family, organisation, etc.<p>For Normal DC, the information is general; for Hard DC, it is specific; and for Heroic DC, it can extend to obscure secrets).';
+          const legendsSkill = {
+            name: 'Legend Lore',
+            type: 'skill',
+            data: {
+              description: description,
+              ability: 'wis',
+              subtype: 'vagabond',
+            },
+          };
+          const itemData = await item.actor?.createEmbeddedDocuments('Item', [legendsSkill]);
+          const id = (itemData[0] as Item).id;
+          if (id) {
+            const i = item.actor?.items.get(id);
+            if (i) {
+              await i.setFlag('helveczia', 'locked', true);
+              await item.actor.update();
+            }
+          }
           break;
       }
     } else {
@@ -38,8 +57,23 @@ export class Vagabond {
     return gainedSkills ? 4 : 0;
   }
 
-  static async cleanup(actor: HVActor): Promise<void> {
+  static async cleanup(actor: HVActor, item: any): Promise<void> {
+    if (item.name === 'Legends') {
+      const skills = actor.items.filter(
+        (i) => i.type === 'skill' && i.name === 'Legend Lore' && (i.data as SkillItemData).data.subtype === 'vagabond',
+      );
+      if (skills.length > 0) {
+        for (const skill of skills) {
+          if (skill.getFlag('helveczia', 'locked') && skill.id) {
+            await actor.deleteEmbeddedDocuments('Item', [skill.id]);
+          }
+        }
+      }
+    }
     actor.setFlag('helveczia', 'vagabond-skills', false);
     log.debug('Vagabond.getSkillsBonus() |  vagabond-skills flag set to false');
+    actor.setFlag('helveczia', 'vagabond-class', false);
+    log.debug('Vagabond.getSkillsBonus() |  vagabond-class flag set to false');
+    await actor.sheet?.render(true);
   }
 }

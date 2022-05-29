@@ -18,7 +18,7 @@ export class Student {
     return gainedSkills ? 2 : 0;
   }
 
-  static async cleanup(actor: HVActor): Promise<void> {
+  static async cleanup(actor: HVActor, _item: any): Promise<void> {
     actor.setFlag('helveczia', 'student-skill', false);
     const sciences = actor.items.filter(
       (i) => i.type === 'skill' && (i.data as SkillItemData).data.subtype === 'science',

@@ -43,7 +43,7 @@ export class Fighter {
     return gainedSkills;
   }
 
-  static async cleanup(actor: HVActor): Promise<void> {
+  static async cleanup(actor: HVActor, _item: any): Promise<void> {
     await actor.setFlag('helveczia', 'fighter-class', false);
     log.debug('Fighter.getSkillsBonus() |  fighter-class flag set to false');
     await actor.setFlag('helveczia', 'fighter-specialism', false);

@@ -18,7 +18,10 @@
                 {{/if}}
             {{/if}}
             {{#if vagabond_class }}
-            <a class="item" data-tab="vagabond">{{ localize 'HV.skills.vagabond'}}</a>
+            <a class="item" data-tab="vagabond">{{ localize 'HV.class.vagabond'}}</a>
+            {{/if}}
+            {{#if fighter_class }}
+            <a class="item" data-tab="fighter">{{ localize 'HV.class.fighter'}}</a>
             {{/if}}
         {{/if}}
         <a class="item" data-tab="editor">{{ localize 'HV.tabs.notes'}}</a>
@@ -55,6 +58,11 @@
         {{#if vagabond_class}}
         <div class="tab vagabond" data-group="primary" data-tab="vagabond">
             {{> "systems/helveczia/templates/actor/partials/vagabond.hbs"}}
+        </div>
+        {{/if }}
+        {{#if fighter_class}}
+        <div class="tab fighter" data-group="primary" data-tab="fighter">
+            {{> "systems/helveczia/templates/actor/partials/fighter.hbs"}}
         </div>
         {{/if }}
         {{!-- Notes --}}

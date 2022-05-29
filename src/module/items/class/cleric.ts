@@ -17,7 +17,7 @@ export class Cleric {
     return gainedSixthLevelSkills ? 6 : 0;
   }
 
-  static async cleanup(actor: HVActor): Promise<void> {
+  static async cleanup(actor: HVActor, _item: any): Promise<void> {
     actor.setFlag('helveczia', 'cleric-skill', false);
   }
 }

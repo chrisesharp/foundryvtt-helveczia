@@ -19,7 +19,7 @@ const log = new Logger();
 type ProfEntry = {
   onCreate: (item: HVItem) => void;
   skillBonus: (actor: HVActor) => number;
-  onDelete: (actor: HVActor) => void;
+  onDelete: (actor: HVActor, itemData: any) => void;
   specialisms?: () => string[];
 };
 
@@ -90,7 +90,7 @@ export class ClassItem extends BaseItem {
     const prof = ClassItem.findProfession(itemData);
     const func = prof?.onDelete;
     if (func) {
-      func(actor);
+      func(actor, itemData);
     }
   }
 

@@ -64,6 +64,8 @@ export class HVActorSheet extends ActorSheet {
     data.effects = prepareActiveEffectCategories(this.actor.effects);
     if (this.actor.isVagabond()) {
       data.maxspecialisms = (actorData.data as CharacterActorData).data.level >= 5 ? 3 : 2;
+    } else {
+      data.maxspecialisms = 1;
     }
     return data;
   }
@@ -215,20 +217,6 @@ export class HVActorSheet extends ActorSheet {
     // Active Effect management
     html.find('.effect-control').click((ev) => onManageActiveEffect(ev, this.actor));
   }
-
-  // async _getItemRollMod(_idx, div) {
-  //   const itemDiv = $(div).parent().children('.rollable');
-  //   const itemID = itemDiv.data('item-id');
-  //   const item = this.actor.items.get(itemID);
-  //   let mods = '0';
-  //   if (item) {
-  //     const itemData = item.data as SkillItemData;
-  //     const data = await this.getRollMods({ attr: itemData.data.ability, roll: itemData.type, itemId: item.id });
-  //     const value = data.mods.reduce((acc, n) => acc + n, 0);
-  //     mods = value > 0 ? `+${value}` : `${value}`;
-  //   }
-  //   $(div).text(mods);
-  // }
 
   async _getItemRollMod(itemID: string): Promise<string> {
     const item = this.actor.items.get(itemID);
