@@ -151,19 +151,21 @@ export class HVActorSheet extends ActorSheet {
       const requiredProfession = itemData.data.parent.toLowerCase();
       const thisActorProfession = this.actor.data.data.class.toLowerCase();
       if (thisActorProfession === requiredProfession) {
-        log.debug(`_removeClasses() | Removing specialisms for ${thisActorProfession} `);
-        const classes = this.actor.items.filter(
-          (i) =>
-            i.type == 'class' &&
-            (i.data as ClassItemData).data.specialism &&
-            (i.data as ClassItemData).data.parent.toLowerCase() === this.actor.data.data.class.toLowerCase(),
-        );
-        await Promise.all(
-          classes.map((p) => {
-            if (p.id) return this.actor.deleteEmbeddedDocuments('Item', [p.id]);
-            return Promise.resolve();
-          }),
-        );
+        if (requiredProfession === 'fighter') {
+          log.debug(`_removeClasses() | Removing specialisms for ${thisActorProfession} `);
+          const classes = this.actor.items.filter(
+            (i) =>
+              i.type == 'class' &&
+              (i.data as ClassItemData).data.specialism &&
+              (i.data as ClassItemData).data.parent.toLowerCase() === this.actor.data.data.class.toLowerCase(),
+          );
+          await Promise.all(
+            classes.map((p) => {
+              if (p.id) return this.actor.deleteEmbeddedDocuments('Item', [p.id]);
+              return Promise.resolve();
+            }),
+          );
+        }
         return true;
       }
       ui.notifications.error(game.i18n.localize(`You must be a ${requiredProfession} for this specialism`));
