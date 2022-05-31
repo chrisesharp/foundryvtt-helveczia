@@ -60,6 +60,10 @@ export interface HelvecziaConfig {
   coins: {
     [key: string]: string;
   };
+
+  icons: {
+    [key: string]: string;
+  };
 }
 
 export const HV: HelvecziaConfig = {
@@ -128,5 +132,14 @@ export const HV: HelvecziaConfig = {
     th: 'Th',
     pf: 'Pf',
     gr: 'Gr',
+  },
+
+  icons: {
+    d4: '/systems/helveczia/assets/dice/d4.svg',
+    d6: '/systems/helveczia/assets/dice/d6.svg',
+    d8: '/systems/helveczia/assets/dice/d8.svg',
+    d10: '/systems/helveczia/assets/dice/d10.svg',
+    d12: '/systems/helveczia/assets/dice/d12.svg',
+    d20: '/systems/helveczia/assets/dice/d20.svg',
   },
 };

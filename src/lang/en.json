@@ -14,6 +14,7 @@
   "HV.randomCraft": "Roll for Random Craft",
   "HV.randomScience": "Roll for Random Sciences",
   "HV.rollCheck": "Rolling {type} check",
+  "HV.rolls.hitpoints": "Rolled {hitpoints} hitpoints",
   "HV.deeds.favour": "Favour",
   "HV.deeds.sin": "Sin",
   "HV.Setting.debug": "Debug",

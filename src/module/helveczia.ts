@@ -84,7 +84,7 @@ Hooks.once('ready', async () => {
     const hungarians = game.actors?.filter((i) => i.isHungarian());
     if (hungarians?.length) {
       Promise.all(hungarians?.map(async (actor) => await actor.setFlag('helveczia', 'fate-invoked', false)));
-      console.log('Fate of Hungarians reset');
+      log.info('Fate of Hungarians reset');
     }
   }
 });

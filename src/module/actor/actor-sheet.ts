@@ -55,6 +55,9 @@ export class HVActorSheet extends ActorSheet {
       config: CONFIG.HV,
       user: game.user,
       classes: this.actor.data.data.classes,
+      needToRoll:
+        this.actor.data.data.hp.max === 0 ||
+        (this.actor.getFlag('helveczia', 'rolled-hits-lvl') as number) < this.actor.data.data.level,
     };
     // Add actor, actor data and item
     data.actor = actorData.data;
@@ -183,6 +186,9 @@ export class HVActorSheet extends ActorSheet {
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
 
+    // Roll Hit Points.
+    html.find('.hitdie').click(this._onRollHitPoints.bind(this));
+
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
@@ -283,6 +289,34 @@ export class HVActorSheet extends ActorSheet {
 
     const rollData = await this.getRollMods(dataset);
     this.actor.rollCheck(rollData, target);
+  }
+
+  async _onRollHitPoints(event) {
+    event.preventDefault();
+    const hitpoints = await HVCharacterCreator.rollHitPoints(this.actor.data);
+    const success = this.actor.data.data.hp.max < hitpoints.max;
+    const updateData = {
+      hp: {
+        value: hitpoints.value,
+        max: hitpoints.max,
+      },
+    };
+    const templateData = {
+      success: success,
+      hitpoints: hitpoints,
+      actor: this.actor,
+      user: game.user?.id,
+      title: game.i18n.format('HV.rolls.hitpoints', { hitpoints: hitpoints.max }),
+    };
+
+    const content = await renderTemplate('systems/helveczia/templates/chat/roll-hitpoints.hbs', templateData);
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+    await hitpoints.roll.toMessage({ speaker: speaker, flavor: content });
+    if (success) {
+      await this.actor.update({ data: updateData });
+      this.render(true);
+    }
+    this.actor.setFlag('helveczia', 'rolled-hits-lvl', this.actor.data.data.level);
   }
 
   async getRollMods(data): Promise<{ mods: number[]; longName: string }> {

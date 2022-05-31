@@ -1,0 +1,15 @@
+<section class="helveczia chat-card">
+    <div class="helveczia chat-block">
+        <div class="flexrow chat-header">
+            <div class="chat-title"><h2>New Hitpoints</h2></div>
+            <div class="chat-img" style="background-image:url('{{actor.img}}')"></div>
+        </div>
+        <div>
+        {{#if success}}
+            <h3>{{actor.name}} rolled {{hitpoints.max}} new maximum hitpoints!</h3>
+        {{else}}
+         <h3> Sorry, you didn't roll any higher than your current maximum hitpoints!</h3>
+        {{/if}}
+        </div>
+    </div>
+</section>

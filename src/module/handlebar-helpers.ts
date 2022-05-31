@@ -87,10 +87,10 @@ export const registerHandlebarHelpers = async function () {
     return str.toLowerCase();
   });
 
-  // Handlebars.registerHelper('die', function(dieStep) {
-  //     const die = 2 + (2 * dieStep);
-  //     return CONFIG.HV.icons[`d${die}`];
-  // });
+  Handlebars.registerHelper('die', function (die) {
+    die = Math.min(20, Math.max(4, die));
+    return CONFIG.HV.icons[`d${die}`];
+  });
 
   Handlebars.registerHelper('isChecked', function (isChecked) {
     return isChecked ? ' checked ' : '';
