@@ -66,7 +66,17 @@ export class HVActor extends Actor {
     data.classes = categories['class'].filter((i) => i.data.data.specialism === false);
     data.specialisms = categories['class'].filter((i) => i.data.data.specialism);
     data.deeds = categories['deed'];
-    data.spells = categories['spell'];
+    data.spells = [[], [], []];
+    if (categories['spell'].length) {
+      data.spells = categories['spell'].reduce(
+        (acc, item) => {
+          const level = item.data.data.level - 1;
+          acc[level].push(item);
+          return acc;
+        },
+        [[], [], []],
+      );
+    }
     data.people = data.peoples[0]?.name;
     data.class = data.classes[0]?.name;
   }

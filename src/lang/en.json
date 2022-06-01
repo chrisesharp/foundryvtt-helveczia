@@ -46,6 +46,8 @@
   "HV.Difficulty": "Difficulty",
   "HV.RollMode": "Roll Mode",
   "HV.Melee": "Mêlée",
+  "HV.Spells": "Spells",
+  "HV.Spellbook": "Spellbook",
   "HV.Ranged": "Ranged",
   "HV.MeleeMod": "Melee Modifier",
   "HV.RangeMod": "Ranged Modifier",

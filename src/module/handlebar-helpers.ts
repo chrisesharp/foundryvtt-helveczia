@@ -166,6 +166,10 @@ export const registerHandlebarHelpers = async function () {
     return arr.includes(e);
   });
 
+  Handlebars.registerHelper('length', function (arr) {
+    return arr.length;
+  });
+
   Handlebars.registerHelper('success', function (roll) {
     let success = 'normal';
     if (roll >= 18 && roll < 24) success = 'difficult';

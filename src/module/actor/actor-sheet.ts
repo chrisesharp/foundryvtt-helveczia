@@ -75,6 +75,7 @@ export class HVActorSheet extends ActorSheet {
       : 1;
     data.spellslots = (this.actor as HVActor).getSpellSlots();
     data.maxspells = data.spellslots.reduce((acc, n) => acc + n, 0);
+    data.spellGroups = [1, 2, 3];
     return data;
   }
 

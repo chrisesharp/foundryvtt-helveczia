@@ -16,6 +16,7 @@ export async function preloadTemplates(): Promise<Handlebars.TemplateDelegate[]>
     'systems/helveczia/templates/actor/partials/vagabond.hbs',
     'systems/helveczia/templates/actor/partials/cleric.hbs',
     'systems/helveczia/templates/actor/partials/student.hbs',
+    'systems/helveczia/templates/actor/partials/spells.hbs',
     // Item Sheets
     'systems/helveczia/templates/item/armour-sheet.hbs',
     'systems/helveczia/templates/item/class-sheet.hbs',

@@ -117,7 +117,7 @@ export class Cleric {
   static getSpellSlots(actor: HVActor): number[] {
     const level = actor.data.data.level;
     const bonus = actor.data.data.scores.wis.value;
-    const spells = CONFIG.HV.spellSlots[level];
+    const spells = duplicate(CONFIG.HV.spellSlots[level]);
     if (bonus >= 12) spells[0] += 1;
     if (bonus >= 15) spells[1] += 1;
     if (bonus >= 18) spells[2] += 1;

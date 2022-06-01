@@ -8,32 +8,17 @@
         <li class="item-entry flexcol" data-item-id="{{item.id}}">
             <div class="item flexrow">
                 <div class="item-image" data-item-id="{{item.id}}"><img src="{{item.img}}" width="24" height="24"/></div>
-                <h4 class="item-name">{{item.name}}</h4>
-            </div>
-        </li>
-    {{/each}}
-        <li class="flexrow item-header">
-            <h2 class="centred">~ {{ localize "HV.class.student"}} ( {{ data.spells.length }} / {{ maxspells }} ) ~</h2>
-        </li>
-    {{#each data.spells as |item id|}}
-        <li class="item-entry flexcol" data-item-id="{{item.id}}">
-            <div class="item flexrow">
-                <h4 class="item-name">{{item.name}}</h4>
-                <div class="spell-data">
-                    <h4>{{ item.data.data.level }}</h4>
-                </div>
-                {{#unless (itemLocked item)}}
-                <div class="item-controls">
-                    <a class="item-control item-edit" title="{{localize 'HV.Edit'}} {{localize 'HV.tabs.skills'}}"><i class="fas fa-edit"></i></a>
-                    <a class="item-control item-delete" title="{{localize 'HV.Delete'}} {{localize 'HV.tabs.skills'}}"><i class="fas fa-trash"></i></a>
-                </div>
-                {{else}}
-                <div class="item-controls">
-                    <i id="padlock" class="fas fa-lock" style="padding-top: 4px;"></i>
-                </div>
-                {{/unless}}
+                <h4 class="item-name">{{item.name}} Details</h4>
             </div>
         </li>
     {{/each}}
     </ol>
+    <section class="spellbook">
+        <ol class="items-list">
+            <li class="flexrow item-header">
+                    <h2 class="centred">~ {{ localize "HV.Spellbook"}}  ~</h2>
+            </li>
+            {{> "systems/helveczia/templates/actor/partials/spells.hbs"}}
+        </ol>
+    </section>
 </div>

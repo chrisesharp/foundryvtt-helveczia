@@ -122,7 +122,8 @@
     },
     "deed": {
       "templates": ["base"],
-      "subtype": ""
+      "subtype": "",
+      "value": 1
     },
     "spell": {
       "level": 1,
