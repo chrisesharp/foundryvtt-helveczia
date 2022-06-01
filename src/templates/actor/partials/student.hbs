@@ -2,7 +2,7 @@
 <div class="student">
     <ol class="items-list">
         <li class="flexrow item-header">
-            <h2 class="centred">~ {{ localize "HV.class.student"}} ( {{ data.specialisms.length }} / {{ maxspecialisms }} ) ~</h2>
+            <h2 class="centred">~ {{ localize "HV.class.student"}}  ~</h2>
         </li>
     {{#each data.classes as |item id|}}
         <li class="item-entry flexcol" data-item-id="{{item.id}}">
@@ -12,11 +12,16 @@
             </div>
         </li>
     {{/each}}
-    {{#each data.specialisms as |item id|}}
+        <li class="flexrow item-header">
+            <h2 class="centred">~ {{ localize "HV.class.student"}} ( {{ data.spells.length }} / {{ maxspells }} ) ~</h2>
+        </li>
+    {{#each data.spells as |item id|}}
         <li class="item-entry flexcol" data-item-id="{{item.id}}">
             <div class="item flexrow">
-                <div class="item-image" data-item-id="{{item.id}}"><img src="{{item.img}}" width="24" height="24"/></div>
                 <h4 class="item-name">{{item.name}}</h4>
+                <div class="spell-data">
+                    <h4>{{ item.data.data.level }}</h4>
+                </div>
                 {{#unless (itemLocked item)}}
                 <div class="item-controls">
                     <a class="item-control item-edit" title="{{localize 'HV.Edit'}} {{localize 'HV.tabs.skills'}}"><i class="fas fa-edit"></i></a>

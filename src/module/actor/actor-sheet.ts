@@ -6,6 +6,7 @@ import { ClassItemData, SkillItemData } from '../items/item-types';
 import { Logger } from '../logger';
 import { HVItem } from '../items/item';
 import { CharacterActorData } from './actor-types';
+import { HVActor } from './actor';
 
 const log = new Logger();
 
@@ -67,11 +68,13 @@ export class HVActorSheet extends ActorSheet {
     data.items = this.actor.items.map((i) => i.data);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.effects = prepareActiveEffectCategories(this.actor.effects);
-    if (this.actor.isVagabond()) {
-      data.maxspecialisms = (actorData.data as CharacterActorData).data.level >= 5 ? 3 : 2;
-    } else {
-      data.maxspecialisms = 1;
-    }
+    data.maxspecialisms = this.actor.isVagabond()
+      ? (actorData.data as CharacterActorData).data.level >= 5
+        ? 3
+        : 2
+      : 1;
+    data.spellslots = (this.actor as HVActor).getSpellSlots();
+    data.maxspells = data.spellslots.reduce((acc, n) => acc + n, 0);
     return data;
   }
 
@@ -108,6 +111,11 @@ export class HVActorSheet extends ActorSheet {
           }
           if (item.data.data.subtype === 'vagabond' && !this.actor.isVagabond()) {
             return ui.notifications.error(game.i18n.localize('HV.errors.notVagabond'));
+          }
+          break;
+        case 'spell':
+          if (!(this.actor.isCleric() || this.actor.isStudent())) {
+            return ui.notifications.error(game.i18n.localize('HV.errors.notMagical'));
           }
           break;
       }

@@ -24,6 +24,7 @@ export async function preloadTemplates(): Promise<Handlebars.TemplateDelegate[]>
     'systems/helveczia/templates/item/possession-sheet.hbs',
     'systems/helveczia/templates/item/skill-sheet.hbs',
     'systems/helveczia/templates/item/weapon-sheet.hbs',
+    'systems/helveczia/templates/item/spell-sheet.hbs',
     // Item Partials
     'systems/helveczia/templates/item/partials/item-effects.hbs',
     'systems/helveczia/templates/item/partials/item-nav.hbs',

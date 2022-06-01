@@ -81,7 +81,7 @@
     }
   },
   "Item": {
-    "types": ["possession", "people", "class", "skill", "armour", "weapon", "deed"],
+    "types": ["possession", "people", "class", "skill", "armour", "weapon", "deed", "spell"],
     "templates": {
       "base": {
         "description": ""
@@ -123,6 +123,15 @@
     "deed": {
       "templates": ["base"],
       "subtype": ""
+    },
+    "spell": {
+      "level": 1,
+      "class": "",
+      "range": "",
+      "duration": "",
+      "area": "",
+      "save": "",
+      "component": ""
     }
   }
 }

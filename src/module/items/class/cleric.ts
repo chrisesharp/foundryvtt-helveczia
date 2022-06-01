@@ -114,6 +114,17 @@ export class Cleric {
     return gainedSixthLevelSkills ? 6 : 0;
   }
 
+  static getSpellSlots(actor: HVActor): number[] {
+    const level = actor.data.data.level;
+    const bonus = actor.data.data.scores.wis.value;
+    const spells = CONFIG.HV.spellSlots[level];
+    if (bonus >= 12) spells[0] += 1;
+    if (bonus >= 15) spells[1] += 1;
+    if (bonus >= 18) spells[2] += 1;
+    log.debug(`Cleric.getSpellSlots() | WIS of ${bonus} results in `, spells);
+    return spells;
+  }
+
   static async cleanup(actor: HVActor, _item: any): Promise<void> {
     Promise.all(
       Object.keys(clericSpecialisms).map((s) => {

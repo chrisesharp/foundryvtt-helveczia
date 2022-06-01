@@ -2,6 +2,8 @@ import { ActorData } from '@league-of-foundry-developers/foundry-vtt-types/src/f
 import { CharacterActorData, HVActorData, NPCActorData } from './actor-types';
 import { Logger } from '../logger';
 import { HVDice } from '../dice';
+import { Student } from '../items/class/student';
+import { Cleric } from '../items/class/cleric';
 
 const log = new Logger();
 
@@ -51,7 +53,7 @@ export class HVActor extends Actor {
         acc[item.type] = category;
         return acc;
       },
-      { possession: [], people: [], class: [], skill: [], armour: [], weapon: [], deed: [] },
+      { possession: [], people: [], class: [], skill: [], armour: [], weapon: [], deed: [], spell: [] },
     );
 
     data.possessions = {
@@ -64,6 +66,7 @@ export class HVActor extends Actor {
     data.classes = categories['class'].filter((i) => i.data.data.specialism === false);
     data.specialisms = categories['class'].filter((i) => i.data.data.specialism);
     data.deeds = categories['deed'];
+    data.spells = categories['spell'];
     data.people = data.peoples[0]?.name;
     data.class = data.classes[0]?.name;
   }
@@ -377,6 +380,12 @@ export class HVActor extends Actor {
 
   isHighVirtue(): boolean {
     return this.data.data.virtue > 14;
+  }
+
+  getSpellSlots(): number[] {
+    if (this.isStudent()) return Student.getSpellSlots(this);
+    else if (this.isCleric()) return Cleric.getSpellSlots(this);
+    return [];
   }
 }
 

@@ -25,6 +25,7 @@ import { WeaponSheet } from './items/weapon/weapon-sheet';
 import { DeedSheet } from './items/deed/deed-sheet';
 import { ClassSheet } from './items/class/class-sheet';
 import { PeopleSheet } from './items/people/people-sheet';
+import { SpellSheet } from './items/spell/spell-sheet';
 
 import { HV } from './config';
 import { registerHandlebarHelpers } from './handlebar-helpers';
@@ -68,6 +69,7 @@ Hooks.once('init', async () => {
   Items.registerSheet('helveczia', ClassSheet, { types: ['class'] });
   Items.registerSheet('helveczia', DeedSheet, { types: ['deed'] });
   Items.registerSheet('helveczia', PeopleSheet, { types: ['people'] });
+  Items.registerSheet('helveczia', SpellSheet, { types: ['spell'] });
   // DocumentSheetConfig.registerSheet(DocumentSheetConfig, "helveczia", HVItemSheetConfig, {makeDefault: true});
 });
 

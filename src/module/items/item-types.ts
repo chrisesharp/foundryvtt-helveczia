@@ -58,6 +58,13 @@ export interface DeedItemData {
   data: DeedData;
 }
 
+type SpellData = BaseData;
+
+export interface SpellItemData {
+  type: 'spell';
+  data: SpellData;
+}
+
 ///////////////////////////////
 
 // export type ReferenceItemData = TokenReferenceItemData | ActorReferenceItemData | CombatantReferenceItemData;
@@ -68,4 +75,5 @@ export type HVItemData =
   | ArmourItemData
   | ClassItemData
   | PeopleItemData
-  | DeedItemData;
+  | DeedItemData
+  | SpellItemData;

@@ -6,6 +6,7 @@ import { PeopleItem } from './items/people/people-item';
 import { DeedItem } from './items/deed/deed-item';
 import { ArmourItem } from './items/armour/armour-item';
 import { WeaponItem } from './items/weapon/weapon-item';
+import { SpellItem } from './items/spell/spell-item';
 import { PossessionItem } from './items/possesion/possession-item';
 import { HVActor } from './actor/actor';
 import { HVCharacterCreator } from './apps/chargen';
@@ -55,7 +56,15 @@ export interface HelvecziaConfig {
     [key: string]: string;
   };
 
+  magicalClasses: string[];
+
   abilities: string[];
+
+  saves: string[];
+
+  spellSlots: {
+    [key: number]: number[];
+  };
 
   coins: {
     [key: string]: string;
@@ -73,6 +82,7 @@ export const HV: HelvecziaConfig = {
     character: HVActor,
     npc: HVActor,
   },
+
   itemClasses: {
     skill: SkillItem,
     possession: PossessionItem,
@@ -81,7 +91,9 @@ export const HV: HelvecziaConfig = {
     deed: DeedItem,
     armour: ArmourItem,
     weapon: WeaponItem,
+    spell: SpellItem,
   },
+
   sheetComponents: {
     actor: {
       // sortable: Sortable,
@@ -93,6 +105,7 @@ export const HV: HelvecziaConfig = {
       // automation: Automation,
     },
   },
+
   applications: {
     peoplePicker: null,
     // classPicker: ClassPicker,
@@ -121,12 +134,25 @@ export const HV: HelvecziaConfig = {
     magical: 'HV.skills.magical',
   },
 
+  magicalClasses: ['cleric', 'student'],
+
   deedTypes: {
     favour: 'HV.deeds.favour',
     sin: 'HV.deeds.sin',
   },
 
   abilities: ['str', 'int', 'wis', 'dex', 'con', 'cha'],
+
+  saves: ['bravery', 'deftness', 'temptation'],
+
+  spellSlots: {
+    1: [1, 0, 0],
+    2: [2, 0, 0],
+    3: [2, 1, 0],
+    4: [3, 2, 0],
+    5: [3, 2, 1],
+    6: [3, 3, 2],
+  },
 
   coins: {
     th: 'Th',
