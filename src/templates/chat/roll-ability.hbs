@@ -10,10 +10,14 @@
         </div>
         <div class="blindable" data-blind="{{data.roll.blindroll}}">
             {{#if result.details}}<div class="chat-details">{{{result.details}}}</div>{{/if}}
-            {{#if result.isFailure}}<div class='roll-result roll-fail'><b>{{localize 'HV.Failure'}}</b> ({{result.target}})
-            </div>{{/if}}
-            {{#if result.isSuccess}}<div class='roll-result roll-success'><b>{{localize 'HV.Success'}}</b>
-                ({{result.target}})</div>{{/if}}
+            {{#if result.isFailure}}
+                <div class='roll-result roll-fail'><b>{{localize 'HV.Failure'}}</b> ({{localize 'HV.needed'}} {{result.target}})
+                </div>
+            {{/if}}
+            {{#if result.isSuccess}}
+                <div class='roll-result roll-success'><b>{{success result.total}}</b> ({{localize 'HV.needed'}} {{result.target}})
+                </div>
+            {{/if}}
             {{#if rollHV}}<div>{{{rollHV}}}</div>{{/if}}
         </div>
     </div>

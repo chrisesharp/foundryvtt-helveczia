@@ -165,6 +165,13 @@ export const registerHandlebarHelpers = async function () {
   Handlebars.registerHelper('contains', function (e, arr) {
     return arr.includes(e);
   });
+
+  Handlebars.registerHelper('success', function (roll) {
+    let success = 'normal';
+    if (roll >= 18 && roll < 24) success = 'difficult';
+    else if (roll >= 24) success = 'heroic';
+    return game.i18n.localize(`HV.${success}.success`);
+  });
 };
 
 function getOrdinal(level: number): string {

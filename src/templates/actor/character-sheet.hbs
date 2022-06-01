@@ -26,6 +26,9 @@
             {{#if cleric_class }}
             <a class="item" data-tab="cleric">{{ localize 'HV.class.cleric'}}</a>
             {{/if}}
+            {{#if student_class }}
+            <a class="item" data-tab="student">{{ localize 'HV.class.student'}}</a>
+            {{/if}}
         {{/if}}
         <a class="item" data-tab="editor">{{ localize 'HV.tabs.notes'}}</a>
     </nav>
@@ -71,6 +74,11 @@
         {{#if cleric_class}}
         <div class="tab cleric" data-group="primary" data-tab="cleric">
             {{> "systems/helveczia/templates/actor/partials/cleric.hbs"}}
+        </div>
+        {{/if}}
+        {{#if student_class}}
+        <div class="tab student" data-group="primary" data-tab="student">
+            {{> "systems/helveczia/templates/actor/partials/student.hbs"}}
         </div>
         {{/if }}
         {{!-- Notes --}}

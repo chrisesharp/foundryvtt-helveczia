@@ -46,6 +46,7 @@ export class HVActorSheet extends ActorSheet {
       fighter_specialism: this.actor.getFlag('helveczia', 'fighter-specialism'),
       fighter_third_skill: this.actor.getFlag('helveczia', 'fighter-third-skill'),
       fighter_fifth_skill: this.actor.getFlag('helveczia', 'fighter-fifth-skill'),
+      student_class: this.actor.getFlag('helveczia', 'student-class'),
       student_skill: this.actor.getFlag('helveczia', 'student-skill'),
       student_skills_generated:
         this.actor.getFlag('helveczia', 'student-skill-generated-1') &&

@@ -47,15 +47,15 @@ const clericSpecialisms = {
 };
 
 async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void> {
-  log.debug(`Cleric.deleteSpecialism() | deleting ${name}`);
+  log.debug(`Cleric.deleteSpecialistSkill() | deleting ${name}`);
   const skills = actor.items.filter(
     (i) => i.type === 'skill' && i.name === name && (i.data as SkillItemData).data.subtype === 'magical',
   );
-  log.debug(`Cleric.deleteSpecialism() | matching skills:`, skills);
+  log.debug(`Cleric.deleteSpecialistSkill() | matching skills:`, skills);
   if (skills.length > 0) {
     for (const skill of skills) {
       if (skill.getFlag('helveczia', 'locked') && skill.id) {
-        log.debug(`Cleric.deleteSpecialism() | deleteing :`, skill);
+        log.debug(`Cleric.deleteSpecialistSkill() | deleteing :`, skill);
         await actor.deleteEmbeddedDocuments('Item', [skill.id]);
       }
     }
