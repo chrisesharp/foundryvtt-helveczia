@@ -102,8 +102,8 @@ export class HVActorSheet extends ActorSheet {
           if (this.actor.data.data.skills.length == this.actor.data.data.maxskills) {
             return ui.notifications.error(game.i18n.localize('HV.errors.fullSkills'));
           }
-          if (item.data.data.subtype === 'esoteric' && !this.actor.isCleric()) {
-            return ui.notifications.error(game.i18n.localize('HV.errors.notCleric'));
+          if (item.data.data.subtype === 'magical' && !(this.actor.isCleric() && this.actor.isStudent())) {
+            return ui.notifications.error(game.i18n.localize('HV.errors.notMagical'));
           }
           if (item.data.data.subtype === 'vagabond' && !this.actor.isVagabond()) {
             return ui.notifications.error(game.i18n.localize('HV.errors.notVagabond'));

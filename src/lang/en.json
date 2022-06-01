@@ -3,7 +3,7 @@
   "HV.skills.science": "Science",
   "HV.skills.practical": "Practical",
   "HV.skills.vagabond": "Vagabond",
-  "HV.skills.cleric": "Cleric",
+  "HV.skills.magical": "Magical",
   "HV.class.fighter": "Fighter",
   "HV.class.vagabond": "Vagabond",
   "HV.class.cleric": "Cleric",
@@ -99,6 +99,6 @@
   "HV.messages.AttackFailure": "failed in their attack against",
   "HV.messages.AttackSuccess": "was successful in their attack",
   "HV.errors.fullSkills": "You have a full quota of skills already!",
-  "HV.errors.notCleric": "You must be a cleric or student to have this skill!",
+  "HV.errors.notMagical": "You must be a cleric or student to have this skill!",
   "HV.errors.notVagabond": "You must be a vagabond to have this skill!"
 }

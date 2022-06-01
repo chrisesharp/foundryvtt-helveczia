@@ -118,7 +118,7 @@ export const HV: HelvecziaConfig = {
     science: 'HV.skills.science',
     practical: 'HV.skills.practical',
     vagabond: 'HV.skills.vagabond',
-    esoteric: 'HV.skills.esoteric',
+    magical: 'HV.skills.magical',
   },
 
   deedTypes: {

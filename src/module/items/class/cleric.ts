@@ -49,7 +49,7 @@ const clericSpecialisms = {
 async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void> {
   log.debug(`Cleric.deleteSpecialism() | deleting ${name}`);
   const skills = actor.items.filter(
-    (i) => i.type === 'skill' && i.name === name && (i.data as SkillItemData).data.subtype === 'cleric',
+    (i) => i.type === 'skill' && i.name === name && (i.data as SkillItemData).data.subtype === 'magical',
   );
   log.debug(`Cleric.deleteSpecialism() | matching skills:`, skills);
   if (skills.length > 0) {
@@ -97,7 +97,7 @@ export class Cleric {
             data: {
               description: clericSpecialisms[s].description,
               ability: '',
-              subtype: 'cleric',
+              subtype: 'magical',
             },
           };
           item.actor?.setFlag('helveczia', clericSpecialisms[s].flag, true);
