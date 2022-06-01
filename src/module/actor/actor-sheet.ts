@@ -42,6 +42,7 @@ export class HVActorSheet extends ActorSheet {
       vagabond_skills: this.actor.getFlag('helveczia', 'vagabond-skills'),
       fighter_class: this.actor.getFlag('helveczia', 'fighter-class'),
       vagabond_class: this.actor.getFlag('helveczia', 'vagabond-class'),
+      cleric_class: this.actor.isCleric(),
       fighter_specialism: this.actor.getFlag('helveczia', 'fighter-specialism'),
       fighter_third_skill: this.actor.getFlag('helveczia', 'fighter-third-skill'),
       fighter_fifth_skill: this.actor.getFlag('helveczia', 'fighter-fifth-skill'),
@@ -101,8 +102,8 @@ export class HVActorSheet extends ActorSheet {
           if (this.actor.data.data.skills.length == this.actor.data.data.maxskills) {
             return ui.notifications.error(game.i18n.localize('HV.errors.fullSkills'));
           }
-          if (item.data.data.subtype === 'esoteric' && !(this.actor.isCleric() || this.actor.isStudent())) {
-            return ui.notifications.error(game.i18n.localize('HV.errors.notEsoteric'));
+          if (item.data.data.subtype === 'esoteric' && !this.actor.isCleric()) {
+            return ui.notifications.error(game.i18n.localize('HV.errors.notCleric'));
           }
           if (item.data.data.subtype === 'vagabond' && !this.actor.isVagabond()) {
             return ui.notifications.error(game.i18n.localize('HV.errors.notVagabond'));
@@ -387,7 +388,7 @@ export class HVActorSheet extends ActorSheet {
       // Add item tags
       let tags = `
       <div class="item-summary">`;
-      if (item.type === 'skill')
+      if (item.type === 'skill' && (item.data as SkillItemData).data?.ability.length)
         tags += `
       <ol class="tag-list">
         <li class="tag">${game.i18n.localize(`HV.scores.${(item.data as SkillItemData).data.ability}.short`)}</li>

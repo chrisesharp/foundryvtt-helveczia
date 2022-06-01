@@ -100,7 +100,6 @@ export class Vagabond {
   }
 
   static getSkillsBonus(actor: HVActor): number {
-    // TODO make this dependent on specialization
     const gainedSkills = actor.isVagabond() && actor.getFlag('helveczia', 'vagabond-skills');
     return gainedSkills ? 4 : 0;
   }

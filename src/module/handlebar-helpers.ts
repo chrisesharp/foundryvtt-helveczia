@@ -111,7 +111,7 @@ export const registerHandlebarHelpers = async function () {
   // Handlebars.registerHelper('possIcon', function(i) {
   //     if (i.endsWith('*')) {
   //         const text = i.substr(0, i.length - 1);
-  //         return new Handlebars.SafeString(`<span title="${game.i18n.localize('DEE.tabs.esoterica')}">${text}<img src="/systems/dee/assets/default/icons/magic.png" width="10px"></span>`);
+  //         return new Handlebars.SafeString(`<span title="${game.i18n.localize('DEE.tabs.clerica')}">${text}<img src="/systems/dee/assets/default/icons/magic.png" width="10px"></span>`);
   //     }
   //     return i;
   // });

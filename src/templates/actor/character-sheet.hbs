@@ -23,6 +23,9 @@
             {{#if fighter_class }}
             <a class="item" data-tab="fighter">{{ localize 'HV.class.fighter'}}</a>
             {{/if}}
+            {{#if cleric_class }}
+            <a class="item" data-tab="cleric">{{ localize 'HV.class.cleric'}}</a>
+            {{/if}}
         {{/if}}
         <a class="item" data-tab="editor">{{ localize 'HV.tabs.notes'}}</a>
     </nav>
@@ -63,6 +66,11 @@
         {{#if fighter_class}}
         <div class="tab fighter" data-group="primary" data-tab="fighter">
             {{> "systems/helveczia/templates/actor/partials/fighter.hbs"}}
+        </div>
+        {{/if }}
+        {{#if cleric_class}}
+        <div class="tab cleric" data-group="primary" data-tab="cleric">
+            {{> "systems/helveczia/templates/actor/partials/cleric.hbs"}}
         </div>
         {{/if }}
         {{!-- Notes --}}
