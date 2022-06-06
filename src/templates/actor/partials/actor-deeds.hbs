@@ -4,31 +4,38 @@
         <li class="flexrow item-header">
             <div class="flex1"></div>
             <h2 class="flex3 centred">~ {{ localize 'HV.tabs.deeds'}} ~</h2>
-            <a class="flex1 item-control absolution" title="{{localize 'HV.deeds.absolution'}}"><i class="atone-rollable fas fa-book-medical"></i></a>
+            <a class="flex1 item-control absolution" title="{{localize 'HV.deeds.absolution'}}"><i class="atone-rollable fa fa-dice"></i></a>
         </li>
     </ol>
 </div>
 <div class="flexrow">
     <div>
-    <h3 class="centred">Sins</h3>
-    <ol class="items-list">
-    {{#each data.deeds as |item id|}}
-        {{#if (eq item.data.data.subtype 'virtue')}}
+        <h3 class="centred">Sins</h3>
+        <ol class="items-list">
+        {{#each data.sins as |item id|}}
+            <li class="item-entry flexcol" data-item-id="{{item.id}}">
+                <div class="item flexrow">
+                    <h4 class="item-name">
+                        {{ deedLocalize  (lookup ../config.cardinalSins item.data.data.cardinality) }} ~ {{item.name}}
+                    </h4>
+                    <div class="item-controls">
+                        {{#if ../user.isGM }}
+                        <a class="item-control item-delete" title="{{localize 'HV.Delete'}} {{localize 'HV.tabs.deeds'}}"><i class="fas fa-trash"></i></a>
+                        {{/if}}
+                    </div>
+                </div>
+            </li>
+        {{/each}}
         </ol>
-        </div>
-        <div>
+    </div>
+    <div>
         <h3 class="centred">Virtues</h3>
         <ol class="items-list">
-        {{/if}}
+        {{#each data.virtues as |item id|}}
         <li class="item-entry flexcol" data-item-id="{{item.id}}">
             <div class="item flexrow">
                 <h4 class="item-name">
-                    {{#if (eq item.data.data.subtype 'sin')}}
-                     {{ deedLocalize  (lookup ../config.cardinalSins item.data.data.cardinality) }}
-                    {{else}}
-                     {{ deedLocalize  (lookup ../config.cardinalVirtues item.data.data.cardinality) }}
-                    {{/if}}
-                ~ {{item.name}}
+                    {{ deedLocalize  (lookup ../config.cardinalVirtues item.data.data.cardinality) }} ~ {{item.name}}
                 </h4>
                 <div class="item-controls">
                     {{#if ../user.isGM }}
@@ -37,7 +44,7 @@
                 </div>
             </div>
         </li>
-    {{/each}}
-    </ol>
+        {{/each}}
+        </ol>
     </div>
 </div>

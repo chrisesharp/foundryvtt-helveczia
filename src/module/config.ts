@@ -57,11 +57,11 @@ export interface HelvecziaConfig {
   };
 
   virtueMagnitudes: {
-    [key: string]: string;
+    [key: number]: string;
   };
 
   sinMagnitudes: {
-    [key: string]: string;
+    [key: number]: string;
   };
 
   cardinalSins: {

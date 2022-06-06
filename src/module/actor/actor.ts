@@ -67,11 +67,26 @@ export class HVActor extends Actor {
     data.peoples = categories['people'];
     data.classes = categories['class'].filter((i) => i.data.data.specialism === false);
     data.specialisms = categories['class'].filter((i) => i.data.data.specialism);
-    data.deeds = categories['deed'].sort((a, b) => {
-      const first = a.data.data.subtype === 'sin' ? 0 - a.data.data.magnitude : a.data.data.magnitude;
-      const second = b.data.data.subtype === 'sin' ? 0 - b.data.data.magnitude : b.data.data.magnitude;
-      return first - second;
-    });
+    // data.deeds = categories['deed'].sort((a, b) => {
+    //   const first = a.data.data.subtype === 'sin' ? 0 - a.data.data.magnitude : a.data.data.magnitude;
+    //   const second = b.data.data.subtype === 'sin' ? 0 - b.data.data.magnitude : b.data.data.magnitude;
+    //   return first - second;
+    // });
+    data.deeds = categories['deed'];
+    data.sins = categories['deed']
+      .filter((d) => d.data.data.subtype === 'sin')
+      .sort((a, b) => {
+        const first = 0 - a.data.data.magnitude;
+        const second = 0 - b.data.data.magnitude;
+        return first - second;
+      });
+    data.virtues = categories['deed']
+      .filter((d) => d.data.data.subtype === 'virtue')
+      .sort((a, b) => {
+        const first = a.data.data.magnitude;
+        const second = b.data.data.magnitude;
+        return first - second;
+      });
     data.spells = [[], [], []];
     if (categories['spell'].length) {
       data.spells = categories['spell'].reduce(

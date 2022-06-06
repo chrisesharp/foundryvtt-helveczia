@@ -2,7 +2,7 @@ import { HVCharacterCreator } from '../apps/chargen';
 import { onManageActiveEffect, prepareActiveEffectCategories } from '../effects';
 import { ClassItem } from '../items/class/class-item';
 import { PeopleItem } from '../items/people/people-item';
-import { ClassItemData, SkillItemData } from '../items/item-types';
+import { ClassItemData, DeedItemData, SkillItemData } from '../items/item-types';
 import { Logger } from '../logger';
 import { HVItem } from '../items/item';
 import { CharacterActorData } from './actor-types';
@@ -535,7 +535,7 @@ export class HVActorSheet extends ActorSheet {
 
   async _onAbsolution(event) {
     event.preventDefault();
-    // const sins = this.actor.data.data.deeds.filter(d => d.data.data.subtype === 'sin');
+    const sins: HVItem[] = this.actor.data.data.deeds.filter((d) => d.data.data.subtype === 'sin');
     const virtues = this.actor.data.data.deeds.filter(
       (d) => d.data.data.subtype === 'virtue' && d.data.data.magnitude > 1,
     );
@@ -543,19 +543,44 @@ export class HVActorSheet extends ActorSheet {
 
     if (lowVirtue && virtues.length == 0) {
       ui.notifications.warn(
-        'In such a low state of virtue, you must have at least a moderately good deed for absolution!',
+        game.i18n.localize(
+          'In such a low state of virtue, you must have at least a moderately good deed for absolution!',
+        ),
       );
       return;
     }
 
     const italian = this.actor.isItalian() ? 1 : 0;
-    const roll = await await new Roll('1d3 + 1 + @italian', { italian: italian }).evaluate({ async: true });
+    const roll = await new Roll('1d3 + 1 + @italian', { italian: italian }).evaluate({ async: true });
+
+    const absolved: HVItem[] = [];
+    let absolvedTotal = 0;
+
+    while (sins.length > 0) {
+      const sin = sins.shift();
+      if (sin) {
+        const mag: number = Math.floor((sin?.data as DeedItemData).data.magnitude);
+        if (absolvedTotal + mag < roll.total) {
+          absolvedTotal = absolvedTotal + mag;
+          absolved.push(sin);
+        }
+      }
+    }
+
+    await Promise.all(
+      absolved.map((sin) => {
+        if (sin.id) return this.actor.deleteEmbeddedDocuments('Item', [sin.id]);
+        return Promise.resolve();
+      }),
+    );
 
     const templateData = {
-      success: true,
+      success: absolved.length > 0,
       roll: roll,
       actor: this.actor,
       user: game.user?.id,
+      absolved: absolved,
+      cardinalSins: CONFIG.HV.cardinalSins,
     };
 
     const content = await renderTemplate('systems/helveczia/templates/chat/roll-absolution.hbs', templateData);

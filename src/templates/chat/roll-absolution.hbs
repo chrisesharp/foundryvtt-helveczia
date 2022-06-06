@@ -5,7 +5,16 @@
             <div class="chat-img" style="background-image:url('{{actor.img}}')"></div>
         </div>
         <div>
-         <h3> You have been absolved of the following sins...</h3>
+        {{#if success}}
+        <h3> You have been absolved of the following sins...</h3>
+        <ol>
+        {{#each absolved as |sin|}}
+            <li>{{ deedLocalize  (lookup ../cardinalSins sin.data.data.cardinality) }} ~ {{sin.name}}</li>
+        {{/each}}
+        </ol>
+        {{else}}
+        <h3> You were unable to absolve any of your sins.</h3>
+        {{/if}}
         </div>
     </div>
 </section>
