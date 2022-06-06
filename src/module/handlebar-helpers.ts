@@ -60,11 +60,6 @@ export const registerHandlebarHelpers = async function () {
     return Math.max(0, Math.min(7, n - 14));
   });
 
-  // Handlebars.registerHelper("player", function (id) {
-  //     const player = game.users?.players.find(p=>p.character?.id===id);
-  //     return (player) ? player.name: "";
-  // });
-
   Handlebars.registerHelper('hasArmour', function (a) {
     return 0 < a && a < 6;
   });
@@ -104,10 +99,6 @@ export const registerHandlebarHelpers = async function () {
     return isSelected === value ? ' selected ' : '';
   });
 
-  // Handlebars.registerHelper('trade', function(trade) {
-  //     return CONFIG.DEE.icons[trade];
-  // });
-
   Handlebars.registerHelper('inParty', function (actor) {
     return actor.getFlag('hv', 'party');
   });
@@ -118,11 +109,6 @@ export const registerHandlebarHelpers = async function () {
   //         return new Handlebars.SafeString(`<span title="${game.i18n.localize('DEE.tabs.clerica')}">${text}<img src="/systems/dee/assets/default/icons/magic.png" width="10px"></span>`);
   //     }
   //     return i;
-  // });
-
-  // Handlebars.registerHelper('ability', function(ability) {
-  //     let item = game.items.find(i => i.type==="ability" && i.name===ability);
-  //     return item;
   // });
 
   Handlebars.registerHelper('plusminus', function (value) {

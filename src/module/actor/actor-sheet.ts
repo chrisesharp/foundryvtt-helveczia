@@ -211,6 +211,7 @@ export class HVActorSheet extends ActorSheet {
     html.find('.choose-specialism').click(this._chooseSpecialism.bind(this));
     html.find('.generate-craft-skill').click(this._generateCraftSkill.bind(this));
     html.find('.generate-science-skills').click(this._generateScienceSkills.bind(this));
+    html.find('.absolution').click(this._onAbsolution.bind(this));
     // lock sheet
     // html.find('#padlock').click(this._onToggleLock.bind(this));
 
@@ -331,7 +332,6 @@ export class HVActorSheet extends ActorSheet {
     const item = this.actor.items.get(li.data('item-id'));
     if (!item) return;
     const description = TextEditor.enrichHTML(item.data.data.description);
-    // const abilities = this.actor.getAbilities();
     const options = '';
 
     // Toggle summary
@@ -531,5 +531,35 @@ export class HVActorSheet extends ActorSheet {
 
   async _getTags(item: HVItem): Promise<string> {
     return CONFIG.HV.itemClasses[item.data.type] ? CONFIG.HV.itemClasses[item.data.type].getTags(item, this.actor) : '';
+  }
+
+  async _onAbsolution(event) {
+    event.preventDefault();
+    // const sins = this.actor.data.data.deeds.filter(d => d.data.data.subtype === 'sin');
+    const virtues = this.actor.data.data.deeds.filter(
+      (d) => d.data.data.subtype === 'virtue' && d.data.data.magnitude > 1,
+    );
+    const lowVirtue = this.actor.data.data.virtue < 7;
+
+    if (lowVirtue && virtues.length == 0) {
+      ui.notifications.warn(
+        'In such a low state of virtue, you must have at least a moderately good deed for absolution!',
+      );
+      return;
+    }
+
+    const italian = this.actor.isItalian() ? 1 : 0;
+    const roll = await await new Roll('1d3 + 1 + @italian', { italian: italian }).evaluate({ async: true });
+
+    const templateData = {
+      success: true,
+      roll: roll,
+      actor: this.actor,
+      user: game.user?.id,
+    };
+
+    const content = await renderTemplate('systems/helveczia/templates/chat/roll-absolution.hbs', templateData);
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+    await roll.toMessage({ speaker: speaker, flavor: content });
   }
 }

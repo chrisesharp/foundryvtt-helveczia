@@ -17,6 +17,8 @@
   "HV.rolls.hitpoints": "Rolled {hitpoints} hitpoints",
   "HV.deeds.virtue": "Virtue",
   "HV.deeds.sin": "Sin",
+  "HV.deeds.sins": "Sins",
+  "HV.deeds.absolution": "Absolution",
   "HV.deeds.minor": "Minor",
   "HV.deeds.moderate": "Moderate",
   "HV.deeds.major": "Major",

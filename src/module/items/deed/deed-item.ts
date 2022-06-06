@@ -63,10 +63,13 @@ export class DeedItem extends BaseItem {
   }
 
   static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
+    const isSin = (item.data as DeedItemData).data.subtype === 'sin';
+    const mag = isSin ? 0 - (item.data as DeedItemData).data.magnitude : (item.data as DeedItemData).data.magnitude;
+    const value = mag > 0 ? `+${mag}` : mag;
     return `
     <ol class="tag-list">
       <li class="tag">${game.i18n.localize(`HV.deeds.${(item.data as DeedItemData).data.subtype}`)}</li>
-      <li class="tag">${(item.data as DeedItemData).data.magnitude}</li>
+      <li class="tag">${value}</li>
     </ol>`;
   }
 
