@@ -4,6 +4,8 @@ import { Logger } from '../logger';
 import { HVDice } from '../dice';
 import { Student } from '../items/class/student';
 import { Cleric } from '../items/class/cleric';
+import { SkillItemData } from '../items/item-types';
+import { PeopleItem } from '../items/people/people-item';
 
 const log = new Logger();
 
@@ -396,6 +398,64 @@ export class HVActor extends Actor {
     if (this.isStudent()) return Student.getSpellSlots(this);
     else if (this.isCleric()) return Cleric.getSpellSlots(this);
     return [];
+  }
+
+  async getRollMods(data): Promise<{ mods: number[]; longName: string }> {
+    let longName = '';
+    const mod: number[] = [];
+    switch (data.roll) {
+      case 'attr':
+        data.resource = 'scores';
+        break;
+      case 'save':
+        data.resource = 'saves';
+        if (this.isHungarian()) {
+          const fated = await PeopleItem.enableHungarianFate(this);
+          if (data.attr === fated.attr) mod.push(fated.mod);
+        }
+        break;
+      case 'skill':
+        data.resource = '';
+        mod.push(this.data.data.level);
+        break;
+      default:
+    }
+    const attribute = data.attr;
+    const resource = data.resource;
+    if (resource !== '' && attribute) {
+      mod.push(this.data.data[resource][attribute].mod);
+      longName = game.i18n.format(`HV.${resource}.${attribute}.long`);
+      log.debug(
+        `getRollMods() | name:${longName} - resource=${resource}, attribute=${attribute}, mod=${mod.join('+')}`,
+      );
+    } else {
+      const item = this.items.get(`${data.itemId}`);
+      log.debug(`getRollMods() | itemId:${data.itemId}`);
+      if (item) {
+        const skill = item.data as SkillItemData;
+        const bonus = skill.data.bonus;
+        const ability = this.data.data.scores[skill.data.ability]?.mod;
+        mod.push(bonus);
+        mod.push(ability);
+        longName = item.name ?? game.i18n.localize('HV.skill');
+        log.debug(`getRollMods() | name:${longName} - ability=${skill.data.ability}, bonus=${bonus}`);
+      } else {
+        log.error('getRollMods() | itemId not found on actor');
+      }
+    }
+    return { mods: mod, longName: longName };
+  }
+
+  async getItemRollMod(itemID: string): Promise<string> {
+    const item = this.items.get(itemID);
+    let mods = '0';
+    if (item) {
+      const itemData = item.data as SkillItemData;
+      const data = await this.getRollMods({ attr: itemData.data.ability, roll: itemData.type, itemId: item.id });
+      const value = data.mods.reduce((acc, n) => acc + n, 0);
+      mods = value > 0 ? `+${value}` : `${value}`;
+    }
+    return mods;
   }
 }
 

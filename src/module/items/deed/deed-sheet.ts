@@ -5,9 +5,9 @@ export class DeedSheet extends HVItemSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ['helveczia', 'sheet', 'item'],
-      width: 350,
-      height: 450,
-      resizable: false,
+      width: 450,
+      height: 350,
+      resizable: true,
       tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'editor' }],
     });
   }

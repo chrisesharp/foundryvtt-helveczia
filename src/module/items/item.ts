@@ -28,9 +28,21 @@ export class HVItem extends Item {
 
   //** @override */
   protected _onDelete(_options: DocumentModificationOptions, _userId: string): void {
-    if (this.isOwned) {
+    if (this.isEmbedded) {
       CONFIG.HV.itemClasses[this.data.type]?.onDelete(this.actor, this.data);
     }
+  }
+
+  //** @override */
+  protected _onUpdate(
+    changed: DeepPartial<PropertiesToSource<ItemDataBaseProperties>>,
+    options: DocumentModificationOptions,
+    userId: string,
+  ): void {
+    if (CONFIG.HV.itemClasses[this.data.type]) {
+      CONFIG.HV.itemClasses[this.data.type]?.onUpdate(this, changed, options, userId);
+    }
+    super._onUpdate(changed, options, userId);
   }
 
   /** Augment actor skills  */

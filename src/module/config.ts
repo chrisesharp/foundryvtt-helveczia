@@ -56,6 +56,22 @@ export interface HelvecziaConfig {
     [key: string]: string;
   };
 
+  virtueMagnitudes: {
+    [key: string]: string;
+  };
+
+  sinMagnitudes: {
+    [key: string]: string;
+  };
+
+  cardinalSins: {
+    [key: number]: string;
+  };
+
+  cardinalVirtues: {
+    [key: number]: string;
+  };
+
   magicalClasses: string[];
 
   abilities: string[];
@@ -137,8 +153,42 @@ export const HV: HelvecziaConfig = {
   magicalClasses: ['cleric', 'student'],
 
   deedTypes: {
-    favour: 'HV.deeds.favour',
+    virtue: 'HV.deeds.virtue',
     sin: 'HV.deeds.sin',
+  },
+
+  cardinalSins: {
+    0: 'superbia',
+    1: 'avaritia',
+    2: 'luxuria',
+    3: 'invidia',
+    4: 'gula',
+    5: 'ira',
+    6: 'acedia',
+  },
+
+  cardinalVirtues: {
+    0: 'humilitas',
+    1: 'caritas',
+    2: 'castitas',
+    3: 'benevolentia',
+    4: 'temperantia',
+    5: 'patientia',
+    6: 'industria',
+  },
+
+  virtueMagnitudes: {
+    1: 'HV.deeds.minor',
+    2: 'HV.deeds.moderate',
+    3: 'HV.deeds.major',
+    6: 'HV.deeds.sincere',
+  },
+
+  sinMagnitudes: {
+    1: 'HV.deeds.minor',
+    2: 'HV.deeds.moderate',
+    3: 'HV.deeds.major',
+    6: 'HV.deeds.heinous',
   },
 
   abilities: ['str', 'int', 'wis', 'dex', 'con', 'cha'],

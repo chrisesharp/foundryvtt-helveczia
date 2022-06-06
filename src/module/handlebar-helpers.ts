@@ -73,6 +73,10 @@ export const registerHandlebarHelpers = async function () {
     return item.getFlag('helveczia', 'locked');
   });
 
+  Handlebars.registerHelper('deedLocalize', function (text) {
+    return game.i18n.localize(`HV.deeds.${text}`);
+  });
+
   Handlebars.registerHelper('concat', function (args) {
     let outStr = '';
     for (const arg in args) {

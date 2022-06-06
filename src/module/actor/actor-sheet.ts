@@ -119,6 +119,8 @@ export class HVActorSheet extends ActorSheet {
             return ui.notifications.error(game.i18n.localize('HV.errors.notMagical'));
           }
           break;
+        case 'deed':
+          break;
       }
     }
     if (shouldContinue) {
@@ -237,18 +239,6 @@ export class HVActorSheet extends ActorSheet {
     html.find('.effect-control').click((ev) => onManageActiveEffect(ev, this.actor));
   }
 
-  async _getItemRollMod(itemID: string): Promise<string> {
-    const item = this.actor.items.get(itemID);
-    let mods = '0';
-    if (item) {
-      const itemData = item.data as SkillItemData;
-      const data = await this.getRollMods({ attr: itemData.data.ability, roll: itemData.type, itemId: item.id });
-      const value = data.mods.reduce((acc, n) => acc + n, 0);
-      mods = value > 0 ? `+${value}` : `${value}`;
-    }
-    return mods;
-  }
-
   /**
    * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
    * @param {Event} event   The originating click event
@@ -298,7 +288,7 @@ export class HVActorSheet extends ActorSheet {
       }
     }
 
-    const rollData = await this.getRollMods(dataset);
+    const rollData = await this.actor.getRollMods(dataset);
     this.actor.rollCheck(rollData, target);
   }
 
@@ -330,52 +320,6 @@ export class HVActorSheet extends ActorSheet {
     this.actor.setFlag('helveczia', 'rolled-hits-lvl', this.actor.data.data.level);
   }
 
-  async getRollMods(data): Promise<{ mods: number[]; longName: string }> {
-    let longName = '';
-    const mod: number[] = [];
-    switch (data.roll) {
-      case 'attr':
-        data.resource = 'scores';
-        break;
-      case 'save':
-        data.resource = 'saves';
-        if (this.actor.isHungarian()) {
-          const fated = await PeopleItem.enableHungarianFate(this.actor);
-          if (data.attr === fated.attr) mod.push(fated.mod);
-        }
-        break;
-      case 'skill':
-        data.resource = '';
-        mod.push(this.actor.data.data.level);
-        break;
-      default:
-    }
-    const attribute = data.attr;
-    const resource = data.resource;
-    if (resource !== '' && attribute) {
-      mod.push(this.actor.data.data[resource][attribute].mod);
-      longName = game.i18n.format(`HV.${resource}.${attribute}.long`);
-      log.debug(
-        `getRollMods() | name:${longName} - resource=${resource}, attribute=${attribute}, mod=${mod.join('+')}`,
-      );
-    } else {
-      const item = this.actor.items.get(`${data.itemId}`);
-      log.debug(`getRollMods() | itemId:${data.itemId}`);
-      if (item) {
-        const skill = item.data as SkillItemData;
-        const bonus = skill.data.bonus;
-        const ability = this.actor.data.data.scores[skill.data.ability]?.mod;
-        mod.push(bonus);
-        mod.push(ability);
-        longName = item.name ?? game.i18n.localize('HV.skill');
-        log.debug(`getRollMods() | name:${longName} - ability=${skill.data.ability}, bonus=${bonus}`);
-      } else {
-        log.error('getRollMods() | itemId not found on actor');
-      }
-    }
-    return { mods: mod, longName: longName };
-  }
-
   /**
    * Handle adding a summary description for an Item
    * @param {Event} event   The originating click event
@@ -398,12 +342,7 @@ export class HVActorSheet extends ActorSheet {
       // Add item tags
       let tags = `
       <div class="item-summary">`;
-      if (item.type === 'skill' && (item.data as SkillItemData).data?.ability.length)
-        tags += `
-      <ol class="tag-list">
-        <li class="tag">${game.i18n.localize(`HV.scores.${(item.data as SkillItemData).data.ability}.short`)}</li>
-        <li class="tag">${await this._getItemRollMod(item.id ?? '')}</li>
-      </ol>`;
+      tags += await this._getTags(item);
       tags += `
           <div>
               ${description}
@@ -588,5 +527,9 @@ export class HVActorSheet extends ActorSheet {
       }
     }
     return null;
+  }
+
+  async _getTags(item: HVItem): Promise<string> {
+    return CONFIG.HV.itemClasses[item.data.type] ? CONFIG.HV.itemClasses[item.data.type].getTags(item, this.actor) : '';
   }
 }

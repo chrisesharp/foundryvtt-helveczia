@@ -1,6 +1,7 @@
 import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
 import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
 import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
+import { HVActor } from '../actor/actor';
 import { Logger } from '../logger';
 import { HVItem } from './item';
 
@@ -91,7 +92,18 @@ export abstract class BaseItem {
     return 0;
   }
 
+  static async getTags(_item: HVItem, _actor: HVActor): Promise<string> {
+    return '';
+  }
+
   static onDelete(_actor, _itemData) {}
+
+  static async onUpdate(
+    _item: HVItem,
+    _changed: DeepPartial<PropertiesToSource<ItemDataBaseProperties>>,
+    _options: DocumentModificationOptions,
+    _userId: string,
+  ): Promise<void> {}
 
   /*************************
    * EVENT HANDLER

@@ -64,12 +64,23 @@
     }
   }
 
+  .deed-header {
+    display: flex;
+  }
+
+  select.deed-option {
+    border: 0;
+  }
   h2.cost {
     margin: 0 0 1px;
   }
 
   h3.spell-hdr {
     margin: 0 0 1px;
+  }
+
+  h3.deed-hdr {
+    padding: 5px;
   }
 }
 

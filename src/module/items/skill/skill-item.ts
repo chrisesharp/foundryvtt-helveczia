@@ -1,8 +1,10 @@
 import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
 import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
 import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
+import { HVActor } from '../../actor/actor';
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
+import { SkillItemData } from '../item-types';
 
 export class SkillItem extends BaseItem {
   static get documentName() {
@@ -30,7 +32,7 @@ export class SkillItem extends BaseItem {
 
   static prepareItemData(itemDocument) {
     const data = super.prepareItemData(itemDocument);
-    if (itemDocument.isOwned && itemDocument.parent instanceof Actor) {
+    if (itemDocument.isEmbedded && itemDocument.parent instanceof Actor) {
       const extraData = CONFIG.HV.itemClasses['people']?.augmentOwnedItem(itemDocument.parent, data);
       mergeObject(data, extraData);
     }
@@ -46,6 +48,17 @@ export class SkillItem extends BaseItem {
     if (skill) {
       // await this.rollSkill(sheet, skill);
     }
+  }
+
+  static async getTags(item: HVItem, actor: HVActor): Promise<string> {
+    if ((item.data as SkillItemData).data?.ability.length) {
+      return `
+    <ol class="tag-list">
+      <li class="tag">${game.i18n.localize(`HV.scores.${(item.data as SkillItemData).data.ability}.short`)}</li>
+      <li class="tag">${await actor.getItemRollMod(item.id ?? '')}</li>
+    </ol>`;
+    }
+    return '';
   }
 
   /** @override */

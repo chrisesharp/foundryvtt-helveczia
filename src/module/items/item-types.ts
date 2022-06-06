@@ -51,7 +51,10 @@ export interface WeaponItemData {
   data: WeaponData;
 }
 
-type DeedData = BaseData;
+type DeedData = BaseData & {
+  subtype: string;
+  magnitude: number;
+};
 
 export interface DeedItemData {
   type: 'deed';
