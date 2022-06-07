@@ -7,6 +7,7 @@ import { Logger } from '../logger';
 import { HVItem } from '../items/item';
 import { CharacterActorData } from './actor-types';
 import { HVActor } from './actor';
+import { Utils } from '../utils/utils';
 
 const log = new Logger();
 
@@ -141,12 +142,7 @@ export class HVActorSheet extends ActorSheet {
   async _removePeoples(item): Promise<boolean> {
     if (item.name === this.actor.data.data.people) return false;
     const peoples = this.actor.items.filter((i) => i.type == 'people');
-    await Promise.all(
-      peoples.map((p) => {
-        if (p.id) return this.actor.deleteEmbeddedDocuments('Item', [p.id]);
-        return Promise.resolve();
-      }),
-    );
+    await Utils.deleteEmbeddedArray(peoples, this.actor);
     return true;
   }
 
@@ -156,12 +152,7 @@ export class HVActorSheet extends ActorSheet {
     if (!itemData.data.specialism) {
       log.debug('_removeClasses() | Removing previous classes');
       const classes = this.actor.items.filter((i) => i.type == 'class');
-      await Promise.all(
-        classes.map((p) => {
-          if (p.id) return this.actor.deleteEmbeddedDocuments('Item', [p.id]);
-          return Promise.resolve();
-        }),
-      );
+      await Utils.deleteEmbeddedArray(classes, this.actor);
       return true;
     } else {
       const requiredProfession = itemData.data.parent.toLowerCase();
@@ -175,12 +166,7 @@ export class HVActorSheet extends ActorSheet {
               (i.data as ClassItemData).data.specialism &&
               (i.data as ClassItemData).data.parent.toLowerCase() === this.actor.data.data.class.toLowerCase(),
           );
-          await Promise.all(
-            classes.map((p) => {
-              if (p.id) return this.actor.deleteEmbeddedDocuments('Item', [p.id]);
-              return Promise.resolve();
-            }),
-          );
+          await Utils.deleteEmbeddedArray(classes, this.actor);
         }
         return true;
       }
@@ -567,12 +553,7 @@ export class HVActorSheet extends ActorSheet {
       }
     }
 
-    await Promise.all(
-      absolved.map((sin) => {
-        if (sin.id) return this.actor.deleteEmbeddedDocuments('Item', [sin.id]);
-        return Promise.resolve();
-      }),
-    );
+    await Utils.deleteEmbeddedArray(absolved, this.actor);
 
     const templateData = {
       success: absolved.length > 0,

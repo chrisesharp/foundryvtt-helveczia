@@ -2,23 +2,21 @@ import { HVItem } from '../item';
 import { Logger } from '../../logger';
 import { HVActor } from '../../actor/actor';
 import { ClassItemData, SkillItemData } from '../item-types';
+import { Utils } from '../../utils/utils';
 
 const log = new Logger();
 
 async function deleteSpecialism(actor: HVActor, name: string): Promise<void> {
   log.debug(`Vagabond.deleteSpecialism() | deleting ${name}`);
   const skills = actor.items.filter(
-    (i) => i.type === 'skill' && i.name === name && (i.data as SkillItemData).data.subtype === 'vagabond',
+    (i) =>
+      i.type === 'skill' &&
+      i.name === name &&
+      (i.data as SkillItemData).data.subtype === 'vagabond' &&
+      i.getFlag('helveczia', 'locked') === true,
   );
   log.debug(`Vagabond.deleteSpecialism() | matching skills:`, skills);
-  if (skills.length > 0) {
-    for (const skill of skills) {
-      if (skill.getFlag('helveczia', 'locked') && skill.id) {
-        log.debug(`Vagabond.deleteSpecialism() | deleteing :`, skill);
-        await actor.deleteEmbeddedDocuments('Item', [skill.id]);
-      }
-    }
-  }
+  await Utils.deleteEmbeddedArray(skills, actor);
 }
 
 async function createSpecialismSkill(item: HVItem, skillData: any): Promise<void> {

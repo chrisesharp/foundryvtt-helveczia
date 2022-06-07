@@ -2,6 +2,7 @@ import { HVItem } from '../item';
 import { Logger } from '../../logger';
 import { HVActor } from '../../actor/actor';
 import { ClassItemData, SkillItemData } from '../item-types';
+import { Utils } from '../../utils/utils';
 
 const log = new Logger();
 
@@ -41,17 +42,14 @@ const studentSpecialisms = {
 async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void> {
   log.debug(`Student.deleteSpecialistSkill() | deleting ${name}`);
   const skills = actor.items.filter(
-    (i) => i.type === 'skill' && i.name === name && (i.data as SkillItemData).data.subtype === 'magical',
+    (i) =>
+      i.type === 'skill' &&
+      i.name === name &&
+      (i.data as SkillItemData).data.subtype === 'magical' &&
+      i.getFlag('helveczia', 'locked') === true,
   );
   log.debug(`Student.deleteSpecialistSkill() | matching skills:`, skills);
-  if (skills.length > 0) {
-    for (const skill of skills) {
-      if (skill.getFlag('helveczia', 'locked') && skill.id) {
-        log.debug(`Student.deleteSpecialistSkill() | deleteing :`, skill);
-        await actor.deleteEmbeddedDocuments('Item', [skill.id]);
-      }
-    }
-  }
+  await Utils.deleteEmbeddedArray(skills, actor);
 }
 
 async function createSpecialistSkill(item: HVItem, skillData: any): Promise<void> {
@@ -126,11 +124,14 @@ export class Student {
     );
     actor.setFlag('helveczia', 'student-class', false);
     const sciences = actor.items.filter(
-      (i) => i.type === 'skill' && (i.data as SkillItemData).data.subtype === 'science',
+      (i) =>
+        i.type === 'skill' &&
+        (i.data as SkillItemData).data.subtype === 'science' &&
+        i.getFlag('helveczia', 'locked') === true,
     );
     if (sciences.length > 0) {
       for (const science of sciences) {
-        if (science.getFlag('helveczia', 'locked') && science.id) {
+        if (science.id) {
           const flag =
             actor.getFlag('helveczia', 'student-skill-generated-1') === science.name
               ? 'student-skill-generated-1'

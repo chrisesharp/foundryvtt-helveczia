@@ -6,6 +6,7 @@ import { HVItem } from '../item';
 import { Logger } from '../../logger';
 import { DeedItemData } from '../item-types';
 import { HVActor } from '../../actor/actor';
+import { Utils } from '../../utils/utils';
 
 const log = new Logger();
 
@@ -75,12 +76,11 @@ export class DeedItem extends BaseItem {
 
   static async addDeedEffects(item: HVItem) {
     log.debug('DeedItem.addDeedEffect() | adding deed effects for ', item);
-    await Promise.all(
-      item.effects.map((p) => {
-        if (p.id) return item.deleteEmbeddedDocuments('ActiveEffect', [p.id]);
-        return Promise.resolve();
-      }),
+    await Utils.deleteEmbeddedArray(
+      item.effects.filter((_e) => true),
+      item,
     );
+
     const itemData = item.data as DeedItemData;
     const magnitude = itemData.data.magnitude;
     const subtype = itemData.data.subtype;

@@ -7,6 +7,7 @@ import { HVItem } from '../item';
 import { SkillItemData } from '../item-types';
 import { Logger } from '../../logger';
 import { HVActorData } from '../../actor/actor-types';
+import { Utils } from '../../utils/utils';
 
 const log = new Logger();
 
@@ -69,16 +70,22 @@ export class PeopleItem extends BaseItem {
 
   static async cleanupGermanSkill(actor: HVActor): Promise<void> {
     actor.setFlag('helveczia', 'german-skill', false);
-    const crafts = actor.items.filter((i) => i.type === 'skill' && (i.data as SkillItemData).data.subtype === 'craft');
-    if (crafts.length > 0) {
-      for (const craft of crafts) {
-        if (craft.getFlag('helveczia', 'locked') && craft.id) {
-          actor.setFlag('helveczia', 'german-skill-generated', false);
-          await actor.deleteEmbeddedDocuments('Item', [craft.id]);
-          await actor.sheet?.render(true);
-        }
-      }
-    }
+    const crafts = actor.items.filter(
+      (i) =>
+        i.type === 'skill' &&
+        (i.data as SkillItemData).data.subtype === 'craft' &&
+        i.getFlag('helveczia', 'locked') === true,
+    );
+    await Utils.deleteEmbeddedArray(crafts, actor);
+    // if (crafts.length > 0) {
+    //   for (const craft of crafts) {
+    //     if (craft.getFlag('helveczia', 'locked') && craft.id) {
+    //       actor.setFlag('helveczia', 'german-skill-generated', false);
+    //       await actor.deleteEmbeddedDocuments('Item', [craft.id]);
+    //       await actor.sheet?.render(true);
+    //     }
+    //   }
+    // }
   }
 
   static async onCreateDutch(item: HVItem): Promise<void> {
