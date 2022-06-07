@@ -116,8 +116,10 @@ export class HVActorSheet extends ActorSheet {
           }
           break;
         case 'spell':
-          if (!(this.actor.isCleric() || this.actor.isStudent())) {
-            return ui.notifications.error(game.i18n.localize('HV.errors.notMagical'));
+          if (item.data.data.class === 'cleric' && !this.actor.isCleric()) {
+            return ui.notifications.error(game.i18n.localize('HV.errors.notCleric'));
+          } else if (item.data.data.class === 'student' && !this.actor.isStudent()) {
+            return ui.notifications.error(game.i18n.localize('HV.errors.notStudent'));
           }
           break;
         case 'deed':
