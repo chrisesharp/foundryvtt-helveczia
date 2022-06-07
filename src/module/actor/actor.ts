@@ -61,17 +61,12 @@ export class HVActor extends Actor {
     data.possessions = {
       articles: categories['possession'],
       weapons: categories['weapon'],
-      armour: categories['armour'],
+      armour: categories['armour'].sort((a, b) => b.data.data.bonus - a.data.data.bonus),
     };
     data.skills = categories['skill'];
     data.peoples = categories['people'];
     data.classes = categories['class'].filter((i) => i.data.data.specialism === false);
     data.specialisms = categories['class'].filter((i) => i.data.data.specialism);
-    // data.deeds = categories['deed'].sort((a, b) => {
-    //   const first = a.data.data.subtype === 'sin' ? 0 - a.data.data.magnitude : a.data.data.magnitude;
-    //   const second = b.data.data.subtype === 'sin' ? 0 - b.data.data.magnitude : b.data.data.magnitude;
-    //   return first - second;
-    // });
     data.deeds = categories['deed'];
     data.sins = categories['deed']
       .filter((d) => d.data.data.subtype === 'sin')
@@ -112,6 +107,7 @@ export class HVActor extends Actor {
       this._updateAbility(data.scores[key]);
     }
 
+    this._calculateCapacity(data);
     this._updateSaves(data);
     this._updateSkills(data);
     this._updateCombatValues(data);
@@ -146,6 +142,13 @@ export class HVActor extends Actor {
   }
 
   /**
+   * Calculate encumbrance capacity from strength
+   */
+  _calculateCapacity(data): void {
+    data.capacity = 16 - (6 - Math.round(data.scores.str.value / 3));
+  }
+
+  /**
    * Prepare Combat related values
    */
   _updateCombatValues(data) {
@@ -160,6 +163,7 @@ export class HVActor extends Actor {
 
   _updateAC(data: any): void {
     data.ac += data.scores.dex.mod;
+    data.ac += data.possessions.armour[0]?.data.data.bonus ?? 0;
   }
 
   /**
@@ -346,7 +350,8 @@ export class HVActor extends Actor {
     await super._preCreate(data, options, user);
     data.token = data.token || {};
 
-    const disposition = data.type === 'character' ? 1 : -1;
+    const disposition =
+      data.type === 'character' ? CONST.TOKEN_DISPOSITIONS.FRIENDLY : CONST.TOKEN_DISPOSITIONS.HOSTILE;
     // Set basic token data for newly created actors.
     mergeObject(
       data.token,
@@ -354,8 +359,10 @@ export class HVActor extends Actor {
         vision: true,
         dimSight: 30,
         brightSight: 0,
+        displayname: CONST.TOKEN_DISPLAY_MODES.HOVER,
         actorLink: true,
         disposition: disposition,
+        lockRotation: true,
         img: CONFIG.HV.DEFAULT_TOKEN,
       },
       { overwrite: false },

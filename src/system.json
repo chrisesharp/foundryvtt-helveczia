@@ -23,6 +23,76 @@
       "package": "helveczia",
       "path": "packs/peoples.db",
       "type": "Item"
+    },
+    {
+      "name": "classes",
+      "label": "Classes",
+      "package": "helveczia",
+      "path": "packs/classes.db",
+      "type": "Item"
+    },
+    {
+      "name": "skills",
+      "label": "Skills",
+      "package": "helveczia",
+      "path": "packs/skills.db",
+      "type": "Item"
+    },
+    {
+      "name": "craft-skills",
+      "label": "Crafts",
+      "package": "helveczia",
+      "path": "packs/craft-skills.db",
+      "type": "Item"
+    },
+    {
+      "name": "science-skills",
+      "label": "Sciences",
+      "package": "helveczia",
+      "path": "packs/science-skills.db",
+      "type": "Item"
+    },
+    {
+      "name": "specialisms",
+      "label": "Specialisms",
+      "package": "helveczia",
+      "path": "packs/specialisms.db",
+      "type": "Item"
+    },
+    {
+      "name": "armour",
+      "label": "Armour",
+      "package": "helveczia",
+      "path": "packs/armour.db",
+      "type": "Item"
+    },
+    {
+      "name": "weapons",
+      "label": "Weapons",
+      "package": "helveczia",
+      "path": "packs/weapons.db",
+      "type": "Item"
+    },
+    {
+      "name": "equipment",
+      "label": "Equipment",
+      "package": "helveczia",
+      "path": "packs/equipment.db",
+      "type": "Item"
+    },
+    {
+      "name": "student-spells",
+      "label": "Student Spells",
+      "package": "helveczia",
+      "path": "packs/student-spells.db",
+      "type": "Item"
+    },
+    {
+      "name": "cleric-spells",
+      "label": "Cleric Spells",
+      "package": "helveczia",
+      "path": "packs/cleric-spells.db",
+      "type": "Item"
     }
   ],
   "dependencies": [],

@@ -12,4 +12,13 @@ export function registerSettings(): void {
     type: Boolean,
     config: true,
   });
+
+  game.settings.register('helveczia', 'effects', {
+    name: game.i18n.localize('HV.Setting.effects'),
+    hint: game.i18n.localize('HV.Setting.effectsHint'),
+    default: false,
+    scope: 'world',
+    type: Boolean,
+    config: true,
+  });
 }

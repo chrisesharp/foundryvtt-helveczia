@@ -77,6 +77,25 @@ export class HVActorSheet extends ActorSheet {
     data.spellslots = (this.actor as HVActor).getSpellSlots();
     data.maxspells = data.spellslots.reduce((acc, n) => acc + n, 0);
     data.spellGroups = [1, 2, 3];
+    data.worn = [];
+    data.carried = [];
+    data.mount = [];
+
+    for (const category of Object.values(data.data.possessions)) {
+      for (const item of category as HVItem[]) {
+        switch ((item as HVItem).getFlag('helveczia', 'position')) {
+          case 'worn':
+            data.worn.push(item);
+            break;
+          case 'carried':
+            data.carried.push(item);
+            break;
+          default:
+            data.mount.push(item);
+            break;
+        }
+      }
+    }
     return data;
   }
 
@@ -139,6 +158,33 @@ export class HVActorSheet extends ActorSheet {
         // return this._onDropFolder(event, data);
       }
     }
+  }
+
+  /** @override */
+  _onSortItem(event, itemData): Promise<HVItem[]> | undefined {
+    const source = this.actor.items.get(itemData._id);
+
+    switch (source?.data.type) {
+      case 'armour':
+        return this._sortPossession(event, source);
+        break;
+      case 'possession':
+        return this._sortPossession(event, source);
+        break;
+      case 'weapon':
+        return this._sortPossession(event, source);
+        break;
+      default:
+        return super._onSortItem(event, itemData);
+    }
+  }
+
+  _sortPossession(event, source): undefined {
+    console.log('HERE', event, source);
+    const positionTarget = event.target.closest('[data-column]');
+    const columnID = positionTarget ? positionTarget.dataset.column : 'mount';
+    source.setFlag('helveczia', 'position', columnID);
+    return;
   }
 
   async _removePeoples(item): Promise<boolean> {

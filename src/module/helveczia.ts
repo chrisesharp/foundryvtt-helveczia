@@ -45,13 +45,13 @@ Hooks.once('init', async () => {
   CONFIG.Actor.documentClass = HVActor;
   CONFIG.Item.documentClass = HVItem;
 
-  CONFIG.HV.showEffects = true;
-
   // Register custom system settings
   registerSettings();
 
   // Register custom handlebar helpers
   registerHandlebarHelpers();
+
+  CONFIG.HV.showEffects = game.settings.get('helveczia', 'effects') as boolean;
 
   // Preload Handlebars templates
   await preloadTemplates();

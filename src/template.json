@@ -92,7 +92,8 @@
       "cost": {
         "value": 0,
         "coin": ""
-      }
+      },
+      "encumbrance": 1
     },
     "people": {
       "templates": ["base"]

@@ -40,6 +40,7 @@ export interface HelvecziaConfig {
   };
 
   showEffects: boolean;
+
   XPLevels: {
     [key: number]: number;
   };
@@ -93,7 +94,9 @@ export interface HelvecziaConfig {
 
 export const HV: HelvecziaConfig = {
   DEFAULT_TOKEN: 'systems/helveczia/assets/man.png',
+
   showEffects: false,
+
   actorClasses: {
     character: HVActor,
     npc: HVActor,

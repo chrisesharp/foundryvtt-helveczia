@@ -183,11 +183,6 @@ export class HVCharacterCreator extends FormApplication {
     const p = await HVCharacterCreator.getDocument(peopleName, peoples);
     const c = await HVCharacterCreator.getDocument(className, professions);
     if (p && c) await actor.createEmbeddedDocuments('Item', [p.toObject(), c.toObject()]);
-    // const hitpoints = await this.rollHitPoints(actor.data);
-    // const updateData = {
-    //   hp: hitpoints,
-    // };
-    // await actor.update({ data: updateData });
     await actor.setFlag('helveczia', 'origins-initialized', true);
     actor.sheet?.render(true);
   }
