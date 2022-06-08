@@ -2,13 +2,13 @@
 <div class="possessions">
     <h2 class="centred">~ {{ localize 'HV.items.possessions'}} ~</h2>
     <div class="possessions flexrow">
-        <ol class="items-list worn" data-column="worn">
+        <ol class="item-list worn" data-column="worn">
             <li class="items-header flexrow">
                 <h2>~ {{ localize 'HV.items.worn'}} ~</h2>
             </li>
             {{#each worn as |item|}}
             <li class="item-entry flexcol" data-item-id="{{item.id}}">
-                <div class="item flexrow">
+                <div class="item flexrow" data-item-id="{{item.id}}">
                     <div class="item-image"><img src="{{item.img}}" width="12" height="12"/></div>
                     <h4 class="item-name">{{item.name}}</h4>
                     <div class="item-controls">
@@ -18,13 +18,13 @@
              </li>
             {{/each }}
         </ol>
-        <ol class="items-list carried" data-column="carried">
+        <ol class="item-list carried" data-column="carried">
             <li class="items-header flexrow">
                 <h2>~ {{ localize 'HV.items.carried'}} ~</h2>
             </li>
             {{#each carried as |item|}}
              <li class="item-entry flexcol" data-item-id="{{item.id}}">
-                <div class="item flexrow">
+                <div class="item flexrow"data-item-id="{{item.id}}">
                     <div class="item-image"><img src="{{item.img}}" width="12" height="12"/></div>
                     <h4 class="item-name">{{item.name}}</h4>
                     <div class="item-controls">
@@ -34,14 +34,14 @@
              </li>
             {{/each }}
         </ol>
-        <ol class="items-list mount" data-column="mount">
+        <ol class="item-list mount" data-column="mount">
             <li class="items-header flexrow">
                 <h2>~ {{ localize 'HV.items.mount'}} ~</h2>
             </li>
             {{#each mount as |item|}}
             {{ log item}}
             <li class="item-entry flexcol" data-item-id="{{item.id}}">
-                <div class="item flexrow">
+                <div class="item flexrow" data-item-id="{{item.id}}">
                     <div class="item-image"><img src="{{item.img}}" width="12" height="12"/></div>
                     <h4 class="item-name">{{item.name}}</h4>
                     <div class="item-controls">

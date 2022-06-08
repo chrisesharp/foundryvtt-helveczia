@@ -7,7 +7,7 @@ export class HVCharacterSheet extends HVActorSheet {
       template: 'systems/helveczia/templates/actor/character-sheet.hbs',
       width: 450,
       height: 685,
-      resizable: false,
+      resizable: true,
       tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'abilities' }],
     });
   }

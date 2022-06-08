@@ -1,6 +1,6 @@
 {{!-- Deeds --}}
 <div class="deeds">
-    <ol class="items-list">
+    <ol class="item-list">
         <li class="flexrow item-header">
             <div class="flex1"></div>
             <h2 class="flex3 centred">~ {{ localize 'HV.tabs.deeds'}} ~</h2>
@@ -11,7 +11,7 @@
 <div class="flexrow">
     <div>
         <h3 class="centred">Sins</h3>
-        <ol class="items-list">
+        <ol class="item-list">
         {{#each data.sins as |item id|}}
             <li class="item-entry flexcol" data-item-id="{{item.id}}">
                 <div class="item flexrow">
@@ -30,7 +30,7 @@
     </div>
     <div>
         <h3 class="centred">Virtues</h3>
-        <ol class="items-list">
+        <ol class="item-list">
         {{#each data.virtues as |item id|}}
         <li class="item-entry flexcol" data-item-id="{{item.id}}">
             <div class="item flexrow">

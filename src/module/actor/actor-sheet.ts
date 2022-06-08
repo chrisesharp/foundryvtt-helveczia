@@ -101,6 +101,7 @@ export class HVActorSheet extends ActorSheet {
 
   /** @override */
   async _onDrop(event) {
+    // super._onDrop(event)
     let item;
     let data;
     const actor = this.actor;
@@ -164,6 +165,7 @@ export class HVActorSheet extends ActorSheet {
   _onSortItem(event, itemData): Promise<HVItem[]> | undefined {
     const source = this.actor.items.get(itemData._id);
 
+    console.log('In onSortItem');
     switch (source?.data.type) {
       case 'armour':
         return this._sortPossession(event, source);
