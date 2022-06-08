@@ -99,73 +99,15 @@ export class HVActorSheet extends ActorSheet {
     return data;
   }
 
-  /** @override */
-  async _onDrop(event) {
-    // super._onDrop(event)
-    let item;
-    let data;
-    const actor = this.actor;
-    const allowed = Hooks.call('dropActorSheetData', actor, this, data);
-    if (allowed === false) return;
-    let shouldContinue = true;
-    try {
-      data = JSON.parse(event.dataTransfer.getData('text/plain'));
-      item = game.items?.get(data.id);
-    } catch (err) {
-      return;
-    }
-
-    if (item) {
-      switch (item.type) {
-        case 'people':
-          shouldContinue = await this._removePeoples(item);
-          break;
-        case 'class':
-          shouldContinue = await this._removeClasses(item);
-          break;
-        case 'skill':
-          if (this.actor.items.getName(item.name)) return;
-          if (this.actor.data.data.skills.length == this.actor.data.data.maxskills) {
-            return ui.notifications.error(game.i18n.localize('HV.errors.fullSkills'));
-          }
-          if (item.data.data.subtype === 'magical' && !(this.actor.isCleric() && this.actor.isStudent())) {
-            return ui.notifications.error(game.i18n.localize('HV.errors.notMagical'));
-          }
-          if (item.data.data.subtype === 'vagabond' && !this.actor.isVagabond()) {
-            return ui.notifications.error(game.i18n.localize('HV.errors.notVagabond'));
-          }
-          break;
-        case 'spell':
-          if (item.data.data.class === 'cleric' && !this.actor.isCleric()) {
-            return ui.notifications.error(game.i18n.localize('HV.errors.notCleric'));
-          } else if (item.data.data.class === 'student' && !this.actor.isStudent()) {
-            return ui.notifications.error(game.i18n.localize('HV.errors.notStudent'));
-          }
-          break;
-        case 'deed':
-          break;
-      }
-    }
-    if (shouldContinue) {
-      switch (data.type) {
-        case 'ActiveEffect':
-          return this._onDropActiveEffect(event, data);
-        case 'Actor':
-          return this._onDropActor(event, data);
-        case 'Item':
-          return this._onDropItem(event, data);
-        // case "Folder":
-        // if (data.documentName === 'Item')
-        // return this._onDropFolder(event, data);
-      }
-    }
+  onDropAllow(_actor, data): boolean {
+    // Prevent folders being dragged onto the sheet
+    return data.type === 'Folder' ? false : true;
   }
 
   /** @override */
   _onSortItem(event, itemData): Promise<HVItem[]> | undefined {
     const source = this.actor.items.get(itemData._id);
 
-    console.log('In onSortItem');
     switch (source?.data.type) {
       case 'armour':
         return this._sortPossession(event, source);
@@ -181,8 +123,48 @@ export class HVActorSheet extends ActorSheet {
     }
   }
 
+  /** @override */
+  async _onDropItem(event: DragEvent, data: ActorSheet.DropData.Item): Promise<unknown> {
+    let shouldContinue = true;
+    let item;
+    try {
+      const transfer = event.dataTransfer?.getData('text/plain') ?? '';
+      data = JSON.parse(transfer);
+      item = game.items?.get(data['id']);
+    } catch (err) {
+      return;
+    }
+    switch (item?.type) {
+      case 'people':
+        shouldContinue = await this._removePeoples(item);
+        break;
+      case 'class':
+        shouldContinue = await this._removeClasses(item);
+        break;
+      case 'skill':
+        if (this.actor.items.getName(item.name)) return;
+        if (this.actor.data.data.skills.length == this.actor.data.data.maxskills) {
+          return ui.notifications.error(game.i18n.localize('HV.errors.fullSkills'));
+        }
+        if (item.data.data.subtype === 'magical' && !(this.actor.isCleric() && this.actor.isStudent())) {
+          return ui.notifications.error(game.i18n.localize('HV.errors.notMagical'));
+        }
+        if (item.data.data.subtype === 'vagabond' && !this.actor.isVagabond()) {
+          return ui.notifications.error(game.i18n.localize('HV.errors.notVagabond'));
+        }
+        break;
+      case 'spell':
+        if (item.data.data.class === 'cleric' && !this.actor.isCleric()) {
+          return ui.notifications.error(game.i18n.localize('HV.errors.notCleric'));
+        } else if (item.data.data.class === 'student' && !this.actor.isStudent()) {
+          return ui.notifications.error(game.i18n.localize('HV.errors.notStudent'));
+        }
+        break;
+    }
+    return shouldContinue ? super._onDropItem(event, data) : null;
+  }
+
   _sortPossession(event, source): undefined {
-    console.log('HERE', event, source);
     const positionTarget = event.target.closest('[data-column]');
     const columnID = positionTarget ? positionTarget.dataset.column : 'mount';
     source.setFlag('helveczia', 'position', columnID);

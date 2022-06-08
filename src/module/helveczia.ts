@@ -29,6 +29,7 @@ import { SpellSheet } from './items/spell/spell-sheet';
 
 import { HV } from './config';
 import { registerHandlebarHelpers } from './handlebar-helpers';
+import { HVActorSheet } from './actor/actor-sheet';
 // import { HVItemSheetConfig } from './items/item-config';
 
 const log = new Logger();
@@ -94,6 +95,10 @@ Hooks.once('ready', async () => {
 // Add any additional hooks if necessary
 Hooks.on('applyActiveEffect', async (actor, changeData) => {
   actor.applyCustomEffect(changeData);
+});
+
+Hooks.on('dropActorSheetData', (actor: HVActor, sheet: HVActorSheet, data) => {
+  return sheet.onDropAllow(actor, data);
 });
 
 // Hooks.on("renderDialog", (dialog, html) => {
