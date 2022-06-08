@@ -110,14 +110,14 @@ export class HVActorSheet extends ActorSheet {
 
     switch (source?.data.type) {
       case 'armour':
-        return this._sortPossession(event, source);
-        break;
+        this._sortPossession(event, source);
+        return;
       case 'possession':
-        return this._sortPossession(event, source);
-        break;
+        this._sortPossession(event, source);
+        return;
       case 'weapon':
-        return this._sortPossession(event, source);
-        break;
+        this._sortPossession(event, source);
+        return;
       default:
         return super._onSortItem(event, itemData);
     }
@@ -160,14 +160,42 @@ export class HVActorSheet extends ActorSheet {
           return ui.notifications.error(game.i18n.localize('HV.errors.notStudent'));
         }
         break;
+      case 'weapon':
+      case 'armour':
+      case 'possession':
+        console.log('Dropping a possession onto sheet');
+        break;
     }
     return shouldContinue ? super._onDropItem(event, data) : null;
   }
 
-  _sortPossession(event, source): undefined {
+  /**
+   *
+   * @returns availableSlots : number
+   */
+  async _calculateAvailableSlots(): Promise<any> {
+    const sheetData = await this.getData();
+    const capacity = this.actor.data.data.capacity - 8;
+    return {
+      worn: 8 - sheetData.worn.length,
+      carried: capacity - sheetData.carried.length,
+      mount: 24 - sheetData.mount.length,
+    };
+  }
+
+  /**
+   *
+   * @param event
+   * @param source
+   * @returns
+   */
+  async _sortPossession(event, source): Promise<undefined> {
     const positionTarget = event.target.closest('[data-column]');
     const columnID = positionTarget ? positionTarget.dataset.column : 'mount';
-    source.setFlag('helveczia', 'position', columnID);
+    const availableSlots = await this._calculateAvailableSlots();
+    const ok = availableSlots[columnID] > 0;
+
+    if (ok) source.setFlag('helveczia', 'position', columnID);
     return;
   }
 

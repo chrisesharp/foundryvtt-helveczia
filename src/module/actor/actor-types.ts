@@ -79,6 +79,7 @@ type BaseData = {
   classes: [Item];
   deeds: [Item];
   spells: [Item];
+  capacity: number;
 };
 
 // type CharacterData = BaseData | {experience: number};
