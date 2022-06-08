@@ -127,6 +127,7 @@ export class HVActorSheet extends ActorSheet {
   async _onDropItem(event: DragEvent, data: ActorSheet.DropData.Item): Promise<unknown> {
     let shouldContinue = true;
     let item;
+    let position = 'mount';
     try {
       const transfer = event.dataTransfer?.getData('text/plain') ?? '';
       data = JSON.parse(transfer);
@@ -163,10 +164,26 @@ export class HVActorSheet extends ActorSheet {
       case 'weapon':
       case 'armour':
       case 'possession':
-        console.log('Dropping a possession onto sheet');
+        const capacitySlots = await this._calculateAvailableSlots();
+        console.log('encumbrance:', item.data.data, capacitySlots);
+        if (capacitySlots.worn >= item.data.data.encumbrance) {
+          position = 'worn';
+        } else if (capacitySlots.carried >= item.data.data.encumbrance) {
+          position = 'carried';
+        }
+        shouldContinue = capacitySlots.carried + capacitySlots.worn + capacitySlots.mount >= item.data.data.encumbrance;
         break;
     }
-    return shouldContinue ? super._onDropItem(event, data) : null;
+    if (shouldContinue) {
+      const items = (await super._onDropItem(event, data)) as HVItem[];
+      if (items.length) {
+        const item = items[0];
+        if (['weapon', 'armour', 'possession'].includes(item.type)) {
+          item.setFlag('helveczia', 'position', position);
+        }
+      }
+    }
+    return;
   }
 
   /**
@@ -179,7 +196,7 @@ export class HVActorSheet extends ActorSheet {
     return {
       worn: 8 - sheetData.worn.length,
       carried: capacity - sheetData.carried.length,
-      mount: 24 - sheetData.mount.length,
+      mount: 8 - sheetData.mount.length,
     };
   }
 
