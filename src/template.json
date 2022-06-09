@@ -110,16 +110,18 @@
       "bonus": 0
     },
     "armour": {
-      "templates": ["base", "possession"],
-      "bonus": 0
+      "templates": ["base"],
+      "bonus": 0,
+      "encumbrance": 1
     },
     "weapon": {
-      "templates": ["base", "possession"],
+      "templates": ["base"],
       "damage": "1d3",
       "critical": {
         "range": "20",
         "multiple": 2
-      }
+      },
+      "encumbrance": 1
     },
     "deed": {
       "templates": ["base"],

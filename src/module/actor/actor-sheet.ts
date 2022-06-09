@@ -125,6 +125,7 @@ export class HVActorSheet extends ActorSheet {
 
   /** @override */
   async _onDropItem(event: DragEvent, data: ActorSheet.DropData.Item): Promise<unknown> {
+    log.debug('_onDropItem() | ', event, data);
     let shouldContinue = true;
     let item;
     let position = 'mount';
@@ -135,15 +136,21 @@ export class HVActorSheet extends ActorSheet {
     } catch (err) {
       return;
     }
+    log.debug('_onDropItem() | dropped item :', item);
     switch (item?.type) {
       case 'people':
         shouldContinue = await this._removePeoples(item);
+        log.debug('_onDropItem() | should continue?:', shouldContinue);
         break;
       case 'class':
         shouldContinue = await this._removeClasses(item);
+        log.debug('_onDropItem() | should continue?:', shouldContinue);
         break;
       case 'skill':
-        if (this.actor.items.getName(item.name)) return;
+        if (this.actor.items.getName(item.name)) {
+          log.debug('_onDropItem() | already got this skill.');
+          return;
+        }
         if (this.actor.data.data.skills.length == this.actor.data.data.maxskills) {
           return ui.notifications.error(game.i18n.localize('HV.errors.fullSkills'));
         }
@@ -165,22 +172,25 @@ export class HVActorSheet extends ActorSheet {
       case 'armour':
       case 'possession':
         const capacitySlots = await this._calculateAvailableSlots();
-        console.log('encumbrance:', item.data.data, capacitySlots);
+        log.debug('_onDropItem() | carrying capacity:', capacitySlots);
+        log.debug('_onDropItem() | item encumbrance:', item.data.data);
         if (capacitySlots.worn >= item.data.data.encumbrance) {
           position = 'worn';
         } else if (capacitySlots.carried >= item.data.data.encumbrance) {
           position = 'carried';
         }
         shouldContinue = capacitySlots.carried + capacitySlots.worn + capacitySlots.mount >= item.data.data.encumbrance;
+        log.debug('_onDropItem() | should continue?:', shouldContinue);
         break;
     }
     if (shouldContinue) {
-      const items = (await super._onDropItem(event, data)) as HVItem[];
-      if (items.length) {
-        const item = items[0];
+      const item = ((await super._onDropItem(event, data)) as HVItem[]).shift();
+      log.debug('_onDropItem() | created item:', item);
+      if (item) {
         if (['weapon', 'armour', 'possession'].includes(item.type)) {
           item.setFlag('helveczia', 'position', position);
         }
+        log.debug(`_onDropItem() | set position of item to ${position}`);
       }
     }
     return;
@@ -211,7 +221,7 @@ export class HVActorSheet extends ActorSheet {
     const columnID = positionTarget ? positionTarget.dataset.column : 'mount';
     const availableSlots = await this._calculateAvailableSlots();
     const ok = availableSlots[columnID] > 0;
-
+    log.debug(`_onSortPossession() | ${ok} we have space, will place it at ${columnID} `);
     if (ok) source.setFlag('helveczia', 'position', columnID);
     return;
   }
