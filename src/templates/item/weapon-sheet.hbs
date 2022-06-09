@@ -22,7 +22,9 @@
     {{!-- Sheet Body --}}
     <section class="sheet-body">
       <div class="tab damage" data-group="primary" data-tab="damage">
-        <h2><input name="data.damage" type="text" value="{{data.damage}}" placeholder="1d3"/></h2>
+        <h3>Damage: <input name="data.damage" type="text" value="{{data.damage}}" placeholder="1d3"/></h3>
+        <h3>Critical on:<input name="data.critical.range" type="text" value="{{data.critical.range}}"/></h3>
+        <h3>Damage multiplier:<input name="data.critical.multiple" type="text" value="{{data.critical.multiple}}"/></h3>
       </div>
       {{#if config.showEffects}}
         <div class="tab effects" data-group="primary" data-tab="effects">

@@ -4,8 +4,9 @@ import { Logger } from '../logger';
 import { HVDice } from '../dice';
 import { Student } from '../items/class/student';
 import { Cleric } from '../items/class/cleric';
-import { SkillItemData } from '../items/item-types';
+import { SkillItemData, WeaponItemData } from '../items/item-types';
 import { PeopleItem } from '../items/people/people-item';
+import { HVItem } from '../items/item';
 
 const log = new Logger();
 
@@ -288,7 +289,7 @@ export class HVActor extends Actor {
     // console.log('Apply random save bonus:', change);
   }
 
-  async rollCheck({ mods, longName }, opponent): Promise<any> {
+  async rollCheck({ mods, longName, dmg, item }, opponent): Promise<any> {
     const label = game.i18n.format('HV.rollCheck', { type: longName });
     const rollParts = ['1d20'];
     mods.forEach((m) => rollParts.push(m));
@@ -297,8 +298,10 @@ export class HVActor extends Actor {
       roll: {
         type: 'check',
         target: CONFIG.HV.difficulties['Normal'],
+        dmg: dmg,
       },
       opponent: opponent,
+      item: item.data,
     };
 
     const skip = false;
@@ -426,9 +429,12 @@ export class HVActor extends Actor {
     return [];
   }
 
-  async getRollMods(data): Promise<{ mods: number[]; longName: string }> {
+  async getRollMods(data): Promise<{ mods: number[]; longName: string; dmg: string[]; item: HVItem | undefined }> {
+    log.debug('getRollMods() | get roll mods for ', data);
     let longName = '';
+    const dmg: string[] = [];
     const mod: number[] = [];
+    const item = data?.itemId ? this.items.get(`${data.itemId}`) : undefined;
     switch (data.roll) {
       case 'attr':
         data.resource = 'scores';
@@ -444,7 +450,16 @@ export class HVActor extends Actor {
         data.resource = '';
         mod.push(this.data.data.level);
         break;
+      case 'attack':
+        data.resource = 'attack';
+        if (item) {
+          dmg.push((item.data as WeaponItemData).data.damage);
+        } else {
+          dmg.push('1d3');
+        }
+        break;
       default:
+        break;
     }
     const attribute = data.attr;
     const resource = data.resource;
@@ -452,10 +467,10 @@ export class HVActor extends Actor {
       mod.push(this.data.data[resource][attribute].mod);
       longName = game.i18n.format(`HV.${resource}.${attribute}.long`);
       log.debug(
-        `getRollMods() | name:${longName} - resource=${resource}, attribute=${attribute}, mod=${mod.join('+')}`,
+        `getRollMods() | name:${longName} - resource=${resource}, attribute=${attribute}, mod=${mod.join('+')}, item=`,
+        item,
       );
     } else {
-      const item = this.items.get(`${data.itemId}`);
       log.debug(`getRollMods() | itemId:${data.itemId}`);
       if (item) {
         const skill = item.data as SkillItemData;
@@ -469,7 +484,7 @@ export class HVActor extends Actor {
         log.error('getRollMods() | itemId not found on actor');
       }
     }
-    return { mods: mod, longName: longName };
+    return { mods: mod, longName: longName, dmg: dmg, item: item };
   }
 
   async getItemRollMod(itemID: string): Promise<string> {

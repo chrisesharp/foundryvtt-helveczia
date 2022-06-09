@@ -64,6 +64,10 @@ export const registerHandlebarHelpers = async function () {
     return 0 < a && a < 6;
   });
 
+  Handlebars.registerHelper('isWorn', function (item) {
+    return item.getFlag('helveczia', 'position') === 'worn';
+  });
+
   Handlebars.registerHelper('itemLocked', function (item) {
     return item.getFlag('helveczia', 'locked');
   });

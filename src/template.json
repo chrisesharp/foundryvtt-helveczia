@@ -116,6 +116,7 @@
     },
     "weapon": {
       "templates": ["base"],
+      "attack": "melee",
       "damage": "1d3",
       "critical": {
         "range": "20",

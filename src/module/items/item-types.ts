@@ -2,7 +2,13 @@ interface BaseData {
   description: string;
 }
 
-type PossessionData = BaseData;
+type PossessionData = BaseData & {
+  cost: {
+    value: number;
+    coin: string;
+  };
+  encumbrance: number;
+};
 
 export interface PossessionItemData {
   type: 'possession';
@@ -20,7 +26,10 @@ export interface SkillItemData {
   data: SkillData;
 }
 
-type ArmourData = BaseData;
+type ArmourData = BaseData & {
+  bonus: number;
+  encumbrance: number;
+};
 
 export interface ArmourItemData {
   type: 'armour';
@@ -44,7 +53,15 @@ export interface PeopleItemData {
   data: PeopleData;
 }
 
-type WeaponData = BaseData;
+type WeaponData = BaseData & {
+  attack: string;
+  damage: string;
+  critical: {
+    range: string;
+    multiple: number;
+  };
+  encumbrance: number;
+};
 
 export interface WeaponItemData {
   type: 'weapon';

@@ -1,4 +1,5 @@
 import { Evaluated } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/foundry.js/roll';
+import { HVActor } from './actor/actor';
 
 const templatePath = 'systems/helveczia/templates/chat/';
 
@@ -50,26 +51,48 @@ export class HVDice {
   }
 
   static digestAttackResult(data, roll) {
+    let opponent: HVActor | undefined;
+    let against = '';
+    let withWeapon = '';
+    let critical = {
+      range: '20',
+      multiple: 2,
+    };
+    if (data.item) {
+      critical = data.item.data.critical;
+      withWeapon = `with their ${data.item.name}`;
+    }
+
     const result: any = {
       isSuccess: false,
       isFailure: false,
-      target: '???',
+      isCrit: false,
+      target: 10,
       total: roll.total,
     };
-    result.target = data.roll.thac0;
 
-    const targetAC = data.roll.target ? data.roll.target.actor.data.data.ac : 0;
+    if (data.opponent?.id) {
+      opponent = game.actors?.get(data.opponent.id);
+      if (opponent) {
+        result.target = opponent.data.data.ac;
+        against += `against ${opponent.data.name}`;
+      }
+    }
 
-    result.victim = data.roll.target ? data.roll.target.data.name : null;
-
-    if (roll.terms[0] == 20) {
-      // TODO instant kill
-    } else if (roll.terms[0] == 1) {
-      // TODO critical failure
-    } else if (roll.total < targetAC) {
-      result.details = game.i18n.format('HV.messages.AttackFailure');
+    if (roll.terms[0]?.results[0]?.result >= parseInt(critical.range)) {
+      // TODO critical
+      result.isSuccess = true;
+      result.isCrit = true;
+      result.details = game.i18n.format('HV.messages.CriticalSuccess', { vs: against, wp: withWeapon });
+    } else if (roll.terms[0]?.results[0]?.result === 1) {
+      result.isFailure = true;
+      result.isCrit = true;
+      result.details = game.i18n.format('HV.messages.CriticalFailure', { vs: against, wp: withWeapon });
+    } else if (roll.total < result.target) {
+      result.details = game.i18n.format('HV.messages.AttackFailure', { vs: against, wp: withWeapon });
+      result.isFailure = true;
     } else {
-      result.details = game.i18n.format('HV.messages.AttackSuccess');
+      result.details = game.i18n.format('HV.messages.AttackSuccess', { vs: against, wp: withWeapon });
       result.isSuccess = true;
     }
     return result;
@@ -84,7 +107,7 @@ export class HVDice {
     speaker,
     form,
   }: HVRollData): Promise<Evaluated<Roll<any>>> {
-    const template = data.roll.dmg ? `${templatePath}/roll-attack.hbs` : `${templatePath}/roll-ability.hbs`;
+    const template = data.roll.dmg?.length ? `${templatePath}/roll-attack.hbs` : `${templatePath}/roll-ability.hbs`;
     const chatData: any = {
       user: game.user?.id,
       speaker: speaker,
@@ -107,7 +130,7 @@ export class HVDice {
     const roll = await new Roll(parts.join('+'), data).evaluate({ async: true });
 
     let dmgRoll: Evaluated<Roll<any>>;
-    if (data.roll.dmg) {
+    if (data.roll.dmg?.length) {
       dmgRoll = await new Roll(data.roll.dmg.join('+'), data).evaluate({ async: true });
     }
 

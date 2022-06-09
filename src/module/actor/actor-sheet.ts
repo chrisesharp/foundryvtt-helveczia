@@ -184,7 +184,8 @@ export class HVActorSheet extends ActorSheet {
         break;
     }
     if (shouldContinue) {
-      const item = ((await super._onDropItem(event, data)) as HVItem[]).shift();
+      const items = (await super._onDropItem(event, data)) as HVItem[];
+      const item = items.length ? items[0] : null;
       log.debug('_onDropItem() | created item:', item);
       if (item) {
         if (['weapon', 'armour', 'possession'].includes(item.type)) {
@@ -353,7 +354,7 @@ export class HVActorSheet extends ActorSheet {
     if (game.user) {
       for (const t of game.user.targets.values()) {
         const data = t.actor?.data;
-        if (data?.type === 'npc' && data._id) {
+        if (data?._id) {
           target = {
             id: data._id,
           };
@@ -361,7 +362,6 @@ export class HVActorSheet extends ActorSheet {
         if (target?.id) break;
       }
     }
-
     const rollData = await this.actor.getRollMods(dataset);
     this.actor.rollCheck(rollData, target);
   }
