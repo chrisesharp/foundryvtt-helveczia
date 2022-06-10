@@ -1,6 +1,5 @@
 <section class="helveczia chat-card">
     <div class="helveczia chat-block">
-        {{log .}}
         <div class="flexrow chat-header">
             <div class="chat-title"><h2>{{title}}</h2></div>
             {{#if data.item}}
@@ -19,17 +18,23 @@
                 {{#if rollHV}}<div>{{{rollHV}}}</div>{{/if}}
             {{/if}}
             {{#if result.isSuccess}}
+                {{#if result.isCrit}}
+                <div class='roll-result roll-success'><b>{{localize 'HV.critical.success'}}</b>
+                </div>
+                {{#if rollHV}}<div>{{{rollHV}}}</div>{{/if}}
+                <div class="critical-roll" data-id="critical" data-formula="{{ result.formula }}" data-dmg-result="{{ dmgResult }}" data-multiplier="{{ result.multiplier }}" data-target="{{ result.target}}" >
+                    <div id="hidden-damage">
+                        <div class='roll-result'><b>{{localize 'HV.Damage'}}</b> </div>
+                        {{{rollDamage}}}
+                    </div>
+                </div>
+                {{else}}
                 <div class='roll-result roll-success'><b>{{success result.total}}</b> ({{localize 'HV.needed'}} {{result.target}})
                 </div>
                 {{#if rollHV}}<div>{{{rollHV}}}</div>{{/if}}
-                {{#if result.isCrit}}
-                <button class="critical" type="button" data-dmg="{{result.dmg}}">
-                    <i class="fa fa-dice"></i>{{localize "HV.RollAgain"}}
-                </button>
-                {{else}}
                 {{#if rollDamage}}
                 <div>
-                     <div class='roll-result'><b>{{localize 'HV.Damage'}}</b </div>
+                     <div class='roll-result'><b>{{localize 'HV.Damage'}}</b> </div>
                     {{{rollDamage}}}
                 </div>
                 {{/if}}

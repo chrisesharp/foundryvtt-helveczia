@@ -30,6 +30,7 @@ import { SpellSheet } from './items/spell/spell-sheet';
 import { HV } from './config';
 import { registerHandlebarHelpers } from './handlebar-helpers';
 import { HVActorSheet } from './actor/actor-sheet';
+import { HVChat } from './chat';
 // import { HVItemSheetConfig } from './items/item-config';
 
 const log = new Logger();
@@ -100,6 +101,8 @@ Hooks.on('applyActiveEffect', async (actor, changeData) => {
 Hooks.on('dropActorSheetData', (actor: HVActor, sheet: HVActorSheet, data) => {
   return sheet.onDropAllow(actor, data);
 });
+
+Hooks.on('renderChatMessage', HVChat.addChatCriticalButton);
 
 // Hooks.on("renderDialog", (dialog, html) => {
 // Array.from(html.find("#document-create option")).forEach(i => {

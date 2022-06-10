@@ -50,7 +50,7 @@ export class HVDice {
     return result;
   }
 
-  static digestAttackResult(data, roll) {
+  static digestAttackResult(data, roll: Evaluated<Roll>) {
     let opponent: HVActor | undefined;
     let against = '';
     let withWeapon = '';
@@ -68,6 +68,8 @@ export class HVDice {
       isFailure: false,
       isCrit: false,
       target: 10,
+      formula: roll.formula,
+      multiplier: critical.multiple,
       total: roll.total,
     };
 
@@ -79,12 +81,14 @@ export class HVDice {
       }
     }
 
-    if (roll.terms[0]?.results[0]?.result >= parseInt(critical.range)) {
+    const rolledDie = roll.terms[0] as Die;
+    const rolledResult = rolledDie.results[0]?.result;
+    if (rolledResult >= parseInt(critical.range)) {
       // TODO critical
       result.isSuccess = true;
       result.isCrit = true;
       result.details = game.i18n.format('HV.messages.CriticalSuccess', { vs: against, wp: withWeapon });
-    } else if (roll.terms[0]?.results[0]?.result === 1) {
+    } else if (rolledResult === 1) {
       result.isFailure = true;
       result.isCrit = true;
       result.details = game.i18n.format('HV.messages.CriticalFailure', { vs: against, wp: withWeapon });
@@ -154,6 +158,7 @@ export class HVDice {
 
     return new Promise(async (resolve) => {
       templateData.rollHV = await roll.render();
+      templateData.dmgResult = dmgRoll.result;
       templateData.rollDamage = dmgRoll ? await dmgRoll.render() : undefined;
       renderTemplate(template, templateData).then((content) => {
         chatData.content = content;
