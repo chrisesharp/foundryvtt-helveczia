@@ -60,7 +60,7 @@ export class HVChat {
       result = `<h1>${game.i18n.format('HV.InstantDeath')}<h1>`;
     } else if (roll.total >= target) {
       const total = dmgResult * multiplier;
-      result = `<h2>A second critical!<h2><h4 class="dice-total" id="dmg-result">${dmgResult} x ${multiplier} = ${total}</h4>`;
+      result = `<div class="roll-result roll-success"><b>A second critical!<b></div><h4 class="dice-total" id="dmg-result">${dmgResult} x ${multiplier} = ${total}</h4>`;
     } else {
       result = `<h4 class="dice-total" id="dmg-result">${dmgResult}</h4>`;
     }
@@ -73,8 +73,9 @@ export class HVChat {
     cb.append($(html));
     const actualDmgResult = cb.find('#dmg-result').remove();
     const hiddenDmg = cb.find('#hidden-damage').remove();
-    $(hiddenDmg).find('.dice-total').remove();
-    $(hiddenDmg).find('.dice-result').append($(actualDmgResult));
+    // $(hiddenDmg).find('.dice-total').remove();
+    // $(hiddenDmg).find('.dice-result').append($(actualDmgResult));
+    $(hiddenDmg).find('.dice-total').replaceWith($(actualDmgResult));
     cb.append($(hiddenDmg));
     cb.find('#hidden-damage').show();
   }
