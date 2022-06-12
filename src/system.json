@@ -95,7 +95,12 @@
       "type": "Item"
     }
   ],
-  "dependencies": [],
+  "dependencies": [
+    {
+      "name": "socketlib",
+      "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/master/module.json"
+    }
+  ],
   "languages": [
     {
       "lang": "en",
@@ -103,7 +108,7 @@
       "path": "lang/en.json"
     }
   ],
-  "socket": false,
+  "socket": true,
   "url": "This is auto replaced",
   "manifest": "This is auto replaced",
   "download": "This is auto replaced",

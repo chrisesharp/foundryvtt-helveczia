@@ -142,5 +142,6 @@
   "HV.errors.notVagabond": "You must be a vagabond to have this skill!",
   "HV.needed": "Needed ",
   "HV.Critical": "Critical",
-  "HV.InstantDeath": "Two criticals in a row! This is instant death!"
+  "HV.SecondCritical": "A Second Success!",
+  "HV.InstantDeath": "Two Criticals in a Row! This is instant death!"
 }

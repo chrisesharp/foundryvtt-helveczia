@@ -12,6 +12,8 @@ import { HVActor } from './actor/actor';
 import { HVCharacterCreator } from './apps/chargen';
 
 export interface HelvecziaConfig {
+  socket?: any;
+
   DEFAULT_TOKEN: string;
   actorClasses: {
     [key: string]: typeof HVActor;

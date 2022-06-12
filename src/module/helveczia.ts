@@ -31,6 +31,7 @@ import { HV } from './config';
 import { registerHandlebarHelpers } from './handlebar-helpers';
 import { HVActorSheet } from './actor/actor-sheet';
 import { HVChat } from './chat';
+
 // import { HVItemSheetConfig } from './items/item-config';
 
 const log = new Logger();
@@ -103,6 +104,13 @@ Hooks.on('dropActorSheetData', (actor: HVActor, sheet: HVActorSheet, data) => {
 });
 
 Hooks.on('renderChatMessage', HVChat.addChatCriticalButton);
+
+// Hooks.once("socketlib.ready", () => {
+//   console.log("socketlib ready - registering chat handler")
+//   const socket = window['socketlib'].registerSystem("helveczia");
+//   socket.register("updateChatMessage", HVChat._updateChatMessage);
+//   HV.socket = socket;
+// });
 
 // Hooks.on("renderDialog", (dialog, html) => {
 // Array.from(html.find("#document-create option")).forEach(i => {
