@@ -1,4 +1,4 @@
-import { Evaluated } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/foundry.js/roll';
+import { Evaluated } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/client/dice/roll';
 import { HVActor } from './actor/actor';
 
 const templatePath = 'systems/helveczia/templates/chat/';
