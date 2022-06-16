@@ -1,5 +1,13 @@
 <section class="helveczia chat-card">
     <div class="helveczia chat-block">
+        <div class="flexrow chat-header">
+            <div class="chat-title"><h2>{{title}}</h2></div>
+            {{#if data.item}}
+            <div class="chat-img" style="background-image:url('{{data.item.img}}')"></div>
+            {{else}}
+            <div class="chat-img" style="background-image:url('{{data.actor.img}}')"></div>
+            {{/if}}
+        </div>
         <div class="blindable" data-blind="{{data.roll.blindroll}}">
             {{{ rollHV }}}
         </div>

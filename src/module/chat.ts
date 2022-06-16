@@ -74,6 +74,7 @@ export class HVChat {
     const multiplier = ev.currentTarget.dataset.multiplier;
     $(ev.currentTarget).remove();
     await HVChat._applyChatCritRoll({
+      actor: actor,
       cb: cb,
       target: target,
       formula: formula,
@@ -83,13 +84,14 @@ export class HVChat {
     updateChatMessage(actor, msgId, cb);
   }
 
-  static async _applyChatCritRoll({ cb, target, formula, dmgResult, multiplier }): Promise<void> {
+  static async _applyChatCritRoll({ actor, cb, target, formula, dmgResult, multiplier }): Promise<void> {
+    $(cb).find('.critical-button').remove();
     const roll = await new Roll(formula).evaluate({ async: true });
     const rolledDie = roll.terms[0] as Die;
     const rolledResult = rolledDie.results[0]?.result;
     let result: string;
     if (rolledResult === 20) {
-      result = `<div class="roll-result roll-success">${game.i18n.format('HV.InstantDeath')}</div>`;
+      result = `<div class="roll-result roll-success"><b>${game.i18n.format('HV.InstantDeath')}</b></div>`;
     } else if (roll.total >= target) {
       const total = dmgResult * multiplier;
       result = `<div class="roll-result roll-success"><b>${game.i18n.localize(
@@ -99,7 +101,10 @@ export class HVChat {
       result = `<h4 class="dice-total" id="dmg-result">${dmgResult}</h4>`;
     }
 
+    const speaker = ChatMessage.getSpeaker({ actor: actor });
     const templateData = {
+      title: game.i18n.format('HV.RollingCritical', { actor: speaker.alias }),
+      speaker: speaker,
       result: result,
       rollHV: await roll.render(),
     };
@@ -107,8 +112,10 @@ export class HVChat {
     cb.append($(html));
     const actualDmgResult = cb.find('#dmg-result').remove();
     const hiddenDmg = cb.find('#hidden-damage').remove();
-    $(hiddenDmg).find('.dice-total').replaceWith($(actualDmgResult));
-    cb.append($(hiddenDmg));
-    cb.find('#hidden-damage').show();
+    if (rolledResult !== 20) {
+      $(hiddenDmg).find('.dice-total').replaceWith($(actualDmgResult));
+      cb.append($(hiddenDmg));
+      cb.find('#hidden-damage').show();
+    }
   }
 }
