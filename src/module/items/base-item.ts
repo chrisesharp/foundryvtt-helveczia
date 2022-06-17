@@ -92,6 +92,10 @@ export abstract class BaseItem {
     return 0;
   }
 
+  static getSaveBase(_actor, _itemData) {
+    return { bravery: 0, deftness: 0, temptation: 0 };
+  }
+
   static async getTags(_item: HVItem, _actor: HVActor): Promise<string> {
     return '';
   }

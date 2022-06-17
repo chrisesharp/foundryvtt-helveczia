@@ -104,6 +104,11 @@ export class Student {
     return gainedSkills ? 2 : 0;
   }
 
+  static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
+    const base = Math.round(actor.data.data.level / 2);
+    return { bravery: base, deftness: base, temptation: base + 2 };
+  }
+
   static getSpellSlots(actor: HVActor): number[] {
     const level = actor.data.data.level;
     const bonus = actor.data.data.scores.int.value;

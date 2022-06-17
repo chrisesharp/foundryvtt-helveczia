@@ -89,6 +89,10 @@ export interface HelvecziaConfig {
     [key: string]: string;
   };
 
+  attacks: {
+    [key: string]: string;
+  };
+
   icons: {
     [key: string]: string;
   };
@@ -213,6 +217,11 @@ export const HV: HelvecziaConfig = {
     th: 'Th',
     pf: 'Pf',
     gr: 'Gr',
+  },
+
+  attacks: {
+    melee: 'HV.Melee',
+    ranged: 'HV.Ranged',
   },
 
   icons: {

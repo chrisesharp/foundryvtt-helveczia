@@ -3,7 +3,6 @@ import { Logger } from '../../logger';
 import { HVActor } from '../../actor/actor';
 import { ClassItemData, SkillItemData } from '../item-types';
 import { Utils } from '../../utils/utils';
-// import { SkillItemData } from '../item-types';
 
 const log = new Logger();
 
@@ -78,15 +77,16 @@ export class Cleric {
   }
 
   static async onCreate(item: HVItem): Promise<void> {
+    const actor = item.actor;
     const sourceItemData = item.data as ClassItemData;
     if (sourceItemData.data.specialism) {
-      if (!item.actor?.isCleric()) {
+      if (!actor?.isCleric()) {
         ui.notifications.error(game.i18n.localize('You must be a cleric for this specialism'));
         return;
       }
     } else {
       log.debug('Cleric.onCreate() | cleric-class flag set to true');
-      item.actor?.setFlag('helveczia', 'cleric-class', true);
+      actor?.setFlag('helveczia', 'cleric-class', true);
       Promise.all(
         Object.keys(clericSpecialisms).map((s) => {
           const skill = {
@@ -98,7 +98,7 @@ export class Cleric {
               subtype: 'magical',
             },
           };
-          item.actor?.setFlag('helveczia', clericSpecialisms[s].flag, true);
+          actor?.setFlag('helveczia', clericSpecialisms[s].flag, true);
           return createSpecialistSkill(item, skill);
         }),
       );
@@ -110,6 +110,11 @@ export class Cleric {
     actor.setFlag('helveczia', 'cleric-skill', gainedSixthLevelSkills);
     log.debug('Cleric.getSkillsBonus() |  cleric-skill flag set to ', gainedSixthLevelSkills);
     return gainedSixthLevelSkills ? 6 : 0;
+  }
+
+  static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
+    const base = Math.round(actor.data.data.level / 2);
+    return { bravery: base + 2, deftness: base, temptation: base + 2 };
   }
 
   static getSpellSlots(actor: HVActor): number[] {

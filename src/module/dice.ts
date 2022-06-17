@@ -154,11 +154,13 @@ export class HVDice {
       data.roll.blindroll = true;
     }
 
-    templateData.result = data.roll.dmg ? HVDice.digestAttackResult(data, roll) : HVDice.digestResult(data, roll);
+    templateData.result = data.roll.dmg?.length
+      ? HVDice.digestAttackResult(data, roll)
+      : HVDice.digestResult(data, roll);
 
     return new Promise(async (resolve) => {
       templateData.rollHV = await roll.render();
-      templateData.dmgResult = dmgRoll.result;
+      templateData.dmgResult = dmgRoll?.result;
       templateData.rollDamage = dmgRoll ? await dmgRoll.render() : undefined;
       renderTemplate(template, templateData).then((content) => {
         chatData.content = content;

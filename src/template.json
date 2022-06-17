@@ -122,7 +122,8 @@
         "range": "20",
         "multiple": 2
       },
-      "encumbrance": 1
+      "encumbrance": 1,
+      "bonus": 0
     },
     "deed": {
       "templates": ["base"],

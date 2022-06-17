@@ -19,6 +19,7 @@ const log = new Logger();
 type ProfEntry = {
   onCreate: (item: HVItem) => void;
   skillBonus: (actor: HVActor) => number;
+  saveBase: (actor: HVActor) => { bravery: number; deftness: number; temptation: number };
   onDelete: (actor: HVActor, itemData: any) => void;
   specialisms?: () => string[];
 };
@@ -34,22 +35,26 @@ export class ClassItem extends BaseItem {
     Cleric: {
       onCreate: Cleric.onCreate,
       skillBonus: Cleric.getSkillsBonus,
+      saveBase: Cleric.getSaveBase,
       onDelete: Cleric.cleanup,
     },
     Student: {
       onCreate: Student.onCreate,
       skillBonus: Student.getSkillsBonus,
+      saveBase: Student.getSaveBase,
       onDelete: Student.cleanup,
     },
     Fighter: {
       onCreate: Fighter.onCreate,
       skillBonus: Fighter.getSkillsBonus,
+      saveBase: Fighter.getSaveBase,
       onDelete: Fighter.cleanup,
       specialisms: Fighter.specialisms,
     },
     Vagabond: {
       onCreate: Vagabond.onCreate,
       skillBonus: Vagabond.getSkillsBonus,
+      saveBase: Vagabond.getSaveBase,
       onDelete: Vagabond.cleanup,
       specialisms: Vagabond.specialisms,
     },
@@ -84,6 +89,17 @@ export class ClassItem extends BaseItem {
     }
     log.debug(`PeopleItem.getSkillsBonus() | skill bonus for ${itemData.name} is ${bonus}`);
     return bonus;
+  }
+
+  static getSaveBase(actor, itemData): { bravery: number; deftness: number; temptation: number } {
+    const prof = ClassItem.findProfession(itemData);
+    let base = { bravery: 0, deftness: 0, temptation: 0 };
+    const func = prof?.saveBase;
+    if (func) {
+      base = func(actor);
+    }
+    log.debug(`PeopleItem.getSaveBase() | save bases for ${itemData.name} are `, base);
+    return base;
   }
 
   static onDelete(actor, itemData) {

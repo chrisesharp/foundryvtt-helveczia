@@ -164,7 +164,8 @@ export class HVActor extends Actor {
 
   _updateAC(data: any): void {
     data.ac += data.scores.dex.mod;
-    data.ac += data.possessions.armour[0]?.data.data.bonus ?? 0;
+    const armour = data.possessions.armour.filter((i) => i.getFlag('helveczia', 'position') === 'worn');
+    data.ac += armour[0]?.data.data.bonus ?? 0;
   }
 
   /**
@@ -189,15 +190,17 @@ export class HVActor extends Actor {
     data.saves.temptation.bonus += data.scores.wis.mod;
     const virtue = this.isHighVirtue() ? 1 : 0;
 
+    const bases = data.classes[0]?.getSaveBase(this);
     for (const saveType of Object.keys(data.saves)) {
       const save = data.saves[saveType];
+      save.base = bases ? bases[saveType] : 0;
       save.bonus += virtue;
       save.mod = save.base + save.bonus;
     }
   }
 
   /**
-   * Update base & bonus for saves
+   * Update base & bonus for skills
    */
   async _updateSkills(data: any) {
     const peopleBonus = data.peoples[0]?.getSkillsBonus(this) ?? 0;
@@ -301,7 +304,7 @@ export class HVActor extends Actor {
         dmg: dmg,
       },
       opponent: opponent,
-      item: item.data,
+      item: item?.data,
     };
 
     const skip = false;
@@ -450,8 +453,8 @@ export class HVActor extends Actor {
         data.resource = '';
         mod.push(this.data.data.level);
         break;
-      case 'attack':
-        data.resource = 'attack';
+      case 'weapon':
+        data.resource = '';
         if (item) {
           dmg.push((item.data as WeaponItemData).data.damage);
         } else {
@@ -473,13 +476,32 @@ export class HVActor extends Actor {
     } else {
       log.debug(`getRollMods() | itemId:${data.itemId}`);
       if (item) {
-        const skill = item.data as SkillItemData;
-        const bonus = skill.data.bonus;
-        const ability = this.data.data.scores[skill.data.ability]?.mod;
-        mod.push(bonus);
-        mod.push(ability);
-        longName = item.name ?? game.i18n.localize('HV.skill');
-        log.debug(`getRollMods() | name:${longName} - ability=${skill.data.ability}, bonus=${bonus}`);
+        switch (item.type) {
+          case 'skill':
+            {
+              const skill = item.data as SkillItemData;
+              const bonus = Math.floor(skill.data.bonus);
+              const ability = this.data.data.scores[skill.data.ability]?.mod;
+              mod.push(bonus);
+              mod.push(ability);
+              longName = item.name ?? game.i18n.localize('HV.skill');
+              log.debug(`getRollMods() | name:${longName} - ability=${skill.data.ability}, bonus=${bonus}`);
+            }
+            break;
+          case 'weapon':
+            {
+              const weapon = item.data as WeaponItemData;
+              const bonus = Math.floor(weapon.data.bonus);
+              const ability = this.data.data.attack[weapon.data.attack]?.mod;
+              mod.push(bonus);
+              mod.push(ability);
+              longName = item.name ?? game.i18n.localize('HV.items.weapon');
+              log.debug(`getRollMods() | name:${longName} - attack=${weapon.data.attack}, bonus=${bonus}`);
+            }
+            break;
+          default:
+            break;
+        }
       } else {
         log.error('getRollMods() | itemId not found on actor');
       }
@@ -491,10 +513,24 @@ export class HVActor extends Actor {
     const item = this.items.get(itemID);
     let mods = '0';
     if (item) {
-      const itemData = item.data as SkillItemData;
-      const data = await this.getRollMods({ attr: itemData.data.ability, roll: itemData.type, itemId: item.id });
-      const value = data.mods.reduce((acc, n) => acc + n, 0);
-      mods = value > 0 ? `+${value}` : `${value}`;
+      switch (item.type) {
+        case 'skill':
+          {
+            const itemData = item.data as SkillItemData;
+            const data = await this.getRollMods({ attr: itemData.data.ability, roll: itemData.type, itemId: item.id });
+            const value = data.mods.reduce((acc, n) => acc + n, 0);
+            mods = value > 0 ? `+${value}` : `${value}`;
+          }
+          break;
+        case 'weapon':
+          {
+            const itemData = item.data as WeaponItemData;
+            const data = await this.getRollMods({ roll: itemData.type, itemId: item.id });
+            const value = data.mods.reduce((acc, n) => acc + n, 0);
+            mods = value > 0 ? `+${value}` : `${value}`;
+          }
+          break;
+      }
     }
     return mods;
   }

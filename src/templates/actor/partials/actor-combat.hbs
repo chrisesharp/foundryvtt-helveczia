@@ -31,15 +31,12 @@
     <ol class="item-list">
         <li class="flexrow item-header">
             <h2 class="centred">~ {{ localize 'HV.tabs.combat'}} ~</h2>
-            <div class="item-controls">
-            <a class="item-control item-create" title="{{localize 'HV.Add'}} {{localize 'HV.tabs.skills'}}" data-type="skill"><i class="fas fa-plus"></i></a>
-            </div>
         </li>
     {{#each data.possessions.weapons as |item id|}}
     {{#if (isWorn item)}}
         <li class="item-entry item-rollable flexcol" data-item-id="{{item.id}}">
             <div class="item flexrow">
-                <div class="item-image rollable" data-roll="attack" data-item-id="{{item.id}}" data-attr="{{item.data.data.attack}}"><img src="{{item.img}}" width="24" height="24"/></div>
+                <div class="item-image rollable" data-roll="weapon" data-item-id="{{item.id}}" data-attr="{{item.data.data.attack}}"><img src="{{item.img}}" width="24" height="24"/></div>
                 <h4 class="item-name">{{item.name}}</h4>
             </div>
         </li>

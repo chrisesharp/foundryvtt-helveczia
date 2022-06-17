@@ -61,6 +61,7 @@ type WeaponData = BaseData & {
     multiple: number;
   };
   encumbrance: number;
+  bonus: number;
 };
 
 export interface WeaponItemData {

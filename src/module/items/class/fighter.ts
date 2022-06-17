@@ -43,6 +43,11 @@ export class Fighter {
     return gainedSkills;
   }
 
+  static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
+    const base = Math.round(actor.data.data.level / 2);
+    return { bravery: base + 2, deftness: base, temptation: base };
+  }
+
   static async cleanup(actor: HVActor, _item: any): Promise<void> {
     await actor.setFlag('helveczia', 'fighter-class', false);
     log.debug('Fighter.getSkillsBonus() |  fighter-class flag set to false');

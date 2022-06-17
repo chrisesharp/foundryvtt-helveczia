@@ -102,6 +102,11 @@ export class Vagabond {
     return gainedSkills ? 4 : 0;
   }
 
+  static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
+    const base = Math.round(actor.data.data.level / 2);
+    return { bravery: base, deftness: base + 2, temptation: base };
+  }
+
   static async cleanup(actor: HVActor, item: any): Promise<void> {
     log.debug(`Vagabond.cleanup() |  cleaning up ${item.name}`);
     if (Vagabond.specialisms().includes(item.name)) {

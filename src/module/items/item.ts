@@ -51,6 +51,12 @@ export class HVItem extends Item {
       ? CONFIG.HV.itemClasses[this.data.type].getSkillsBonus(actor, this.data)
       : 0;
   }
+
+  getSaveBase(actor): { bravery: number; deftness: number; temptation: number } {
+    return CONFIG.HV.itemClasses[this.data.type]
+      ? CONFIG.HV.itemClasses[this.data.type].getSaveBase(actor, this.data)
+      : { bravery: 0, deftness: 0, temptation: 0 };
+  }
 }
 
 declare global {

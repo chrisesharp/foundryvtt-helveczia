@@ -16,15 +16,21 @@
     </header>
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
-      <a class="item" data-tab="damage">{{ localize 'HV.tabs.damage'}}</a>
+      <a class="item" data-tab="damage">{{ localize 'HV.tabs.combat'}}</a>
       {{> "systems/helveczia/templates/item/partials/item-nav.hbs"}}
     </nav>
     {{!-- Sheet Body --}}
     <section class="sheet-body">
       <div class="tab damage" data-group="primary" data-tab="damage">
-        <h3>Damage: <input name="data.damage" type="text" value="{{data.damage}}" placeholder="1d3"/></h3>
-        <h3>Critical on:<input name="data.critical.range" type="text" value="{{data.critical.range}}"/></h3>
-        <h3>Damage multiplier:<input name="data.critical.multiple" type="text" value="{{data.critical.multiple}}"/></h3>
+        <div class="flexrow">
+          <select name="data.attack" type="text">
+            {{selectOptions attacks selected=data.attack localize=true}}
+          </select>
+          <h3 class="flexrow">{{ localize 'HV.additionalBonus' }}:<input name="data.bonus" type="text" value="{{data.bonus}}"/></h3>
+        </div>
+        <h3>{{ localize 'HV.tabs.damage'}}:<input name="data.damage" type="text" value="{{data.damage}}" placeholder="1d3"/></h3>
+        <h3>{{ localize 'HV.Critical'}} on:<input name="data.critical.range" type="text" value="{{data.critical.range}}"/></h3>
+        <h3>{{ localize 'HV.DamageMultiplier'}}:<input name="data.critical.multiple" type="text" value="{{data.critical.multiple}}"/></h3>
       </div>
       {{#if config.showEffects}}
         <div class="tab effects" data-group="primary" data-tab="effects">
