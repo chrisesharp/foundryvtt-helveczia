@@ -185,7 +185,7 @@ export class HVActorSheet extends ActorSheet {
     }
     if (shouldContinue) {
       const items = (await super._onDropItem(event, data)) as HVItem[];
-      const item = items.length ? items[0] : null;
+      const item = items?.length ? items[0] : null;
       log.debug('_onDropItem() | created item:', item);
       if (item) {
         if (['weapon', 'armour', 'possession'].includes(item.type)) {

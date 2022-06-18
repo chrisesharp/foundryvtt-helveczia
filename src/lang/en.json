@@ -139,6 +139,8 @@
   "HV.messages.AttackSuccess": "was successful in their attack {wp} {vs}",
   "HV.messages.CriticalSuccess": "had a potentially critical success {wp} {vs}!",
   "HV.messages.CriticalFailure": "had a critical failure {wp} {vs}!",
+  "HV.messages.absolution": "You have been absolved of the following sins...",
+  "HV.messages.noAbsolution": "You were unable to absolve any of your sins.",
   "HV.errors.fullSkills": "You have a full quota of skills already!",
   "HV.errors.notMagical": "You must be a cleric or student to have this skill!",
   "HV.errors.notCleric": "You must be a cleric to have this spell!",
@@ -148,5 +150,6 @@
   "HV.Critical": "Critical",
   "HV.RollingCritical": "{actor} press their advantage",
   "HV.SecondCritical": "A Second Success!",
-  "HV.InstantDeath": "Two Criticals in a Row! This is instant death!"
+  "HV.InstantDeath": "Two Criticals in a Row! This is instant death!",
+  "HV.Fist": "Unarmed"
 }

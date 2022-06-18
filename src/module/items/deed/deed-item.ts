@@ -65,7 +65,9 @@ export class DeedItem extends BaseItem {
 
   static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
     const isSin = (item.data as DeedItemData).data.subtype === 'sin';
-    const mag = isSin ? 0 - (item.data as DeedItemData).data.magnitude : 0 + (item.data as DeedItemData).data.magnitude;
+    const mag = isSin
+      ? 0 - Math.floor((item.data as DeedItemData).data.magnitude)
+      : 0 + Math.floor((item.data as DeedItemData).data.magnitude);
     const value = mag > 0 ? `+${mag}` : mag;
     return `
     <ol class="tag-list">

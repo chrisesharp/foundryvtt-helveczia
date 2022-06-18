@@ -4,8 +4,8 @@ export class WeaponSheet extends HVItemSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ['helveczia', 'sheet', 'item'],
-      width: 450,
-      height: 450,
+      width: 470,
+      height: 470,
       resizable: true,
       tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'damage' }],
     });

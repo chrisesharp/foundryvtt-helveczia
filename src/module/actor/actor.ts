@@ -365,7 +365,7 @@ export class HVActor extends Actor {
         vision: true,
         dimSight: 30,
         brightSight: 0,
-        displayname: CONST.TOKEN_DISPLAY_MODES.HOVER,
+        displayName: CONST.TOKEN_DISPLAY_MODES.HOVER,
         actorLink: true,
         disposition: disposition,
         lockRotation: true,
@@ -460,6 +460,10 @@ export class HVActor extends Actor {
         } else {
           dmg.push('1d3');
         }
+        break;
+      case 'attack':
+        data.resource = 'attack';
+        dmg.push('1d3');
         break;
       default:
         break;

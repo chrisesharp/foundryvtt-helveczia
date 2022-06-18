@@ -81,6 +81,9 @@
   }
 
   li.item-rollable {
+    &:hover i.fist {
+      display: none;
+    }
     &:hover .item-image {
       background-image: url('/icons/svg/d20-grey.svg') !important;
       background-size: cover;

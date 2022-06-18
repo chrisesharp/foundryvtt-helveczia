@@ -36,13 +36,14 @@ export class HVChat {
 
   static async addChatCriticalButton(msg, html, _data) {
     const chatCard = html.find('.helveczia.chat-card');
+    if (!chatCard) return;
     try {
       const actor = await HVChat.getActorFromUUID(chatCard.attr('data-actor-id'));
       if (actor && actor.isOwner) {
         await HVChat._addCritButton(msg, actor, chatCard);
       }
     } catch (e) {
-      log.debug('addChatCriticalButton() | error caught: ', e);
+      // log.debug('addChatCriticalButton() | error caught: ', e);
     }
   }
 

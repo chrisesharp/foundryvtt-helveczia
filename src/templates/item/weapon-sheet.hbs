@@ -1,10 +1,12 @@
 <form class="{{cssClass}}" autocomplete="off">
-    <header class="sheet-header">
-      <div class="flexcol" style="justify-content: center;align-items: center;">
+    <header class="sheet-header flexcol">
+      <div class="flexrow" style="justify-content: center;align-items: center;">
         <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+        <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
       </div>
+    </header>
+    <header class="sheet-header">
       <div class="header-fields">
-          <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
           <div class="form-group">
             <h2 class="cost">Cost: </h2>
             <input name="data.cost.value" type="text" value="{{data.cost.value}}">

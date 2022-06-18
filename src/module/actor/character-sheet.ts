@@ -5,8 +5,8 @@ export class HVCharacterSheet extends HVActorSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['helveczia', 'sheet', 'actor', 'character'],
       template: 'systems/helveczia/templates/actor/character-sheet.hbs',
-      width: 450,
-      height: 685,
+      width: 580,
+      height: 730,
       resizable: true,
       tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'abilities' }],
     });

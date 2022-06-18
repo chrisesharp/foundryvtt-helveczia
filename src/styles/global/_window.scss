@@ -1,5 +1,14 @@
+.app,
 .window-app {
-  // font-family: $font-primary;
+  font-family: $font-primary;
+
+  .chat-message {
+    background-image: url('/systems/helveczia/assets/papers2.png');
+    background-color: transparent;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 20px;
+  }
   .window-content {
     font-family: $font-primary;
     background-image: url('/systems/helveczia/assets/papers2.png');

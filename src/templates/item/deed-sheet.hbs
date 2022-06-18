@@ -16,6 +16,11 @@
               {{selectOptions cardinalSins selected=data.cardinality localize=true}}
             {{/if}}
             </select>
+            {{#if (eq data.subtype 'virtue')}}
+              <h3 class="deed-hdr">({{ deedLocalize (lookup cardinalVirtues data.cardinality) }})</h3>
+             {{else}}
+               <h3 class="deed-hdr">({{ deedLocalize (lookup cardinalSins data.cardinality) }})</h3>
+             {{/if}}
           </div>
           <div class="deed-header">
             <h3 class="deed-hdr"> of </h3>
