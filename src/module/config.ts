@@ -99,7 +99,7 @@ export interface HelvecziaConfig {
 }
 
 export const HV: HelvecziaConfig = {
-  DEFAULT_TOKEN: 'systems/helveczia/assets/man.png',
+  DEFAULT_TOKEN: 'systems/helveczia/assets/people/man.png',
 
   showEffects: false,
 
