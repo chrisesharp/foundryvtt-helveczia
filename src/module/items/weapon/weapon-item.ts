@@ -6,6 +6,8 @@ import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 import { WeaponItemData } from '../item-types';
 
+const DEFAULT_TOKEN = 'icons/svg/sword.svg';
+
 export class WeaponItem extends BaseItem {
   static get documentName() {
     return 'weapon';
@@ -22,12 +24,19 @@ export class WeaponItem extends BaseItem {
   }
 
   static async onCreate(
-    _item: HVItem,
-    _data: PropertiesToSource<ItemDataBaseProperties>,
+    item: HVItem,
+    data: PropertiesToSource<ItemDataBaseProperties>,
     _options: DocumentModificationOptions,
     _userId: string,
   ) {
-    // console.log('in WeaponItem.onCreate():', item, data, options, userId);
+    mergeObject(
+      data,
+      {
+        img: DEFAULT_TOKEN,
+      },
+      { overwrite: true },
+    );
+    item.data.update(data);
   }
 
   /** @override */

@@ -10,6 +10,7 @@ import { HVActorData } from '../../actor/actor-types';
 import { Utils } from '../../utils/utils';
 
 const log = new Logger();
+const DEFAULT_TOKEN = 'icons/svg/village.svg';
 
 export class PeopleItem extends BaseItem {
   static races: {
@@ -77,15 +78,6 @@ export class PeopleItem extends BaseItem {
         i.getFlag('helveczia', 'locked') === true,
     );
     await Utils.deleteEmbeddedArray(crafts, actor);
-    // if (crafts.length > 0) {
-    //   for (const craft of crafts) {
-    //     if (craft.getFlag('helveczia', 'locked') && craft.id) {
-    //       actor.setFlag('helveczia', 'german-skill-generated', false);
-    //       await actor.deleteEmbeddedDocuments('Item', [craft.id]);
-    //       await actor.sheet?.render(true);
-    //     }
-    //   }
-    // }
   }
 
   static async onCreateDutch(item: HVItem): Promise<void> {
@@ -153,6 +145,15 @@ export class PeopleItem extends BaseItem {
     _options: DocumentModificationOptions,
     _userId: string,
   ) {
+    mergeObject(
+      data,
+      {
+        img: DEFAULT_TOKEN,
+      },
+      { overwrite: true },
+    );
+    item.data.update(data);
+
     if (item.parent) {
       const func = PeopleItem.races[data.name].onCreate;
       if (func) func(item);

@@ -4,6 +4,8 @@ import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-ty
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 
+const DEFAULT_TOKEN = 'icons/svg/daze.svg';
+
 export class SpellItem extends BaseItem {
   static get documentName() {
     return 'possession';
@@ -20,12 +22,19 @@ export class SpellItem extends BaseItem {
   }
 
   static async onCreate(
-    _item: HVItem,
-    _data: PropertiesToSource<ItemDataBaseProperties>,
+    item: HVItem,
+    data: PropertiesToSource<ItemDataBaseProperties>,
     _options: DocumentModificationOptions,
     _userId: string,
   ) {
-    // console.log('in PossessionItem.onCreate():', item, data, options, userId);
+    mergeObject(
+      data,
+      {
+        img: DEFAULT_TOKEN,
+      },
+      { overwrite: true },
+    );
+    item.data.update(data);
   }
 
   /** @override */
