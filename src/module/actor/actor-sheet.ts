@@ -75,6 +75,7 @@ export class HVActorSheet extends ActorSheet {
         : 2
       : 1;
     data.spellslots = (this.actor as HVActor).getSpellSlots();
+    data.spellBonus = (this.actor as HVActor).getSpellBonus();
     data.maxspells = data.spellslots.reduce((acc, n) => acc + n, 0);
     data.spellGroups = [1, 2, 3];
     data.worn = [];
@@ -316,6 +317,18 @@ export class HVActorSheet extends ActorSheet {
       const itemID = li.data('item-id');
       this.actor.deleteEmbeddedDocuments('Item', [itemID]);
       li.slideUp(200, () => this.render(false));
+    });
+
+    // Toggle spell bonnus
+    html.find('.item-bonus').click((ev) => {
+      const li = $(ev.currentTarget).parents('.item-entry');
+      const itemID = li.data('item-id');
+      const item = this.actor.items.get(itemID);
+      console.log('item:', itemID, item);
+      if (item) {
+        const state = item.getFlag('helveczia', 'bonusSpell') as boolean;
+        item.setFlag('helveczia', 'bonusSpell', !state);
+      }
     });
 
     // Update Item Roll Mods

@@ -431,6 +431,21 @@ export class HVActor extends Actor {
     return [];
   }
 
+  getSpellBonus(): number[] {
+    let attr = 0;
+    if (this.isStudent()) {
+      attr = this.data.data.scores.int.value;
+    } else if (this.isCleric()) {
+      attr = this.data.data.scores.wis.value;
+    }
+
+    const spells = [0, 0, 0];
+    if (attr >= 12) spells[0] = 1;
+    if (attr >= 15) spells[1] = 1;
+    if (attr >= 18) spells[2] = 1;
+    return spells;
+  }
+
   async getRollMods(data): Promise<{ mods: number[]; longName: string; dmg: string[]; item: HVItem | undefined }> {
     log.debug('getRollMods() | get roll mods for ', data);
     let longName = '';

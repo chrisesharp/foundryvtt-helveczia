@@ -79,7 +79,15 @@ export interface DeedItemData {
   data: DeedData;
 }
 
-type SpellData = BaseData;
+type SpellData = BaseData & {
+  level: number;
+  class: string;
+  range: string;
+  duration: string;
+  area: string;
+  save: string;
+  component: string;
+};
 
 export interface SpellItemData {
   type: 'spell';

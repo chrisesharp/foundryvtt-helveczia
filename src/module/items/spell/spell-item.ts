@@ -1,8 +1,10 @@
 import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
 import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
 import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
+import { HVActor } from '../../actor/actor';
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
+import { SpellItemData } from '../item-types';
 
 const DEFAULT_TOKEN = 'icons/svg/daze.svg';
 
@@ -51,5 +53,16 @@ export class SpellItem extends BaseItem {
     saves['-'] = '-';
     sheetData.saves = saves;
     return sheetData;
+  }
+
+  /** @override */
+  static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
+    const itemData = item.data as SpellItemData;
+    return `
+    <ol class="tag-list">
+      <li class="tag" title="${game.i18n.localize('HV.Save')}">${game.i18n.localize(
+      `HV.saves.${itemData.data.save}.long`,
+    )}</li>
+    </ol>`;
   }
 }

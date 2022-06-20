@@ -111,11 +111,11 @@ export class Student {
 
   static getSpellSlots(actor: HVActor): number[] {
     const level = actor.data.data.level;
-    const bonus = actor.data.data.scores.int.value;
+    const bonus = actor.getSpellBonus();
     const spells = duplicate(CONFIG.HV.spellSlots[level]);
-    if (bonus >= 12) spells[0] += 1;
-    if (bonus >= 15) spells[1] += 1;
-    if (bonus >= 18) spells[2] += 1;
+    for (const i in spells) {
+      spells[i] += bonus[i];
+    }
     log.debug(`Student.getSpellSlots() | INT of ${bonus} results in `, spells);
     return spells;
   }
