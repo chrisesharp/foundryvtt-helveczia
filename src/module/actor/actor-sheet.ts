@@ -173,7 +173,7 @@ export class HVActorSheet extends ActorSheet {
       case 'possession':
         const capacitySlots = await this._calculateAvailableSlots();
         log.debug('_onDropItem() | carrying capacity:', capacitySlots);
-        log.debug('_onDropItem() | item encumbrance:', item.data.data);
+        log.debug('_onDropItem() | item encumbrance:', item.data.data.encumbrance);
         if (capacitySlots.worn >= item.data.data.encumbrance) {
           position = 'worn';
         } else if (capacitySlots.carried >= item.data.data.encumbrance) {
@@ -204,10 +204,17 @@ export class HVActorSheet extends ActorSheet {
   async _calculateAvailableSlots(): Promise<any> {
     const sheetData = await this.getData();
     const capacity = this.actor.data.data.capacity - 8;
+    const wornUsed = sheetData.worn.map((i) => i.data.data.encumbrance).reduce((acc, n) => acc + n, 0);
+    const carriedUsed = sheetData.carried.map((i) => i.data.data.encumbrance).reduce((acc, n) => acc + n, 0);
+    const mountUsed = sheetData.mount.map((i) => i.data.data.encumbrance).reduce((acc, n) => acc + n, 0);
+    const worn = 8 - wornUsed;
+    const carried = capacity - carriedUsed;
+    const mount = 8 - mountUsed;
+    log.debug(`_calculateAvailableSlots() | slots are worn:${worn}, carried: ${carried}, mount:${mount}`);
     return {
-      worn: 8 - sheetData.worn.length,
-      carried: capacity - sheetData.carried.length,
-      mount: 8 - sheetData.mount.length,
+      worn: worn,
+      carried: carried,
+      mount: mount,
     };
   }
 
@@ -221,7 +228,8 @@ export class HVActorSheet extends ActorSheet {
     const positionTarget = event.target.closest('[data-column]');
     const columnID = positionTarget ? positionTarget.dataset.column : 'mount';
     const availableSlots = await this._calculateAvailableSlots();
-    const ok = availableSlots[columnID] > 0;
+    log.debug(`_onSortPossession() |encumbrance of item is ${source.data.data.encumbrance} `);
+    const ok = availableSlots[columnID] - source.data.data.encumbrance >= 0;
     log.debug(`_onSortPossession() | ${ok} we have space, will place it at ${columnID} `);
     if (ok) source.setFlag('helveczia', 'position', columnID);
     return;

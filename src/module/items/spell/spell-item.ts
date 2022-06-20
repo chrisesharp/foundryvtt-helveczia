@@ -48,6 +48,7 @@ export class SpellItem extends BaseItem {
     CONFIG.HV.saves.forEach((a) => {
       saves[a] = game.i18n.localize(`HV.saves.${a}.long`);
     });
+    saves['-'] = '-';
     sheetData.saves = saves;
     return sheetData;
   }

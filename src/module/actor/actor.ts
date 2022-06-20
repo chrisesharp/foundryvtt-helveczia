@@ -288,7 +288,6 @@ export class HVActor extends Actor {
   }
 
   _applyRandomSaveBonus(_change) {
-    // TODO implement Hungarian Fate
     // console.log('Apply random save bonus:', change);
   }
 

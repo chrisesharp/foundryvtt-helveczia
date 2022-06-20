@@ -81,17 +81,45 @@
       "type": "Item"
     },
     {
-      "name": "student-spells",
-      "label": "Student Spells",
+      "name": "student-spells-1",
+      "label": "Student Spells - Level 1",
       "package": "helveczia",
-      "path": "packs/student-spells.db",
+      "path": "packs/student-spells-1.db",
       "type": "Item"
     },
     {
-      "name": "cleric-spells",
-      "label": "Cleric Spells",
+      "name": "student-spells-2",
+      "label": "Student Spells - Level 2",
       "package": "helveczia",
-      "path": "packs/cleric-spells.db",
+      "path": "packs/student-spells-2.db",
+      "type": "Item"
+    },
+    {
+      "name": "student-spells-3",
+      "label": "Student Spells - Level 3",
+      "package": "helveczia",
+      "path": "packs/student-spells-3.db",
+      "type": "Item"
+    },
+    {
+      "name": "cleric-spells-1",
+      "label": "Cleric Spells - Level 1",
+      "package": "helveczia",
+      "path": "packs/cleric-spells-1.db",
+      "type": "Item"
+    },
+    {
+      "name": "cleric-spells-2",
+      "label": "Cleric Spells - Level 2",
+      "package": "helveczia",
+      "path": "packs/cleric-spells-2.db",
+      "type": "Item"
+    },
+    {
+      "name": "cleric-spells-3",
+      "label": "Cleric Spells - Level 3",
+      "package": "helveczia",
+      "path": "packs/cleric-spells-3.db",
       "type": "Item"
     }
   ],
