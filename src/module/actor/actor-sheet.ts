@@ -160,6 +160,9 @@ export class HVActorSheet extends ActorSheet {
         if (item.data.data.subtype === 'vagabond' && !this.actor.isVagabond()) {
           return ui.notifications.error(game.i18n.localize('HV.errors.notVagabond'));
         }
+        if ((item.data.data.subtype === 'craft' || item.data.data.subtype === 'science') && this.actor.isVagabond()) {
+          return ui.notifications.error(game.i18n.localize('HV.errors.areVagabond'));
+        }
         break;
       case 'spell':
         if (item.data.data.class === 'cleric' && !this.actor.isCleric()) {
