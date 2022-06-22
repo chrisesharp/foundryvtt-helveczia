@@ -29,10 +29,18 @@ export class SpellItem extends BaseItem {
   static async createChatMessage(actor: HVActor, message: string, data: ItemData): Promise<void> {
     const speaker = ChatMessage.getSpeaker({ actor: actor });
     const title = game.i18n.localize(message);
-    const summary =
-      message === 'HV.SpellCast'
-        ? game.i18n.format('HV.CastsSpell', { spell: data.name, caster: speaker.alias })
-        : game.i18n.format('HV.MemorizeSpell', { spell: data.name, caster: speaker.alias });
+    let summary: string;
+
+    switch (message) {
+      case 'HV.SpellCast':
+        summary = game.i18n.format('HV.CastsSpell', { spell: data.name, caster: speaker.alias });
+        break;
+      case 'HV.SpellLost':
+        summary = game.i18n.localize('HV.SpellLost');
+        break;
+      default:
+        summary = game.i18n.format('HV.MemorizeSpell', { spell: data.name, caster: speaker.alias });
+    }
 
     const templateData = {
       config: CONFIG.HV,

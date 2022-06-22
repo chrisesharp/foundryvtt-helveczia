@@ -148,6 +148,7 @@
   "HV.messages.noAbsolution": "You were unable to absolve any of your sins.",
   "HV.SpellCast": "A spell is cast!",
   "HV.SpellRememorize": "A spell is rememorized!",
+  "HV.SpellLost": "A distraction caused the spell to be lost!",
   "HV.CastsSpell": "{caster} casts a spell of {spell}",
   "HV.MemorizeSpell": "{caster} memorizes the spell of {spell}",
   "HV.errors.fullSkills": "You have a full quota of skills already!",

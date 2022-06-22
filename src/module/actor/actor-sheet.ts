@@ -387,9 +387,15 @@ export class HVActorSheet extends ActorSheet {
       const itemID = li.data('item-id');
       const item = this.actor.items.get(itemID);
       if (item) {
-        await item.createChatMessage(this.actor, 'HV.SpellRememorize');
-        if (item.getFlag('helveczia', 'bonusSpell') === true) {
-          item.setFlag('helveczia', 'castSpell', false);
+        const rollData = await this.actor.getRollMods({ roll: 'save', attr: 'temptation' });
+        const roll = await this.actor.rollCheck(rollData, {});
+        if (roll.total >= roll.data.roll.target) {
+          await item.createChatMessage(this.actor, 'HV.SpellRememorize');
+          if (item.getFlag('helveczia', 'bonusSpell') === true) {
+            item.setFlag('helveczia', 'castSpell', false);
+          }
+        } else {
+          await item.createChatMessage(this.actor, 'HV.SpellLost');
         }
       }
     });
