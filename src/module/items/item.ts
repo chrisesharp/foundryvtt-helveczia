@@ -1,6 +1,7 @@
 import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
 import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
 import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
+import { HVActor } from '../actor/actor';
 import { HVItemData } from './item-types';
 
 export class HVItem extends Item {
@@ -56,6 +57,12 @@ export class HVItem extends Item {
     return CONFIG.HV.itemClasses[this.data.type]
       ? CONFIG.HV.itemClasses[this.data.type].getSaveBase(actor, this.data)
       : { bravery: 0, deftness: 0, temptation: 0 };
+  }
+
+  async createChatMessage(actor: HVActor, message: string): Promise<void> {
+    if (CONFIG.HV.itemClasses[this.data.type]) {
+      CONFIG.HV.itemClasses[this.data.type].createChatMessage(actor, message, this.data);
+    }
   }
 }
 

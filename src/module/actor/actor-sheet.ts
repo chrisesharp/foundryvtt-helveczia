@@ -2,7 +2,7 @@ import { HVCharacterCreator } from '../apps/chargen';
 import { onManageActiveEffect, prepareActiveEffectCategories } from '../effects';
 import { ClassItem } from '../items/class/class-item';
 import { PeopleItem } from '../items/people/people-item';
-import { ClassItemData, DeedItemData, SkillItemData } from '../items/item-types';
+import { ClassItemData, DeedItemData, SkillItemData, SpellItemData } from '../items/item-types';
 import { Logger } from '../logger';
 import { HVItem } from '../items/item';
 import { CharacterActorData } from './actor-types';
@@ -53,6 +53,7 @@ export class HVActorSheet extends ActorSheet {
       student_skills_generated:
         this.actor.getFlag('helveczia', 'student-skill-generated-1') &&
         this.actor.getFlag('helveczia', 'student-skill-generated-2'),
+      bonusSpellsChosen: this.actor.getFlag('helveczia', 'bonusSpellsChosen') as number,
       options: this.options,
       editable: this.isEditable,
       isToken: this.token && !this.token.data.actorLink,
@@ -76,6 +77,11 @@ export class HVActorSheet extends ActorSheet {
       : 1;
     data.spellslots = (this.actor as HVActor).getSpellSlots();
     data.spellBonus = (this.actor as HVActor).getSpellBonus();
+    data.currentBonusSpells = [
+      (this.actor.getFlag('helveczia', `bonusSpellsChosen-1`) as number) ?? 0,
+      (this.actor.getFlag('helveczia', `bonusSpellsChosen-2`) as number) ?? 0,
+      (this.actor.getFlag('helveczia', `bonusSpellsChosen-3`) as number) ?? 0,
+    ];
     data.maxspells = data.spellslots.reduce((acc, n) => acc + n, 0);
     data.spellGroups = [1, 2, 3];
     data.worn = [];
@@ -171,6 +177,12 @@ export class HVActorSheet extends ActorSheet {
         } else if (item.data.data.class === 'student' && !this.actor.isStudent()) {
           return ui.notifications.error(game.i18n.localize('HV.errors.notStudent'));
         }
+        const level = parseInt(item.data.data.level);
+        const spellSlots = this.actor.getSpellSlots();
+        // console.log(`spellSlots: ${spellSlots[level-1]}, level:${level},spells.length:${this.actor.data.data.spells[level-1].length}`, this.actor.data.data.spells)
+        if (this.actor.data.data.spells[level - 1].length >= spellSlots[level - 1]) {
+          return ui.notifications.error(game.i18n.format('HV.errors.maxSpells', { level: level }));
+        }
         break;
       case 'weapon':
       case 'armour':
@@ -192,10 +204,17 @@ export class HVActorSheet extends ActorSheet {
       const item = items?.length ? items[0] : null;
       log.debug('_onDropItem() | created item:', item);
       if (item) {
-        if (['weapon', 'armour', 'possession'].includes(item.type)) {
-          item.setFlag('helveczia', 'position', position);
+        switch (item.type) {
+          case 'weapon':
+          case 'armour':
+          case 'possession':
+            item.setFlag('helveczia', 'position', position);
+            log.debug(`_onDropItem() | set position of item to ${position}`);
+            break;
+          case 'spell':
+            await item.createChatMessage(this.actor, 'HV.SpellRememorize');
+            break;
         }
-        log.debug(`_onDropItem() | set position of item to ${position}`);
       }
     }
     return;
@@ -319,20 +338,61 @@ export class HVActorSheet extends ActorSheet {
       li.slideUp(200, () => this.render(false));
     });
 
-    // Toggle spell bonnus
-    html.find('.item-bonus').click((ev) => {
+    // Toggle spell bonus
+    html.find('.item-bonus').click(async (ev) => {
       const li = $(ev.currentTarget).parents('.item-entry');
       const itemID = li.data('item-id');
       const item = this.actor.items.get(itemID);
-      console.log('item:', itemID, item);
       if (item) {
-        const state = item.getFlag('helveczia', 'bonusSpell') as boolean;
-        item.setFlag('helveczia', 'bonusSpell', !state);
+        const spellLevel = (item.data as SpellItemData).data.level;
+        const state = (item.getFlag('helveczia', 'bonusSpell') as boolean) ?? false;
+        const current = (this.actor.getFlag('helveczia', `bonusSpellsChosen-${spellLevel}`) as number) ?? 0;
+        if (state !== true) {
+          if (current < this.actor.getSpellBonus()[spellLevel - 1]) {
+            item.setFlag('helveczia', 'bonusSpell', true);
+            await this.actor.setFlag('helveczia', `bonusSpellsChosen-${spellLevel}`, current + 1);
+          }
+        } else {
+          item.setFlag('helveczia', 'bonusSpell', false);
+          await this.actor.setFlag('helveczia', `bonusSpellsChosen-${spellLevel}`, Math.max(0, current - 1));
+        }
       }
     });
 
-    // Update Item Roll Mods
-    // html.find('.item-roll-mod').each(this._getItemRollMod.bind(this));
+    // Toggle spell cast
+    html.find('.item-cast').click(async (ev) => {
+      const li = $(ev.currentTarget).parents('.item-entry');
+      const itemID = li.data('item-id');
+      const item = this.actor.items.get(itemID);
+      if (item) {
+        const state = item.getFlag('helveczia', 'castSpell') as boolean;
+        if (state !== true) {
+          await item.createChatMessage(this.actor, 'HV.SpellCast');
+          if (item.getFlag('helveczia', 'bonusSpell') === true) {
+            item.setFlag('helveczia', 'castSpell', true);
+          } else {
+            const spell = item.id ? [item.id] : [];
+            await this.actor.deleteEmbeddedDocuments('Item', spell);
+          }
+        } else {
+          ui.notifications.warn('you have already cast this spell and need to re-memorize it.');
+          // item.setFlag('helveczia', 'castSpell', false);
+        }
+      }
+    });
+
+    // Rememorize spell
+    html.find('.item-empty').click(async (ev) => {
+      const li = $(ev.currentTarget).parents('.item-entry');
+      const itemID = li.data('item-id');
+      const item = this.actor.items.get(itemID);
+      if (item) {
+        await item.createChatMessage(this.actor, 'HV.SpellRememorize');
+        if (item.getFlag('helveczia', 'bonusSpell') === true) {
+          item.setFlag('helveczia', 'castSpell', false);
+        }
+      }
+    });
 
     // Active Effect management
     html.find('.effect-control').click((ev) => onManageActiveEffect(ev, this.actor));

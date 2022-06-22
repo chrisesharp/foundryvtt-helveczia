@@ -4,6 +4,7 @@ import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-ty
 import { HVActor } from '../actor/actor';
 import { Logger } from '../logger';
 import { HVItem } from './item';
+import { HVItemData } from './item-types';
 
 const log = new Logger();
 
@@ -99,6 +100,8 @@ export abstract class BaseItem {
   static async getTags(_item: HVItem, _actor: HVActor): Promise<string> {
     return '';
   }
+
+  static async createChatMessage(_actor: HVActor, _message: string, _data: HVItemData): Promise<void> {}
 
   static onDelete(_actor, _itemData) {}
 

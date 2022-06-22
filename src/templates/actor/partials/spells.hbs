@@ -1,19 +1,29 @@
 {{#each spellGroups}}
     <li class="flexrow item-header">
-        <h3 class="centred">~  Level {{this}} {{ localize "HV.Spells"}} ( {{ length (lookup ../data.spells @index) }} / {{ lookup  ../spellslots @index }} / {{ lookup ../spellBonus @index }}') ~</h3>
+        <h3 class="centred">~  Level {{this}} {{ localize "HV.Spells"}} ( {{ length (lookup ../data.spells @index) }} / {{ lookup  ../spellslots @index }}) ~ Bonus Spells (  {{ lookup ../currentBonusSpells @index }} / {{ lookup ../spellBonus @index }}') ~</h3>
     </li>
     {{#each (lookup ../data.spells @index) as |item id|}}
     <li class="item-entry flexcol" data-item-id="{{item.id}}">
         <div class="item flexrow">
-            <div class="flex1">
+            <div class="flexrow">
                 {{#if (bonusSpell item)}}
-                <a class="flex1 item-control item-bonus" title="{{localize 'HV.bonus'}} {{localize 'HV.Spell'}}"><i class="fa fa-check-circle"></i></a>
+                <a class="flex0 item-control item-bonus" title="{{localize 'HV.bonus'}} {{localize 'HV.Spell'}}"><i title="{{ localize 'HV.bonus'}}" class="fa fa-check-circle"></i></a>
                 {{else}}
-                <a class="flex1 item-control item-bonus" title="{{localize 'HV.bonus'}} {{localize 'HV.Spell'}}"><i class="far fa-circle"></i></a>
+                <a class="flex0 item-control item-bonus" title="{{localize 'HV.bonus'}} {{localize 'HV.Spell'}}"><i class="far fa-circle"></i></a>
                 {{/if}}
-            <h4 class="flex3 item-name">{{item.name}}</h4>
+                <h4 class="flex1 item-name">&nbsp; {{item.name}}</h4>
             </div>
-            {{#unless (itemLocked item)}}
+            <div class="item-controls">
+                <a class="item-control item-cast" title="{{localize 'HV.Cast'}} {{localize 'HV.Spell'}}"><i class="fas fa-magic"></i></a>
+                {{#if (bonusSpell item)}}
+                    {{#if (castSpell item)}}
+                    <a class="item-control item-empty" title="{{localize 'HV.Unavailable'}} {{localize 'HV.Spell'}}"><i class="fas fa-battery-empty"></i></a>
+                    {{else}}
+                    <a class="item-control" title="{{localize 'HV.Available'}} {{localize 'HV.Spell'}}"><i class="fas fa-battery-full"></i></a>
+                    {{/if}}
+                {{/if}}
+            </div>
+            {{#unless (or (itemLocked item) (bonusSpell item))}}
             <div class="item-controls">
                 <a class="item-control item-delete" title="{{localize 'HV.Delete'}} {{localize 'HV.tabs.skills'}}"><i class="fas fa-trash"></i></a>
             </div>

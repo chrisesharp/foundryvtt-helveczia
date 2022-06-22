@@ -73,7 +73,11 @@ export const registerHandlebarHelpers = async function () {
   });
 
   Handlebars.registerHelper('bonusSpell', function (item) {
-    return item.getFlag('helveczia', 'bonusSpell');
+    return item.getFlag('helveczia', 'bonusSpell') as boolean;
+  });
+
+  Handlebars.registerHelper('castSpell', function (item) {
+    return item.getFlag('helveczia', 'castSpell') as boolean;
   });
 
   Handlebars.registerHelper('deedLocalize', function (text) {

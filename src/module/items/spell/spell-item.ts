@@ -1,5 +1,8 @@
 import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
-import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
+import {
+  ItemData,
+  ItemDataBaseProperties,
+} from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
 import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
 import { HVActor } from '../../actor/actor';
 import { BaseItem } from '../base-item';
@@ -21,6 +24,28 @@ export class SpellItem extends BaseItem {
 
     // Check or uncheck a single box
     // html.find(".helveczia-possession").click((e) => this._onRollSkill.call(this, e, sheet));
+  }
+
+  static async createChatMessage(actor: HVActor, message: string, data: ItemData): Promise<void> {
+    const speaker = ChatMessage.getSpeaker({ actor: actor });
+    const title = game.i18n.localize(message);
+    const summary =
+      message === 'HV.SpellCast'
+        ? game.i18n.format('HV.CastsSpell', { spell: data.name, caster: speaker.alias })
+        : game.i18n.format('HV.MemorizeSpell', { spell: data.name, caster: speaker.alias });
+
+    const templateData = {
+      config: CONFIG.HV,
+      summary: summary,
+      actor: actor,
+      title: title,
+    };
+    const content = await renderTemplate('systems/helveczia/templates/chat/cast-spell.hbs', templateData);
+    ChatMessage.create({
+      content: content,
+      speaker,
+      blind: false,
+    });
   }
 
   static async onCreate(
@@ -58,11 +83,11 @@ export class SpellItem extends BaseItem {
   /** @override */
   static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
     const itemData = item.data as SpellItemData;
+    const tag = itemData.data.save !== '-' ? game.i18n.localize(`HV.saves.${itemData.data.save}.long`) : undefined;
+    const line = tag ? `<li class="tag" title="${game.i18n.localize('HV.Save')}">${tag}</li>` : '';
     return `
     <ol class="tag-list">
-      <li class="tag" title="${game.i18n.localize('HV.Save')}">${game.i18n.localize(
-      `HV.saves.${itemData.data.save}.long`,
-    )}</li>
+      ${line}
     </ol>`;
   }
 }
