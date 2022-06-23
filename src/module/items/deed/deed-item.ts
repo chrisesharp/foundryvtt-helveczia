@@ -11,6 +11,7 @@ import { Utils } from '../../utils/utils';
 const log = new Logger();
 
 export class DeedItem extends BaseItem {
+  static DEFAULT_TOKEN: 'systems/helveczia/assets/icons/angel_sm.png';
   static get documentName() {
     return 'deed';
   }
@@ -34,6 +35,14 @@ export class DeedItem extends BaseItem {
     if (!item.isEmbedded) {
       await DeedItem.addDeedEffects(item);
     }
+    mergeObject(
+      data,
+      {
+        img: DeedItem.DEFAULT_TOKEN,
+      },
+      { overwrite: true },
+    );
+    item.data.update(data);
     log.debug('DeedItem.onCreate()|', item, data, options, userId);
   }
 
