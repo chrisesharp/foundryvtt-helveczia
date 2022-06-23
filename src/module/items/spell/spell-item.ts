@@ -9,9 +9,8 @@ import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 import { SpellItemData } from '../item-types';
 
-const DEFAULT_TOKEN = 'icons/svg/daze.svg';
-
 export class SpellItem extends BaseItem {
+  static DEFAULT_TOKEN: 'icons/svg/daze.svg';
   static get documentName() {
     return 'possession';
   }
@@ -65,7 +64,7 @@ export class SpellItem extends BaseItem {
     mergeObject(
       data,
       {
-        img: DEFAULT_TOKEN,
+        img: SpellItem.DEFAULT_TOKEN,
       },
       { overwrite: true },
     );

@@ -6,9 +6,8 @@ import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 import { WeaponItemData } from '../item-types';
 
-const DEFAULT_TOKEN = 'icons/svg/sword.svg';
-
 export class WeaponItem extends BaseItem {
+  static DEFAULT_TOKEN: 'icons/svg/sword.svg';
   static get documentName() {
     return 'weapon';
   }
@@ -32,7 +31,7 @@ export class WeaponItem extends BaseItem {
     mergeObject(
       data,
       {
-        img: DEFAULT_TOKEN,
+        img: WeaponItem.DEFAULT_TOKEN,
       },
       { overwrite: true },
     );

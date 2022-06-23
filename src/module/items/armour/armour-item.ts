@@ -4,9 +4,9 @@ import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-ty
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 
-const DEFAULT_TOKEN = 'icons/svg/shield.svg';
-
 export class ArmourItem extends BaseItem {
+  static DEFAULT_TOKEN: 'icons/svg/shield.svg';
+
   static get documentName() {
     return 'armour';
   }
@@ -30,7 +30,7 @@ export class ArmourItem extends BaseItem {
     mergeObject(
       data,
       {
-        img: DEFAULT_TOKEN,
+        img: ArmourItem.DEFAULT_TOKEN,
       },
       { overwrite: true },
     );
