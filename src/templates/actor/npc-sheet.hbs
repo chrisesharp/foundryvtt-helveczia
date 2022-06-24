@@ -1,8 +1,9 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
 
+{{ log .}}
     {{!-- Sheet Header --}}
     <header class="sheet-header">
-      {{> "systems/helveczia/templates/actor/partials/actor-header.hbs"}}
+      {{> "systems/helveczia/templates/actor/partials/npc-header.hbs"}}
     </header>
 
     {{!-- Sheet Tab Navigation --}}
@@ -23,7 +24,7 @@
     <section class="sheet-body">
         {{!-- Abilities Tab --}}
         <div class="tab abilities" data-group="primary" data-tab="abilities">
-            {{> "systems/helveczia/templates/actor/partials/actor-abilities.hbs"}}
+            {{> "systems/helveczia/templates/actor/partials/npc-abilities.hbs"}}
         </div>
         {{!-- Skills Tab --}}
         <div class="tab skills" data-group="primary" data-tab="skills">

@@ -5,7 +5,7 @@ import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 
 export class ArmourItem extends BaseItem {
-  static DEFAULT_TOKEN: 'icons/svg/shield.svg';
+  static DEFAULT_TOKEN = 'icons/svg/shield.svg';
 
   static get documentName() {
     return 'armour';

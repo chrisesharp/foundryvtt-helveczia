@@ -10,7 +10,7 @@ import { HVItem } from '../item';
 import { SpellItemData } from '../item-types';
 
 export class SpellItem extends BaseItem {
-  static DEFAULT_TOKEN: 'icons/svg/daze.svg';
+  static DEFAULT_TOKEN = 'icons/svg/daze.svg';
   static get documentName() {
     return 'possession';
   }

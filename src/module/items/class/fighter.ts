@@ -44,7 +44,7 @@ export class Fighter {
   }
 
   static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
-    const base = Math.round(actor.data.data.level / 2);
+    const base = Math.floor(actor.data.data.level / 2);
     return { bravery: base + 2, deftness: base, temptation: base };
   }
 

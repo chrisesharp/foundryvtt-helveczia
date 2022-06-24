@@ -4,6 +4,7 @@ import { Logger } from '../logger';
 import { HVDice } from '../dice';
 import { Student } from '../items/class/student';
 import { Cleric } from '../items/class/cleric';
+import { Fighter } from '../items/class/fighter';
 import { SkillItemData, WeaponItemData } from '../items/item-types';
 import { PeopleItem } from '../items/people/people-item';
 import { HVItem } from '../items/item';
@@ -22,10 +23,35 @@ export class HVActor extends Actor {
   /** @override */
   prepareBaseData(): void {
     const actorData = this.data;
-    const data = actorData.data;
+
     // const flags = actorData.flags;
-    data.ac = 10;
-    data.level = this._calculateLevel(data.experience);
+    switch (actorData.type) {
+      case 'character':
+        {
+          const data = actorData.data;
+          data.ac = 10;
+          data.level = this._calculateLevel(data.experience);
+        }
+        break;
+      case 'npc':
+        {
+          const data = (actorData as NPCActorData).data;
+          data.ac = data.baseAC;
+          const parts = data.levelBonus.split('+');
+          data.level = parseInt(parts[0]);
+          if (parts.length > 1) {
+            const bonus = parseInt(parts[1][0]);
+            const threat = parts[1].length - 1;
+            const score = Math.max(1, Math.min(18, (3 + bonus) * 3));
+            for (const attr of Object.keys(data.scores)) {
+              data.scores[attr].base = score;
+              data.scores[attr].value = score;
+            }
+            data.experience = CONFIG.HV.challengeAwards[data.level + threat];
+          }
+        }
+        break;
+    }
   }
 
   /** @override */
@@ -109,7 +135,7 @@ export class HVActor extends Actor {
     }
 
     this._calculateCapacity(data);
-    this._updateSaves(data);
+    this._updateSaves(actorData);
     this._updateSkills(data);
     this._updateCombatValues(data);
   }
@@ -124,9 +150,9 @@ export class HVActor extends Actor {
       this._updateAbility(data.scores[key]);
     }
 
-    this._updateSaves(data);
-    this._updateSkills(data);
+    this._updateSaves(actorData);
     this._updateCombatValues(data);
+    data.hp.hd = 8;
   }
 
   /**
@@ -175,6 +201,10 @@ export class HVActor extends Actor {
 
   _updateAttackMods(data: any): void {
     const virtue = this.isLowVirtue() ? 1 : 0;
+    const lvl = data.level;
+    const base = this.isFighter() || this.isNPC() ? lvl : Math.floor((lvl * 2) / 3);
+    data.attack.melee.base = base;
+    data.attack.ranged.base = base;
     data.attack.melee.bonus += data.scores.str.mod + virtue;
     data.attack.ranged.bonus += data.scores.dex.mod + virtue;
     data.attack.melee.mod = data.attack.melee.base + data.attack.melee.bonus;
@@ -184,17 +214,17 @@ export class HVActor extends Actor {
   /**
    * Update base & bonus for saves
    */
-  _updateSaves(data: any) {
-    data.saves.bravery.bonus += data.scores.con.mod;
-    data.saves.deftness.bonus += data.scores.dex.mod;
-    data.saves.temptation.bonus += data.scores.wis.mod;
+  _updateSaves(actorData: any) {
+    const data = actorData.data;
     const virtue = this.isHighVirtue() ? 1 : 0;
+    data.saves.bravery.bonus += data.scores.con.mod + virtue;
+    data.saves.deftness.bonus += data.scores.dex.mod + virtue;
+    data.saves.temptation.bonus += data.scores.wis.mod + virtue;
 
-    const bases = data.classes[0]?.getSaveBase(this);
+    const bases = actorData.type === 'character' ? data.classes[0]?.getSaveBase(this) : Fighter.getSaveBase(this);
     for (const saveType of Object.keys(data.saves)) {
       const save = data.saves[saveType];
       save.base = bases ? bases[saveType] : 0;
-      save.bonus += virtue;
       save.mod = save.base + save.bonus;
     }
   }
@@ -216,7 +246,7 @@ export class HVActor extends Actor {
    */
   _updateAbility(ability: { value: number; mod: number }) {
     ability.value = Math.min(Math.max(ability.value, 0), 18);
-    ability.mod = Math.round(ability.value / 3) - 3;
+    ability.mod = Math.floor(ability.value / 3) - 3;
   }
 
   // Manage potential effect collisions here
@@ -272,12 +302,12 @@ export class HVActor extends Actor {
     const melee = `${key}.melee.base`;
     const ranged = `${key}.ranged.base`;
     const lvl = foundry.utils.getProperty(this.data, 'data.level') ?? 1;
-    const currentMelee = foundry.utils.getProperty(this.data, melee) ?? 0;
-    const currentRanged = foundry.utils.getProperty(this.data, ranged) ?? 0;
+    const currentMeleeBase = foundry.utils.getProperty(this.data, melee) ?? 0;
+    const currentRangedBase = foundry.utils.getProperty(this.data, ranged) ?? 0;
     if (!isNaN(lvl)) {
       const base = value === 'fighter' ? lvl : Math.floor((lvl * 2) / 3);
-      foundry.utils.setProperty(this.data, melee, currentMelee + base);
-      foundry.utils.setProperty(this.data, ranged, currentRanged + base);
+      foundry.utils.setProperty(this.data, melee, currentMeleeBase + base);
+      foundry.utils.setProperty(this.data, ranged, currentRangedBase + base);
     }
   }
 
@@ -381,6 +411,10 @@ export class HVActor extends Actor {
       { overwrite: false },
     );
     this.data.update(data);
+  }
+
+  isNPC(): boolean {
+    return this.data.type === 'npc';
   }
 
   isFighter(): boolean {

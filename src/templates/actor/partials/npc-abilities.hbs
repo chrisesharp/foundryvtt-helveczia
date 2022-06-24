@@ -1,0 +1,90 @@
+{{!-- abilities --}}
+<div class="attribute-group flexrow">
+    <ol class="attributes">
+        <li class="attribute ability-score">
+            <h4 class="attribute-name box-title rollable"  data-roll="attr" data-attr="str" title="Originally {{data.scores.str.base}}">
+                {{ localize 'HV.scores.str.short' }}
+            </h4>
+            <div class="attribute-value">
+                <input name="data.scores.str.value" type="text" value="{{data.scores.str.value}}" data-dtype="Number" />
+                <input name="data.scores.str.mod" type="text" value="({{ plusminus data.scores.str.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+            </div>
+        </li>
+        <li class="attribute ability-score ">
+            <h4 class="attribute-name box-title rollable"  data-roll="attr" data-attr="dex" title="Originally {{data.scores.dex.base}}">
+                {{ localize 'HV.scores.dex.short' }}
+            </h4>
+            <div class="attribute-value">
+                <input name="data.scores.dex.value" type="text" value="{{data.scores.dex.value}}" data-dtype="Number" />
+                <input name="data.scores.dex.mod" type="text" value="({{ plusminus data.scores.dex.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+            </div>
+        </li>
+    </ol>
+    <ol class="attributes">
+        <li class="attribute ability-score ">
+            <h4 class="attribute-name box-title rollable" data-roll="attr" data-attr="con" title="Originally {{data.scores.con.base}}">
+                {{ localize 'HV.scores.con.short' }}
+            </h4>
+            <div class="attribute-value">
+                <input name="data.scores.con.value" type="text" value="{{data.scores.con.value}}" data-dtype="Number" />
+                <input name="data.scores.con.mod" type="text" value="({{ plusminus data.scores.con.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+            </div>
+        </li>
+        <li class="attribute ability-score " >
+            <h4 class="attribute-name box-title rollable" data-roll="attr" data-attr="int" title="Originally {{data.scores.int.base}}">
+                {{ localize 'HV.scores.int.short' }}
+            </h4>
+            <div class="attribute-value">
+                <input name="data.scores.int.value" type="text" value="{{data.scores.int.value}}"data-dtype="Number" />
+                <input name="data.scores.int.mod" type="text" value="({{ plusminus data.scores.int.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+            </div>
+        </li>
+    </ol>
+    <ol class="attributes">
+        <li class="attribute ability-score " >
+            <h4 class="attribute-name box-title rollable" data-roll="attr" data-attr="wis" title="Originally {{data.scores.wis.base}}">
+                {{ localize 'HV.scores.wis.short' }}
+            </h4>
+            <div class="attribute-value">
+                <input name="data.scores.wis.value" type="text" value="{{data.scores.wis.value}}" data-dtype="Number" />
+                <input name="data.scores.wis.mod" type="text" value="({{ plusminus data.scores.wis.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+            </div>
+        </li>
+        <li class="attribute ability-score " >
+            <h4 class="attribute-name box-title rollable" data-roll="attr" data-attr="cha" title="Originally {{data.scores.cha.base}}">
+                {{ localize 'HV.scores.cha.short' }}
+            </h4>
+            <div class="attribute-value">
+                <input name="data.scores.cha.value" type="text" value="{{data.scores.cha.value}}" data-dtype="Number" />
+                <input name="data.scores.cha.mod" type="text" value="({{ plusminus data.scores.cha.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+            </div>
+        </li>
+    </ol>
+</div>
+<h2 class="centred">{{ localize 'HV.tabs.saves' }}</h2>
+<div class="sheet-saves-table">
+    <h3 class="saves-value-header">+/-</h3>
+    <h3 class="saves-base-header">{{ localize 'HV.base' }}</h3>
+    <h3 class="saves-bonus-header">{{ localize 'HV.bonus' }}</h3>
+    <h3 class="saves-bravery-header rollable"  data-roll="save" data-attr="bravery">{{ localize 'HV.saves.bravery.long' }}</h3>
+    <h3 class="saves-deftness-header rollable"  data-roll="save" data-attr="deftness">{{ localize 'HV.saves.deftness.long' }}</h3>
+    <h3 class="saves-temptation-header rollable"  data-roll="save" data-attr="temptation">{{ localize 'HV.saves.temptation.long' }}</h3>
+
+    <h3 class="saves-bravery-value">{{ plusminus data.saves.bravery.mod }}</h3>
+    <h3 class="saves-bravery-lb">(</h3>
+    <h3 class="saves-bravery-base">{{ plusminus data.saves.bravery.base }}</h3>
+    <h3 class="saves-bravery-bonus">{{ plusminus data.saves.bravery.bonus }}</h3>
+    <h3 class="saves-bravery-rb">)</h3>
+
+    <h3 class="saves-deftness-value" data-roll="save" data-attr="deftness">{{ plusminus data.saves.deftness.mod }}</h3>
+    <h3 class="saves-deftness-lb">(</h3>
+    <h3 class="saves-deftness-base">{{ plusminus data.saves.deftness.base }}</h3>
+    <h3 class="saves-deftness-bonus">{{ plusminus data.saves.deftness.bonus }}</h3>
+    <h3 class="saves-deftness-rb">)</h3>
+
+    <h3 class="saves-temptation-value" data-roll="save" data-attr="temptation">{{ plusminus data.saves.temptation.mod }}</h3>
+    <h3 class="saves-temptation-lb">(</h3>
+    <h3 class="saves-temptation-base">{{ plusminus data.saves.temptation.base }}</h3>
+    <h3 class="saves-temptation-bonus">{{ plusminus data.saves.temptation.bonus }}</h3>
+    <h3 class="saves-temptation-rb">)</h3>
+</div>

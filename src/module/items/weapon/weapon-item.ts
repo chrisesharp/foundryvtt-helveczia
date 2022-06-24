@@ -7,7 +7,7 @@ import { HVItem } from '../item';
 import { WeaponItemData } from '../item-types';
 
 export class WeaponItem extends BaseItem {
-  static DEFAULT_TOKEN: 'icons/svg/sword.svg';
+  static DEFAULT_TOKEN = 'icons/svg/sword.svg';
   static get documentName() {
     return 'weapon';
   }

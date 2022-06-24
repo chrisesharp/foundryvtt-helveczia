@@ -105,7 +105,7 @@ export class Student {
   }
 
   static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
-    const base = Math.round(actor.data.data.level / 2);
+    const base = Math.floor(actor.data.data.level / 2);
     return { bravery: base, deftness: base, temptation: base + 2 };
   }
 

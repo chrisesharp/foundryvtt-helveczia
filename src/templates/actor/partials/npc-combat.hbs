@@ -1,0 +1,50 @@
+{{!-- skills and abilities --}}
+<div class="combat">
+    <div class="combat-bonuses">
+        <div class="combat-melee">
+            <div>
+                <h3 class="attribute-name" title="{{ localize 'HV.Melee' }}">
+                    {{ localize 'HV.Melee' }} :
+                </h3>
+            </div>
+            <div>
+                <h3 title="{{ localize 'HV.MeleeMod' }}">{{ plusminus data.attack.melee.mod }}</h3>
+            </div>
+            <div>
+                <h4> = [ {{ plusminus data.attack.melee.base}} ] + [ {{ plusminus data.attack.melee.bonus }} ]</h4>
+            </div>
+        </div>
+        <div class="combat-ranged">
+            <div>
+                <h3 class="attribute-name" title="{{ localize 'HV.Ranged' }}">
+                    {{ localize 'HV.Ranged' }} :
+                </h3>
+            </div>
+            <div>
+                <h4 title="{{ localize 'HV.RangeMod' }}">{{ plusminus data.attack.ranged.mod }}</h4>
+            </div>
+            <div>
+                <h4> = [ {{ plusminus data.attack.ranged.base}} ] + [ {{ plusminus data.attack.ranged.bonus }} ]</h4>
+            </div>
+        </div>
+    </div>
+    <ol class="item-list">
+        <li class="flexrow item-header">
+            <h2 class="centred">~ {{ localize 'HV.tabs.combat'}} ~</h2>
+        </li>
+        <li class="item-rollable flexcol" data-roll="attack" data-attr="melee">
+            <div class="item flexrow">
+                <div class="item-image rollable" data-roll="attack" data-attr="melee">&nbsp;<i class="fist fas fa-fist-raised" style="font-size: 1.2em;"></i></div>
+                <h4 class="item-name">{{ localize 'HV.Fist' }}</h4>
+            </div>
+        </li>
+    {{#each data.possessions.weapons as |item id|}}
+        <li class="item-entry item-rollable flexcol" data-item-id="{{item.id}}">
+            <div class="item flexrow">
+                <div class="item-image rollable" data-roll="weapon" data-item-id="{{item.id}}" data-attr="{{item.data.data.attack}}"><img src="{{item.img}}" width="24" height="24"/></div>
+                <h4 class="item-name">{{item.name}}</h4>
+            </div>
+        </li>
+    {{/each}}
+    </ol>
+</div>

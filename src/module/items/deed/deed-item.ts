@@ -11,7 +11,7 @@ import { Utils } from '../../utils/utils';
 const log = new Logger();
 
 export class DeedItem extends BaseItem {
-  static DEFAULT_TOKEN: 'systems/helveczia/assets/icons/angel_sm.png';
+  static DEFAULT_TOKEN = 'systems/helveczia/assets/icons/angel_sm.png';
   static get documentName() {
     return 'deed';
   }
@@ -110,6 +110,5 @@ export class DeedItem extends BaseItem {
     if (effect) {
       await item.updateEmbeddedDocuments('ActiveEffect', [{ _id: effect.id, effects: [effect] }]);
     }
-    // return item.update();
   }
 }

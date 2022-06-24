@@ -41,6 +41,10 @@ export interface HelvecziaConfig {
     // classPicker: ClassPicker | null;
   };
 
+  challengeAwards: {
+    [key: number]: number;
+  };
+
   showEffects: boolean;
 
   XPLevels: {
@@ -134,6 +138,19 @@ export const HV: HelvecziaConfig = {
   applications: {
     peoplePicker: null,
     // classPicker: ClassPicker,
+  },
+
+  challengeAwards: {
+    1: 50,
+    2: 100,
+    3: 150,
+    4: 250,
+    5: 400,
+    6: 650,
+    7: 1000,
+    8: 1500,
+    9: 2000,
+    10: 2500,
   },
 
   XPLevels: {

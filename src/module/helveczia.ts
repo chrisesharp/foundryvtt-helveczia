@@ -31,6 +31,7 @@ import { HV } from './config';
 import { registerHandlebarHelpers } from './handlebar-helpers';
 import { HVActorSheet } from './actor/actor-sheet';
 import { HVChat } from './chat';
+import { HVNPCSheet } from './actor/npc-sheet';
 
 // import { HVItemSheetConfig } from './items/item-config';
 
@@ -64,7 +65,8 @@ Hooks.once('init', async () => {
 
   Actors.unregisterSheet('core', ActorSheet);
   Items.unregisterSheet('core', ItemSheet);
-  Actors.registerSheet('helveczia', HVCharacterSheet, { types: ['character', 'npc'], makeDefault: true });
+  Actors.registerSheet('helveczia', HVCharacterSheet, { types: ['character'], makeDefault: true });
+  Actors.registerSheet('helveczia', HVNPCSheet, { types: ['npc'], makeDefault: true });
   Items.registerSheet('helveczia', SkillSheet, { types: ['skill'] });
   Items.registerSheet('helveczia', PossessionSheet, { types: ['possession'] });
   Items.registerSheet('helveczia', ArmourSheet, { types: ['armour'] });
