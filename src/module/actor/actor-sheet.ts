@@ -7,6 +7,7 @@ import { Logger } from '../logger';
 import { HVItem } from '../items/item';
 import { CharacterActorData } from './actor-types';
 import { Utils } from '../utils/utils';
+import { HVDice } from '../dice';
 
 const log = new Logger();
 
@@ -86,6 +87,7 @@ export class HVActorSheet extends ActorSheet {
     html.find('.generate-abilities').click(this._generateAbilities.bind(this));
     html.find('.choose-race-class').click(this._generateRaceClass.bind(this));
     html.find('.choose-specialism').click(this._chooseSpecialism.bind(this));
+    html.find('.roll-virtue').click(this.rollVirtue.bind(this));
     html.find('.generate-craft-skill').click(this._generateCraftSkill.bind(this));
     html.find('.generate-science-skills').click(this._generateScienceSkills.bind(this));
     html.find('.absolution').click(this._onAbsolution.bind(this));
@@ -313,11 +315,6 @@ export class HVActorSheet extends ActorSheet {
         content: content,
         default: 'submit',
         buttons: {
-          cancel: {
-            icon: '<i class="fas fa-times"></i>',
-            label: game.i18n.localize('HV.Cancel'),
-            callback: () => null,
-          },
           submit: {
             icon: '<i class="fas fa-check"></i>',
             label: game.i18n.localize('HV.Confirm'),
@@ -360,6 +357,51 @@ export class HVActorSheet extends ActorSheet {
             callback: async () => {
               const specialism = $('#specialism').val() as string;
               HVCharacterCreator.setSpecialism(this.actor, specialism);
+            },
+          },
+        },
+      },
+      {
+        classes: ['helveczia', 'helveczia-dialog'],
+      },
+    ).render(true);
+  }
+
+  async rollVirtue(event) {
+    event.preventDefault();
+    const button = $(event.currentTarget);
+    const actorId = $(button).data('actorId');
+
+    const content = await renderTemplate('systems/helveczia/templates/actor/dialogs/roll-virtue.hbs', {});
+    const title = `${game.i18n.localize('HV.RollVirtue')}`;
+    new Dialog(
+      {
+        title: title,
+        content: content,
+        default: 'submit',
+        buttons: {
+          submit: {
+            icon: '<i class="fas fa-check"></i>',
+            label: game.i18n.localize('HV.Roll'),
+            callback: async () => {
+              const actor = game.actors?.get(actorId);
+              const rollFormula = $('#formula').val() as string;
+              const rollData = {
+                actor: actor,
+                roll: {
+                  blindroll: true,
+                },
+              };
+              const roll = await HVDice.Roll({
+                parts: [rollFormula],
+                data: rollData,
+                skipDialog: true,
+                speaker: ChatMessage.getSpeaker({ actor: actor }),
+                flavour: title,
+                title: title,
+                chatMessage: true,
+              });
+              await actor?.update({ data: { virtue: roll.total } });
             },
           },
         },

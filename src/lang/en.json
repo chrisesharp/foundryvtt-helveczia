@@ -164,5 +164,6 @@
   "HV.RollingCritical": "{actor} press their advantage",
   "HV.SecondCritical": "A Second Success!",
   "HV.InstantDeath": "Two Criticals in a Row! This is instant death!",
-  "HV.Fist": "Unarmed"
+  "HV.Fist": "Unarmed",
+  "HV.RollVirtue": "Roll for Virtue"
 }
