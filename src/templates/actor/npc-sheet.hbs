@@ -1,6 +1,4 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
-
-{{ log .}}
     {{!-- Sheet Header --}}
     <header class="sheet-header">
       {{> "systems/helveczia/templates/actor/partials/npc-header.hbs"}}
@@ -9,11 +7,10 @@
     {{!-- Sheet Tab Navigation --}}
     {{!-- <nav class="sheet-tabs tabs side character" data-group="primary"> --}}
     <nav class="sheet-tabs tabs character" data-group="primary">
-        <a class="item" data-tab="abilities">{{ localize 'HV.tabs.abilities'}}</a>
+        <a class="item" data-tab="saves">{{ localize 'HV.tabs.saves'}}</a>
         <a class="item" data-tab="combat">{{ localize 'HV.tabs.combat'}}</a>
         <a class="item" data-tab="skills">{{ localize 'HV.tabs.skills'}}</a>
         <a class="item" data-tab="possessions">{{ localize 'HV.tabs.possessions'}}</a>
-        <a class="item" data-tab="deeds">{{ localize 'HV.tabs.deeds'}}</a>
         {{#if config.showEffects }}
         <a class="item" data-tab="effects">{{ localize 'HV.tabs.effects'}}</a>
         {{/if}}
@@ -22,25 +19,21 @@
 
     {{!-- Sheet Body --}}
     <section class="sheet-body">
-        {{!-- Abilities Tab --}}
-        <div class="tab abilities" data-group="primary" data-tab="abilities">
-            {{> "systems/helveczia/templates/actor/partials/npc-abilities.hbs"}}
+        {{!-- Saves Tab --}}
+        <div class="tab saves" data-group="primary" data-tab="saves">
+            {{> "systems/helveczia/templates/actor/partials/npc-saves.hbs"}}
         </div>
         {{!-- Skills Tab --}}
         <div class="tab skills" data-group="primary" data-tab="skills">
-            {{> "systems/helveczia/templates/actor/partials/actor-skills.hbs"}}
+            {{> "systems/helveczia/templates/actor/partials/npc-skills.hbs"}}
         </div>
         {{!-- Combat Tab --}}
         <div class="tab combat" data-group="primary" data-tab="combat">
-            {{> "systems/helveczia/templates/actor/partials/actor-combat.hbs"}}
+            {{> "systems/helveczia/templates/actor/partials/npc-combat.hbs"}}
         </div>
         {{!-- Possessions Tab --}}
         <div class="tab possessions" data-group="primary" data-tab="possessions">
-            {{> "systems/helveczia/templates/actor/partials/actor-equipment.hbs"}}
-        </div>
-        {{!-- Deeds Tab --}}
-        <div class="tab deeds" data-group="primary" data-tab="deeds">
-            {{> "systems/helveczia/templates/actor/partials/actor-deeds.hbs"}}
+            {{> "systems/helveczia/templates/actor/partials/npc-equipment.hbs"}}
         </div>
         {{#if config.showEffects}}
         <div class="tab effects" data-group="primary" data-tab="effects">

@@ -12,7 +12,7 @@ export class HVNPCSheet extends HVActorSheet {
       width: 580,
       height: 730,
       resizable: true,
-      tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'abilities' }],
+      tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'combat' }],
     });
   }
 
@@ -34,6 +34,7 @@ export class HVNPCSheet extends HVActorSheet {
     data.data = data.actor.data;
     data.items = this.actor.items.map((i) => i.data);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    data.possessions = data.data.possessions;
     data.effects = prepareActiveEffectCategories(this.actor.effects);
     return data;
   }

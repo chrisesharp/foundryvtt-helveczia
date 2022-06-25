@@ -18,8 +18,10 @@ export async function preloadTemplates(): Promise<Handlebars.TemplateDelegate[]>
     'systems/helveczia/templates/actor/partials/student.hbs',
     'systems/helveczia/templates/actor/partials/spells.hbs',
     'systems/helveczia/templates/actor/partials/npc-header.hbs',
-    'systems/helveczia/templates/actor/partials/npc-abilities.hbs',
+    'systems/helveczia/templates/actor/partials/npc-saves.hbs',
     'systems/helveczia/templates/actor/partials/npc-combat.hbs',
+    'systems/helveczia/templates/actor/partials/npc-equipment.hbs',
+    'systems/helveczia/templates/actor/partials/npc-skills.hbs',
     // Item Sheets
     'systems/helveczia/templates/item/armour-sheet.hbs',
     'systems/helveczia/templates/item/class-sheet.hbs',

@@ -35,23 +35,28 @@ export class HVActor extends Actor {
         break;
       case 'npc':
         {
-          const data = (actorData as NPCActorData).data;
-          data.ac = data.baseAC;
-          const parts = data.levelBonus.split('+');
-          data.level = parseInt(parts[0]);
-          if (parts.length > 1) {
-            const bonus = parseInt(parts[1][0]);
-            const threat = parts[1].length - 1;
-            const score = Math.max(1, Math.min(18, (3 + bonus) * 3));
-            for (const attr of Object.keys(data.scores)) {
-              data.scores[attr].base = score;
-              data.scores[attr].value = score;
-            }
-            data.experience = CONFIG.HV.challengeAwards[data.level + threat];
-          }
+          this.calculateNPCThreatLevel(actorData);
         }
         break;
     }
+  }
+
+  calculateNPCThreatLevel(actorData: NPCActorData): void {
+    const data = actorData.data;
+    data.ac = data.baseAC;
+    const parts = data.levelBonus.split('+');
+    data.level = parseInt(parts[0]);
+    let threat = 0;
+    if (parts.length > 1) {
+      const bonus = parseInt(parts[1][0]);
+      threat = parts[1].length - 1;
+      const score = Math.max(1, Math.min(18, (3 + bonus) * 3));
+      for (const attr of Object.keys(data.scores)) {
+        data.scores[attr].value = score;
+        if (!data.scores[attr].base) data.scores[attr].base = score;
+      }
+    }
+    data.experience = CONFIG.HV.challengeAwards[data.level + threat];
   }
 
   /** @override */
@@ -389,6 +394,14 @@ export class HVActor extends Actor {
       data.type === 'character' ? CONST.TOKEN_DISPOSITIONS.FRIENDLY : CONST.TOKEN_DISPOSITIONS.HOSTILE;
     // Set basic token data for newly created actors.
     mergeObject(
+      data,
+      {
+        img: CONFIG.HV.DEFAULT_TOKEN,
+      },
+      { overwrite: false },
+    );
+
+    mergeObject(
       data.token,
       {
         vision: true,
@@ -398,18 +411,11 @@ export class HVActor extends Actor {
         actorLink: true,
         disposition: disposition,
         lockRotation: true,
-        img: CONFIG.HV.DEFAULT_TOKEN,
+        img: data.img,
       },
       { overwrite: false },
     );
 
-    mergeObject(
-      data,
-      {
-        img: CONFIG.HV.DEFAULT_TOKEN,
-      },
-      { overwrite: false },
-    );
     this.data.update(data);
   }
 

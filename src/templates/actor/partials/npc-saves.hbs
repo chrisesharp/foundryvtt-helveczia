@@ -1,0 +1,28 @@
+{{!-- abilities --}}
+<h2 class="centred">{{ localize 'HV.tabs.saves' }}</h2>
+<div class="sheet-saves-table">
+    <h3 class="saves-value-header">+/-</h3>
+    <h3 class="saves-base-header">{{ localize 'HV.base' }}</h3>
+    <h3 class="saves-bonus-header">{{ localize 'HV.bonus' }}</h3>
+    <h3 class="saves-bravery-header rollable"  data-roll="save" data-attr="bravery">{{ localize 'HV.saves.bravery.long' }}</h3>
+    <h3 class="saves-deftness-header rollable"  data-roll="save" data-attr="deftness">{{ localize 'HV.saves.deftness.long' }}</h3>
+    <h3 class="saves-temptation-header rollable"  data-roll="save" data-attr="temptation">{{ localize 'HV.saves.temptation.long' }}</h3>
+
+    <h3 class="saves-bravery-value">{{ plusminus data.saves.bravery.mod }}</h3>
+    <h3 class="saves-bravery-lb">(</h3>
+    <h3 class="saves-bravery-base">{{ plusminus data.saves.bravery.base }}</h3>
+    <h3 class="saves-bravery-bonus">{{ plusminus data.saves.bravery.bonus }}</h3>
+    <h3 class="saves-bravery-rb">)</h3>
+
+    <h3 class="saves-deftness-value" data-roll="save" data-attr="deftness">{{ plusminus data.saves.deftness.mod }}</h3>
+    <h3 class="saves-deftness-lb">(</h3>
+    <h3 class="saves-deftness-base">{{ plusminus data.saves.deftness.base }}</h3>
+    <h3 class="saves-deftness-bonus">{{ plusminus data.saves.deftness.bonus }}</h3>
+    <h3 class="saves-deftness-rb">)</h3>
+
+    <h3 class="saves-temptation-value" data-roll="save" data-attr="temptation">{{ plusminus data.saves.temptation.mod }}</h3>
+    <h3 class="saves-temptation-lb">(</h3>
+    <h3 class="saves-temptation-base">{{ plusminus data.saves.temptation.base }}</h3>
+    <h3 class="saves-temptation-bonus">{{ plusminus data.saves.temptation.bonus }}</h3>
+    <h3 class="saves-temptation-rb">)</h3>
+</div>
