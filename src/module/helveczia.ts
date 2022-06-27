@@ -107,6 +107,31 @@ Hooks.on('dropActorSheetData', (actor: HVActor, sheet: HVActorSheet, data) => {
 
 Hooks.on('renderChatMessage', HVChat.addChatCriticalButton);
 
+// License and KOFI infos
+Hooks.on('renderSidebarTab', async (object, html) => {
+  // if (object instanceof ActorDirectory) {
+  //   party.addControl(object, html);
+  // }
+
+  if (object instanceof Settings) {
+    const gamesystem = html.find('#game-details');
+    // License text
+    const template = 'systems/helveczia/templates/chat/license.html';
+    const rendered = await renderTemplate(template, {});
+    gamesystem.find('.system').append(rendered);
+
+    // User guide
+    const docs = html.find("button[data-action='docs']");
+    const site = 'https://chrisesharp.github.io/foundryvtt-helveczia';
+    const styling = 'border:none;margin-right:2px;vertical-align:middle;margin-bottom:5px';
+    $(
+      `<button data-action="userguide"><img src='/systems/dee/assets/default/icons/magic.png' width='16' height='16' style='${styling}'/>Helvéczia Guide</button>`,
+    ).insertAfter(docs);
+    html.find('button[data-action="userguide"]').click(() => {
+      new FrameViewer(site, { render: true }).render(true);
+    });
+  }
+});
 // Hooks.once("socketlib.ready", () => {
 //   console.log("socketlib ready - registering chat handler")
 //   const socket = window['socketlib'].registerSystem("helveczia");
