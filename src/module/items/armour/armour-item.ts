@@ -50,8 +50,8 @@ export class ArmourItem extends BaseItem {
     const itemData = item.data as ArmourItemData;
     return `
     <ol class="tag-list">
-      <li class="tag" title="${game.i18n.localize('HV.AC')}">+${itemData.data.bonus}</li>
-      <li class="tag" title="${game.i18n.localize('HV.Encumbrance')}">${itemData.data.encumbrance}</li>
+      <li class="tag" title="${game.i18n.localize('HV.AC')}">+${itemData.data.bonus ?? 0}</li>
+      <li class="tag" title="${game.i18n.localize('HV.Encumbrance')}">${itemData.data.encumbrance ?? 0}</li>
     </ol>`;
   }
 }
