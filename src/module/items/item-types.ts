@@ -15,6 +15,20 @@ export interface PossessionItemData {
   data: PossessionData;
 }
 
+type BookData = BaseData & {
+  cost: {
+    value: number;
+    coin: string;
+  };
+  encumbrance: number;
+  spells: string[];
+};
+
+export interface BookItemData {
+  type: 'book';
+  data: BookData;
+}
+
 type SkillData = BaseData & {
   subtype: string;
   ability: string;
@@ -105,4 +119,5 @@ export type HVItemData =
   | ClassItemData
   | PeopleItemData
   | DeedItemData
-  | SpellItemData;
+  | SpellItemData
+  | BookItemData;

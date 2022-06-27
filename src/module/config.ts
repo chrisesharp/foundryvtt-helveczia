@@ -10,6 +10,7 @@ import { SpellItem } from './items/spell/spell-item';
 import { PossessionItem } from './items/possesion/possession-item';
 import { HVActor } from './actor/actor';
 import { HVCharacterCreator } from './apps/chargen';
+import { BookItem } from './items/book/book-item';
 
 export interface HelvecziaConfig {
   socket?: any;
@@ -121,6 +122,7 @@ export const HV: HelvecziaConfig = {
     armour: ArmourItem,
     weapon: WeaponItem,
     spell: SpellItem,
+    book: BookItem,
   },
 
   sheetComponents: {

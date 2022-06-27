@@ -32,6 +32,7 @@ import { registerHandlebarHelpers } from './handlebar-helpers';
 import { HVActorSheet } from './actor/actor-sheet';
 import { HVChat } from './chat';
 import { HVNPCSheet } from './actor/npc-sheet';
+import { BookSheet } from './items/book/book-sheet';
 
 // import { HVItemSheetConfig } from './items/item-config';
 
@@ -75,6 +76,7 @@ Hooks.once('init', async () => {
   Items.registerSheet('helveczia', DeedSheet, { types: ['deed'] });
   Items.registerSheet('helveczia', PeopleSheet, { types: ['people'] });
   Items.registerSheet('helveczia', SpellSheet, { types: ['spell'] });
+  Items.registerSheet('helveczia', BookSheet, { types: ['book'] });
   // DocumentSheetConfig.registerSheet(DocumentSheetConfig, "helveczia", HVItemSheetConfig, {makeDefault: true});
 });
 
@@ -128,7 +130,9 @@ Hooks.on('renderSidebarTab', async (object, html) => {
       `<button data-action="userguide"><img src='/systems/dee/assets/default/icons/magic.png' width='16' height='16' style='${styling}'/>Helvéczia Guide</button>`,
     ).insertAfter(docs);
     html.find('button[data-action="userguide"]').click(() => {
-      new FrameViewer(site, { render: true }).render(true);
+      const fv = new FrameViewer();
+      fv.url = site;
+      fv.render(true);
     });
   }
 });
