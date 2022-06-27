@@ -129,7 +129,12 @@ export class HVCharacterSheet extends HVActorSheet {
     try {
       const transfer = event.dataTransfer?.getData('text/plain') ?? '';
       data = JSON.parse(transfer);
-      item = game.items?.get(data['id']);
+      if (data['pack']) {
+        const pack = game.packs.get(data['pack']);
+        item = pack?.get(data['id']);
+      } else {
+        item = game.items?.get(data['id']);
+      }
     } catch (err) {
       return;
     }
