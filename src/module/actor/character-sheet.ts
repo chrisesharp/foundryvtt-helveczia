@@ -131,7 +131,7 @@ export class HVCharacterSheet extends HVActorSheet {
       data = JSON.parse(transfer);
       if (data['pack']) {
         const pack = game.packs.get(data['pack']);
-        item = pack?.get(data['id']);
+        item = await pack?.getDocument(data['id']);
       } else {
         item = game.items?.get(data['id']);
       }
