@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8" />
+    <title>Helvéczia for Foundry VTT (Unofficial)</title>
+    <meta name="description" content="usage instructions for Helvéczia for Foundry VTT" />
+    <meta name="author" content="chrisesharp" />
+
+    <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+
+    <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/skeleton.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+
+    <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <!-- <link rel="icon" type="image/png" href="images/favicon.png" /> -->
+    <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <!-- <script id="twitter-wjs" src="http://platform.twitter.com/widgets.js"></script> -->
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/site.js"></script>
+  </head>
+  <body class="has-docked-nav">
+    <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <div class="container">
+      <section class="header">
+        <h2>Helvéczia</h2>
+        <p>Unofficial system for Foundry VTT</p>
+      </section>
+      <div class="navbar-spacer"></div>
+      <nav class="navbar">
+        <div class="container">
+          <ul class="navbar-list">
+            <li class="navbar-item">
+              <a class="navbar-link" href="#intro">Intro</a>
+            </li>
+            <li class="navbar-item">
+              <a class="navbar-link" href="#install">Install</a>
+            </li>
+            <li class="navbar-item">
+              <a class="navbar-link" href="#" data-popover="#charNavPop">Characters</a>
+              <div id="charNavPop" class="popover">
+                <ul class="popover-list">
+                  <li class="popover-item">
+                    <a class="popover-link" href="#generation">Generation</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#skills">Skills</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#possessions">Possessions</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#combat">Combat</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#class">Class</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#virtue">Virtue</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="docs-section">
+        <h2 id="intro" class="docs-header">Introduction</h2>
+        <div>
+          <p>
+            This is an unofficial, third-party implementation of the excellent <strong>Helvéczia</strong> core rules, copyright <strong>Gabor Lux</strong>.
+          </p>
+          <p>
+            You need to get the <em><a href="https://emdt.bigcartel.com/category/helveczia-rpg">Helvéczia rules</a></em> 
+            in order to play. You will also find a wealth of inspiration for your games in the rules (and especially the excellent box set), too.
+          </p>
+          <p>
+            For further documentation on how to use Foundry VTT please go to
+            Foundry VTT
+            <a href="https://foundryvtt.com/kb/" target="_blank">Knowledge base</a>.
+          </p>
+        </div>
+      </div>
+      <div class="docs-section">
+        <h2 id="install" class="docs-header">Installation</h2>
+        <p>
+          You'll need a Foundry VTT License or GM access to a Foundry VTT
+          server.
+        </p>
+        <div class="row">
+          <div class="one column"></div>
+          <div class="ten columns">
+            <ol>
+              <li>
+                Launch Foundry VTT.
+              </li>
+              <li>
+                Go to the <em>Game Systems</em> tab, then click <em>Install System</em>.
+              </li>
+              <li>
+                Find <code>'Helvéczia'</code> and click <em>Install</em>.
+              </li>
+              <li>
+                <em>Create World</em> using the <em>Helvéczia</em> system.
+              </li>
+            </ol>
+            </div>
+        </div>
+      </div>
+      <div class="docs-section">
+        <h2 id="settings" class="docs-header">Settings</h2>
+        <p>The System settings are to control system-wide behaviours, and you 
+          can access them under the <em>Configure Settings</em> dialog from the 
+          Foundry VTT sidebar.
+        </p>
+        <div class="row">
+          <p style="text-align: center;">
+            <img src="./images/settings.png" />
+          </p>
+        </div>
+        <div class="row">
+          There are three settings available right now to customize your experience with Helvéczia.
+          <div class="one column"></div>
+          <div class="ten column">
+            <ul>
+              <li><strong>Debug</strong>
+                <ul>
+                In the event that something seems to be broken, switch on debugging to help identify the problem. If you raise
+                an issue on GitHub with the system, this will help identify what the problem is. 
+                </ul>
+              </li>
+              <li><strong>Show effects tab</strong>
+                <ul>
+                The Helvéczia system uses the Foundry VTT <em>Active Effects</em> to model the game mechanics
+                of various class, peoples and skills, but it's possible to add effects directly to characters and any items.
+                This can enable you to create your own custom effects. In the future, I'll wrap a more user-friendly
+                interface over this, but for now, you can get to these effects by
+                ticking this box. It will add a new tab (for the GM) to character and item sheets.
+                <p>For <em>advanced users only!</em></p>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="docs-section">
+        <h2 id="characters" class="docs-header">Characters</h2>
+        <hr>
+        <h4 class="docs-header" id="generation">Character Generation</h4>
+        <div style="text-align: center;">
+          <img src="./images/initial-character.png" />
+        </div>
+        <div>
+          <p>When you create a new Character and give them a name, you will be presented with a clean character sheet.
+            This defaults to the character starting at level 2 (with 2000 experience points) and a portrait (which you can change by clicking on it). 
+            You also have a button to generate two sets of ability statistics, as per the rules, which you will get to choose one set of.
+          </p>
+        </div>
+        <div style="text-align: center;">
+          <img src="./images/initial-abilities.png" />
+        </div>
+        <div>
+          <p>
+            Here, we want to make Pascal a student, so we choose option B as it has better intelligence,
+          </p>
+          <div style="text-align: center;">
+            <img src="./images/choose-origins.png" />
+          </div>
+          <p>
+            Once chosen, the abilities are displayed, plus the saving throws, and the ability bonuses. We then need to click the button to choose our origins and class.
+          </p>
+          <div style="text-align: center;">
+            <img src="./images/choose-class.png" />
+          </div>
+          <p>
+            We want to make Pascal French, and a student. Once chosen, the bonuses from the ethnic origin and class are applied. 
+            We then need to click the die that will be flashing to generate initial hitpoints. Because we chose to be a student, we only get to roll a d6.
+          </p>
+          <div style="text-align: center;">
+            <img src="./images/initial-hitpoints.png" />
+          </div>
+          <div class="row" >
+            <div class="six columns">
+              <p> Your choices are logged as a Chat Message to the GM...</p>
+              <p>Now all initial abilities and derived values are generated.</p>
+              <p>We can then go onto select skills.</p>
+           </div>
+           <div class="one column">
+            <img src="./images/choices.png"  />
+           </div>
+          </div>
+          <hr>
+          <h4 class="docs-header" id="skills">Skills</h4>
+          <p>The Skills tab shows what current skills the character has mastered, either by virtue of their origins or class, or what they have learned subsequently.</p>
+          <p style="text-align: center;">
+            <img src="./images/choose-skills.png" />
+          </p>
+          <p>Because Pascal is a Student, he has already been assigned the Student skills of <em>Spells</em> and <em>Doctorate</em></p>
+          <p>He is also allowed two randomly assigned <em> Science Skills</em> which you can click the button to generate.</p>
+          <p>
+           Once those are assigned, we still have 2 more skill slots to choose. We can get them from the <em>Skill Compendium</em> by clicking on the
+           Compendium Packs sidebar tab, clicking on <em>Skills</em> and then dragging our choices from there onto our character sheet.
+          </p>
+          <p style="text-align: center;">
+            <img src="./images/skill-compendium.png" />
+          </p>
+          <p>Here, we have had Geometry and Anatomy assigned as our Science skills, and we have added two magical skills - Alchemy and Cryptography. </p>
+          <p style="text-align: center;">
+            <img src="./images/chosen-skills.png" />
+          </p>
+          <p>A skill check can be made by hovering over the skill and clicking on the <em>D20</em> that appears.</p>
+          <p style="text-align: center;">
+            <img src="./images/skill-check.png" />
+          </p>
+          <p>For all checks. you will be presented with a dialog giving you the chance to select the difficulty level of the check, and any situational modifiers that might apply.
+            You only need to add anything specific to the situation, as all other modifiers due to level and ability will be automatically applied.
+          </p>
+          <p style="text-align: center;">
+            <img src="./images/skill-result.png" />
+          </p>
+          <p>The result will be displayed as a Chat Message. Here, poor Pascal failed his Alchemy check, despite having a total of +3 bonus to his roll!
+          </p>
+        </div>
+        <hr>
+        <h4 class="docs-header" id="possessions">Possessions</h4>
+        <div class="row">
+          <p style="text-align: center;">
+            <img src="./images/possessions-tab.png" />
+          </p>
+          <p>
+            The Possessions tab shows the articles of equipment, armour, weapons, etc. the character has, assigned to the columns of what is 
+            <em>Worn</em>, <em>Carried</em> and available on their <em>Mount</em>, as per the rules.
+          </p>
+          <p>Pascal was given 7 Thalers on his generation, so this appears below, in the <em>Wealth</em> section.</p>
+          
+          <div class="row">
+            <div class="four columns">
+              <p>
+                To add various weapons, armour and other possessions, simply open the relevant Compendium Pack and drag the item onto the character sheet. 
+                Don't forget to make a note of the costs and deduct from your wealth manually.
+               </p>
+              <p>
+              Here we have given Pascal a Fur Coat for protection (which has automatically increased his AC by +3 when dragged into the Worn column), and a Pistol as a weapon.
+              </p>
+              <p>
+              We have also dragged a default starting Spell Book for him.
+              </p>
+              <p>We have updated his Wealth to reflect these expenses.</p>
+            </div>
+            <div class="eight columns">
+              <img src="./images/worn-items.png" />
+            </div>
+          </div>
+        </div>
+        <hr>
+        <h4 class="docs-header" id="combat">Combat</h4>
+        <div class="row">
+          <p style="text-align: center;">
+            <img src="./images/combat-tab.png" />
+          </p>
+          <p>
+            Now we have a weapon, it is worth looking at the Combat tab. Only weapons that are in the <em>Worn</em> column on the Possessions tab will appear here.
+          </p>
+          <p>By default there is always one's Fists, so an unarmed combat entry also appears here.</p>
+          <p>
+            By clicking on an item, a summary of that item will appear. Here we can see the various details of a pistol: It is <code>Ranged</code>, 
+            has an Attack bonus of <code>+2</code>, does the significant damage of <code>1d10X</code> (meaning 10's explode for another roll),
+             a critical is scored on a natural roll of <code>20</code>, and would do <code>X3</code> (triple) damage in that event.
+          </p>
+        </div>
+        <div class="row">
+          <div class="six columns">
+            <p>To attack with his pistol, you can click on the <em>D20</em> that appears when you hover on the weapon.</p>
+            <p>You will be presented with a check dialog as usual. If you have an enemy targeted already (click and press <code>T</code> on their Token) 
+              then their AC will automatically be used as the target for the roll.</p>
+            <p>If the roll is successful, then damage will automatically be rolled.</p>
+            <p>Here it seems Pascal scored a hit, but not a critical success.</p>
+          </div>
+          <div class="six columns">
+            <img src="./images/combat-check.png" />
+          </div>
+        </div>
+        <div>
+          <p>If a natural roll of the weapons critical range is rolled, then a <em>potential crit</em> has occurred, and the roll message
+             will give the attacker a button to press to see if a crit really has occured. If it has, then the damage with the multiplier is then rolled.</p>
+             <p style="text-align: center;">
+              <img src="./images/potential-crit.png" />
+              <img src="./images/crit-scored.png" />
+            </p>
+            <p>As per the rules, if another natural crit is rolled, this means instant death, and an appropriate message would be displayed!</p>
+        </div>
+        <hr>
+        <h4 class="docs-header" id="class">Class</h4>
+        <div class="row">
+          <p style="text-align: center;">
+            <img src="./images/student-tab.png" />
+          </p>
+          <p>Since Pascal is a Student, a <em>Student</em> tab is present. This tab would be display the respective class details for whichever class
+            the character has chosen.
+          </p>
+          <p>Each class tab shows a description of the class, and any specialisms chosen. Both Students and Clerics have spells as a specialism, 
+            so this tab also shows the list of spells that Pascal has memorized.
+          </p>
+          <p>For each spell level, there is a section, with a header that shows:
+            <ol>
+              <li>current number of spells memorized,</li>
+              <li>maximum number of spells that can be memorized,</li>
+              <li>how many of those are <em>bonus</em> spells, which can be retained and rememorized.</li>
+            </ol>
+          </p>
+          <p>For Clerics, you would randomly roll for your list of starting spells and then drag each of them from their respective Compendium pack.</p> 
+          <p>However, for Students, they start with a random selection in a Spellbook. A starting Spellbook is provided as an example, 
+            but you should edit the list in the one provided by dragging them onto the description of the book:
+          </p>
+          <p style="text-align: center;">
+            <img src="./images/spellbook.png" />
+          </p>
+          <p>
+            Once you have a spellbook populated, you can drag that onto your character sheet and it will appear in their possessions. 
+            To then memorize a spell, open the spellbook and drag the relevant spell from the page onto the sheet.
+          </p>
+          <p style="text-align: center;">
+            <img src="./images/spell-drag.png" />
+          </p>
+          <p>
+            Here we have memorized two spells, and selected one of those to be the single Level 1 Bonus spell, but clicking the radio button.
+          </p>
+          <p style="text-align: center;">
+            <img src="./images/bonus-spell.png" />
+          </p>
+          <div class="row">
+            <div class="six columns">
+              <p>
+                To cast a spell, click on the magic wand icon. Bonus spells have a little "battery" icon that is either full or empty depending on
+                whether it is memorized or not.<b>To rememorize a bonus spell, click on the empty battery icon to make a Temptation check and hopefully restore
+                the spell.</b>
+              </p>
+              <p>
+                They also have the padlock icon to indicate they are special and should not be simply removed.
+              </p>
+              <p>Non-bonus spells, when cast, will simply disappear from your memorized list.</p>
+              <p>The act of memorizing or casting a spell will be recorded as GM whisper messages.</p>
+            </div>
+            <div class="six columns">
+              <img src="./images/spell-messages.png" />
+            </div>
+          </div>
+        </div>
+        <hr>
+        <h4 class="docs-header" id="virtue">Virtue</h4>
+        <div class="row">
+          <p style="text-align: center;">
+            <img src="./images/virtue.png" />
+          </p>
+          <p>
+            When generated, the character's initial virtue is randomly rolled and set. Pascal's was set to 11...pretty average virtue. 
+            If Pascal was of high virtue, he would not be able to memorize any spells!
+          </p>
+          <p>
+            However, as the GM decides on actions throughout the session, they should then drop <em>Deeds</em> that represent the 
+            relevant vice or virtue relating to that deed, which will affect Pascal's virtuous (or not) state.
+          </p>
+          <p>To do this, we can create a new <em>Deed</em> and fill in the details to represent the magnitude and detail of the act.</p>
+          <p style="text-align: center;">
+            <img src="./images/sinful-deed.png" />
+          </p>
+          <p>When dragged onto the character sheet, this will then appear in the <em>Sins</em> column, and have an automatically negative effect on their virtue.</p>
+          <p style="text-align: center;">
+            <img src="./images/deeds.png" />
+          </p>
+          <p>
+            To atone for sins and recover virtue, as per the rules, click  on the dice icon by the Deeds header to randomly roll how many points of virtue are recovered.
+          </p>
+          <p>The largest sins will be automatically removed that can be, based on the roll.</p>
+          <p style="text-align: center;">
+            <img src="./images/absolve.png" />
+          </p>
+          
+        </div>
+    </div>
+      <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    </body>
+  </html>

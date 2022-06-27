@@ -167,10 +167,20 @@ export class HVCharacterSheet extends HVActorSheet {
         }
         break;
       case 'spell':
-        if (item.data.data.class === 'cleric' && !this.actor.isCleric()) {
-          return ui.notifications.error(game.i18n.localize('HV.errors.notCleric'));
-        } else if (item.data.data.class === 'student' && !this.actor.isStudent()) {
-          return ui.notifications.error(game.i18n.localize('HV.errors.notStudent'));
+        if (item.data.data.class === 'cleric') {
+          if (!this.actor.isCleric()) {
+            return ui.notifications.error(game.i18n.localize('HV.errors.notCleric'));
+          }
+          if (this.actor.isLowVirtue()) {
+            return ui.notifications.error(game.i18n.localize('HV.errors.lowVirtue'));
+          }
+        } else if (item.data.data.class === 'student') {
+          if (!this.actor.isStudent()) {
+            return ui.notifications.error(game.i18n.localize('HV.errors.notStudent'));
+          }
+          if (this.actor.isHighVirtue()) {
+            return ui.notifications.error(game.i18n.localize('HV.errors.highVirtue'));
+          }
         }
         const level = parseInt(item.data.data.level);
         const spellSlots = this.actor.getSpellSlots();
