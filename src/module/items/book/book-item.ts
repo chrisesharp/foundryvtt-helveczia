@@ -21,6 +21,19 @@ export class BookItem extends BaseItem {
     // html.find(".helveczia-possession").click((e) => this._onRollSkill.call(this, e, sheet));
   }
 
+  static activateListeners(html, item) {
+    // Delete Inventory Item
+    html.find('.item-delete').click((ev) => {
+      const li = $(ev.currentTarget).parents('.item-entry');
+      const itemID = li.data('item-id');
+      const updateData = {
+        spells: item.data.data.spells.filter((i) => i.id !== itemID),
+      };
+      item.update({ data: updateData });
+      li.slideUp(200, () => item.render(false));
+    });
+  }
+
   static async onCreate(
     _item: HVItem,
     _data: PropertiesToSource<ItemDataBaseProperties>,
@@ -31,8 +44,9 @@ export class BookItem extends BaseItem {
   }
 
   /** @override */
-  static getSheetData(sheetData, _item) {
+  static getSheetData(sheetData, item) {
     sheetData.coins = CONFIG.HV.coins;
+    sheetData.spells = item.object.data.data?.spells;
     return sheetData;
   }
 

@@ -31,6 +31,11 @@ export class HVActorSheet extends ActorSheet {
     return data.type === 'Folder' ? false : true;
   }
 
+  /** @override */
+  async _onDrop(event: DragEvent): Promise<void> {
+    super._onDrop(event);
+  }
+
   async _removePeoples(item): Promise<boolean> {
     if (item.name === this.actor.data.data.people) return false;
     const peoples = this.actor.items.filter((i) => i.type == 'people');

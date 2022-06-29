@@ -90,6 +90,8 @@ export interface HelvecziaConfig {
     [key: number]: number[];
   };
 
+  spellPacks: string[];
+
   coins: {
     [key: string]: string;
   };
@@ -231,6 +233,15 @@ export const HV: HelvecziaConfig = {
     5: [3, 2, 1],
     6: [3, 3, 2],
   },
+
+  spellPacks: [
+    'helveczia.student-spells-1',
+    'helveczia.student-spells-2',
+    'helveczia.student-spells-3',
+    'helveczia.cleric-spells-1',
+    'helveczia.cleric-spells-2',
+    'helveczia.cleric-spells-3',
+  ],
 
   coins: {
     th: 'Th',

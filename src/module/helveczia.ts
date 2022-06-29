@@ -34,8 +34,6 @@ import { HVChat } from './chat';
 import { HVNPCSheet } from './actor/npc-sheet';
 import { BookSheet } from './items/book/book-sheet';
 
-// import { HVItemSheetConfig } from './items/item-config';
-
 const log = new Logger();
 
 // Initialize system
@@ -57,6 +55,10 @@ Hooks.once('init', async () => {
   registerHandlebarHelpers();
 
   CONFIG.HV.showEffects = game.settings.get('helveczia', 'effects') as boolean;
+  CONFIG.Combat.initiative = {
+    formula: '1d20+@initiative',
+    decimals: 2,
+  };
 
   // Preload Handlebars templates
   await preloadTemplates();
@@ -77,7 +79,6 @@ Hooks.once('init', async () => {
   Items.registerSheet('helveczia', PeopleSheet, { types: ['people'] });
   Items.registerSheet('helveczia', SpellSheet, { types: ['spell'] });
   Items.registerSheet('helveczia', BookSheet, { types: ['book'] });
-  // DocumentSheetConfig.registerSheet(DocumentSheetConfig, "helveczia", HVItemSheetConfig, {makeDefault: true});
 });
 
 // Setup system
@@ -104,6 +105,10 @@ Hooks.on('applyActiveEffect', async (actor, changeData) => {
 });
 
 Hooks.on('dropActorSheetData', (actor: HVActor, sheet: HVActorSheet, data) => {
+  return sheet.onDropAllow(actor, data);
+});
+
+Hooks.on('dropItemSheetData', (actor: HVActor, sheet: HVActorSheet, data) => {
   return sheet.onDropAllow(actor, data);
 });
 

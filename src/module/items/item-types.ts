@@ -15,13 +15,17 @@ export interface PossessionItemData {
   data: PossessionData;
 }
 
+type entry = {
+  id: string;
+  name: string;
+};
 type BookData = BaseData & {
   cost: {
     value: number;
     coin: string;
   };
   encumbrance: number;
-  spells: string[];
+  spells: entry[];
 };
 
 export interface BookItemData {
