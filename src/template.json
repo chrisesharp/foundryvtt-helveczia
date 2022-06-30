@@ -134,7 +134,8 @@
         "multiple": 2
       },
       "encumbrance": 1,
-      "bonus": 0
+      "bonus": 0,
+      "reload": 0
     },
     "deed": {
       "templates": ["base"],

@@ -80,6 +80,7 @@ type WeaponData = BaseData & {
   };
   encumbrance: number;
   bonus: number;
+  reload: number;
 };
 
 export interface WeaponItemData {

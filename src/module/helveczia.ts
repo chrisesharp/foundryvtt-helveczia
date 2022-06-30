@@ -33,6 +33,7 @@ import { HVActorSheet } from './actor/actor-sheet';
 import { HVChat } from './chat';
 import { HVNPCSheet } from './actor/npc-sheet';
 import { BookSheet } from './items/book/book-sheet';
+import { HVCombat } from './combat';
 
 const log = new Logger();
 
@@ -113,6 +114,7 @@ Hooks.on('dropItemSheetData', (actor: HVActor, sheet: HVActorSheet, data) => {
 });
 
 Hooks.on('renderChatMessage', HVChat.addChatCriticalButton);
+Hooks.on('renderCombatTracker', HVCombat.format);
 
 // License and KOFI infos
 Hooks.on('renderSidebarTab', async (object, html) => {

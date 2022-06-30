@@ -27,10 +27,13 @@
     <section class="sheet-body">
       <div class="tab damage" data-group="primary" data-tab="damage">
         <div class="flexrow">
-          <select name="data.attack" type="text">
+          <select class="flex1" name="data.attack" type="text">
             {{selectOptions attacks selected=data.attack localize=true}}
           </select>
-          <h3 class="flexrow">{{ localize 'HV.additionalBonus' }}:<input name="data.bonus" type="text" value="{{data.bonus}}"/></h3>
+          {{#if (eq data.attack 'ranged')}}
+          <h3 class="flex2 flexrow">{{ localize 'HV.Reload'}}:<input name="data.reload" type="text" value="{{data.reload}}"/></h3>
+          {{/if}}
+          <h3 class="flex2 flexrow">{{ localize 'HV.additionalBonus' }}:<input name="data.bonus" type="text" value="{{data.bonus}}"/></h3>
         </div>
         <h3>{{ localize 'HV.tabs.damage'}}:<input name="data.damage" type="text" value="{{data.damage}}" placeholder="1d3"/></h3>
         <h3>{{ localize 'HV.Critical'}} on:<input name="data.critical.range" type="text" value="{{data.critical.range}}"/></h3>

@@ -50,7 +50,7 @@ export class HVDice {
     return result;
   }
 
-  static digestAttackResult(data, roll: Evaluated<Roll>) {
+  static async digestAttackResult(data, roll: Evaluated<Roll>) {
     let opponent: HVActor | undefined;
     let against = '';
     let withWeapon = '';
@@ -61,6 +61,11 @@ export class HVDice {
     if (data.item) {
       critical = data.item.data.critical;
       withWeapon = `with their ${data.item.name}`;
+      if (data.item.data.reload > 0) {
+        const attacker = data.item.document.actor as HVActor;
+        await attacker.setFlag('helveczia', 'reload-trigger', data.item.data.reload);
+        console.log('fired and set reload-trigger to ', attacker.getFlag('helveczia', 'reload-trigger'));
+      }
     }
 
     const result: any = {
@@ -154,7 +159,7 @@ export class HVDice {
     }
 
     templateData.result = data.roll.dmg?.length
-      ? HVDice.digestAttackResult(data, roll)
+      ? await HVDice.digestAttackResult(data, roll)
       : HVDice.digestResult(data, roll);
 
     return new Promise(async (resolve) => {
