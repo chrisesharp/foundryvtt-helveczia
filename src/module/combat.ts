@@ -37,7 +37,8 @@ export class HVCombat {
           log.debug(`HVCombat.format() |id:${id} reload = ${reload}`);
           // Append colored flag
           if (Math.round(reload) > 0) {
-            const colour = colours[Math.max(2, Math.round(reload))];
+            const index = Math.min(2, Math.round(reload));
+            const colour = colours[index];
             const controls = $(ct).find('.combatant-controls');
             controls.prepend(
               `<a class='combatant-control flag' style='color:${colour}' title="${reload.toFixed(

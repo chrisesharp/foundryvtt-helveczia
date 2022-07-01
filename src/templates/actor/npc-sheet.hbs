@@ -7,7 +7,7 @@
     {{!-- Sheet Tab Navigation --}}
     {{!-- <nav class="sheet-tabs tabs side character" data-group="primary"> --}}
     <nav class="sheet-tabs tabs character" data-group="primary">
-        <a class="item" data-tab="saves">{{ localize 'HV.tabs.saves'}}</a>
+        <a class="item" data-tab="abilities">{{ localize 'HV.tabs.abilities'}}</a>
         <a class="item" data-tab="combat">{{ localize 'HV.tabs.combat'}}</a>
         <a class="item" data-tab="skills">{{ localize 'HV.tabs.skills'}}</a>
         <a class="item" data-tab="possessions">{{ localize 'HV.tabs.possessions'}}</a>
@@ -20,8 +20,8 @@
     {{!-- Sheet Body --}}
     <section class="sheet-body">
         {{!-- Saves Tab --}}
-        <div class="tab saves" data-group="primary" data-tab="saves">
-            {{> "systems/helveczia/templates/actor/partials/npc-saves.hbs"}}
+        <div class="tab abilities" data-group="primary" data-tab="abilities">
+            {{> "systems/helveczia/templates/actor/partials/actor-abilities.hbs"}}
         </div>
         {{!-- Skills Tab --}}
         <div class="tab skills" data-group="primary" data-tab="skills">

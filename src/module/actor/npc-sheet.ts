@@ -1,4 +1,5 @@
 import { prepareActiveEffectCategories } from '../effects';
+import { HVItem } from '../items/item';
 import { Logger } from '../logger';
 import { HVActorSheet } from './actor-sheet';
 
@@ -22,6 +23,11 @@ export class HVNPCSheet extends HVActorSheet {
     const actorData = baseData.actor;
     const data: any = {
       owner: this.actor.isOwner,
+      fighter_class: this.actor.getFlag('helveczia', 'fighter-class'),
+      vagabond_class: this.actor.getFlag('helveczia', 'vagabond-class'),
+      cleric_class: this.actor.isCleric(),
+      fighter_specialism: this.actor.getFlag('helveczia', 'fighter-specialism'),
+      student_class: this.actor.getFlag('helveczia', 'student-class'),
       options: this.options,
       editable: this.isEditable,
       isToken: this.token && !this.token.data.actorLink,
@@ -50,5 +56,45 @@ export class HVNPCSheet extends HVActorSheet {
       carried: carried,
       mount: mount,
     };
+  }
+
+  /** @override */
+  async _onDropItem(event: DragEvent, data: ActorSheet.DropData.Item): Promise<unknown> {
+    log.debug('_onDropItem() | ', event, data);
+    let shouldContinue = true;
+    let item;
+    try {
+      const transfer = event.dataTransfer?.getData('text/plain') ?? '';
+      data = JSON.parse(transfer);
+      if (data['pack']) {
+        const pack = game.packs.get(data['pack']);
+        item = await pack?.getDocument(data['id']);
+      } else {
+        item = game.items?.get(data['id']);
+      }
+    } catch (err) {
+      return;
+    }
+    log.debug('_onDropItem() | dropped item :', item);
+    switch (item?.type) {
+      case 'people':
+        shouldContinue = await this._removePeoples(item);
+        log.debug('_onDropItem() | should continue?:', shouldContinue);
+        break;
+      case 'class':
+        shouldContinue = await this._removeClasses(item);
+        log.debug('_onDropItem() | should continue?:', shouldContinue);
+        break;
+      case 'skill':
+        if (this.actor.items.getName(item.name)) {
+          log.debug('_onDropItem() | already got this skill.');
+          return;
+        }
+        break;
+    }
+    if (shouldContinue) {
+      return super._onDropItem(event, data);
+    }
+    return;
   }
 }

@@ -157,7 +157,6 @@ export class HVActor extends Actor {
 
     this._updateSaves(actorData);
     this._updateCombatValues(data);
-    data.hp.hd = 8;
   }
 
   /**
