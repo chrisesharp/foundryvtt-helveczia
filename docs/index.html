@@ -88,6 +88,43 @@
                 </ul>
               </div>
             </li>
+            <li class="navbar-item">
+              <a class="navbar-link" href="#combat-tracker">Combat Tracker</a>
+            </li>
+            <li class="navbar-item">
+              <a class="navbar-link" href="#" data-popover="#compNavPop">Compendia</a>
+              <div id="compNavPop" class="popover">
+                <ul class="popover-list">
+                  <li class="popover-item">
+                    <a class="popover-link" href="#item-armour">Armour</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#item-weapons">Weapons</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#item-possessions">Possessions</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#item-skills">Skills</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#item-spells">Spells</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#item-book">Spell Books</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#item-deeds">Deeds</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#item-people">Peoples</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#item-class">Classes</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
           </ul>
         </div>
       </nav>
@@ -448,6 +485,222 @@
           </p>
           <div style="text-align: center;">
             <img src="./images/npc-skills.png" />
+          </div>
+          <div class="docs-section">
+            <h2 id="combat-tracker" class="docs-header">Combat Tracker</h2>
+            <hr>
+            <p>
+              The Combat Tracker is pretty standard Foundry VTT. As per the rules, it's individual initiative (bonuses are automatically applied to each role). You can roll all NPCs automatically by clicking on the Roll NPCs button.
+            </p>
+            <div style="text-align: center;">
+              <img src="./images/combat-2.png" />
+            </div>
+            <p>
+              Here, Pascal Groux is in a fight with the village troublemaker. He has lost the initiative, but on his turn, he fires his Blunderbus.
+            </p>
+            <div style="text-align: center;">
+              <img src="./images/combat-3.png" />
+            </div>
+            <p>
+              A reload marker in red appears, indicating that he is in the process of reloading his blunderbus, and how many rounds (or fractions of rounds) there are left before he can fire it again. 
+              When there is only 0.5 rounds left, it will turn amber, indicating that Pascal could fire it again but at -2 (which would have to be manually applied as a situational modifier on the attack roll.)
+            </p>
+            <p>
+              Once it has fully reloaded, the marker will disappear.
+            </p>
+          </div>
+          <div class="docs-section">
+            <h2 id="compendia" class="docs-header">Compendia</h2>
+            <hr>
+            <div class="row">
+              <div class="six columns">
+                <p>
+                  The following Items can be created for the Helvéczia RPG in Foundry:
+                  <ol>
+                    <li>Armour</li>
+                    <li>Weapons</li>
+                    <li>Possessions</li>
+                    <li>Spells</li>
+                    <li>Books of Spells</li>
+                    <li>Skills</li>
+                    <li>Deeds of Virtue or Vice</li>
+                    <li>Peoples</li>
+                    <li>Classes & Specialisms</li>
+                  </ol>
+                </p>
+                <p>
+                  It is possible to create any of these from scratch, but a Compendium containing the default
+                  items for each category as per the rules is provided for ease of use.
+                </p>
+                <p>
+                  The Peoples and Classes items are complex and make use of Foundry <em>Effects</em> so creating or modifying them require use of the <a href="#settings">Effects Tab setting</a> and is for advanced users only!
+                </p>
+                <p>
+                  At present, this system only supports a single People (ethnic origin) and single Class (profession) association with each actor. 
+                  For instance, it is not possible to be half-italian/half-french, nor is it possible to be a dual-classed Fighter/Vagabond, etc. 
+                  Dragging on a new People or Class will replace the existing one on a character sheet.
+                </p>
+              </div>
+              <div class="six columns">
+                <div style="text-align: center;">
+                  <img src="./images/compendia.png" />
+                </div>
+              </div>
+            </div>
+            <hr>
+            <h4 class="docs-header" id="item-armour">Armour</h4>
+            <div class="row">
+              <div class="six columns">
+                <p>
+                  The common armour types have been provided in the Compendium.
+                </p>
+                <p>You can specify the name, cost, and encumbrance values (0 encumbrance means it doesn't take a slot up in your carrying capacity).</p>
+                <p>You can also specify the AC bonus the piece provides, and any additional description or notes.</p>
+              </div>
+              <div class="six columns">
+                <div style="text-align: center;">
+                  <img src="./images/armour.png" />
+                </div>
+              </div>
+            </div>
+            <hr>
+            <h4 class="docs-header" id="item-weapons">Weapons</h4>
+            <div class="row">
+              <div class="six columns">
+                <p>
+                  The common melee and ranged weapon types have been provided in the Compendium.
+                </p>
+                <p>You can specify the name, cost, and encumbrance values (0 encumbrance means it doesn't take a slot up in your carrying capacity).</p>
+                <p>You can also specify whether it is a melee or ranged weapon, any additional attack bonuses it may have (if it's magical, for instance),
+                   the damage it does (e.g. <code>1d10+3</code>), the dice roll number on or above that is considered a critical roll,
+                   and the damage multiplier in the event of a critical.</p>
+                <p>On the Notes tab,you can add any additional description or notes.</p>
+              </div>
+              <div class="six columns">
+                <div style="text-align: center;">
+                  <img src="./images/weapon.png" />
+                </div>
+              </div>
+            </div>
+            <hr>
+            <h4 class="docs-header" id="item-possessions">Possessions</h4>
+            <div class="row">
+              <div class="six columns">
+                <p>
+                 Possessions are the mundane or magical pieces of equipment that a character may carry.
+                </p>
+              </div>
+              <div class="six columns">
+                <div style="text-align: center;">
+                  <img src="./images/possession.png" />
+                </div>
+              </div>
+            </div>
+            <hr>
+            <h4 class="docs-header" id="item-skills">Skills</h4>
+            <div class="row">
+              <div class="six columns">
+                <p>
+                 Skills are a broad set, which are categorised into the following subtypes:
+                 <ol>
+                  <li>Craft</li>
+                  <li>Science</li>
+                  <li>Practical</li>
+                  <li>Vagabond</li>
+                  <li>Magical</li>
+                 </ol>
+                </p>
+                <p>You can specify the subtype, the ability that it uses for checks, and any additional bonuses that it might have for checking.</p>
+              </div>
+              <div class="six columns">
+                <div style="text-align: center;">
+                  <img src="./images/skill.png" />
+                </div>
+              </div>
+            </div>
+            <hr>
+            <h4 class="docs-header" id="item-spells">Spells</h4>
+            <div class="row">
+              <div class="six columns">
+                <p>
+                Spells are classified as Cleric or Student spells, and the Level of spell.
+                </p>
+                <p>You can specify the key properties of the spell: Range, Duration, Area, Save, and Components.</p>
+                <p>None of these properties are automated, as they are all extremely subjective.</p>
+              </div>
+              <div class="six columns">
+                <div style="text-align: center;">
+                  <img src="./images/spell.png" />
+                </div>
+              </div>
+            </div>
+            <hr>
+            <h4 class="docs-header" id="item-book">Books (of Spells)</h4>
+            <div class="row">
+              <div class="three columns">
+                <p>
+                Books, Scrolls, Pamphlets, etc. can all be modelled as a <em>Book</em> item.
+                </p>
+                <p>If it is to record spells, as in a Spellbook, then you can drag the desired spells from the Compendia onto the Book's sheet.</p>
+                <p>The book can then be added as a possession to the character, and when the character wishes to memorize a spell, then simply need
+                  to open the book's sheet and drag the spell from the book onto their character sheet.
+                </p>
+              </div>
+              <div class="nine columns">
+                <div style="text-align: center;">
+                  <img src="./images/spellbook.png" />
+                </div>
+              </div>
+            </div>
+            <hr>
+            <h4 class="docs-header" id="item-deeds">Deeds</h4>
+            <div class="row">
+              <div class="six columns">
+                <p>As per the rules, it is important for the GM to record characters good or bad deeds on their character sheet at the end of each day.</p>
+                <p>When added to the sheet, the deed will automatically affect the character's virtue level.</p>
+                <p>
+                  Deeds maybe virtuous, or vile, and you must specify whether they are a <code>Virtue</code> or a <code>Vice</code> and which of the corresponding seven types it relates to.
+                </p>
+                <p>You must also specify the magnitude of the deed: Minor (1pt), Moderate (2pt), Major (3pt) or or Heinous/Sincere (6 pt) </p>
+              </div>
+              <div class="six columns">
+                <div style="text-align: center;">
+                  <img src="./images/deed.png" />
+                </div>
+              </div>
+            </div>
+            <hr>
+            <h4 class="docs-header" id="item-people">Peoples</h4>
+            <div class="row">
+              <div class="six columns">
+                <p>The standard peoples defined in the Helvéczia RPG rules are included in the Peoples Compendium.</p>
+                <p>The benefits and disadvantages of each peoples have been automated, so they should be applied automatically in all circumstances.</p>
+                <p>As noted above, it is complex to add a new type of people, as it requires intimate Knowledge of the system, and your are advised not to try modifying these.</p>
+              </div>
+              <div class="six columns">
+                <div style="text-align: center;">
+                  <img src="./images/people.png" />
+                </div>
+              </div>
+            </div>
+            <hr>
+            <h4 class="docs-header" id="item-class">Classes & Specialisms</h4>
+            <div class="row">
+              <div class="six columns">
+                <p>The standard classes and specialisms defined in the Helvéczia RPG rules are included in the Classes and Specialisms Compendium.</p>
+                <p>The benefits and disadvantages of each class and specialism have been automated, so they should be applied automatically in all circumstances.</p>
+                <p>As noted above, it is complex to add a new type of class or specialism, as it requires intimate Knowledge of the system, and your are advised not to try modifying these.</p>
+                <div style="text-align: center;">
+                  <img src="./images/specialism.png" />
+                </div>
+              </div>
+              <div class="six columns">
+                <div style="text-align: center;">
+                  <img src="./images/classes.png" />
+                </div>
+              </div>
+            </div>
+            <hr>
           </div>
     </div>
       <!-- End Document
