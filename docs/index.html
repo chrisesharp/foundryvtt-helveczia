@@ -75,6 +75,19 @@
                 </ul>
               </div>
             </li>
+            <li class="navbar-item">
+              <a class="navbar-link" href="#" data-popover="#npcNavPop">NPCs</a>
+              <div id="npcNavPop" class="popover">
+                <ul class="popover-list">
+                  <li class="popover-item">
+                    <a class="popover-link" href="#npc-generation">Generation</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#npc-weapons">Weapons & Skills</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
           </ul>
         </div>
       </nav>
@@ -389,8 +402,53 @@
           <p style="text-align: center;">
             <img src="./images/absolve.png" />
           </p>
-          
         </div>
+        <div class="docs-section">
+          <h2 id="npcs" class="docs-header">NPCs</h2>
+          <hr>
+          <h4 class="docs-header" id="npc-generation">NPC Generation</h4>
+          <p>
+            Creating an NPC (classed or non-classed) is a similar process. Create a new <code>npc</code> actor type and you will be presented by an initial basic NPC.
+          </p>
+          <p>Here we have given them a name and set their level as per the rules for a Reisläufer - 2+1.</p>
+          <div style="text-align: center;">
+            <img src="./images/npc-gen-1.png" />
+          </div>
+          <p>As per the rules, you can add <code>*</code>'s to the level spec to denote increased threat, which will increase the calculated experience points, below.</p>
+          <div style="text-align: center;">
+            <img src="./images/npc-gen-2.png" />
+          </div>
+          <p>By default, the NPC is non-classed. Because we want out Reisläufer to be a weapons master, we need to assign the Fighter class to them. Simply open the Classes Compendium 
+            and drag the Fighter entry onto the NPC sheet. This will recognise that a Fighter needs to specify a particular specialism, and prompt you to choose.
+          </p>
+          <div style="text-align: center;">
+            <img src="./images/npc-gen-3.png" />
+          </div>
+          <hr>
+          <h4 class="docs-header" id="npc-weapons">NPC Weapons & Skills</h4>
+          <p>
+            Once chosen, the Hit Dice will be set correctly, and other bonuses. Now we can give our Reisläufer some weapons. Rathern than bother with positions for NPCs, we assume everything is "worn" and so all weapons appear under Combat
+            automatically. Either click the <code>+</code> sign next to the Combat heading to create a new weapon...
+          </p>
+          <div style="text-align: center;">
+            <img src="./images/npc-gen-5a.png" />
+          </div>
+          <p>
+            ...and edit it to create the weapon you. Here's we've created a Lucerne Hammer.
+          </p>
+          <div style="text-align: center;">
+            <img src="./images/npc-gen-5b.png" />
+          </div>
+          <p> Alternatively, if a weapon already exists in the Compendium  (e.g. Halberd) then that can just be dragged onto the sheet. As you can see, the appropriate bonuses are applied automatically for all weapons.</p>
+          <div style="text-align: center;">
+            <img src="./images/npc-gen-6.png" />
+          </div>
+          <p>Finally, we can add any skills we need to our NPC. A Reisläufer apparently has the "Looting" craft skill, which isn't a normal craft skill in the Craft Compendium. It's a simple matter again to create
+            a new Skill in the same way as we created a new Weapon, and give it whatever details we think necessary.
+          </p>
+          <div style="text-align: center;">
+            <img src="./images/npc-skills.png" />
+          </div>
     </div>
       <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
