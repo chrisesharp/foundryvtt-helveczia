@@ -550,6 +550,7 @@ export class HVActor extends Actor {
               const weapon = item.data as WeaponItemData;
               const bonus = Math.floor(weapon.data.bonus);
               const ability = this.data.data.attack[weapon.data.attack]?.mod;
+              if (weapon.data.attack === 'melee') dmg.push(this.data.data.attack.melee?.bonus);
               mod.push(bonus);
               mod.push(ability);
               longName = item.name ?? game.i18n.localize('HV.items.weapon');

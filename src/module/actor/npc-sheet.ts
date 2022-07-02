@@ -1,5 +1,4 @@
 import { prepareActiveEffectCategories } from '../effects';
-import { HVItem } from '../items/item';
 import { Logger } from '../logger';
 import { HVActorSheet } from './actor-sheet';
 
