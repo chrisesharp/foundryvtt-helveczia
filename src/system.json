@@ -25,6 +25,20 @@
       "type": "Item"
     },
     {
+      "name": "books",
+      "label": "Books",
+      "package": "helveczia",
+      "path": "packs/books.db",
+      "type": "Item"
+    },
+    {
+      "name": "deeds",
+      "label": "Deeds",
+      "package": "helveczia",
+      "path": "packs/deeds.db",
+      "type": "Item"
+    },
+    {
       "name": "classes",
       "label": "Classes",
       "package": "helveczia",

@@ -217,7 +217,7 @@ export class HVCharacterSheet extends HVActorSheet {
             log.debug(`_onDropItem() | set position of item to ${position}`);
             break;
           case 'spell':
-            await item.createChatMessage(this.actor, 'HV.SpellRememorize');
+            await item.createChatMessage(this.actor, 'HV.SpellMemorize');
             break;
         }
       }
