@@ -135,6 +135,13 @@
       "package": "helveczia",
       "path": "packs/cleric-spells-3.db",
       "type": "Item"
+    },
+    {
+      "name": "cards",
+      "label": "Cards",
+      "package": "helveczia",
+      "path": "packs/cards.db",
+      "type": "Cards"
     }
   ],
   "dependencies": [
