@@ -35,6 +35,9 @@ export async function preloadTemplates(): Promise<Handlebars.TemplateDelegate[]>
     // Item Partials
     'systems/helveczia/templates/item/partials/item-effects.hbs',
     'systems/helveczia/templates/item/partials/item-nav.hbs',
+    // Card Sheets
+    'systems/helveczia/templates/cards/cards-hand.hbs',
+    'systems/helveczia/templates/cards/dialog-play.hbs',
   ];
 
   return loadTemplates(templatePaths);

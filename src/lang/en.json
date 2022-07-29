@@ -169,5 +169,7 @@
   "HV.SecondCritical": "A Second Success!",
   "HV.InstantDeath": "Two Criticals in a Row! This is instant death!",
   "HV.Fist": "Unarmed",
-  "HV.RollVirtue": "Roll for Virtue"
+  "HV.RollVirtue": "Roll for Virtue",
+  "HV.cards.Total": "Total",
+  "HV.cards.Reset": "Return to Deck"
 }

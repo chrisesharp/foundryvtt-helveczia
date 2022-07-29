@@ -1,0 +1,69 @@
+<form class="{{cssClass}}" autocomplete="off">
+    {{ log . }}
+    <header class="sheet-header flexrow">
+        <h1 class="name">
+            <input type="text" name="name" value="{{data.name}}" placeholder="{{localize 'Name'}}"/>
+        </h1>
+    </header>
+    <div>
+        <header class="cards-header flexrow">
+            &nbsp;
+            <span class="card-suit">{{localize "CARD.Name"}}</span>
+            <span class="card-suit">{{localize "Notes"}}</span>
+            <span class="card-suit">{{localize "CARD.Suit"}}</span>
+            <span class="card-value">{{localize "CARD.Value"}}</span>
+            <span class="card-faces">{{localize "CARD.Face"}}</span>
+            <div class="card-controls"></div>
+        </header>
+        <ol class="cards">
+        {{#each cards as |card|}}
+            <li class="card flexrow" data-card-id="{{card.id}}">
+                <img class="card-face" data-src="{{card.img}}"  height="48">
+                {{#if card.showFace}}
+                <span class="card-suit">{{card.data.name}}</span>
+                <span class="card-suit">{{card.data.description}}</span>
+                <span class="card-suit">{{card.data.suit}}</span>
+                <span class="card-value">{{card.data.value}}</span>
+                {{else}}
+                <span class="card-name">?</span>
+                {{/if}}
+                <div class="card-faces flexcol">
+                    <a class="card-control" title="{{localize 'CARD.FaceNext'}}" data-action="nextFace" {{#unless card.hasNextFace}}disabled{{/unless}}><i class="fas fa-caret-up"></i></a>
+                    <a class="card-control" title="{{localize 'CARD.FacePrevious'}}" data-action="prevFace" {{#unless card.hasPreviousFace}}disabled{{/unless}}><i class="fas fa-caret-down"></i></a>
+                </div>
+                <div class="card-controls">
+                    {{#if (and @root.editable (not @root.inCompendium))}}
+                    <a class="card-control" title="{{localize 'CARD.Play'}}" data-action="play"><i class="fas fa-chevron-circle-right"></i></a>
+                    {{/if}}
+                </div>
+            </li>
+        {{else}}
+            <li>
+                <p class="hint">{{localize "CARDS.NoCards"}}</p>
+            </li>
+        {{/each}}
+        </ol>
+         <header class="cards-header flexrow">
+            &nbsp;
+            <span class="card-suit"></span>
+            <span class="card-suit"></span>
+            <span class="card-suit"></span>
+            <span class="card-value">{{total}}</span>
+            <span class="card-faces"></span>
+            <div class="card-controls"></div>
+        </header>
+    </div>
+
+    <!-- Sheet Footer -->
+    <footer class="sheet-footer flexrow">
+        {{#if isGM}}
+        <button class="card-control" type="button" data-action="draw" {{ disabled inCompendium }}>
+            <i class="fas fa-plus"></i> {{localize "CARDS.Draw"}}
+        </button>
+        <button class="card-control" type="button" data-action="reset" {{ disabled inCompendium }}>
+            <i class="fas fa-undo"></i> {{localize "HV.cards.Reset"}}
+        </button>
+        {{/if}}
+    </footer>
+</form>
+

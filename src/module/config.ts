@@ -15,6 +15,7 @@ import { BookItem } from './items/book/book-item';
 export interface HelvecziaConfig {
   socket?: any;
 
+  createCardsFor?: (string) => void;
   DEFAULT_TOKEN: string;
   actorClasses: {
     [key: string]: typeof HVActor;

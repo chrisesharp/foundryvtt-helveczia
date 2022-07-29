@@ -34,6 +34,7 @@ import { HVChat } from './chat';
 import { HVNPCSheet } from './actor/npc-sheet';
 import { BookSheet } from './items/book/book-sheet';
 import { HVCombat } from './combat';
+import { HVCardsHand } from './apps/cards';
 
 const log = new Logger();
 
@@ -67,6 +68,13 @@ Hooks.once('init', async () => {
   // Register custom sheets (if any)
   // Register sheet application classes
 
+  DocumentSheetConfig.unregisterSheet(Cards, 'core', CardsHand);
+  DocumentSheetConfig.registerSheet(Cards, 'core', HVCardsHand, {
+    label: 'CARDS.CardsHand',
+    types: ['hand'],
+    makeDefault: true,
+  });
+
   Actors.unregisterSheet('core', ActorSheet);
   Items.unregisterSheet('core', ItemSheet);
   Actors.registerSheet('helveczia', HVCharacterSheet, { types: ['character'], makeDefault: true });
@@ -98,6 +106,8 @@ Hooks.once('ready', async () => {
       log.info('Fate of Hungarians reset');
     }
   }
+
+  CONFIG.HV.createCardsFor = HVCardsHand.createHandsFor;
 });
 
 // Add any additional hooks if necessary
