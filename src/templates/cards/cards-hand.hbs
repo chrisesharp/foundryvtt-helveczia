@@ -1,5 +1,4 @@
 <form class="{{cssClass}}" autocomplete="off">
-    {{ log . }}
     <header class="sheet-header flexrow">
         <h1 class="name">
             <input type="text" name="name" value="{{data.name}}" placeholder="{{localize 'Name'}}"/>
@@ -32,8 +31,10 @@
                     <a class="card-control" title="{{localize 'CARD.FacePrevious'}}" data-action="prevFace" {{#unless card.hasPreviousFace}}disabled{{/unless}}><i class="fas fa-caret-down"></i></a>
                 </div>
                 <div class="card-controls">
-                    {{#if (and @root.editable (not @root.inCompendium))}}
-                    <a class="card-control" title="{{localize 'CARD.Play'}}" data-action="play"><i class="fas fa-chevron-circle-right"></i></a>
+                    {{#if @root.isGM }}
+                        {{#if (and @root.editable (not @root.inCompendium))}}
+                        <a class="card-control" title="{{localize 'CARD.Play'}}" data-action="play"><i class="fas fa-chevron-circle-right"></i></a>
+                        {{/if}}
                     {{/if}}
                 </div>
             </li>
@@ -56,14 +57,12 @@
 
     <!-- Sheet Footer -->
     <footer class="sheet-footer flexrow">
-        {{#if isGM}}
         <button class="card-control" type="button" data-action="draw" {{ disabled inCompendium }}>
             <i class="fas fa-plus"></i> {{localize "CARDS.Draw"}}
         </button>
         <button class="card-control" type="button" data-action="reset" {{ disabled inCompendium }}>
             <i class="fas fa-undo"></i> {{localize "HV.cards.Reset"}}
         </button>
-        {{/if}}
     </footer>
 </form>
 

@@ -22,6 +22,10 @@ export const registerHandlebarHelpers = async function () {
     return game.i18n.format('HV.bonusSkills', { num: num, skill: skill, role: role, level: level });
   });
 
+  Handlebars.registerHelper('cardsFilter', function (playTarget, cards) {
+    return cards.filter((c) => c.name.includes(playTarget));
+  });
+
   Handlebars.registerHelper('largest', function (lh, rh) {
     return Math.max(parseInt(lh), parseInt(rh));
   });

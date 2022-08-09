@@ -61,13 +61,21 @@ export class HVCardsHand extends CardsHand {
               return [];
             });
           }
+        } else {
+          const speaker = ChatMessage.getSpeaker();
+          const chatData: any = {
+            user: game.user?.id,
+            speaker: speaker,
+            content: `${speaker.alias} wishes to draw from the Devil's Bible!`,
+          };
+          ChatMessage.create(chatData);
         }
         break;
       case 'pass':
         this.object.passDialog();
         break;
       case 'play':
-        if (card) this.object.playDialog(card);
+        if (card) this.playDialog(this.object, card);
         break;
       case 'reset':
         this.object.resetDialog();
@@ -98,21 +106,67 @@ export class HVCardsHand extends CardsHand {
   }
 
   static async createHandsFor(name: string): Promise<void> {
-    const deck = game.cards?.getName("The Devil's Bible");
-    await Cards.createDocuments([
-      {
-        name: `Devil for ${name}`,
-        type: 'hand',
-        _id: randomID(),
-        flags: {
-          helveczia: {
-            playTarget: name,
-            sourceDeck: deck?.id,
+    // const deckName = "The Devil's Bible";
+    const packName = 'helveczia.cards';
+    const pack = game.packs.get(packName);
+    if (pack) {
+      const result = (await pack.importAll({ folderName: `${name}` }))[0];
+      const deck = game.cards?.get(result.id);
+      const folderId = deck?.folder?.id;
+      await Cards.createDocuments([
+        {
+          name: `Devil's hand for ${name}`,
+          type: 'hand',
+          _id: randomID(),
+          folder: folderId,
+          flags: {
+            helveczia: {
+              playTarget: name,
+              sourceDeck: deck?.id,
+            },
           },
         },
-      },
-      { name: `${name}`, type: 'hand', _id: randomID() },
-    ]);
+        {
+          name: `${name}'s hand`,
+          type: 'hand',
+          _id: randomID(),
+          folder: folderId,
+        },
+      ]);
+    }
+  }
+
+  async playDialog(source, card) {
+    const user = game.user;
+    if (user != null) {
+      const cards = game.cards?.filter(
+        (c) => c !== source && c.type !== 'deck' && c.testUserPermission(user, 'LIMITED'),
+      );
+      if (!cards?.length) return ui.notifications.warn('CARDS.PassWarnNoTargets', { localize: true });
+
+      // Construct the dialog HTML
+      const html = await renderTemplate('systems/helveczia/templates/cards/dialog-play.hbs', { card, cards });
+
+      // Display the prompt
+      return Dialog.prompt({
+        title: game.i18n.localize('CARD.Play'),
+        label: game.i18n.localize('CARD.Play'),
+        content: html,
+        callback: (html) => {
+          const form = html.querySelector('form.cards-dialog') as HTMLFormElement;
+          if (form) {
+            const fd = new FormDataExtended(form, {}).toObject();
+            const to = game.cards?.get(fd.to as string);
+            const options = { action: 'play', updateData: fd.down ? { face: null } : {} };
+            return source.pass(to, [card.id], options).catch((err) => {
+              return ui.notifications.error(err.message);
+            });
+          }
+        },
+        rejectClose: false,
+        options: { jQuery: false },
+      });
+    }
   }
 }
 
