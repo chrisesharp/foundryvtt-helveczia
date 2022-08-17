@@ -80,19 +80,22 @@ export class HVCardsHand extends CardsHand {
   }
 
   static async createHandsFor(name: string): Promise<void> {
-    // const deckName = "The Devil's Bible";
     const packName = 'helveczia.cards';
+    const userId = game.users?.find((u) => u.charname === name)?.id;
     const pack = game.packs.get(packName);
     if (pack) {
       const result = (await pack.importAll({ folderName: `${name}` }))[0];
       const deck = game.cards?.get(result.id);
       const folderId = deck?.folder?.id;
+      const perms = {};
+      if (userId) perms[userId] = CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
       await Cards.createDocuments([
         {
           name: `Devil's hand for ${name}`,
           type: 'hand',
           _id: randomID(),
           folder: folderId,
+          permission: perms,
           flags: {
             helveczia: {
               playTarget: name,
