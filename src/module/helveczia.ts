@@ -34,7 +34,7 @@ import { HVChat } from './chat';
 import { HVNPCSheet } from './actor/npc-sheet';
 import { BookSheet } from './items/book/book-sheet';
 import { HVCombat } from './combat';
-import { HVCardsHand } from './apps/cards';
+import { HVCardsHand, HVCardsPile } from './apps/cards';
 
 const log = new Logger();
 
@@ -72,6 +72,12 @@ Hooks.once('init', async () => {
   DocumentSheetConfig.registerSheet(Cards, 'core', HVCardsHand, {
     label: 'CARDS.CardsHand',
     types: ['hand'],
+    makeDefault: true,
+  });
+  DocumentSheetConfig.unregisterSheet(Cards, 'core', CardsPile);
+  DocumentSheetConfig.registerSheet(Cards, 'core', HVCardsPile, {
+    label: 'CARDS.CardsPile',
+    types: ['pile'],
     makeDefault: true,
   });
 

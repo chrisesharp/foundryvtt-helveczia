@@ -1,6 +1,13 @@
+export class HVCardsPile extends CardsConfig {
+  static get defaultOptions() {
+    return foundry.utils.mergeObject(super.defaultOptions, {
+      template: 'systems/helveczia/templates/cards/cards-pile.hbs',
+    });
+  }
+}
+
 export class HVCardsHand extends CardsHand {
   static get defaultOptions() {
-    // TODO implement new HVCardsHand sheet
     return foundry.utils.mergeObject(super.defaultOptions, {
       template: 'systems/helveczia/templates/cards/cards-hand.hbs',
     });

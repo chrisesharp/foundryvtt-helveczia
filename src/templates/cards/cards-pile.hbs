@@ -1,0 +1,50 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header flexrow">
+        <h1 class="name">
+            <input type="text" name="name" value="{{data.name}}" placeholder="{{localize 'Name'}}"/>
+        </h1>
+    </header>
+
+    <div>
+        <header class="cards-header flexrow">
+            <span class="sort-mode"></span>
+            <h4 class="card-name">{{localize "CARD.Name"}}</h4>
+            <span class="card-suit">{{localize "Notes"}}</span>
+            <span class="card-suit">{{localize "CARD.Suit"}}</span>
+            <span class="card-value">{{localize "CARD.Value"}}</span>
+            <span class="card-faces">{{localize "CARD.Face"}}</span>
+        </header>
+        <ol class="cards">
+        {{#each cards as |card|}}
+            <li class="card flexrow" data-card-id="{{card.id}}">
+                <img class="card-face" data-src="{{card.img}}"  height="48">
+                {{#if card.showFace}}
+                 <span class="card-suit">{{card.data.name}}</span>
+                <span class="card-suit">{{card.data.description}}</span>
+                <span class="card-suit">{{card.data.suit}}</span>
+                <span class="card-value">{{card.data.value}}</span>
+                {{else}}
+                <span class="card-name">?</span>
+                {{/if}}
+                <div class="card-faces flexcol">
+                    <a class="card-control" title="{{localize 'CARD.FaceNext'}}" data-action="nextFace" {{#unless card.hasNextFace}}disabled{{/unless}}><i class="fas fa-caret-up"></i></a>
+                    <a class="card-control" title="{{localize 'CARD.FacePrevious'}}" data-action="prevFace" {{#unless card.hasPreviousFace}}disabled{{/unless}}><i class="fas fa-caret-down"></i></a>
+                </div>
+            </li>
+        {{else}}
+            <li>
+                <p class="hint">{{localize "CARDS.NoCards"}}</p>
+            </li>
+        {{/each}}
+        </ol>
+    </div>
+
+    <!-- Sheet Footer -->
+    <footer class="sheet-footer flexrow">
+        {{#if owner}}
+        <button class="card-control" type="button" data-action="reset" {{ disabled inCompendium }}>
+            <i class="fas fa-undo"></i> {{localize "HV.cards.Reset"}}
+        </button>
+        {{/if}}
+    </footer>
+</form>
