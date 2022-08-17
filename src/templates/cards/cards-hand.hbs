@@ -1,4 +1,5 @@
 <form class="{{cssClass}}" autocomplete="off">
+    {{ log . }}
     <header class="sheet-header flexrow">
         <h1 class="name">
             <input type="text" name="name" value="{{data.name}}" placeholder="{{localize 'Name'}}"/>
@@ -11,14 +12,16 @@
             <span class="card-suit">{{localize "Notes"}}</span>
             <span class="card-suit">{{localize "CARD.Suit"}}</span>
             <span class="card-value">{{localize "CARD.Value"}}</span>
+            {{#if @root.isGM}}
             <span class="card-faces">{{localize "CARD.Face"}}</span>
+            {{/if}}
             <div class="card-controls"></div>
         </header>
         <ol class="cards">
         {{#each cards as |card|}}
             <li class="card flexrow" data-card-id="{{card.id}}">
                 <img class="card-face" data-src="{{card.img}}"  height="48">
-                {{#if card.showFace}}
+                {{#if (or @root.isGM card.showFace) }}
                 <span class="card-suit">{{card.data.name}}</span>
                 <span class="card-suit">{{card.data.description}}</span>
                 <span class="card-suit">{{card.data.suit}}</span>
@@ -26,10 +29,12 @@
                 {{else}}
                 <span class="card-name">?</span>
                 {{/if}}
+                {{#if @root.isGM}}
                 <div class="card-faces flexcol">
                     <a class="card-control" title="{{localize 'CARD.FaceNext'}}" data-action="nextFace" {{#unless card.hasNextFace}}disabled{{/unless}}><i class="fas fa-caret-up"></i></a>
                     <a class="card-control" title="{{localize 'CARD.FacePrevious'}}" data-action="prevFace" {{#unless card.hasPreviousFace}}disabled{{/unless}}><i class="fas fa-caret-down"></i></a>
                 </div>
+                {{/if}}
                 <div class="card-controls">
                     {{#if @root.isGM }}
                         {{#if (and @root.editable (not @root.inCompendium))}}
@@ -44,6 +49,7 @@
             </li>
         {{/each}}
         </ol>
+        {{#if @root.isGM}}
          <header class="cards-header flexrow">
             &nbsp;
             <span class="card-suit"></span>
@@ -53,16 +59,19 @@
             <span class="card-faces"></span>
             <div class="card-controls"></div>
         </header>
+        {{/if}}
     </div>
 
     <!-- Sheet Footer -->
     <footer class="sheet-footer flexrow">
-        <button class="card-control" type="button" data-action="draw" {{ disabled inCompendium }}>
+        <button class="card-control" type="button" data-action="draw">
             <i class="fas fa-plus"></i> {{localize "CARDS.Draw"}}
         </button>
-        <button class="card-control" type="button" data-action="reset" {{ disabled inCompendium }}>
+        {{#if @root.isGM}}
+        <button class="card-control" type="button" data-action="reset">
             <i class="fas fa-undo"></i> {{localize "HV.cards.Reset"}}
         </button>
+        {{/if}}
     </footer>
 </form>
 

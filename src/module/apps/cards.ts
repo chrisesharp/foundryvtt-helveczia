@@ -50,26 +50,7 @@ export class HVCardsHand extends CardsHand {
         this.object.dealDialog();
         break;
       case 'draw':
-        // this.object.drawDialog();
-        const sourceDeck = this.object.getFlag('helveczia', 'sourceDeck');
-        if (typeof sourceDeck === 'string' && sourceDeck !== null) {
-          const from = game.cards?.get(sourceDeck);
-          if (typeof from === 'object' && from != null) {
-            const options = { how: CONST.CARD_DRAW_MODES.RANDOM };
-            this.object.draw(from, 1, options).catch((err) => {
-              ui.notifications.error(err.message);
-              return [];
-            });
-          }
-        } else {
-          const speaker = ChatMessage.getSpeaker();
-          const chatData: any = {
-            user: game.user?.id,
-            speaker: speaker,
-            content: `${speaker.alias} wishes to draw from the Devil's Bible!`,
-          };
-          ChatMessage.create(chatData);
-        }
+        this.drawDialog(this.object);
         break;
       case 'pass':
         this.object.passDialog();
@@ -89,18 +70,11 @@ export class HVCardsHand extends CardsHand {
         this.render();
         break;
       case 'nextFace':
-        if (card) card.update({ face: card.data.face === null ? 0 : card.data.face + 1 });
-        break;
+        await card?.update({ face: card.data?.face === null ? 0 : card.data?.face + 1 });
+        return;
       case 'prevFace':
-        if (card) {
-          let newface = card.data.face ?? null;
-          if (newface) {
-            newface = newface === 0 ? null : (newface -= 1);
-          }
-
-          card.update({ face: newface });
-        }
-        break;
+        await card?.update({ face: card.data?.face === 0 ? null : -1 });
+        return;
     }
     return;
   }
@@ -127,12 +101,47 @@ export class HVCardsHand extends CardsHand {
           },
         },
         {
-          name: `${name}'s hand`,
-          type: 'hand',
+          name: `${name}'s returned cards`,
+          type: 'pile',
           _id: randomID(),
           folder: folderId,
         },
       ]);
+    }
+  }
+
+  async drawDialog(source) {
+    const user = game.user;
+    if (user != null) {
+      // const decks = game.cards?.filter((c) => c.type === 'deck' && c.testUserPermission(user, 'LIMITED'));
+      const sourceDeck = source.getFlag('helveczia', 'sourceDeck');
+      const decks = [sourceDeck];
+      if (!decks?.length) return ui.notifications.warn('CARDS.DrawWarnNoSources', { localize: true });
+
+      // Construct the dialog HTML
+      const html = await renderTemplate('systems/helveczia/templates/cards/dialog-draw.hbs', {});
+
+      // Display the prompt
+      return Dialog.prompt({
+        title: game.i18n.localize('CARDS.DrawTitle'),
+        label: game.i18n.localize('CARDS.Draw'),
+        content: html,
+        callback: (html) => {
+          const form = html.querySelector('form.cards-dialog') as HTMLFormElement;
+          if (form) {
+            const fd = new FormDataExtended(form, {}).toObject();
+            const from = game.cards?.get(sourceDeck);
+            // const options = { how: fd.how, updateData: fd.down ? { face: null } : {} };
+            const options = { how: CONST.CARD_DRAW_MODES.RANDOM, updateData: { face: null } };
+            return source.draw(from, fd.number, options).catch((err) => {
+              ui.notifications.error(err.message);
+              return [];
+            });
+          }
+        },
+        rejectClose: false,
+        options: { jQuery: false },
+      });
     }
   }
 
