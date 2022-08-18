@@ -34,7 +34,7 @@ import { HVChat } from './chat';
 import { HVNPCSheet } from './actor/npc-sheet';
 import { BookSheet } from './items/book/book-sheet';
 import { HVCombat } from './combat';
-import { HVCardsHand, HVCardsPile } from './apps/cards';
+import { HVCardsHand, HVCardsPile, HVCardsControl } from './apps/cards';
 
 const log = new Logger();
 
@@ -117,6 +117,8 @@ Hooks.once('ready', async () => {
 });
 
 // Add any additional hooks if necessary
+Hooks.on('HV.Cards.genCards', HVCardsControl.showDialog);
+
 Hooks.on('applyActiveEffect', async (actor, changeData) => {
   actor.applyCustomEffect(changeData);
 });
@@ -137,6 +139,10 @@ Hooks.on('renderSidebarTab', async (object, html) => {
   // if (object instanceof ActorDirectory) {
   //   party.addControl(object, html);
   // }
+
+  if (object instanceof CardsDirectory) {
+    HVCardsControl.addControl(object, html);
+  }
 
   if (object instanceof Settings) {
     const gamesystem = html.find('#game-details');

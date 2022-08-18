@@ -1,3 +1,44 @@
+export class HVCardsControl {
+  static addControl(_object, html): void {
+    if (game.user?.isGM) {
+      const control = `<div flexrow>
+      <button class='hv-card-gen' type="button" title='${game.i18n.localize(
+        'HV.dialog.cardgenerator',
+      )}'> ${game.i18n.localize('HV.dialog.cardgenerator')}
+      </button>
+      </div>`;
+      // html.find('.fas.fa-search').replaceWith($(control));
+      html.find('.header-search').before($(control));
+      html.find('.hv-card-gen').click((ev) => {
+        ev.preventDefault();
+        Hooks.call('HV.Cards.genCards');
+      });
+    }
+  }
+
+  static async showDialog(options = {}): Promise<void> {
+    const buttons = {
+      ok: {
+        label: game.i18n.localize('HV.dialog.createDeckForActor'),
+        icon: '<i class="fas fa-dice-d20"></i>',
+        callback: (html) => {
+          const actor = html.find('#actor').val();
+          HVCardsHand.createHandsFor(actor);
+        },
+      },
+    };
+    const actors = game.actors?.filter((a) => a.hasPlayerOwner);
+    const html = await renderTemplate('systems/helveczia/templates/cards/dialog-generate.hbs', { actors: actors });
+    new Dialog({
+      title: game.i18n.localize('HV.dialog.cardgenerator'),
+      content: html,
+      buttons: buttons,
+      default: 'ok',
+      close: () => {},
+    }).render(true, { focus: true, ...options });
+  }
+}
+
 export class HVCardsPile extends CardsConfig {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {

@@ -171,5 +171,8 @@
   "HV.Fist": "Unarmed",
   "HV.RollVirtue": "Roll for Virtue",
   "HV.cards.Total": "Total",
-  "HV.cards.Reset": "Return to Deck"
+  "HV.cards.Reset": "Return to Deck",
+  "HV.dialog.cardgenerator": "Add Devil's Bible",
+  "HV.dialog.cardlabel": "Add Devil's Bible for",
+  "HV.dialog.createDeckForActor": "Create Decks for Actor"
 }

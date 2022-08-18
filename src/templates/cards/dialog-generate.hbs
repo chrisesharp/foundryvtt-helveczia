@@ -1,0 +1,12 @@
+<form class="cards-dialog">
+    <div class="form-group">
+        <label>{{localize "HV.dialog.cardlabel"}}</label>
+        <div class="form-fields">
+            <select name="actor" id="actor">
+                 {{#each actors as |actor| }}
+                 <option>{{ actor.name }}</option>
+                 {{/each}}
+            </select>
+        </div>
+    </div>
+</form>
