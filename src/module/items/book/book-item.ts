@@ -1,12 +1,13 @@
 import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
-import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
-import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
+import { ItemDataConstructorData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
+import { BaseUser } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/documents.mjs';
 import { HVActor } from '../../actor/actor';
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 import { BookItemData } from '../item-types';
 
 export class BookItem extends BaseItem {
+  static DEFAULT_TOKEN = 'icons/svg/book.svg';
   static get documentName() {
     return 'book';
   }
@@ -34,13 +35,14 @@ export class BookItem extends BaseItem {
     });
   }
 
-  static async onCreate(
-    _item: HVItem,
-    _data: PropertiesToSource<ItemDataBaseProperties>,
-    _options: DocumentModificationOptions,
-    _userId: string,
-  ) {
-    // console.log('in PossessionItem.onCreate():', item, data, options, userId);
+  static async preCreate(data: ItemDataConstructorData, _options: DocumentModificationOptions, _user: BaseUser) {
+    mergeObject(
+      data,
+      {
+        img: BookItem.DEFAULT_TOKEN,
+      },
+      { overwrite: true },
+    );
   }
 
   /** @override */

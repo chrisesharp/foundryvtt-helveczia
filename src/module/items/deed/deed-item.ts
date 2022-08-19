@@ -1,5 +1,8 @@
 import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
-import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
+import {
+  ItemDataBaseProperties,
+  ItemDataConstructorData,
+} from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
 import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
@@ -7,11 +10,13 @@ import { Logger } from '../../logger';
 import { DeedItemData } from '../item-types';
 import { HVActor } from '../../actor/actor';
 import { Utils } from '../../utils/utils';
+import { BaseUser } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/documents.mjs';
 
 const log = new Logger();
 
 export class DeedItem extends BaseItem {
-  static DEFAULT_TOKEN = 'systems/helveczia/assets/icons/angel_sm.png';
+  // static DEFAULT_TOKEN = 'systems/helveczia/assets/icons/angel_sm.png';
+  static DEFAULT_TOKEN = 'icons/svg/aura.svg';
   static get documentName() {
     return 'deed';
   }
@@ -24,6 +29,16 @@ export class DeedItem extends BaseItem {
 
     // Check or uncheck a single box
     // html.find(".helveczia-possession").click((e) => this._onRollSkill.call(this, e, sheet));
+  }
+
+  static async preCreate(data: ItemDataConstructorData, _options: DocumentModificationOptions, _user: BaseUser) {
+    mergeObject(
+      data,
+      {
+        img: DeedItem.DEFAULT_TOKEN,
+      },
+      { overwrite: true },
+    );
   }
 
   static async onCreate(
@@ -42,7 +57,7 @@ export class DeedItem extends BaseItem {
       },
       { overwrite: true },
     );
-    item.data.update(data);
+    await item.data.update(data);
     log.debug('DeedItem.onCreate()|', item, data, options, userId);
   }
 

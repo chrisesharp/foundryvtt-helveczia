@@ -1,6 +1,6 @@
 import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
-import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
-import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
+import { ItemDataConstructorData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
+import { BaseUser } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/documents.mjs';
 import { HVActor } from '../../actor/actor';
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
@@ -22,12 +22,7 @@ export class WeaponItem extends BaseItem {
     // html.find(".helveczia-possession").click((e) => this._onRollSkill.call(this, e, sheet));
   }
 
-  static async onCreate(
-    item: HVItem,
-    data: PropertiesToSource<ItemDataBaseProperties>,
-    _options: DocumentModificationOptions,
-    _userId: string,
-  ) {
+  static async preCreate(data: ItemDataConstructorData, _options: DocumentModificationOptions, _user: BaseUser) {
     mergeObject(
       data,
       {
@@ -35,7 +30,6 @@ export class WeaponItem extends BaseItem {
       },
       { overwrite: true },
     );
-    item.data.update(data);
   }
 
   /** @override */

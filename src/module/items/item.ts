@@ -1,15 +1,30 @@
 import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
-import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
+// eslint-disable-next-line prettier/prettier
+import { ItemDataBaseProperties, ItemDataConstructorData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
+import { BaseUser } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/documents.mjs';
 import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
 import { HVActor } from '../actor/actor';
 import { HVItemData } from './item-types';
 
 export class HVItem extends Item {
+  protected async _preCreate(
+    data: ItemDataConstructorData,
+    options: DocumentModificationOptions,
+    user: BaseUser,
+  ): Promise<void> {
+    await super._preCreate(data, options, user);
+    if (CONFIG.HV.itemClasses[this.data.type]) {
+      await CONFIG.HV.itemClasses[this.data.type].preCreate(data, options, user);
+    }
+    this.data.update(data);
+  }
+
   protected async _onCreate(
     data: PropertiesToSource<ItemDataBaseProperties>,
     options: DocumentModificationOptions,
     userId: string,
   ): Promise<void> {
+    super._onCreate(data, options, userId);
     // Let every itemType augment itself on creation
     if (CONFIG.HV.itemClasses[this.data.type]) {
       await CONFIG.HV.itemClasses[this.data.type].onCreate(this, data, options, userId);
