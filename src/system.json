@@ -18,6 +18,13 @@
   "styles": ["styles/helveczia.css"],
   "packs": [
     {
+      "name": "npcs",
+      "label": "NPCs",
+      "package": "helveczia",
+      "path": "packs/npcs.db",
+      "type": "Actor"
+    },
+    {
       "name": "peoples",
       "label": "Peoples",
       "package": "helveczia",
@@ -142,6 +149,13 @@
       "package": "helveczia",
       "path": "packs/cards.db",
       "type": "Cards"
+    },
+    {
+      "name": "rolltables",
+      "label": "Rolltables",
+      "package": "helveczia",
+      "path": "packs/rolltables.db",
+      "type": "RollTable"
     }
   ],
   "dependencies": [

@@ -174,5 +174,7 @@
   "HV.cards.Reset": "Return to Deck",
   "HV.dialog.cardgenerator": "Add Devil's Bible",
   "HV.dialog.cardlabel": "Add Devil's Bible for",
-  "HV.dialog.createDeckForActor": "Create Decks for Actor"
+  "HV.dialog.createDeckForActor": "Create Decks for Actor",
+  "HV.dialog.namegenerator": "Random Name",
+  "HV.dialog.findname": "Find a Name"
 }
