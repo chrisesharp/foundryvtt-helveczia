@@ -176,5 +176,6 @@
   "HV.dialog.cardlabel": "Add Devil's Bible for",
   "HV.dialog.createDeckForActor": "Create Decks for Actor",
   "HV.dialog.namegenerator": "Random Name",
-  "HV.dialog.findname": "Find a Name"
+  "HV.dialog.findname": "Find a Name",
+  "HV.dialog.nameerror": "Cannot suggest a {people} name"
 }

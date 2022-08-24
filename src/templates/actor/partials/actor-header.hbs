@@ -7,6 +7,7 @@
             <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
         </div>
         <div class="actor-name" style="display: inline-flex;">
+            <a><i class="fa fa-dice roll-name" data-actor-id="{{ actor._id}}"></i></a>
             <h3 style="display: contents;"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>,</h3>
         </div>
         {{#unless no_origins }}

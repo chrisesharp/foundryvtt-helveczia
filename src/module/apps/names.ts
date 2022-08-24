@@ -36,8 +36,7 @@ export class HVNameGenerator {
         },
       },
     };
-    const actors = game.actors?.filter((a) => a.hasPlayerOwner);
-    const html = await renderTemplate('systems/helveczia/templates/names/dialog-name.hbs', { actors: actors });
+    const html = await renderTemplate('systems/helveczia/templates/names/dialog-name.hbs', {});
     new Dialog({
       title: game.i18n.localize('HV.dialog.namegenerator'),
       content: html,
@@ -49,7 +48,7 @@ export class HVNameGenerator {
 
   static findName(sex: string, people: string, helveczian: boolean): string {
     const variant = helveczian ? 'helveczian' : 'native';
-    let names: NameType[];
+    let names: NameType[] = [];
     switch (people) {
       case 'french':
         names = FrenchNames;
@@ -57,10 +56,11 @@ export class HVNameGenerator {
       case 'italian':
         names = ItalianNames;
         break;
-      default:
+      case 'german':
         names = GermanNames;
+        break;
     }
-    const name = names[Math.floor(Math.random() * 100)] as NameType;
-    return `${name.forename[sex]} ${name.surname[variant]}`;
+    const name = names[Math.floor(Math.random() * names.length)] as NameType;
+    return name ? `${name.forename[sex]} ${name.surname[variant]}` : '';
   }
 }

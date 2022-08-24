@@ -8,6 +8,7 @@ import { HVItem } from '../items/item';
 import { CharacterActorData } from './actor-types';
 import { Utils } from '../utils/utils';
 import { HVDice } from '../dice';
+import { HVNameGenerator } from '../apps/names';
 
 const log = new Logger();
 
@@ -93,6 +94,7 @@ export class HVActorSheet extends ActorSheet {
     html.find('.choose-race-class').click(this._generateRaceClass.bind(this));
     html.find('.choose-specialism').click(this._chooseSpecialism.bind(this));
     html.find('.roll-virtue').click(this.rollVirtue.bind(this));
+    html.find('.roll-name').click(this.rollName.bind(this));
     html.find('.generate-craft-skill').click(this._generateCraftSkill.bind(this));
     html.find('.generate-science-skills').click(this._generateScienceSkills.bind(this));
     html.find('.absolution').click(this._onAbsolution.bind(this));
@@ -370,6 +372,23 @@ export class HVActorSheet extends ActorSheet {
         classes: ['helveczia', 'helveczia-dialog'],
       },
     ).render(true);
+  }
+
+  async rollName(event) {
+    event.preventDefault();
+    const button = $(event.currentTarget);
+    const actorId = $(button).data('actorId');
+    const actor = game.actors?.get(actorId);
+    // TODO set gender properly
+    const sex = 'male';
+    const people = actor?.data.data.people?.toLowerCase() ?? 'german';
+    const helveczian = false;
+    const name = HVNameGenerator.findName(sex, people, helveczian);
+    if (name !== '') {
+      await actor?.update({ name: name, token: { name: name } });
+    } else {
+      ui.notifications.warn(game.i18n.format('HV.dialog.nameerror', { people: actor?.data.data.people }));
+    }
   }
 
   async rollVirtue(event) {
