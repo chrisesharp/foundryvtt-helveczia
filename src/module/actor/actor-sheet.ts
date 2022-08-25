@@ -77,6 +77,8 @@ export class HVActorSheet extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
+    // set character sex
+    html.find('.toggle-gender').click(this._toggleGender.bind(this));
     // Item summaries
     html.find('.item .item-name').click((event) => this._onItemSummary(event));
 
@@ -237,6 +239,12 @@ export class HVActorSheet extends ActorSheet {
     this.actor.rollCheck(rollData, target);
   }
 
+  async _toggleGender(event) {
+    event.preventDefault();
+    const sex = this.actor.getFlag('helveczia', 'sex') === 'male' ? 'female' : 'male';
+    await this.actor.setFlag('helveczia', 'sex', sex);
+  }
+
   async _onRollHitPoints(event) {
     event.preventDefault();
     const hitpoints = await HVCharacterCreator.rollHitPoints(this.actor.data);
@@ -379,8 +387,7 @@ export class HVActorSheet extends ActorSheet {
     const button = $(event.currentTarget);
     const actorId = $(button).data('actorId');
     const actor = game.actors?.get(actorId);
-    // TODO set gender properly
-    const sex = 'male';
+    const sex = (actor?.getFlag('helveczia', 'sex') as string) ?? 'male';
     const people = actor?.data.data.people?.toLowerCase() ?? 'german';
     const helveczian = false;
     const name = HVNameGenerator.findName(sex, people, helveczian);

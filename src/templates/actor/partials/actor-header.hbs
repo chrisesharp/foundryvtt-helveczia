@@ -7,8 +7,9 @@
             <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
         </div>
         <div class="actor-name" style="display: inline-flex;">
-            <a><i class="fa fa-dice roll-name" data-actor-id="{{ actor._id}}"></i></a>
+            <a><i class="fas {{#if (eq sex 'male') }}fa-mars{{else}}fa-venus{{/if}} toggle-gender" data-actor-id="{{ actor._id}}" title="sex"></i></a>
             <h3 style="display: contents;"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>,</h3>
+            <a><i class="fa fa-dice roll-name" data-actor-id="{{ actor._id}}"></i></a>
         </div>
         {{#unless no_origins }}
         <div class="actor-level" style="display: inline-flex;">

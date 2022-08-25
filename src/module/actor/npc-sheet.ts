@@ -27,6 +27,7 @@ export class HVNPCSheet extends HVActorSheet {
       cleric_class: this.actor.isCleric(),
       fighter_specialism: this.actor.getFlag('helveczia', 'fighter-specialism'),
       student_class: this.actor.getFlag('helveczia', 'student-class'),
+      sex: this.actor.getFlag('helveczia', 'sex') ?? 'male',
       options: this.options,
       editable: this.isEditable,
       isToken: this.token && !this.token.data.actorLink,

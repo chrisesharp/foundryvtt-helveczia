@@ -25,6 +25,7 @@ export class HVCharacterSheet extends HVActorSheet {
     const actorData = baseData.actor;
     const data: any = {
       owner: this.actor.isOwner,
+      sex: this.actor.getFlag('helveczia', 'sex') ?? 'male',
       initialized:
         this.actor.getFlag('helveczia', 'abilities-initialized') &&
         this.actor.getFlag('helveczia', 'origins-initialized'),
