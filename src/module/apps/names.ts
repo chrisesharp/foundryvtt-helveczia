@@ -1,10 +1,18 @@
 import { FrenchNames } from './names/french';
 import { GermanNames } from './names/german';
 import { ItalianNames } from './names/italian';
+import { PolishNames } from './names/polish';
 
 type NameType = {
   forename: { male: string; female: string };
   surname: { native: string; helveczian: string };
+};
+
+const nameMap = {
+  french: FrenchNames,
+  german: GermanNames,
+  italian: ItalianNames,
+  polish: PolishNames,
 };
 
 export class HVNameGenerator {
@@ -32,7 +40,15 @@ export class HVNameGenerator {
           const sex = html.find('#sex').val();
           const people = html.find('#people').val();
           const helveczian = html.find('[type=checkbox]').is(':checked');
-          ui.notifications.info(HVNameGenerator.findName(sex, people, helveczian));
+          const name = HVNameGenerator.findName(sex, people, helveczian);
+          const content = `<h1 class='generated-name'>${name}</h1>`;
+          Dialog.prompt({
+            title: game.i18n.localize('HV.dialog.sendname'),
+            callback: () => {
+              ChatMessage.create({ content: content });
+            },
+            content: content,
+          });
         },
       },
     };
@@ -48,19 +64,9 @@ export class HVNameGenerator {
 
   static findName(sex: string, people: string, helveczian: boolean): string {
     const variant = helveczian ? 'helveczian' : 'native';
-    let names: NameType[] = [];
-    switch (people) {
-      case 'french':
-        names = FrenchNames;
-        break;
-      case 'italian':
-        names = ItalianNames;
-        break;
-      case 'german':
-        names = GermanNames;
-        break;
-    }
-    const name = names[Math.floor(Math.random() * names.length)] as NameType;
-    return name ? `${name.forename[sex]} ${name.surname[variant]}` : '';
+    const names: NameType[] = nameMap[people] ?? [];
+    const forename = (names[Math.floor(Math.random() * names.length)] as NameType).forename[sex] ?? '';
+    const surname = (names[Math.floor(Math.random() * names.length)] as NameType).surname[variant] ?? '';
+    return `${forename} ${surname}`;
   }
 }

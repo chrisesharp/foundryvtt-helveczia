@@ -177,5 +177,6 @@
   "HV.dialog.createDeckForActor": "Create Decks for Actor",
   "HV.dialog.namegenerator": "Random Name",
   "HV.dialog.findname": "Find a Name",
-  "HV.dialog.nameerror": "Cannot suggest a {people} name"
+  "HV.dialog.nameerror": "Cannot suggest a {people} name",
+  "HV.dialog.sendname": "Send Name to Chat?"
 }
