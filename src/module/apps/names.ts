@@ -2,6 +2,11 @@ import { FrenchNames } from './names/french';
 import { GermanNames } from './names/german';
 import { ItalianNames } from './names/italian';
 import { PolishNames } from './names/polish';
+import { DutchNames } from './names/dutch';
+import { CzechNames } from './names/czech';
+import { EnglishNames } from './names/english';
+import { SpanishNames } from './names/spanish';
+import { SwedishNames } from './names/swedish';
 
 type NameType = {
   forename: { male: string; female: string };
@@ -13,6 +18,11 @@ const nameMap = {
   german: GermanNames,
   italian: ItalianNames,
   polish: PolishNames,
+  dutch: DutchNames,
+  czech: CzechNames,
+  english: EnglishNames,
+  spanish: SpanishNames,
+  swedish: SwedishNames,
 };
 
 export class HVNameGenerator {
@@ -66,7 +76,13 @@ export class HVNameGenerator {
     const variant = helveczian ? 'helveczian' : 'native';
     const names: NameType[] = nameMap[people] ?? [];
     const forename = (names[Math.floor(Math.random() * names.length)] as NameType).forename[sex] ?? '';
-    const surname = (names[Math.floor(Math.random() * names.length)] as NameType).surname[variant] ?? '';
+    let surname = '';
+    if (people === 'swedish') {
+      const father = (names[Math.floor(Math.random() * names.length)] as NameType).forename['male'];
+      surname = sex === 'male' ? `${father}son` : `${father}dotter`;
+    } else {
+      surname = (names[Math.floor(Math.random() * names.length)] as NameType).surname[variant] ?? '';
+    }
     return `${forename} ${surname}`;
   }
 }
