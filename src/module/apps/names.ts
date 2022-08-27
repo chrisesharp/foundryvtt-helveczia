@@ -9,6 +9,8 @@ import { SpanishNames } from './names/spanish';
 import { SwedishNames } from './names/swedish';
 import { HungarianNames } from './names/hungarian';
 import { CossackNames } from './names/cossack';
+import { GypsyNames } from './names/gypsy';
+import { JewishNames } from './names/jewish';
 
 type NameType = {
   forename: { male: string; female: string };
@@ -27,6 +29,8 @@ const nameMap = {
   swedish: SwedishNames,
   hungarian: HungarianNames,
   cossack: CossackNames,
+  gypsy: GypsyNames,
+  jewish: JewishNames,
 };
 
 export class HVNameGenerator {
