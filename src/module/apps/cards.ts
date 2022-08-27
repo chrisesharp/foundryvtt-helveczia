@@ -129,7 +129,8 @@ export class HVCardsHand extends CardsHand {
 
   static async createHandsFor(name: string): Promise<void> {
     const packName = 'helveczia.cards';
-    const userId = game.users?.find((u) => u.charname === name)?.id;
+    // const forename = name.split(' ')[0];
+    const userId = game.users?.find((u) => u.character?.name === name)?.id;
     const pack = game.packs.get(packName);
     if (pack) {
       const result = (await pack.importAll({ folderName: `${name}` }))[0];
