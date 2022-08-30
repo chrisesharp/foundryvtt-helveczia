@@ -1,6 +1,6 @@
 # Helveczia RPG for Foundry VTT
 
- This is an unofficial, third-party implementation of the excellent **Helvéczia** core rules, copyright **Gabor Lux**.
+ This is an unofficial, third-party implementation of the excellent **Helvéczia** core rules, copyright **Gabor Lux**, 2021.
 
 You need to get the [Helvéczia rules](https://emdt.bigcartel.com/category/helveczia-rpg)
 in order to play. You will also find a wealth of inspiration for your games in the rules (and especially the excellent box set), too.
