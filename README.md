@@ -10,6 +10,7 @@ in order to play. You will also find a wealth of inspiration for your games in t
 Full documentation is available [here](https://chrisesharp.github.io/foundryvtt-helveczia/)
 
 To install in Foundry VTT, provide this manifest URL:
+
 [https://github.com/chrisesharp/foundryvtt-helveczia/releases/latest/download/system.json](https://github.com/chrisesharp/foundryvtt-helveczia/releases/latest/download/system.json)
 
 
