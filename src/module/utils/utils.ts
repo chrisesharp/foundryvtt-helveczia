@@ -21,14 +21,4 @@ export class Utils {
       }, []),
     );
   }
-
-  // static async deleteEmbeddedArray(arr: EmbeddedObjectType[], subject: EmbeddedSubject) {
-  //     return Promise.all(
-  //         arr.map((p) => {
-  //             const docType = (p instanceof Item) ?  "Item" : "ActiveEffect";
-  //             if (p.id) return subject.deleteEmbeddedDocuments(docType, [p.id]);
-  //             return Promise.resolve();
-  //         }),
-  //       );
-  // }
 }

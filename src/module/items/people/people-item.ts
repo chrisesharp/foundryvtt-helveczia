@@ -198,23 +198,4 @@ export class PeopleItem extends BaseItem {
     const attr = (await actor.getFlag('helveczia', 'fate-save')) as string;
     return { mod: -2, attr: attr };
   }
-
-  // static async addFrenchEffects(item: HVItem) {
-  //   const armourEffect = { key: 'data.ac', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: '1' };
-  //   const deftnessEffect = { key: 'data.saves.deftness.bonus', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: '1' };
-  //   const effect = await ActiveEffect.create(
-  //     {
-  //       label: 'Finesse',
-  //       icon: 'icons/svg/aura.svg',
-  //       origin: item.uuid,
-  //       transfer: true,
-  //       changes: [armourEffect, deftnessEffect],
-  //     },
-  //     { parent: item },
-  //   );
-  //   if (effect) {
-  //     await item.updateEmbeddedDocuments('ActiveEffect', [{ _id: effect.id, effects: [effect] }]);
-  //   }
-  //   return item.update();
-  // }
 }

@@ -72,10 +72,6 @@ export abstract class BaseItem {
         'A subclass of the BaseItem must provide an documentName field or implement their own _onItemAdd() method.',
       );
     }
-
-    // html.find(`.fatex-js-${this.documentName}-add`).click((e) => this._onItemAdd.call(this, e, sheet));
-    // html.find(`.fatex-js-${this.documentName}-settings`).click((e) => this._onItemSettings.call(this, e, sheet));
-    // html.find(`.fatex-js-${this.documentName}-delete`).click((e) => this._onItemDelete.call(this, e, sheet));
   }
 
   /**

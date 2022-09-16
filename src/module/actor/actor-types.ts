@@ -82,8 +82,6 @@ type BaseData = {
   capacity: number;
 };
 
-// type CharacterData = BaseData | {experience: number};
-
 export interface CharacterActorData {
   type: 'character';
   data: BaseData;
@@ -99,5 +97,4 @@ export interface NPCActorData {
 
 ///////////////////////////////
 
-// export type ReferenceItemData = TokenReferenceItemData | ActorReferenceItemData | CombatantReferenceItemData;
 export type HVActorData = CharacterActorData | NPCActorData;

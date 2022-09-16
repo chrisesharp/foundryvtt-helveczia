@@ -18,9 +18,6 @@ export class ArmourItem extends BaseItem {
    */
   static activateActorSheetListeners(html, sheet) {
     super.activateActorSheetListeners(html, sheet);
-
-    // Check or uncheck a single box
-    // html.find(".helveczia-possession").click((e) => this._onRollSkill.call(this, e, sheet));
   }
 
   static async preCreate(data: ItemDataConstructorData, _options: DocumentModificationOptions, _user: BaseUser) {
@@ -32,22 +29,6 @@ export class ArmourItem extends BaseItem {
       { overwrite: true },
     );
   }
-
-  // static async onCreate(
-  //   item: HVItem,
-  //   data: PropertiesToSource<ItemDataBaseProperties>,
-  //   _options: DocumentModificationOptions,
-  //   _userId: string,
-  // ) {
-  //   mergeObject(
-  //     data,
-  //     {
-  //       img: ArmourItem.DEFAULT_TOKEN,
-  //     },
-  //     { overwrite: true },
-  //   );
-  //   item.data.update(data);
-  // }
 
   /** @override */
   static getSheetData(sheetData, _item) {

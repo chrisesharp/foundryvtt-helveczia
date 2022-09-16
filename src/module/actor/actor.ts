@@ -24,7 +24,6 @@ export class HVActor extends Actor {
   prepareBaseData(): void {
     const actorData = this.data;
 
-    // const flags = actorData.flags;
     switch (actorData.type) {
       case 'character':
         {
@@ -62,8 +61,6 @@ export class HVActor extends Actor {
   /** @override */
   prepareDerivedData(): void {
     const actorData = this.data;
-    // const data = actorData.data;
-    // const flags = actorData.flags;
     this._categoriseItems(actorData);
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep

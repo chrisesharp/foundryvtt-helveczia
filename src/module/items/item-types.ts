@@ -115,7 +115,6 @@ export interface SpellItemData {
 
 ///////////////////////////////
 
-// export type ReferenceItemData = TokenReferenceItemData | ActorReferenceItemData | CombatantReferenceItemData;
 export type HVItemData =
   | PossessionItemData
   | SkillItemData
