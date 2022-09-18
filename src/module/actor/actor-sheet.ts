@@ -15,13 +15,13 @@ const log = new Logger();
 export class HVActorSheet extends ActorSheet {
   /** @override */
   get template() {
-    return `systems/helveczia/templates/actor/${this.actor.data.type}-sheet.hbs`;
+    return `systems/helveczia/templates/actor/${this.actor.type}-sheet.hbs`;
   }
 
   /** @override */
   activateEditor(target, editorOptions, initialContent) {
     // remove some controls to the editor as the space is lacking
-    if (target == 'data.description') {
+    if (target == 'system.description') {
       editorOptions.toolbar = 'styleselect bullist hr table removeFormat save';
     }
     super.activateEditor(target, editorOptions, initialContent);
@@ -29,7 +29,7 @@ export class HVActorSheet extends ActorSheet {
 
   onDropAllow(_actor, data): boolean {
     // Prevent folders being dragged onto the sheet
-    return data.type === 'Folder' ? false : true;
+    return !(data.type === 'Folder');
   }
 
   /** @override */
@@ -38,31 +38,31 @@ export class HVActorSheet extends ActorSheet {
   }
 
   async _removePeoples(item): Promise<boolean> {
-    if (item.name === this.actor.data.data.people) return false;
-    const peoples = this.actor.items.filter((i) => i.type == 'people');
+    if (item.name === this.actor.system.people) return false;
+    // const peoples = this.actor.items.filter((i) => i.type == 'people');
+    const peoples = this.actor.itemTypes['people'];
     await Utils.deleteEmbeddedArray(peoples, this.actor);
     return true;
   }
 
   async _removeClasses(item): Promise<boolean> {
-    if (item.name === this.actor.data.data.class) return false;
-    const itemData = item.data as ClassItemData;
-    if (!itemData.data.specialism) {
+    if (item.name === this.actor.system.class) return false;
+    const itemData = item.system as ClassItemData;
+    if (!itemData.specialism) {
       log.debug('_removeClasses() | Removing previous classes');
-      const classes = this.actor.items.filter((i) => i.type == 'class');
+      const classes = this.actor.itemTypes['class'];
       await Utils.deleteEmbeddedArray(classes, this.actor);
       return true;
     } else {
-      const requiredProfession = itemData.data.parent.toLowerCase();
-      const thisActorProfession = this.actor.data.data.class.toLowerCase();
+      const requiredProfession = itemData.parent.toLowerCase();
+      const thisActorProfession = this.actor.system.class.toLowerCase();
       if (thisActorProfession === requiredProfession) {
         if (requiredProfession === 'fighter') {
           log.debug(`_removeClasses() | Removing specialisms for ${thisActorProfession} `);
-          const classes = this.actor.items.filter(
+          const classes = this.actor.itemTypes['class'].filter(
             (i) =>
-              i.type == 'class' &&
-              (i.data as ClassItemData).data.specialism &&
-              (i.data as ClassItemData).data.parent.toLowerCase() === this.actor.data.data.class.toLowerCase(),
+              (i.system as ClassItemData).specialism &&
+              (i.system as ClassItemData).parent.toLowerCase() === this.actor.system.class.toLowerCase(),
           );
           await Utils.deleteEmbeddedArray(classes, this.actor);
         }
@@ -130,7 +130,7 @@ export class HVActorSheet extends ActorSheet {
       const itemID = li.data('item-id');
       const item = this.actor.items.get(itemID);
       if (item) {
-        const spellLevel = (item.data as SpellItemData).data.level;
+        const spellLevel = (item.system as SpellItemData).level;
         const state = (item.getFlag('helveczia', 'bonusSpell') as boolean) ?? false;
         const current = (this.actor.getFlag('helveczia', `bonusSpellsChosen-${spellLevel}`) as number) ?? 0;
         if (state !== true) {
@@ -248,10 +248,10 @@ export class HVActorSheet extends ActorSheet {
     let target: { id?: string } = {};
     if (game.user) {
       for (const t of game.user.targets.values()) {
-        const data = t.actor?.data;
-        if (data?._id) {
+        const actor = t.actor;
+        if (actor?._id) {
           target = {
-            id: data._id,
+            id: actor._id,
           };
         }
         if (target?.id) break;
@@ -269,8 +269,8 @@ export class HVActorSheet extends ActorSheet {
 
   async _onRollHitPoints(event) {
     event.preventDefault();
-    const hitpoints = await HVCharacterCreator.rollHitPoints(this.actor.data);
-    const success = this.actor.data.data.hp.max < hitpoints.max;
+    const hitpoints = await HVCharacterCreator.rollHitPoints(this.actor);
+    const success = this.actor.system.hp.max < hitpoints.max;
     const updateData = {
       hp: {
         value: hitpoints.value,
@@ -289,10 +289,10 @@ export class HVActorSheet extends ActorSheet {
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
     await hitpoints.roll.toMessage({ speaker: speaker, flavor: content });
     if (success) {
-      await this.actor.update({ data: updateData });
+      await this.actor.update({ system: updateData });
       this.render(true);
     }
-    this.actor.setFlag('helveczia', 'rolled-hits-lvl', this.actor.data.data.level);
+    this.actor.setFlag('helveczia', 'rolled-hits-lvl', this.actor.system.level);
   }
 
   /**
@@ -305,7 +305,7 @@ export class HVActorSheet extends ActorSheet {
     const li = $(event.currentTarget).parents('.item-entry');
     const item = this.actor.items.get(li.data('item-id'));
     if (!item) return;
-    const description = TextEditor.enrichHTML(item.data.data.description);
+    const description = TextEditor.enrichHTML(item.system.description);
     const options = '';
 
     // Toggle summary
@@ -410,13 +410,13 @@ export class HVActorSheet extends ActorSheet {
     const actorId = $(button).data('actorId');
     const actor = game.actors?.get(actorId);
     const sex = (actor?.getFlag('helveczia', 'sex') as string) ?? 'male';
-    const people = actor?.data.data.people?.toLowerCase() ?? 'german';
+    const people = actor?.system.people?.toLowerCase() ?? 'german';
     const helveczian = false;
     const name = HVNameGenerator.findName(sex, people, helveczian);
     if (name !== '') {
-      await actor?.update({ name: name, token: { name: name } });
+      await actor?.update({ name: name, prototypeToken: { name: name } });
     } else {
-      ui.notifications.warn(game.i18n.format('HV.dialog.nameerror', { people: actor?.data.data.people }));
+      ui.notifications.warn(game.i18n.format('HV.dialog.nameerror', { people: actor?.system.people }));
     }
   }
 
@@ -454,7 +454,7 @@ export class HVActorSheet extends ActorSheet {
                 title: title,
                 chatMessage: true,
               });
-              await actor?.update({ data: { virtue: roll.total } });
+              await actor?.update({ system: { virtue: roll.total } });
             },
           },
         },
@@ -491,16 +491,16 @@ export class HVActorSheet extends ActorSheet {
 
   async _generateCraftSkill(event) {
     event.preventDefault();
-    const existingSkills = (this.actor.data as CharacterActorData).data?.skills.map((i) => i.name);
+    const existingSkills = (this.actor.system as CharacterActorData).skills.map((i) => i.name);
     const rndCraft = await this.getRandomCraft(existingSkills);
     if (rndCraft) {
-      const craft = { name: rndCraft?.name, ability: (rndCraft.data as SkillItemData).data.ability };
+      const craft = { name: rndCraft?.name, ability: (rndCraft.system as SkillItemData).ability };
       const description =
         'Due to their diligence, they learn an extra, randomly rolled Craft skill with a +2 bonus. In this trade, they are already considered journeymen by guild standards, and enjoy all attendant benefits.  Germans can become masters in their craft  at 4th level.';
       const skill = {
         name: craft.name,
         type: 'skill',
-        data: {
+        system: {
           ability: craft.ability,
           subtype: 'craft',
           bonus: 2,
@@ -522,7 +522,7 @@ export class HVActorSheet extends ActorSheet {
 
   async _generateScienceSkills(event) {
     event.preventDefault();
-    const existingSkills = (this.actor.data as CharacterActorData).data.skills.map((i) => i.name);
+    const existingSkills = (this.actor.system as CharacterActorData).skills.map((i) => i.name);
     existingSkills.push(await this._genRndScienceSkill(1, existingSkills));
     await this._genRndScienceSkill(2, existingSkills);
     await this.actor.update();
@@ -531,12 +531,12 @@ export class HVActorSheet extends ActorSheet {
   async _genRndScienceSkill(idx, existingSkills): Promise<string | null> {
     const rndSkill = await this.getRandomScience(existingSkills);
     if (rndSkill != null) {
-      const skillData = { name: rndSkill.name, ability: (rndSkill.data as SkillItemData).data.ability };
+      const skillData = { name: rndSkill.name, ability: (rndSkill.system as SkillItemData).ability };
       const description = 'Random science known from their Student studies.';
       const skill = {
         name: skillData.name,
         type: 'skill',
-        data: {
+        system: {
           ability: skillData.ability,
           subtype: 'science',
           bonus: 0,
@@ -560,16 +560,14 @@ export class HVActorSheet extends ActorSheet {
   }
 
   async _getTags(item: HVItem): Promise<string> {
-    return CONFIG.HV.itemClasses[item.data.type] ? CONFIG.HV.itemClasses[item.data.type].getTags(item, this.actor) : '';
+    return CONFIG.HV.itemClasses[item.type] ? CONFIG.HV.itemClasses[item.type].getTags(item, this.actor) : '';
   }
 
   async _onAbsolution(event) {
     event.preventDefault();
-    const sins: HVItem[] = this.actor.data.data.deeds.filter((d) => d.data.data.subtype === 'sin');
-    const virtues = this.actor.data.data.deeds.filter(
-      (d) => d.data.data.subtype === 'virtue' && d.data.data.magnitude > 1,
-    );
-    const lowVirtue = this.actor.data.data.virtue < 7;
+    const sins: HVItem[] = this.actor.system.deeds.filter((d) => d.system.subtype === 'sin');
+    const virtues = this.actor.system.deeds.filter((d) => d.system.subtype === 'virtue' && d.system.magnitude > 1);
+    const lowVirtue = this.actor.system.virtue < 7;
 
     if (lowVirtue && virtues.length == 0) {
       ui.notifications.warn(
@@ -589,7 +587,7 @@ export class HVActorSheet extends ActorSheet {
     while (sins.length > 0) {
       const sin = sins.shift();
       if (sin) {
-        const mag: number = Math.floor((sin?.data as DeedItemData).data.magnitude);
+        const mag: number = Math.floor((sin?.system as DeedItemData).magnitude);
         if (absolvedTotal + mag < roll.total) {
           absolvedTotal = absolvedTotal + mag;
           absolved.push(sin);

@@ -14,8 +14,6 @@ import { BookItem } from './items/book/book-item';
 import { KJVBible } from './apps/bible/bible';
 
 export interface HelvecziaConfig {
-  socket?: any;
-
   createCardsFor?: (string) => void;
   DEFAULT_TOKEN: string;
   DEFAULT_PARTY: string;
