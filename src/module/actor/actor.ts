@@ -1,4 +1,3 @@
-import { ActorData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/module.mjs';
 import { CharacterActorData, HVActorData, NPCActorData } from './actor-types';
 import { Logger } from '../logger';
 import { HVDice } from '../dice';
@@ -22,12 +21,10 @@ export class HVActor extends Actor {
 
   /** @override */
   prepareBaseData(): void {
-    const actorData = this.data;
-
-    switch (actorData.type) {
+    switch (this.type) {
       case 'character':
         {
-          const data = actorData.data;
+          const data = this.system;
           data.ac = 10;
           data.npcModBonus = 0;
           data.level = this._calculateLevel(data.experience);
@@ -42,8 +39,8 @@ export class HVActor extends Actor {
     }
   }
 
-  calculateNPCThreatLevel(actorData: NPCActorData): void {
-    const data = actorData.data;
+  calculateNPCThreatLevel(): void {
+    const data = this.system;
     data.ac = data.baseAC;
     const parts = data.levelBonus.split('+');
     data.level = parseInt(parts[0]);
@@ -64,62 +61,52 @@ export class HVActor extends Actor {
 
   /** @override */
   prepareDerivedData(): void {
-    const actorData = this.data;
-    this._categoriseItems(actorData);
+    this._categoriseItems();
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
-    switch (actorData.type) {
+    switch (this.type) {
       case 'character':
-        this._prepareCharacterData(actorData);
+        this._prepareCharacterData();
         break;
       case 'npc':
-        this._prepareNPCData(actorData);
+        this._prepareNPCData();
         break;
     }
   }
 
-  _categoriseItems(actorData) {
-    const data = actorData.data;
-    const categories = actorData.items.reduce(
-      (acc, item) => {
-        const category = acc[item.type] || [];
-        category.push(item);
-        acc[item.type] = category;
-        return acc;
-      },
-      { possession: [], people: [], class: [], skill: [], armour: [], weapon: [], deed: [], spell: [], book: [] },
-    );
+  _categoriseItems() {
+    const data = this.system;
 
     data.possessions = {
-      articles: categories['possession'].concat(categories['book']),
-      weapons: categories['weapon'],
-      armour: categories['armour'].sort((a, b) => b.data.data.bonus - a.data.data.bonus),
+      articles: this.itemTypes['possession'].concat(this.itemTypes['book']),
+      weapons: this.itemTypes['weapon'],
+      armour: this.itemTypes['armour'].sort((a, b) => b.system.bonus - a.system.bonus),
     };
-    data.skills = categories['skill'];
-    data.peoples = categories['people'];
-    data.classes = categories['class'].filter((i) => i.data.data.specialism === false);
-    data.specialisms = categories['class'].filter((i) => i.data.data.specialism);
-    data.deeds = categories['deed'];
-    data.sins = categories['deed']
-      .filter((d) => d.data.data.subtype === 'sin')
+    data.skills = this.itemTypes['skill'];
+    data.peoples = this.itemTypes['people'];
+    data.classes = this.itemTypes['class'].filter((i) => i.system.specialism === false);
+    data.specialisms = this.itemTypes['class'].filter((i) => i.system.specialism);
+    data.deeds = this.itemTypes['deed'];
+    data.sins = this.itemTypes['deed']
+      .filter((d) => d.system.subtype === 'sin')
       .sort((a, b) => {
-        const first = 0 - a.data.data.magnitude;
-        const second = 0 - b.data.data.magnitude;
+        const first = 0 - a.system.magnitude;
+        const second = 0 - b.system.magnitude;
         return first - second;
       });
-    data.virtues = categories['deed']
-      .filter((d) => d.data.data.subtype === 'virtue')
+    data.virtues = this.itemTypes['deed']
+      .filter((d) => d.system.subtype === 'virtue')
       .sort((a, b) => {
-        const first = a.data.data.magnitude;
-        const second = b.data.data.magnitude;
+        const first = a.system.magnitude;
+        const second = b.system.magnitude;
         return first - second;
       });
     data.spells = [[], [], []];
-    if (categories['spell'].length) {
-      data.spells = categories['spell'].reduce(
+    if (this.itemTypes['spell'].length) {
+      data.spells = this.itemTypes['spell'].reduce(
         (acc, item) => {
-          const level = item.data.data.level - 1;
+          const level = item.system.level - 1;
           acc[level].push(item);
           return acc;
         },
@@ -133,15 +120,15 @@ export class HVActor extends Actor {
   /**
    * Prepare Character type specific data
    */
-  async _prepareCharacterData(actorData: ActorData) {
-    const data = actorData.data;
+  async _prepareCharacterData() {
+    const data = this.system;
 
     for (const key of Object.keys(data.scores)) {
       this._updateAbility(data.scores[key]);
     }
 
     this._calculateCapacity(data);
-    this._updateSaves(actorData);
+    this._updateSaves(data);
     this._updateSkills(data);
     this._updateCombatValues(data);
   }
@@ -149,14 +136,14 @@ export class HVActor extends Actor {
   /**
    * Prepare NPC type specific data
    */
-  async _prepareNPCData(actorData: ActorData) {
-    const data = actorData.data;
+  async _prepareNPCData() {
+    const data = this.system;
 
     for (const key of Object.keys(data.scores)) {
       this._updateAbility(data.scores[key]);
     }
 
-    this._updateSaves(actorData);
+    this._updateSaves(data);
     this._updateCombatValues(data);
   }
 
@@ -232,8 +219,7 @@ export class HVActor extends Actor {
   /**
    * Update base & bonus for saves
    */
-  _updateSaves(actorData: any) {
-    const data = actorData.data;
+  _updateSaves(data: any) {
     const virtue = this.isHighVirtue() ? 1 : 0;
     data.saves.bravery.bonus += data.scores.con.mod + virtue + data.npcModBonus;
     data.saves.deftness.bonus += data.scores.dex.mod + virtue + data.npcModBonus;
@@ -299,10 +285,10 @@ export class HVActor extends Actor {
 
   _applySave(change) {
     const { key, primary } = change;
-    const current = foundry.utils.getProperty(this.data, key) ?? null;
+    const current = foundry.utils.getProperty(this.system, key) ?? null;
     log.debug(`_applySave() | current value of ${key} is ${current}`);
     let update = '';
-    const lvl = foundry.utils.getProperty(this.data, 'data.level') ?? null;
+    const lvl = foundry.utils.getProperty(this.system, 'level') ?? null;
     log.debug(`_applySave() | level is ${lvl}`);
     if (!isNaN(lvl)) {
       log.debug('Primary?:', primary);
@@ -311,7 +297,7 @@ export class HVActor extends Actor {
     }
     log.debug('_applySave() | update is ', key, update);
     if (update !== '') {
-      foundry.utils.setProperty(this.data, key, update);
+      foundry.utils.setProperty(this.system, key, update);
     }
   }
 
@@ -319,20 +305,20 @@ export class HVActor extends Actor {
     const { key, value } = change;
     const melee = `${key}.melee.base`;
     const ranged = `${key}.ranged.base`;
-    const lvl = foundry.utils.getProperty(this.data, 'data.level') ?? 1;
-    const currentMeleeBase = foundry.utils.getProperty(this.data, melee) ?? 0;
-    const currentRangedBase = foundry.utils.getProperty(this.data, ranged) ?? 0;
+    const lvl = foundry.utils.getProperty(this.system, 'level') ?? 1;
+    const currentMeleeBase = foundry.utils.getProperty(this.system, 'melee') ?? 0;
+    const currentRangedBase = foundry.utils.getProperty(this.system, 'ranged') ?? 0;
     if (!isNaN(lvl)) {
       const base = value === 'fighter' ? lvl : Math.floor((lvl * 2) / 3);
-      foundry.utils.setProperty(this.data, melee, currentMeleeBase + base);
-      foundry.utils.setProperty(this.data, ranged, currentRangedBase + base);
+      foundry.utils.setProperty(this.system, melee, currentMeleeBase + base);
+      foundry.utils.setProperty(this.system, ranged, currentRangedBase + base);
     }
   }
 
   _applyBonus(change) {
     const { key, value } = change;
-    const currentBonus = foundry.utils.getProperty(this.data, key) ?? 0;
-    foundry.utils.setProperty(this.data, key, currentBonus + parseInt(value));
+    const currentBonus = foundry.utils.getProperty(this.system, key) ?? 0;
+    foundry.utils.setProperty(this.system, key, currentBonus + parseInt(value));
   }
 
   _applyRandomSaveBonus(_change) {
@@ -351,7 +337,7 @@ export class HVActor extends Actor {
         dmg: dmg,
       },
       opponent: opponent,
-      item: item?.data,
+      item: item,
     };
 
     const skip = false;
@@ -379,7 +365,7 @@ export class HVActor extends Actor {
   }
 
   _getCharacterRollData(data: CharacterActorData['data']): void {
-    if (this.data.type !== 'character') return;
+    if (this.type !== 'character') return;
     // log.debug('Character RollData:', data);
     if (data?.scores) {
       for (const [k, v] of Object.entries(data.scores)) {
@@ -389,7 +375,7 @@ export class HVActor extends Actor {
   }
 
   _getNPCRollData(data: NPCActorData['data']): void {
-    if (this.data.type !== 'npc') return;
+    if (this.type !== 'npc') return;
     // log.debug('NPC RollData:', data);
     if (data?.scores) {
       for (const [k, v] of Object.entries(data.scores)) {
@@ -401,7 +387,7 @@ export class HVActor extends Actor {
   /** @override */
   async _preCreate(data, options, user) {
     await super._preCreate(data, options, user);
-    data.token = data.token || {};
+    data.prototypeToken = data.prototypeToken || {};
 
     const disposition = data.type !== 'npc' ? CONST.TOKEN_DISPOSITIONS.FRIENDLY : CONST.TOKEN_DISPOSITIONS.HOSTILE;
     // Set basic token data for newly created actors.
@@ -417,11 +403,8 @@ export class HVActor extends Actor {
     );
 
     mergeObject(
-      data.token,
+      data.prototypeToken,
       {
-        vision: true,
-        dimSight: 30,
-        brightSight: 0,
         displayName: CONST.TOKEN_DISPLAY_MODES.HOVER,
         actorLink: true,
         disposition: disposition,
@@ -431,7 +414,7 @@ export class HVActor extends Actor {
       { overwrite: false },
     );
 
-    this.data.update(data);
+    this.updateSource(data);
   }
 
   isNPC(): boolean {
@@ -467,17 +450,17 @@ export class HVActor extends Actor {
   }
 
   isNamedType(name: string, type: string): boolean {
-    const actorData = this.data;
-    const namedClass = actorData.items.find((i) => i.type === type && i.name === name);
+    // const namedClass = actorData.items.find((i) => i.type === type && i.name === name);
+    const namedClass = this.itemTypes[type].find((i) => i.name === name);
     return namedClass !== undefined;
   }
 
   isLowVirtue(): boolean {
-    return this.data.data.virtue < 7;
+    return this.system.virtue < 7;
   }
 
   isHighVirtue(): boolean {
-    return this.data.data.virtue > 14;
+    return this.system.virtue > 14;
   }
 
   getSpellSlots(): number[] {
@@ -489,9 +472,9 @@ export class HVActor extends Actor {
   getSpellBonus(): number[] {
     let attr = 0;
     if (this.isStudent()) {
-      attr = this.data.data.scores.int.value;
+      attr = this.system.scores.int.value;
     } else if (this.isCleric()) {
-      attr = this.data.data.scores.wis.value;
+      attr = this.system.scores.wis.value;
     }
 
     const spells = [0, 0, 0];
@@ -552,25 +535,25 @@ export class HVActor extends Actor {
         switch (item.type) {
           case 'skill':
             {
-              const skill = item.data as SkillItemData;
-              const bonus = Math.floor(skill.data.bonus);
-              const ability = this.data.data.scores[skill.data.ability]?.mod;
+              const skill = item.system as SkillItemData;
+              const bonus = Math.floor(skill.bonus);
+              const ability = this.data.data.scores[skill.ability]?.mod;
               mod.push(bonus);
               mod.push(ability);
               longName = item.name ?? game.i18n.localize('HV.skill');
-              log.debug(`getRollMods() | name:${longName} - ability=${skill.data.ability}, bonus=${bonus}`);
+              log.debug(`getRollMods() | name:${longName} - ability=${skill.ability}, bonus=${bonus}`);
             }
             break;
           case 'weapon':
             {
-              const weapon = item.data as WeaponItemData;
-              const bonus = Math.floor(weapon.data.bonus);
-              const ability = this.data.data.attack[weapon.data.attack]?.mod;
-              if (weapon.data.attack === 'melee') dmg.push(this.data.data.attack.melee?.bonus);
+              const weapon = item.system as WeaponItemData;
+              const bonus = Math.floor(weapon.bonus);
+              const ability = this.system.attack[weapon.attack]?.mod;
+              if (weapon.attack === 'melee') dmg.push(this.system.attack.melee?.bonus);
               mod.push(bonus);
               mod.push(ability);
               longName = item.name ?? game.i18n.localize('HV.items.weapon');
-              log.debug(`getRollMods() | name:${longName} - attack=${weapon.data.attack}, bonus=${bonus}`);
+              log.debug(`getRollMods() | name:${longName} - attack=${weapon.attack}, bonus=${bonus}`);
             }
             break;
           default:
@@ -590,16 +573,15 @@ export class HVActor extends Actor {
       switch (item.type) {
         case 'skill':
           {
-            const itemData = item.data as SkillItemData;
-            const data = await this.getRollMods({ attr: itemData.data.ability, roll: itemData.type, itemId: item.id });
+            const itemData = item.system as SkillItemData;
+            const data = await this.getRollMods({ attr: itemData.ability, roll: item.type, itemId: item.id });
             const value = data.mods.reduce((acc, n) => acc + n, 0);
             mods = value > 0 ? `+${value}` : `${value}`;
           }
           break;
         case 'weapon':
           {
-            const itemData = item.data as WeaponItemData;
-            const data = await this.getRollMods({ roll: itemData.type, itemId: item.id });
+            const data = await this.getRollMods({ roll: item.type, itemId: item.id });
             const value = data.mods.reduce((acc, n) => acc + n, 0);
             mods = value > 0 ? `+${value}` : `${value}`;
           }
