@@ -50,25 +50,21 @@ export class HVCharacterSheet extends HVActorSheet {
       bonusSpellsChosen: this.actor.getFlag('helveczia', 'bonusSpellsChosen') as number,
       options: this.options,
       editable: this.isEditable,
-      isToken: this.token && !this.token.data.actorLink,
+      isToken: this.prototypeToken && !this.prototypeToken.actorLink,
       config: CONFIG.HV,
       user: game.user,
-      classes: this.actor.data.data.classes,
+      classes: this.actor.system.classes,
       needToRoll:
-        this.actor.data.data.hp.max === 0 ||
-        (this.actor.getFlag('helveczia', 'rolled-hits-lvl') as number) < this.actor.data.data.level,
+        this.actor.system.hp.max === 0 ||
+        (this.actor.getFlag('helveczia', 'rolled-hits-lvl') as number) < this.actor.system.level,
     };
     // Add actor, actor data and item
-    data.actor = actorData.data;
-    data.data = data.actor.data;
-    data.items = this.actor.items.map((i) => i.data);
+    data.actor = actorData;
+    data.data = data.actor.system;
+    data.items = this.actor.items.map((i) => i.system);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.effects = prepareActiveEffectCategories(this.actor.effects);
-    data.maxspecialisms = this.actor.isVagabond()
-      ? (actorData.data as CharacterActorData).data.level >= 5
-        ? 3
-        : 2
-      : 1;
+    data.maxspecialisms = this.actor.isVagabond() ? ((actorData.system as CharacterActorData).level >= 5 ? 3 : 2) : 1;
     data.spellslots = (this.actor as HVActor).getSpellSlots();
     data.spellBonus = (this.actor as HVActor).getSpellBonus();
     data.currentBonusSpells = [
@@ -106,10 +102,10 @@ export class HVCharacterSheet extends HVActorSheet {
    */
   async _calculateAvailableSlots(): Promise<any> {
     const sheetData = await this.getData();
-    const capacity = this.actor.data.data.capacity - 8;
-    const wornUsed = sheetData.worn.map((i) => i.data.data.encumbrance).reduce((acc, n) => acc + n, 0);
-    const carriedUsed = sheetData.carried.map((i) => i.data.data.encumbrance).reduce((acc, n) => acc + n, 0);
-    const mountUsed = sheetData.mount.map((i) => i.data.data.encumbrance).reduce((acc, n) => acc + n, 0);
+    const capacity = this.actor.system.capacity - 8;
+    const wornUsed = sheetData.worn.map((i) => i.system.encumbrance).reduce((acc, n) => acc + n, 0);
+    const carriedUsed = sheetData.carried.map((i) => i.system.encumbrance).reduce((acc, n) => acc + n, 0);
+    const mountUsed = sheetData.mount.map((i) => i.system.encumbrance).reduce((acc, n) => acc + n, 0);
     const worn = 8 - wornUsed;
     const carried = capacity - carriedUsed;
     const mount = 8 - mountUsed;
@@ -154,28 +150,28 @@ export class HVCharacterSheet extends HVActorSheet {
           log.debug('_onDropItem() | already got this skill.');
           return;
         }
-        if (this.actor.data.data.skills.length == this.actor.data.data.maxskills) {
+        if (this.actor.system.skills.length == this.actor.system.maxskills) {
           return ui.notifications.error(game.i18n.localize('HV.errors.fullSkills'));
         }
-        if (item.data.data.subtype === 'magical' && !(this.actor.isCleric() && this.actor.isStudent())) {
+        if (item.system.subtype === 'magical' && !(this.actor.isCleric() && this.actor.isStudent())) {
           return ui.notifications.error(game.i18n.localize('HV.errors.notMagical'));
         }
-        if (item.data.data.subtype === 'vagabond' && !this.actor.isVagabond()) {
+        if (item.system.subtype === 'vagabond' && !this.actor.isVagabond()) {
           return ui.notifications.error(game.i18n.localize('HV.errors.notVagabond'));
         }
-        if ((item.data.data.subtype === 'craft' || item.data.data.subtype === 'science') && this.actor.isVagabond()) {
+        if ((item.system.subtype === 'craft' || item.data.data.subtype === 'science') && this.actor.isVagabond()) {
           return ui.notifications.error(game.i18n.localize('HV.errors.areVagabond'));
         }
         break;
       case 'spell':
-        if (item.data.data.class === 'cleric') {
+        if (item.system.class === 'cleric') {
           if (!this.actor.isCleric()) {
             return ui.notifications.error(game.i18n.localize('HV.errors.notCleric'));
           }
           if (this.actor.isLowVirtue()) {
             return ui.notifications.error(game.i18n.localize('HV.errors.lowVirtue'));
           }
-        } else if (item.data.data.class === 'student') {
+        } else if (item.system.class === 'student') {
           if (!this.actor.isStudent()) {
             return ui.notifications.error(game.i18n.localize('HV.errors.notStudent'));
           }
@@ -183,10 +179,10 @@ export class HVCharacterSheet extends HVActorSheet {
             return ui.notifications.error(game.i18n.localize('HV.errors.highVirtue'));
           }
         }
-        const level = parseInt(item.data.data.level);
+        const level = parseInt(item.system.level);
         const spellSlots = this.actor.getSpellSlots();
-        // console.log(`spellSlots: ${spellSlots[level-1]}, level:${level},spells.length:${this.actor.data.data.spells[level-1].length}`, this.actor.data.data.spells)
-        if (this.actor.data.data.spells[level - 1].length >= spellSlots[level - 1]) {
+        // console.log(`spellSlots: ${spellSlots[level-1]}, level:${level},spells.length:${this.actor.system.spells[level-1].length}`, this.actor.system.spells)
+        if (this.actor.system.spells[level - 1].length >= spellSlots[level - 1]) {
           return ui.notifications.error(game.i18n.format('HV.errors.maxSpells', { level: level }));
         }
         break;
@@ -195,13 +191,13 @@ export class HVCharacterSheet extends HVActorSheet {
       case 'possession':
         const capacitySlots = await this._calculateAvailableSlots();
         log.debug('_onDropItem() | carrying capacity:', capacitySlots);
-        log.debug('_onDropItem() | item encumbrance:', item.data.data.encumbrance);
-        if (capacitySlots.worn >= item.data.data.encumbrance) {
+        log.debug('_onDropItem() | item encumbrance:', item.system.encumbrance);
+        if (capacitySlots.worn >= item.system.encumbrance) {
           position = 'worn';
-        } else if (capacitySlots.carried >= item.data.data.encumbrance) {
+        } else if (capacitySlots.carried >= item.system.encumbrance) {
           position = 'carried';
         }
-        shouldContinue = capacitySlots.carried + capacitySlots.worn + capacitySlots.mount >= item.data.data.encumbrance;
+        shouldContinue = capacitySlots.carried + capacitySlots.worn + capacitySlots.mount >= item.system.encumbrance;
         log.debug('_onDropItem() | should continue?:', shouldContinue);
         break;
     }
@@ -236,8 +232,8 @@ export class HVCharacterSheet extends HVActorSheet {
     const positionTarget = event.target.closest('[data-column]');
     const columnID = positionTarget ? positionTarget.dataset.column : 'mount';
     const availableSlots = await this._calculateAvailableSlots();
-    log.debug(`_onSortPossession() |encumbrance of item is ${source.data.data.encumbrance} `);
-    const ok = availableSlots[columnID] - source.data.data.encumbrance >= 0;
+    log.debug(`_onSortPossession() |encumbrance of item is ${source.system.encumbrance} `);
+    const ok = availableSlots[columnID] - source.system.encumbrance >= 0;
     log.debug(`_onSortPossession() | ${ok} we have space, will place it at ${columnID} `);
     if (ok) source.setFlag('helveczia', 'position', columnID);
     return;
@@ -247,7 +243,7 @@ export class HVCharacterSheet extends HVActorSheet {
   _onSortItem(event, itemData): Promise<HVItem[]> | undefined {
     const source = this.actor.items.get(itemData._id);
 
-    switch (source?.data.type) {
+    switch (source?.type) {
       case 'armour':
         this._sortPossession(event, source);
         return;

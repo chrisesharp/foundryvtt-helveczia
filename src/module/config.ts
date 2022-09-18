@@ -13,8 +13,6 @@ import { HVCharacterCreator } from './apps/chargen';
 import { BookItem } from './items/book/book-item';
 
 export interface HelvecziaConfig {
-  socket?: any;
-
   createCardsFor?: (string) => void;
   DEFAULT_TOKEN: string;
   actorClasses: {
@@ -108,7 +106,6 @@ export interface HelvecziaConfig {
 
 export const HV: HelvecziaConfig = {
   DEFAULT_TOKEN: 'systems/helveczia/assets/people/male/man_0.png',
-
   showEffects: false,
 
   actorClasses: {
