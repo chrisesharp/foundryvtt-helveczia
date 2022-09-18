@@ -30,15 +30,15 @@ export class HVNPCSheet extends HVActorSheet {
       sex: this.actor.getFlag('helveczia', 'sex') ?? 'male',
       options: this.options,
       editable: this.isEditable,
-      isToken: this.token && !this.token.data.actorLink,
+      isToken: this.prototypeToken && !this.prototypeToken.actorLink,
       config: CONFIG.HV,
       user: game.user,
-      classes: this.actor.data.data.classes,
+      classes: this.actor.system.classes,
     };
     // Add actor, actor data and item
-    data.actor = actorData.data;
-    data.data = data.actor.data;
-    data.items = this.actor.items.map((i) => i.data);
+    data.actor = actorData;
+    data.data = data.actor.system;
+    data.items = this.actor.items.map((i) => i.system);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.possessions = data.data.possessions;
     data.effects = prepareActiveEffectCategories(this.actor.effects);

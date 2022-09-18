@@ -165,18 +165,3 @@ Hooks.on('renderSidebarTab', async (object, html) => {
     });
   }
 });
-// Hooks.once("socketlib.ready", () => {
-//   console.log("socketlib ready - registering chat handler")
-//   const socket = window['socketlib'].registerSystem("helveczia");
-//   socket.register("updateChatMessage", HVChat._updateChatMessage);
-//   HV.socket = socket;
-// });
-
-// Hooks.on("renderDialog", (dialog, html) => {
-// Array.from(html.find("#document-create option")).forEach(i => {
-//     if (i.value == "your-item-type")
-//     {
-//         i.remove()
-//     }
-// })
-// })
