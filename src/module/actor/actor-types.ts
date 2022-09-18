@@ -91,7 +91,7 @@ export interface CharacterActorData {
 
 export interface NPCActorData {
   type: 'npc';
-  data: BaseData & {
+  system: BaseData & {
     levelBonus: string;
     npcModBonus: number;
     baseAC: number;

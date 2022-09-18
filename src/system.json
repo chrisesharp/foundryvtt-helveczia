@@ -1,5 +1,6 @@
 {
   "name": "helveczia",
+  "id": "helveczia",
   "title": "Helvéczia",
   "description": "Unofficial Implementation of the picaresque fantasy RPG",
   "version": "This is auto replaced",
@@ -12,7 +13,11 @@
     }
   ],
   "minimumCoreVersion": "9",
-  "compatibleCoreVersion": "9",
+  "compatibleCoreVersion": "10.285",
+  "compatibility": {
+    "minimum": 9,
+    "verified": "10.285"
+  },
   "scripts": [],
   "esmodules": ["module/helveczia.js"],
   "styles": ["styles/helveczia.css"],
@@ -156,12 +161,6 @@
       "package": "helveczia",
       "path": "packs/rolltables.db",
       "type": "RollTable"
-    }
-  ],
-  "dependencies": [
-    {
-      "name": "socketlib",
-      "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/master/module.json"
     }
   ],
   "languages": [
