@@ -84,13 +84,16 @@ type BaseData = {
 
 export interface CharacterActorData {
   type: 'character';
-  data: BaseData;
+  data: BaseData & {
+    npcModBonus: number;
+  };
 }
 
 export interface NPCActorData {
   type: 'npc';
   data: BaseData & {
     levelBonus: string;
+    npcModBonus: number;
     baseAC: number;
   };
 }

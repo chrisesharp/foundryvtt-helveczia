@@ -29,6 +29,7 @@ export class HVActor extends Actor {
         {
           const data = actorData.data;
           data.ac = 10;
+          data.npcModBonus = 0;
           data.level = this._calculateLevel(data.experience);
         }
         break;
@@ -46,14 +47,16 @@ export class HVActor extends Actor {
     const parts = data.levelBonus.split('+');
     data.level = parseInt(parts[0]);
     let threat = 0;
+    data.npcModBonus = 0;
     if (parts.length > 1) {
       const bonus = parseInt(parts[1][0]);
+      data.npcModBonus = bonus;
       threat = parts[1].length - 1;
-      const score = Math.max(1, Math.min(18, (3 + bonus) * 3));
-      for (const attr of Object.keys(data.scores)) {
-        data.scores[attr].value = score;
-        if (!data.scores[attr].base) data.scores[attr].base = score;
-      }
+      // const score = Math.max(1, Math.min(18, (3 + bonus) * 3));
+      // for (const attr of Object.keys(data.scores)) {
+      //   data.scores[attr].value = score;
+      //   if (!data.scores[attr].base) data.scores[attr].base = score;
+      // }
     }
     data.experience = CONFIG.HV.challengeAwards[data.level + threat];
   }
@@ -180,7 +183,7 @@ export class HVActor extends Actor {
    * Prepare Combat related values
    */
   _updateCombatValues(data) {
-    data.initiative += data.scores.dex.mod;
+    data.initiative += data.scores.dex.mod + data.npcModBonus;
     this._updateAC(data);
     this._updateAttackMods(data);
   }
@@ -190,7 +193,7 @@ export class HVActor extends Actor {
    */
 
   _updateAC(data: any): void {
-    data.ac += data.scores.dex.mod;
+    data.ac += data.scores.dex.mod + data.npcModBonus;
     const armour = data.possessions.armour.filter((i) => i.getFlag('helveczia', 'position') === 'worn');
     data.ac += armour[0]?.data.data.bonus ?? 0;
   }
@@ -206,8 +209,8 @@ export class HVActor extends Actor {
     const base = this.isFighter() || this.isNPC() ? lvl : Math.floor((lvl * 2) / 3);
     data.attack.melee.base = base;
     data.attack.ranged.base = base;
-    data.attack.melee.bonus += data.scores.str.mod + virtue;
-    data.attack.ranged.bonus += data.scores.dex.mod + virtue;
+    data.attack.melee.bonus += data.scores.str.mod + virtue + data.npcModBonus;
+    data.attack.ranged.bonus += data.scores.dex.mod + virtue + data.npcModBonus;
     data.attack.melee.mod = data.attack.melee.base + data.attack.melee.bonus;
     data.attack.ranged.mod = data.attack.ranged.base + data.attack.ranged.bonus;
   }
@@ -218,11 +221,11 @@ export class HVActor extends Actor {
   _updateSaves(actorData: any) {
     const data = actorData.data;
     const virtue = this.isHighVirtue() ? 1 : 0;
-    data.saves.bravery.bonus += data.scores.con.mod + virtue;
-    data.saves.deftness.bonus += data.scores.dex.mod + virtue;
-    data.saves.temptation.bonus += data.scores.wis.mod + virtue;
+    data.saves.bravery.bonus += data.scores.con.mod + virtue + data.npcModBonus;
+    data.saves.deftness.bonus += data.scores.dex.mod + virtue + data.npcModBonus;
+    data.saves.temptation.bonus += data.scores.wis.mod + virtue + data.npcModBonus;
 
-    const bases = actorData.type === 'character' ? data.classes[0]?.getSaveBase(this) : Fighter.getSaveBase(this);
+    const bases = data.classes.length > 0 ? data.classes[0]?.getSaveBase(this) : Fighter.getSaveBase(this);
     for (const saveType of Object.keys(data.saves)) {
       const save = data.saves[saveType];
       save.base = bases ? bases[saveType] : 0;
@@ -236,7 +239,7 @@ export class HVActor extends Actor {
   async _updateSkills(data: any) {
     const peopleBonus = data.peoples[0]?.getSkillsBonus(this) ?? 0;
     const classBonus = data.classes[0]?.getSkillsBonus(this) ?? 0;
-    data.maxskills += data.scores.int.mod + peopleBonus + classBonus;
+    data.maxskills += data.scores.int.mod + peopleBonus + classBonus + data.npcModBonus;
     log.debug(
       `HVActor._updateSkills() | max skills are int(${data.scores.int.mod}) + peoples(${peopleBonus}) + class(${classBonus})`,
     );

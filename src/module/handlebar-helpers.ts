@@ -178,6 +178,10 @@ export const registerHandlebarHelpers = async function () {
     else if (roll >= 24) success = 'heroic';
     return game.i18n.localize(`HV.${success}.success`);
   });
+
+  Handlebars.registerHelper('hasSpells', function (spellsArr) {
+    return spellsArr[0].length > 0 || spellsArr[1].length > 0 || spellsArr[2].length > 0;
+  });
 };
 
 function getOrdinal(level: number): string {

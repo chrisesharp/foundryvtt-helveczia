@@ -42,6 +42,7 @@ export class HVNPCSheet extends HVActorSheet {
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.possessions = data.data.possessions;
     data.effects = prepareActiveEffectCategories(this.actor.effects);
+    data.spellGroups = [1, 2, 3];
     return data;
   }
 

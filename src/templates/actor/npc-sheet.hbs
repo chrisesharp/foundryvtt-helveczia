@@ -11,6 +11,12 @@
         <a class="item" data-tab="combat">{{ localize 'HV.tabs.combat'}}</a>
         <a class="item" data-tab="skills">{{ localize 'HV.tabs.skills'}}</a>
         <a class="item" data-tab="possessions">{{ localize 'HV.tabs.possessions'}}</a>
+        {{#if vagabond_class }}
+            <a class="item" data-tab="vagabond">{{ localize 'HV.class.vagabond'}}</a>
+        {{/if}}
+        {{#if (hasSpells data.spells) }}
+        <a class="item" data-tab="spells">{{ localize 'HV.Spells'}}</a>
+        {{/if}}
         {{#if config.showEffects }}
         <a class="item" data-tab="effects">{{ localize 'HV.tabs.effects'}}</a>
         {{/if}}
@@ -35,9 +41,24 @@
         <div class="tab possessions" data-group="primary" data-tab="possessions">
             {{> "systems/helveczia/templates/actor/partials/npc-equipment.hbs"}}
         </div>
+        <div class="tab spells" data-group="primary" data-tab="spells">
+            <section class="spellbook">
+                <ol class="item-list">
+                    <li class="flexrow item-header">
+                            <h2 class="centred">~ {{ localize "HV.MemorizedSpells"}}  ~</h2>
+                    </li>
+                    {{> "systems/helveczia/templates/actor/partials/spells.hbs"}}
+                </ol>
+            </section>
+        </div>
         {{#if config.showEffects}}
         <div class="tab effects" data-group="primary" data-tab="effects">
             {{> "systems/helveczia/templates/actor/partials/actor-effects.hbs"}}
+        </div>
+        {{/if }}
+        {{#if vagabond_class}}
+        <div class="tab vagabond" data-group="primary" data-tab="vagabond">
+            {{> "systems/helveczia/templates/actor/partials/vagabond.hbs"}}
         </div>
         {{/if }}
         {{!-- Notes --}}
