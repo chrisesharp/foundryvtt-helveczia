@@ -90,3 +90,11 @@
     cursor: pointer;
   }
 }
+
+#combat li.combatant .token-initiative {
+  display: flex;
+
+  .init-bonus-ctrl {
+    display: flex;
+  }
+}

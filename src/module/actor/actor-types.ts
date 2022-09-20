@@ -29,6 +29,7 @@ type BaseData = {
   level: number;
   people: string;
   class: string;
+  initiative: number;
   virtue: number;
   experience: number;
   maxskills: number;

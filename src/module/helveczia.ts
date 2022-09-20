@@ -30,7 +30,7 @@ import { HVActorSheet } from './actor/actor-sheet';
 import { HVChat } from './chat';
 import { HVNPCSheet } from './actor/npc-sheet';
 import { BookSheet } from './items/book/book-sheet';
-import { HVCombat } from './combat';
+import { HVCombat, HVCombatant } from './combat';
 import { HVCardsHand, HVCardsPile, HVCardsControl } from './apps/cards';
 import { HVNameGenerator } from './apps/names';
 
@@ -47,6 +47,7 @@ Hooks.once('init', async () => {
   CONFIG.HV = HV;
   CONFIG.Actor.documentClass = HVActor;
   CONFIG.Item.documentClass = HVItem;
+  CONFIG.Combatant.documentClass = HVCombatant;
 
   // Register custom system settings
   registerSettings();
@@ -165,18 +166,3 @@ Hooks.on('renderSidebarTab', async (object, html) => {
     });
   }
 });
-// Hooks.once("socketlib.ready", () => {
-//   console.log("socketlib ready - registering chat handler")
-//   const socket = window['socketlib'].registerSystem("helveczia");
-//   socket.register("updateChatMessage", HVChat._updateChatMessage);
-//   HV.socket = socket;
-// });
-
-// Hooks.on("renderDialog", (dialog, html) => {
-// Array.from(html.find("#document-create option")).forEach(i => {
-//     if (i.value == "your-item-type")
-//     {
-//         i.remove()
-//     }
-// })
-// })

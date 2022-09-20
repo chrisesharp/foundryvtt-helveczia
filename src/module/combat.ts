@@ -14,9 +14,19 @@ export class HVCombat {
         const id = ct.dataset.combatantId;
         const cmbtant = combatTracker.viewed.combatants.get(id) as Combatant;
         const actor = cmbtant.actor;
+        const initBonus = cmbtant.getFlag('helveczia', 'init-bonus') ?? 0;
+        const controls = $(ct).find('.combatant-controls');
+        const initiativeCtrl = $(ct).find('.token-initiative');
         const currentTurn = current.round + current.turn * turnFraction;
         log.debug(`HVCombat.format() | currentTurn = ${currentTurn}`);
         if (actor !== null && game.user?.isGM) {
+          initiativeCtrl.prepend(
+            `<div class='init-bonus-ctrl'>
+              <a class='combatant-control init-up'><i class='fas fa-caret-up' title="increase bonus"></i></a>
+              <a class='combatant-control init' style="color:white" title="additional initiative bonus">${initBonus}</a>
+              <a class='combatant-control init-down'><i class='fas fa-caret-down' title="decrease bonus"></i></a>
+            </div>`,
+          );
           const reloadTrigger = actor.getFlag('helveczia', 'reload-trigger') as number;
           if (reloadTrigger > 0) {
             log.debug(`HVCombat.format() | id:${id} reloadTrigger = ${reloadTrigger}`);
@@ -39,7 +49,7 @@ export class HVCombat {
           if (Math.round(reload) > 0) {
             const index = Math.min(2, Math.round(reload));
             const colour = colours[index];
-            const controls = $(ct).find('.combatant-controls');
+            // const controls = $(ct).find('.combatant-controls');
             controls.prepend(
               `<a class='combatant-control flag' style='color:${colour}' title="${reload.toFixed(
                 1,
@@ -77,5 +87,42 @@ export class HVCombat {
       }
       Hooks.call('renderCombatTracker', combatTracker, html, data);
     });
+
+    html.find('.combatant-control.init-up').click(async (ev) => {
+      if (!data.user.isGM) {
+        return;
+      }
+      const id = $(ev.currentTarget).closest('.combatant')[0].dataset.combatantId;
+      const combatant = game.combat?.data.combatants.get(id);
+      if (combatant) {
+        const initBonus = ((combatant?.getFlag('helveczia', 'init-bonus') as number) ?? 0) + 1;
+        await combatant.setFlag('helveczia', 'init-bonus', initBonus);
+      }
+      Hooks.call('renderCombatTracker', combatTracker, html, data);
+    });
+
+    html.find('.combatant-control.init-down').click(async (ev) => {
+      if (!data.user.isGM) {
+        return;
+      }
+      const id = $(ev.currentTarget).closest('.combatant')[0].dataset.combatantId;
+      const combatant = game.combat?.data.combatants.get(id);
+      if (combatant) {
+        const initBonus = ((combatant?.getFlag('helveczia', 'init-bonus') as number) ?? 0) - 1;
+        await combatant.setFlag('helveczia', 'init-bonus', initBonus);
+      }
+      Hooks.call('renderCombatTracker', combatTracker, html, data);
+    });
+  }
+}
+
+export class HVCombatant extends Combatant {
+  protected _getInitiativeFormula(): string {
+    let formula = super._getInitiativeFormula();
+    const initBonus = this.getFlag('helveczia', 'init-bonus') as number;
+    if (initBonus > 0) {
+      formula += `+${initBonus}`;
+    }
+    return formula;
   }
 }
