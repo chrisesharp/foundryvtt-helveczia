@@ -178,5 +178,7 @@
   "HV.dialog.namegenerator": "Random Name",
   "HV.dialog.findname": "Find a Name",
   "HV.dialog.nameerror": "Cannot suggest a {people} name",
-  "HV.dialog.sendname": "Send Name to Chat?"
+  "HV.dialog.sendname": "Send Name to Chat?",
+  "HV.dialog.partysheet.name": "The Troupe",
+  "HV.dialog.partysheet.remove": "Remove member"
 }

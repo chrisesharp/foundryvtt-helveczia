@@ -116,7 +116,7 @@ export const registerHandlebarHelpers = async function () {
   });
 
   Handlebars.registerHelper('inParty', function (actor) {
-    return actor.getFlag('hv', 'party');
+    return actor.getFlag('helveczia', 'party');
   });
 
   Handlebars.registerHelper('plusminus', function (value) {
@@ -181,6 +181,11 @@ export const registerHandlebarHelpers = async function () {
 
   Handlebars.registerHelper('hasSpells', function (spellsArr) {
     return spellsArr[0].length > 0 || spellsArr[1].length > 0 || spellsArr[2].length > 0;
+  });
+
+  Handlebars.registerHelper('player', function (id) {
+    const player = game.users?.players.find((p) => p.character?.id === id);
+    return player ? player.name : '';
   });
 };
 

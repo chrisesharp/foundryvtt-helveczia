@@ -1,6 +1,6 @@
 {
   "Actor": {
-    "types": ["character", "npc"],
+    "types": ["character", "npc", "party"],
     "templates": {
       "base": {
         "hp": {
@@ -80,6 +80,10 @@
       "levelBonus": "1",
       "baseAC": 10,
       "experience": 0
+    },
+    "party": {
+      "templates": [],
+      "members": []
     }
   },
   "Item": {

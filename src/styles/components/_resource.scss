@@ -4,18 +4,16 @@
   font-style: italic;
 }
 
-.virtue-balance {
-  .fa-balance-scale-left {
-    text-shadow: 0 0 10px $colorRed;
-  }
+.fa-balance-scale-left {
+  text-shadow: 0 0 10px $colorRed;
+}
 
-  .fa-balance-scale-right {
-    text-shadow: 0 0 10px $colorGreen;
-  }
+.fa-balance-scale-right {
+  text-shadow: 0 0 10px $colorGreen;
+}
 
-  .fa-balance-scale {
-    text-shadow: 0 0 10px $colorBlue;
-  }
+.fa-balance-scale {
+  text-shadow: 0 0 10px $colorBlue;
 }
 
 .actor-virtue {

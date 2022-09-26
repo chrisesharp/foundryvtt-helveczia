@@ -133,6 +133,17 @@ nav.sheet-tabs.side {
   }
 }
 
+.sheet-body {
+  .profile-img {
+    flex: 0 0 90px;
+    margin-right: 5px;
+    height: 45px;
+    width: 45px;
+    object-fit: cover;
+    object-position: 50% 0;
+  }
+}
+
 .helveczia.chat-block,
 .sheet-body,
 .actor-computed {

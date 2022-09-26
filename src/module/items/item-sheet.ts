@@ -62,7 +62,7 @@ export class HVItemSheet extends ItemSheet {
 
   activateListeners(html) {
     super.activateListeners(html);
-    if (CONFIG.HV.itemClasses[this.item.type]?.activateListeners) {
+    if (typeof CONFIG.HV.itemClasses[this.item.type]?.activateListeners === 'function') {
       CONFIG.HV.itemClasses[this.item.type]?.activateListeners(html, this.item);
     }
 
@@ -140,7 +140,6 @@ export class HVItemSheet extends ItemSheet {
   }
 
   onDropAllow(_actor, data): boolean {
-    // Prevent folders being dragged onto the sheet
-    return data.type !== 'Item' ? false : true;
+    return data.type === 'Item';
   }
 }

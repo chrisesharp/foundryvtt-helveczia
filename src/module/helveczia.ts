@@ -33,6 +33,8 @@ import { BookSheet } from './items/book/book-sheet';
 import { HVCombat, HVCombatant } from './combat';
 import { HVCardsHand, HVCardsPile, HVCardsControl } from './apps/cards';
 import { HVNameGenerator } from './apps/names';
+import { HVParty } from './apps/party/party';
+import { HVPartySheet } from './apps/party/party-sheet';
 
 const log = new Logger();
 
@@ -84,6 +86,7 @@ Hooks.once('init', async () => {
   Items.unregisterSheet('core', ItemSheet);
   Actors.registerSheet('helveczia', HVCharacterSheet, { types: ['character'], makeDefault: true });
   Actors.registerSheet('helveczia', HVNPCSheet, { types: ['npc'], makeDefault: true });
+  Actors.registerSheet('helveczia', HVPartySheet, { types: ['party'], makeDefault: true });
   Items.registerSheet('helveczia', SkillSheet, { types: ['skill'] });
   Items.registerSheet('helveczia', PossessionSheet, { types: ['possession'] });
   Items.registerSheet('helveczia', ArmourSheet, { types: ['armour'] });
@@ -99,6 +102,7 @@ Hooks.once('init', async () => {
 Hooks.once('setup', async () => {
   // Do anything after initialization but before
   // ready
+  new HVParty();
 });
 
 // When ready
@@ -118,6 +122,7 @@ Hooks.once('ready', async () => {
 // Add any additional hooks if necessary
 Hooks.on('HV.Cards.genCards', HVCardsControl.showDialog);
 Hooks.on('HV.Names.genName', HVNameGenerator.showDialog);
+Hooks.on('HV.Party.showSheet', HVPartySheet.showSheet);
 
 Hooks.on('applyActiveEffect', async (actor, changeData) => {
   actor.applyCustomEffect(changeData);
@@ -137,7 +142,7 @@ Hooks.on('renderCombatTracker', HVCombat.format);
 // License and KOFI infos
 Hooks.on('renderSidebarTab', async (object, html) => {
   if (object instanceof ActorDirectory) {
-    // party.addControl(object, html);
+    HVParty.addControl(object, html);
     HVNameGenerator.addControl(object, html);
   }
 
