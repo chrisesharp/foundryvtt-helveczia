@@ -17,6 +17,7 @@ export interface HelvecziaConfig {
 
   createCardsFor?: (string) => void;
   DEFAULT_TOKEN: string;
+  DEFAULT_PARTY: string;
   actorClasses: {
     [key: string]: typeof HVActor;
     [key: number]: typeof HVActor;
@@ -108,6 +109,7 @@ export interface HelvecziaConfig {
 
 export const HV: HelvecziaConfig = {
   DEFAULT_TOKEN: 'systems/helveczia/assets/people/male/man_0.png',
+  DEFAULT_PARTY: 'systems/helveczia/assets/people/groups/group_0.png',
 
   showEffects: false,
 

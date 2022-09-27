@@ -1,7 +1,7 @@
 <form autocomplete="off" class="sheet-body">
   <div class="header flexrow" style="flex-wrap: nowrap;">
     <div>
-      <a class="item-control resync"><i class="fas fa-sync"></i></a>
+      <a class="item-control resync"><i class="fas fa-sync"></i></a><h3 style="display: contents;"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h3>
     </div>
   </div>
   <ol class="party-members">
@@ -20,6 +20,7 @@
             <br> {{ordinal data.data.level }} level {{data.data.people}} {{data.data.class}}
             {{/unless}}
           </div>
+          {{#if ../user.isGM }}
           <div class="field-row">
             {{ localize 'HV.tabs.saves'}} {{ plusminus data.data.saves.bravery.mod }} / {{ plusminus data.data.saves.deftness.mod }} / {{ plusminus data.data.saves.temptation.mod }}
           </div>
@@ -37,6 +38,7 @@
           <div class="field-row">
             <a class="remove"><i class="fas fa-times-circle" title="{{ localize 'HV.dialog.partysheet.remove'}}"></i></a>
           </div>
+          {{/if}}
         </div>
     </li>
     <hr>

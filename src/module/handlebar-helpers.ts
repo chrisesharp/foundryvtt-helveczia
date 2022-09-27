@@ -115,10 +115,6 @@ export const registerHandlebarHelpers = async function () {
     return isSelected === value ? ' selected ' : '';
   });
 
-  Handlebars.registerHelper('inParty', function (actor) {
-    return actor.getFlag('helveczia', 'party');
-  });
-
   Handlebars.registerHelper('plusminus', function (value) {
     return value > 0 ? `+${value}` : value;
   });

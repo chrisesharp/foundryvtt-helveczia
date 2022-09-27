@@ -81,8 +81,8 @@ export class HVItem extends Item {
   }
 
   /** @override */
-  async _onDropItem(event: DragEvent, data: ActorSheet.DropData.Item): Promise<unknown> {
-    console.log('Item.onDropItem()', event, data);
+  async _onDropItem(_event: DragEvent, _data: ActorSheet.DropData.Item): Promise<unknown> {
+    // console.log('Item.onDropItem()', event, data);
     return null;
   }
 }

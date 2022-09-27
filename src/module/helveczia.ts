@@ -33,8 +33,7 @@ import { BookSheet } from './items/book/book-sheet';
 import { HVCombat, HVCombatant } from './combat';
 import { HVCardsHand, HVCardsPile, HVCardsControl } from './apps/cards';
 import { HVNameGenerator } from './apps/names';
-import { HVParty } from './apps/party/party';
-import { HVPartySheet } from './apps/party/party-sheet';
+import { HVPartySheet } from './actor/party-sheet';
 
 const log = new Logger();
 
@@ -50,6 +49,7 @@ Hooks.once('init', async () => {
   CONFIG.Actor.documentClass = HVActor;
   CONFIG.Item.documentClass = HVItem;
   CONFIG.Combatant.documentClass = HVCombatant;
+  CONFIG.Combat.documentClass = HVCombat;
 
   // Register custom system settings
   registerSettings();
@@ -102,7 +102,6 @@ Hooks.once('init', async () => {
 Hooks.once('setup', async () => {
   // Do anything after initialization but before
   // ready
-  new HVParty();
 });
 
 // When ready
@@ -122,7 +121,6 @@ Hooks.once('ready', async () => {
 // Add any additional hooks if necessary
 Hooks.on('HV.Cards.genCards', HVCardsControl.showDialog);
 Hooks.on('HV.Names.genName', HVNameGenerator.showDialog);
-Hooks.on('HV.Party.showSheet', HVPartySheet.showSheet);
 
 Hooks.on('applyActiveEffect', async (actor, changeData) => {
   actor.applyCustomEffect(changeData);
@@ -139,10 +137,52 @@ Hooks.on('dropItemSheetData', (actor: HVActor, sheet: HVActorSheet, data) => {
 Hooks.on('renderChatMessage', HVChat.addChatCriticalButton);
 Hooks.on('renderCombatTracker', HVCombat.format);
 
+Hooks.on('preCreateCombatant', (combatant, _data, _options, _userId) => {
+  if (combatant.actor.type === 'party') {
+    const members = game.actors?.filter((a) => a.getFlag('helveczia', 'party') === combatant.actor.uuid);
+    const tokenId = combatant.data.tokenId;
+    if (combatant.combat.getFlag('helveczia', 'party-token') === tokenId) {
+      Hooks.call('removePartyFromCombat', members, combatant);
+    } else {
+      Hooks.call('addPartyToCombat', members, combatant);
+    }
+    return false;
+  }
+  return;
+});
+
+Hooks.on('addPartyToCombat', async (members, combatant) => {
+  const combat = combatant.combat;
+  await combat.setFlag('helveczia', 'party-token', combatant.data.tokenId);
+  if (members) {
+    const combatants: Combatant[] = [];
+    await Promise.all(
+      members.map(async (a) => {
+        const combatant = await Combatant.create({ actorId: a.id, combat: combat }, { parent: combat });
+        if (combatant) combatants.push(combatant);
+      }),
+    );
+  }
+});
+
+Hooks.on('removePartyFromCombat', async (members: Actor[], combatant: Combatant) => {
+  const combat = combatant.combat;
+  await combat?.unsetFlag('helveczia', 'party-token');
+  const actorIds = members.filter((a) => a.id != null).map((a) => a.id);
+  if (members && combat) {
+    const combatantIds = combat.combatants
+      .filter((a) => {
+        const id = a.data.actorId;
+        return (id != null && actorIds.includes(id)) as boolean;
+      })
+      .map((c) => c.id ?? '');
+    await combat?.deleteEmbeddedDocuments('Combatant', combatantIds);
+  }
+});
+
 // License and KOFI infos
 Hooks.on('renderSidebarTab', async (object, html) => {
   if (object instanceof ActorDirectory) {
-    HVParty.addControl(object, html);
     HVNameGenerator.addControl(object, html);
   }
 

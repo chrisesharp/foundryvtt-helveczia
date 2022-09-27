@@ -4,6 +4,7 @@ export async function preloadTemplates(): Promise<Handlebars.TemplateDelegate[]>
     // Actor Sheets
     'systems/helveczia/templates/actor/character-sheet.hbs',
     'systems/helveczia/templates/actor/npc-sheet.hbs',
+    'systems/helveczia/templates/actor/party-sheet.hbs',
     // Actor Partials
     'systems/helveczia/templates/actor/partials/actor-header.hbs',
     'systems/helveczia/templates/actor/partials/actor-abilities.hbs',

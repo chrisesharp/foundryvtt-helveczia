@@ -3,7 +3,7 @@ import { Logger } from './logger';
 const log = new Logger();
 const colours = ['', 'orange', 'red'];
 
-export class HVCombat {
+export class HVCombat extends Combat {
   static format(combatTracker, html, data) {
     if (data.combat) {
       const numCombatants = data.combat.combatants.size;

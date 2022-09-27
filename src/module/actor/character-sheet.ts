@@ -185,7 +185,6 @@ export class HVCharacterSheet extends HVActorSheet {
         }
         const level = parseInt(item.data.data.level);
         const spellSlots = this.actor.getSpellSlots();
-        // console.log(`spellSlots: ${spellSlots[level-1]}, level:${level},spells.length:${this.actor.data.data.spells[level-1].length}`, this.actor.data.data.spells)
         if (this.actor.data.data.spells[level - 1].length >= spellSlots[level - 1]) {
           return ui.notifications.error(game.i18n.format('HV.errors.maxSpells', { level: level }));
         }

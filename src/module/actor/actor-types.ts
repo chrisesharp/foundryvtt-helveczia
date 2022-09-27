@@ -1,3 +1,5 @@
+import { HVActor } from './actor';
+
 type Ability =
   | any
   | {
@@ -99,6 +101,13 @@ export interface NPCActorData {
   };
 }
 
+export interface PartyActorData {
+  type: 'party';
+  data: BaseData & {
+    members: HVActor[];
+  };
+}
+
 ///////////////////////////////
 
-export type HVActorData = CharacterActorData | NPCActorData;
+export type HVActorData = CharacterActorData | NPCActorData | PartyActorData;

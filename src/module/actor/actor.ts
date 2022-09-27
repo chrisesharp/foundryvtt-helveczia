@@ -34,9 +34,10 @@ export class HVActor extends Actor {
         }
         break;
       case 'npc':
-        {
-          this.calculateNPCThreatLevel(actorData);
-        }
+        this.calculateNPCThreatLevel(actorData);
+        break;
+      case 'party':
+        this.setPartyData(actorData);
         break;
     }
   }
@@ -52,13 +53,13 @@ export class HVActor extends Actor {
       const bonus = parseInt(parts[1][0]);
       data.npcModBonus = bonus;
       threat = parts[1].length - 1;
-      // const score = Math.max(1, Math.min(18, (3 + bonus) * 3));
-      // for (const attr of Object.keys(data.scores)) {
-      //   data.scores[attr].value = score;
-      //   if (!data.scores[attr].base) data.scores[attr].base = score;
-      // }
     }
     data.experience = CONFIG.HV.challengeAwards[data.level + threat];
+  }
+
+  setPartyData(actorData: ActorData): void {
+    actorData.img = actorData.token.img;
+    actorData.token.name = actorData.name;
   }
 
   /** @override */
@@ -389,13 +390,15 @@ export class HVActor extends Actor {
     await super._preCreate(data, options, user);
     data.token = data.token || {};
 
-    const disposition =
-      data.type === 'character' ? CONST.TOKEN_DISPOSITIONS.FRIENDLY : CONST.TOKEN_DISPOSITIONS.HOSTILE;
+    const disposition = data.type !== 'npc' ? CONST.TOKEN_DISPOSITIONS.FRIENDLY : CONST.TOKEN_DISPOSITIONS.HOSTILE;
     // Set basic token data for newly created actors.
+
+    const defaultToken = data.type === 'party' ? CONFIG.HV.DEFAULT_PARTY : CONFIG.HV.DEFAULT_TOKEN;
+
     mergeObject(
       data,
       {
-        img: CONFIG.HV.DEFAULT_TOKEN,
+        img: defaultToken,
       },
       { overwrite: false },
     );
