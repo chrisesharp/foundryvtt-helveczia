@@ -19,12 +19,13 @@ export class HVCombat extends Combat {
         const initiativeCtrl = $(ct).find('.token-initiative');
         const currentTurn = current.round + current.turn * turnFraction;
         log.debug(`HVCombat.format() | currentTurn = ${currentTurn}`);
-        if (actor !== null && game.user?.isGM) {
+        const toRoll = $(ct).find('.combatant-control.roll').length > 0;
+        if (actor !== null && game.user?.isGM && toRoll) {
+          initiativeCtrl.css('display', 'flex');
           initiativeCtrl.prepend(
             `<div class='init-bonus-ctrl'>
-              <a class='combatant-control init-up'><i class='fas fa-caret-up' title="increase bonus"></i></a>
+              <a class='combatant-control init-change'><i class='init-mod fas fa-plus fa-xs' title="increase bonus"></i><i class='init-mod fas fa-minus fa-xs' style='display:none;' title="decrease bonus"></i></a>
               <a class='combatant-control init' style="color:white" title="additional initiative bonus">${initBonus}</a>
-              <a class='combatant-control init-down'><i class='fas fa-caret-down' title="decrease bonus"></i></a>
             </div>`,
           );
           const reloadTrigger = actor.getFlag('helveczia', 'reload-trigger') as number;
@@ -88,27 +89,30 @@ export class HVCombat extends Combat {
       Hooks.call('renderCombatTracker', combatTracker, html, data);
     });
 
-    html.find('.combatant-control.init-up').click(async (ev) => {
-      if (!data.user.isGM) {
-        return;
+    window.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Shift') {
+        $('.init-mod.fa-plus').css('display', 'none');
+        $('.init-mod.fa-minus').css('display', 'inline');
       }
-      const id = $(ev.currentTarget).closest('.combatant')[0].dataset.combatantId;
-      const combatant = game.combat?.data.combatants.get(id);
-      if (combatant) {
-        const initBonus = ((combatant?.getFlag('helveczia', 'init-bonus') as number) ?? 0) + 1;
-        await combatant.setFlag('helveczia', 'init-bonus', initBonus);
-      }
-      Hooks.call('renderCombatTracker', combatTracker, html, data);
     });
 
-    html.find('.combatant-control.init-down').click(async (ev) => {
+    window.addEventListener('keyup', (ev) => {
+      if (ev.key === 'Shift') {
+        $('.init-mod.fa-plus').css('display', 'inline');
+        $('.init-mod.fa-minus').css('display', 'none');
+      }
+    });
+
+    html.find('.combatant-control.init-change').click(async (ev) => {
       if (!data.user.isGM) {
         return;
       }
+      const keypress = ev.shiftKey;
       const id = $(ev.currentTarget).closest('.combatant')[0].dataset.combatantId;
       const combatant = game.combat?.data.combatants.get(id);
       if (combatant) {
-        const initBonus = ((combatant?.getFlag('helveczia', 'init-bonus') as number) ?? 0) - 1;
+        const currentBonus = (combatant?.getFlag('helveczia', 'init-bonus') as number) ?? 0;
+        const initBonus = !keypress ? currentBonus + 1 : currentBonus - 1;
         await combatant.setFlag('helveczia', 'init-bonus', initBonus);
       }
       Hooks.call('renderCombatTracker', combatTracker, html, data);

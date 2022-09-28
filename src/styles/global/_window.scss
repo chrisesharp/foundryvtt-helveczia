@@ -92,9 +92,20 @@
 }
 
 #combat li.combatant .token-initiative {
-  display: flex;
-
   .init-bonus-ctrl {
     display: flex;
+    a.combatant-control {
+      .init-mod {
+        color: dimgray;
+      }
+
+      &:hover,
+      &:focus {
+        .init-mod {
+          color: whitesmoke;
+          text-shadow: 0 0 10px red;
+        }
+      }
+    }
   }
 }
