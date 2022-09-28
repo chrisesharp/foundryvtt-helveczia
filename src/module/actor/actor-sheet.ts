@@ -100,8 +100,6 @@ export class HVActorSheet extends ActorSheet {
     html.find('.generate-craft-skill').click(this._generateCraftSkill.bind(this));
     html.find('.generate-science-skills').click(this._generateScienceSkills.bind(this));
     html.find('.absolution').click(this._onAbsolution.bind(this));
-    // lock sheet
-    // html.find('#padlock').click(this._onToggleLock.bind(this));
 
     // Add Inventory Item
     html.find('.item-create').click(this._onItemCreate.bind(this));
@@ -159,7 +157,6 @@ export class HVActorSheet extends ActorSheet {
           }
         } else {
           ui.notifications.warn('you have already cast this spell and need to re-memorize it.');
-          // item.setFlag('helveczia', 'castSpell', false);
         }
       }
     });
