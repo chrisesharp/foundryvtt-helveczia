@@ -245,7 +245,6 @@ export class HVDice {
     const html = await renderTemplate(template, dialogData);
     let roll: Promise<Evaluated<Roll<any>>>;
 
-    //Create Dialog window
     return new Promise((resolve) => {
       new Dialog({
         title: title ?? '',

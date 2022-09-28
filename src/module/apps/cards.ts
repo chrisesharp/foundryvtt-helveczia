@@ -7,7 +7,6 @@ export class HVCardsControl {
       )}'> ${game.i18n.localize('HV.dialog.cardgenerator')}
       </button>
       </div>`;
-      // html.find('.fas.fa-search').replaceWith($(control));
       html.find('.header-search').before($(control));
       html.find('.hv-card-gen').click((ev) => {
         ev.preventDefault();
@@ -58,12 +57,8 @@ export class HVCardsHand extends CardsHand {
   getData() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const data: any = super.getData();
-
-    // enforce data to ensure compatability between 0.7 and 0.8
     data.isGM = game.user?.isGM;
-
     data.config = CONFIG.HV;
-
     data.total = data.cards.reduce((acc, card) => acc + card.data.value, 0);
     return data;
   }
@@ -80,10 +75,8 @@ export class HVCardsHand extends CardsHand {
     const card = li ? this.object.cards.get(li.dataset.cardId) : null;
     const cls = getDocumentClass('Card');
 
-    // Save any pending change to the form
     await this._onSubmit(event, { preventClose: true, preventRender: true });
 
-    // Handle the control action
     switch (button.dataset.action) {
       case 'create':
         cls.createDialog({}, { parent: this.object, pack: this.object.pack ?? undefined });
@@ -129,7 +122,6 @@ export class HVCardsHand extends CardsHand {
 
   static async createHandsFor(name: string): Promise<void> {
     const packName = 'helveczia.cards';
-    // const forename = name.split(' ')[0];
     const userId = game.users?.find((u) => u.character?.name === name)?.id;
     const pack = game.packs.get(packName);
     if (pack) {
@@ -169,10 +161,8 @@ export class HVCardsHand extends CardsHand {
       const decks = [sourceDeck];
       if (!decks?.length) return ui.notifications.warn('CARDS.DrawWarnNoSources', { localize: true });
 
-      // Construct the dialog HTML
       const html = await renderTemplate('systems/helveczia/templates/cards/dialog-draw.hbs', {});
 
-      // Display the prompt
       return Dialog.prompt({
         title: game.i18n.localize('CARDS.DrawTitle'),
         label: game.i18n.localize('CARDS.Draw'),
@@ -203,10 +193,8 @@ export class HVCardsHand extends CardsHand {
       );
       if (!cards?.length) return ui.notifications.warn('CARDS.PassWarnNoTargets', { localize: true });
 
-      // Construct the dialog HTML
       const html = await renderTemplate('systems/helveczia/templates/cards/dialog-play.hbs', { card, cards });
 
-      // Display the prompt
       return Dialog.prompt({
         title: game.i18n.localize('CARD.Play'),
         label: game.i18n.localize('CARD.Play'),

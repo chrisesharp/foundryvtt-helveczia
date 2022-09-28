@@ -110,7 +110,6 @@ export class HVCharacterCreator extends FormApplication {
         type: 'result',
       },
     };
-    // Roll and return
     return new Roll(rollParts.join('+'), data).evaluate({ async: true });
   }
 
@@ -128,7 +127,6 @@ export class HVCharacterCreator extends FormApplication {
         gr: 0,
       },
       virtue: virtue,
-      // hp: hitpoints,
     };
     Object.keys(choice).forEach((key) => {
       updateData.scores[key] = {
