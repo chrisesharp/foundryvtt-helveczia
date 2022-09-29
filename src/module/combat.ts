@@ -15,7 +15,6 @@ export class HVCombat extends Combat {
         const cmbtant = combatTracker.viewed.combatants.get(id) as Combatant;
         const actor = cmbtant.actor;
         const initBonus = cmbtant.getFlag('helveczia', 'init-bonus') ?? 0;
-        const controls = $(ct).find('.combatant-controls');
         const initiativeCtrl = $(ct).find('.token-initiative');
         const currentTurn = current.round + current.turn * turnFraction;
         log.debug(`HVCombat.format() | currentTurn = ${currentTurn}`);
@@ -50,7 +49,7 @@ export class HVCombat extends Combat {
           if (Math.round(reload) > 0) {
             const index = Math.min(2, Math.round(reload));
             const colour = colours[index];
-            // const controls = $(ct).find('.combatant-controls');
+            const controls = $(ct).find('.combatant-controls');
             controls.prepend(
               `<a class='combatant-control flag' style='color:${colour}' title="${reload.toFixed(
                 1,
@@ -70,7 +69,6 @@ export class HVCombat extends Combat {
   }
 
   static addListeners(combatTracker, html, data) {
-    // Cycle through colors
     html.find('.combatant-control.flag').click(async (ev) => {
       if (!data.user.isGM) {
         return;

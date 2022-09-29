@@ -89,6 +89,19 @@
               </div>
             </li>
             <li class="navbar-item">
+              <a class="navbar-link" href="#" data-popover="#partyNavPop">Party</a>
+              <div id="partyNavPop" class="popover">
+                <ul class="popover-list">
+                  <li class="popover-item">
+                    <a class="popover-link" href="#party-generation">Generation</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#party-combat">Combat</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="navbar-item">
               <a class="navbar-link" href="#combat-tracker">Combat Tracker</a>
             </li>
             <li class="navbar-item">
@@ -499,303 +512,338 @@
           <div style="text-align: center;">
             <img src="./images/npc-skills.png" />
           </div>
-          <div class="docs-section">
-            <h2 id="combat-tracker" class="docs-header">Combat Tracker</h2>
-            <hr>
-            <p>
-              The Combat Tracker is pretty standard Foundry VTT. As per the rules, it's individual initiative (bonuses are automatically applied to each role). You can roll all NPCs automatically by clicking on the Roll NPCs button.
-            </p>
-            <div style="text-align: center;">
-              <img src="./images/combat-2.png" />
-            </div>
-            <p>
-              Here, Pascal Groux is in a fight with the village troublemaker. He has lost the initiative, but on his turn, he fires his Blunderbus.
-            </p>
-            <div style="text-align: center;">
-              <img src="./images/combat-3.png" />
-            </div>
-            <p>
-              A reload marker in red appears, indicating that he is in the process of reloading his blunderbus, and how many rounds (or fractions of rounds) there are left before he can fire it again. 
-              When there is only 0.5 rounds left, it will turn amber, indicating that Pascal could fire it again but at -2 (which would have to be manually applied as a situational modifier on the attack roll.)
-            </p>
-            <p>
-              Once it has fully reloaded, the marker will disappear.
-            </p>
+        </div>
+        <div class="docs-section">
+          <h2 id="npcs" class="docs-header">NPCs</h2>
+          <hr>
+          <h4 class="docs-header" id="party-generation">Party Sheet</h4>
+          <p>
+            It's useful in hexcrawl or larger scale maps to have a single token representing the whole party. It's also useful as a GM to see a summary of the key information about every character in one view. The <em>Party</em> actor type is designed to fulfill both these needs. 
+          </p>
+          <p>
+            Creating an party sheet is a similar process. Create a new <code>party</code> actor type and you will be presented by an initial empty party sheet.
+          </p>
+          <p>Drag the characters you want to be members of the party onto the sheet. For example, here we have dragged Aaron, Helmut and Pascal onto the sheet.</p>
+          <div style="text-align: center;">
+            <img src="./images/party1.png" />
           </div>
-          <div class="docs-section">
-            <h2 id="compendia" class="docs-header">Compendia</h2>
-            <hr>
-            <div class="row">
-              <div class="six columns">
-                <p>
-                  The following Items can be created for the Helvéczia RPG in Foundry:
-                  <ol>
-                    <li>Armour</li>
-                    <li>Weapons</li>
-                    <li>Possessions</li>
-                    <li>Spells</li>
-                    <li>Books of Spells</li>
-                    <li>Skills</li>
-                    <li>Deeds of Virtue or Vice</li>
-                    <li>Peoples</li>
-                    <li>Classes & Specialisms</li>
-                  </ol>
-                </p>
-                <p>
-                  It is possible to create any of these from scratch, but a Compendium containing the default
-                  items for each category as per the rules is provided for ease of use.
-                </p>
-                <p>
-                  The Peoples and Classes items are complex and make use of Foundry <em>Effects</em> so creating or modifying them require use of the <a href="#settings">Effects Tab setting</a> and is for advanced users only!
-                </p>
-                <p>
-                  At present, this system only supports a single People (ethnic origin) and single Class (profession) association with each actor. 
-                  For instance, it is not possible to be half-italian/half-french, nor is it possible to be a dual-classed Fighter/Vagabond, etc. 
-                  Dragging on a new People or Class will replace the existing one on a character sheet.
-                </p>
-              </div>
-              <div class="six columns">
-                <div style="text-align: center;">
-                  <img src="./images/compendia.png" />
-                </div>
-              </div>
-            </div>
-            <hr>
-            <h4 class="docs-header" id="item-armour">Armour</h4>
-            <div class="row">
-              <div class="six columns">
-                <p>
-                  The common armour types have been provided in the Compendium.
-                </p>
-                <p>You can specify the name, cost, and encumbrance values (0 encumbrance means it doesn't take a slot up in your carrying capacity).</p>
-                <p>You can also specify the AC bonus the piece provides, and any additional description or notes.</p>
-              </div>
-              <div class="six columns">
-                <div style="text-align: center;">
-                  <img src="./images/armour.png" />
-                </div>
-              </div>
-            </div>
-            <hr>
-            <h4 class="docs-header" id="item-weapons">Weapons</h4>
-            <div class="row">
-              <div class="six columns">
-                <p>
-                  The common melee and ranged weapon types have been provided in the Compendium.
-                </p>
-                <p>You can specify the name, cost, and encumbrance values (0 encumbrance means it doesn't take a slot up in your carrying capacity).</p>
-                <p>You can also specify whether it is a melee or ranged weapon, any additional attack bonuses it may have (if it's magical, for instance),
-                   the damage it does (e.g. <code>1d10+3</code>), the dice roll number on or above that is considered a critical roll,
-                   and the damage multiplier in the event of a critical.</p>
-                <p>On the Notes tab,you can add any additional description or notes.</p>
-              </div>
-              <div class="six columns">
-                <div style="text-align: center;">
-                  <img src="./images/weapon.png" />
-                </div>
-              </div>
-            </div>
-            <hr>
-            <h4 class="docs-header" id="item-possessions">Possessions</h4>
-            <div class="row">
-              <div class="six columns">
-                <p>
-                 Possessions are the mundane or magical pieces of equipment that a character may carry.
-                </p>
-              </div>
-              <div class="six columns">
-                <div style="text-align: center;">
-                  <img src="./images/possession.png" />
-                </div>
-              </div>
-            </div>
-            <hr>
-            <h4 class="docs-header" id="item-skills">Skills</h4>
-            <div class="row">
-              <div class="six columns">
-                <p>
-                 Skills are a broad set, which are categorised into the following subtypes:
-                 <ol>
-                  <li>Craft</li>
-                  <li>Science</li>
-                  <li>Practical</li>
-                  <li>Vagabond</li>
-                  <li>Magical</li>
-                 </ol>
-                </p>
-                <p>You can specify the subtype, the ability that it uses for checks, and any additional bonuses that it might have for checking.</p>
-              </div>
-              <div class="six columns">
-                <div style="text-align: center;">
-                  <img src="./images/skill.png" />
-                </div>
-              </div>
-            </div>
-            <hr>
-            <h4 class="docs-header" id="item-spells">Spells</h4>
-            <div class="row">
-              <div class="six columns">
-                <p>
-                Spells are classified as Cleric or Student spells, and the Level of spell.
-                </p>
-                <p>You can specify the key properties of the spell: Range, Duration, Area, Save, and Components.</p>
-                <p>None of these properties are automated, as they are all extremely subjective.</p>
-              </div>
-              <div class="six columns">
-                <div style="text-align: center;">
-                  <img src="./images/spell.png" />
-                </div>
-              </div>
-            </div>
-            <hr>
-            <h4 class="docs-header" id="item-book">Books (of Spells)</h4>
-            <div class="row">
-              <div class="three columns">
-                <p>
-                Books, Scrolls, Pamphlets, etc. can all be modelled as a <em>Book</em> item.
-                </p>
-                <p>If it is to record spells, as in a Spellbook, then you can drag the desired spells from the Compendia onto the Book's sheet.</p>
-                <p>The book can then be added as a possession to the character, and when the character wishes to memorize a spell, then simply need
-                  to open the book's sheet and drag the spell from the book onto their character sheet.
-                </p>
-              </div>
-              <div class="nine columns">
-                <div style="text-align: center;">
-                  <img src="./images/spellbook.png" />
-                </div>
-              </div>
-            </div>
-            <hr>
-            <h4 class="docs-header" id="item-deeds">Deeds</h4>
-            <div class="row">
-              <div class="six columns">
-                <p>As per the rules, it is important for the GM to record characters good or bad deeds on their character sheet at the end of each day.</p>
-                <p>When added to the sheet, the deed will automatically affect the character's virtue level.</p>
-                <p>
-                  Deeds maybe virtuous, or vile, and you must specify whether they are a <code>Virtue</code> or a <code>Vice</code> and which of the corresponding seven types it relates to.
-                </p>
-                <p>You must also specify the magnitude of the deed: Minor (1pt), Moderate (2pt), Major (3pt) or or Heinous/Sincere (6 pt) </p>
-              </div>
-              <div class="six columns">
-                <div style="text-align: center;">
-                  <img src="./images/deed.png" />
-                </div>
-              </div>
-            </div>
-            <hr>
-            <h4 class="docs-header" id="item-people">Peoples</h4>
-            <div class="row">
-              <div class="six columns">
-                <p>The standard peoples defined in the Helvéczia RPG rules are included in the Peoples Compendium.</p>
-                <p>The benefits and disadvantages of each peoples have been automated, so they should be applied automatically in all circumstances.</p>
-                <p>As noted above, it is complex to add a new type of people, as it requires intimate Knowledge of the system, and your are advised not to try modifying these.</p>
-              </div>
-              <div class="six columns">
-                <div style="text-align: center;">
-                  <img src="./images/people.png" />
-                </div>
-              </div>
-            </div>
-            <hr>
-            <h4 class="docs-header" id="item-class">Classes & Specialisms</h4>
-            <div class="row">
-              <div class="six columns">
-                <p>The standard classes and specialisms defined in the Helvéczia RPG rules are included in the Classes and Specialisms Compendium.</p>
-                <p>The benefits and disadvantages of each class and specialism have been automated, so they should be applied automatically in all circumstances.</p>
-                <p>As noted above, it is complex to add a new type of class or specialism, as it requires intimate Knowledge of the system, and your are advised not to try modifying these.</p>
-                <div style="text-align: center;">
-                  <img src="./images/specialism.png" />
-                </div>
-              </div>
-              <div class="six columns">
-                <div style="text-align: center;">
-                  <img src="./images/classes.png" />
-                </div>
-              </div>
-            </div>
-            <hr>
+          <p>
+            From here, as the GM, you can see at a glance all the saves, attack bonusesm AC, HP and virtue of each character in the party. Non-GM players only see the character name, title and portrait.
+          </p>
+          <p>To remove a character from the party, click the small cross icon at the end of the line for that character.</p>
+          <hr>
+          <h4 class="docs-header" id="party-combat">Party Combat</h4>
+          <p>
+            The party can be dragged onto the map, and will be represented by an appropriate group portrait. 
+            From this token you can use the standard FoundryVTT TokenHUD button as a convenience for adding or removing all party members to/from the <a href="#combat-tracker">Combat Tracker.</a>
+          </p>
+          <div style="text-align: center;">
+            <img src="./images/party2.png" />
           </div>
-          <div class="docs-section">
-            <h2 id="extras" class="docs-header">Extras</h2>
-            <hr>
-            <h4 class="docs-header" id="devils-bible">Devil's Bible</h4>
-            <div class="row">
-              <div class="three columns">
-                <p>If a player wants to make use of the Devil's Bible, you can create a deck for them.</p>
-                <p>Go to the Cards tab and click <em>Add Devil's Bible</em>.</p>
-                <p>This will pop up a dialog asking which player character (only actors owned by a player are choosable) that you want to create a deck for. Here we are selecting Helmut Lang.</p>
-                <p>A Folder for the chosen character will be created with three entries:</p>
+        </div>
+        <div class="docs-section">
+          <h2 id="combat-tracker" class="docs-header">Combat Tracker</h2>
+          <hr>
+          <p>
+            The Combat Tracker is pretty standard Foundry VTT. As per the rules, it's individual initiative (bonuses are automatically applied to each role). You can roll all NPCs automatically by clicking on the Roll NPCs button.
+          </p>
+          <div style="text-align: center;">
+            <img src="./images/combat-2.png" />
+          </div>
+          <p>
+            The GM can add a situational modifier for initiative rolls in the tracker directly, by clicking the <em>+</em> icon next to the dice. Increasing is the default, but holding <code>SHIFT</code> will switch it to decreasing, showing a <em>-</em> icon.
+          </p>
+          <div style="text-align: center;">
+            <img src="./images/combat-2a.png" /><img src="./images/combat-2b.png" />
+          </div>
+          <p>
+            Here, Pascal Groux is in a fight with the village troublemaker. He has lost the initiative, but on his turn, he fires his Blunderbus.
+          </p>
+          <div style="text-align: center;">
+            <img src="./images/combat-3.png" />
+          </div>
+          <p>
+            A reload marker in red appears, indicating that he is in the process of reloading his blunderbus, and how many rounds (or fractions of rounds) there are left before he can fire it again. 
+            When there is only 0.5 rounds left, it will turn amber, indicating that Pascal could fire it again but at -2 (which would have to be manually applied as a situational modifier on the attack roll.)
+          </p>
+          <p>
+            Once it has fully reloaded, the marker will disappear.
+          </p>
+        </div>
+        <div class="docs-section">
+          <h2 id="compendia" class="docs-header">Compendia</h2>
+          <hr>
+          <div class="row">
+            <div class="six columns">
+              <p>
+                The following Items can be created for the Helvéczia RPG in Foundry:
                 <ol>
-                  <li>Devil's hand for the character</li>
-                  <li>The character's returned cards</li>
-                  <li>The Devil's Bible</li>
+                  <li>Armour</li>
+                  <li>Weapons</li>
+                  <li>Possessions</li>
+                  <li>Spells</li>
+                  <li>Books of Spells</li>
+                  <li>Skills</li>
+                  <li>Deeds of Virtue or Vice</li>
+                  <li>Peoples</li>
+                  <li>Classes & Specialisms</li>
                 </ol>
-                <p>The player should only be able to view the Devil's hand for them. The others should be hidden from them.</p>
-                <p>When the player wants to draw cards from the Devil's Bible, they can click on the <em>Draw</em> button on <em>the Devil's hand for the character</em>. The will be presented with a dialog asking how many cards they would like to draw (1-3). These will be drawn from their personal deck of the Devil's Bible, and kept face down.</p>
-                <p>The player will only see the face down cards, and no details, but the GM sees what the cards actually are, and how much they're worth.</p>
-                <p>If the player successfully cheats the Devil with a hard Temptation save, then you can flip over a card for them to see. If they wish to replace it, you can pass the card to their <em>returned cards pile</em> by clicking on the right arrow against the card, and can draw a new card to replace it.</p>
-                <p>Clicking on <em>Return to Deck</em> on the returned cards pile will then send those cards back into the deck for drawing again.</p>
-              </div>
-              <div class="nine columns">
-                <div style="text-align: center;">
-                  <img src="./images/cards.png" />
-                </div>
-                <div style="text-align: center;">
-                  <img src="./images/choose_bible.png" />
-                </div>
-                <div style="text-align: center;">
-                  <img src="./images/folder_cards.png" />
-                </div>
-                <div style="text-align: center;">
-                  <img src="./images/draw_cards.png" />
-                </div>
-                <div style="text-align: center;">
-                  <img src="./images/hands.png" />
-                </div>
-                <div style="text-align: center;">
-                  <img src="./images/revealed.png" />
-                </div>
-              </div>
+              </p>
+              <p>
+                It is possible to create any of these from scratch, but a Compendium containing the default
+                items for each category as per the rules is provided for ease of use.
+              </p>
+              <p>
+                The Peoples and Classes items are complex and make use of Foundry <em>Effects</em> so creating or modifying them require use of the <a href="#settings">Effects Tab setting</a> and is for advanced users only!
+              </p>
+              <p>
+                At present, this system only supports a single People (ethnic origin) and single Class (profession) association with each actor. 
+                For instance, it is not possible to be half-italian/half-french, nor is it possible to be a dual-classed Fighter/Vagabond, etc. 
+                Dragging on a new People or Class will replace the existing one on a character sheet.
+              </p>
             </div>
-            <hr>
-            <h4 class="docs-header" id="rnd-names">Random Names</h4>
-            <div class="row">
-              <div class="six columns">
-                <p>There are two ways of generating a random name appropriate for a given gender/origin. The first is a fully automated dice icon on the character sheet. The second is button on the Actor tab.</p>
-                <h4>Actor Sheet</h4>
-                <p>On a character or NPC sheet, if you want to generate an appropriate name once you've decided who this person is and where they are from, it's easier to just give them a placeholder name, like 'a' to start with. 
-                  Once you're ready to pick a name, click on the nice icon next to their name. This will generate a name approriate for the selected gender (the icon to the left of their name) and origins.</p>
-                <p>Here, for our French male character, we get the name the name Jacquet Thévenet.</p>
-                <p>If you don't like that name, keep clicking until you do!  </p>
-                <p>If you decide to switch the gender, re-roll, and a more appropriate name will be selected.</p>
-              </div>
-              <div class="six columns">
-                <div style="text-align: center;">
-                  <img src="./images/empty_name.png" />
-                </div>
-                <div style="text-align: center;">
-                  <img src="./images/male_name.png" />
-                </div>
-                <div style="text-align: center;">
-                  <img src="./images/female_name.png" />
-                </div>
-              </div>
-              <h4>Dialog</h4>
-                <p>On the Actor tab, you will find a button labelled 'Random Name'. Click this to bring up a dialog box which will ask you for the gender and origin of the name, and whether you want it to be a Helvéczian alternative. (Variations are only offered for German, French or Italian names.)</p>
-              <div class="row">
-                <div style="text-align: center;">
-                  <img src="./images/name_generator.png" />
-                </div>
-                <p>Here, for our German male name, we get Matthias Steiger.</p>
-                <p>Clicking on the TICK button will send this name to the Chat window for all to see.</p>
-                <div style="text-align: center;">
-                  <img src="./images/name_to_chat.png" />
-                </div>
+            <div class="six columns">
+              <div style="text-align: center;">
+                <img src="./images/compendia.png" />
               </div>
             </div>
           </div>
+          <hr>
+          <h4 class="docs-header" id="item-armour">Armour</h4>
+          <div class="row">
+            <div class="six columns">
+              <p>
+                The common armour types have been provided in the Compendium.
+              </p>
+              <p>You can specify the name, cost, and encumbrance values (0 encumbrance means it doesn't take a slot up in your carrying capacity).</p>
+              <p>You can also specify the AC bonus the piece provides, and any additional description or notes.</p>
+            </div>
+            <div class="six columns">
+              <div style="text-align: center;">
+                <img src="./images/armour.png" />
+              </div>
+            </div>
+          </div>
+          <hr>
+          <h4 class="docs-header" id="item-weapons">Weapons</h4>
+          <div class="row">
+            <div class="six columns">
+              <p>
+                The common melee and ranged weapon types have been provided in the Compendium.
+              </p>
+              <p>You can specify the name, cost, and encumbrance values (0 encumbrance means it doesn't take a slot up in your carrying capacity).</p>
+              <p>You can also specify whether it is a melee or ranged weapon, any additional attack bonuses it may have (if it's magical, for instance),
+                  the damage it does (e.g. <code>1d10+3</code>), the dice roll number on or above that is considered a critical roll,
+                  and the damage multiplier in the event of a critical.</p>
+              <p>On the Notes tab,you can add any additional description or notes.</p>
+            </div>
+            <div class="six columns">
+              <div style="text-align: center;">
+                <img src="./images/weapon.png" />
+              </div>
+            </div>
+          </div>
+          <hr>
+          <h4 class="docs-header" id="item-possessions">Possessions</h4>
+          <div class="row">
+            <div class="six columns">
+              <p>
+                Possessions are the mundane or magical pieces of equipment that a character may carry.
+              </p>
+            </div>
+            <div class="six columns">
+              <div style="text-align: center;">
+                <img src="./images/possession.png" />
+              </div>
+            </div>
+          </div>
+          <hr>
+          <h4 class="docs-header" id="item-skills">Skills</h4>
+          <div class="row">
+            <div class="six columns">
+              <p>
+                Skills are a broad set, which are categorised into the following subtypes:
+                <ol>
+                <li>Craft</li>
+                <li>Science</li>
+                <li>Practical</li>
+                <li>Vagabond</li>
+                <li>Magical</li>
+                </ol>
+              </p>
+              <p>You can specify the subtype, the ability that it uses for checks, and any additional bonuses that it might have for checking.</p>
+            </div>
+            <div class="six columns">
+              <div style="text-align: center;">
+                <img src="./images/skill.png" />
+              </div>
+            </div>
+          </div>
+          <hr>
+          <h4 class="docs-header" id="item-spells">Spells</h4>
+          <div class="row">
+            <div class="six columns">
+              <p>
+              Spells are classified as Cleric or Student spells, and the Level of spell.
+              </p>
+              <p>You can specify the key properties of the spell: Range, Duration, Area, Save, and Components.</p>
+              <p>None of these properties are automated, as they are all extremely subjective.</p>
+            </div>
+            <div class="six columns">
+              <div style="text-align: center;">
+                <img src="./images/spell.png" />
+              </div>
+            </div>
+          </div>
+          <hr>
+          <h4 class="docs-header" id="item-book">Books (of Spells)</h4>
+          <div class="row">
+            <div class="three columns">
+              <p>
+              Books, Scrolls, Pamphlets, etc. can all be modelled as a <em>Book</em> item.
+              </p>
+              <p>If it is to record spells, as in a Spellbook, then you can drag the desired spells from the Compendia onto the Book's sheet.</p>
+              <p>The book can then be added as a possession to the character, and when the character wishes to memorize a spell, then simply need
+                to open the book's sheet and drag the spell from the book onto their character sheet.
+              </p>
+            </div>
+            <div class="nine columns">
+              <div style="text-align: center;">
+                <img src="./images/spellbook.png" />
+              </div>
+            </div>
+          </div>
+          <hr>
+          <h4 class="docs-header" id="item-deeds">Deeds</h4>
+          <div class="row">
+            <div class="six columns">
+              <p>As per the rules, it is important for the GM to record characters good or bad deeds on their character sheet at the end of each day.</p>
+              <p>When added to the sheet, the deed will automatically affect the character's virtue level.</p>
+              <p>
+                Deeds maybe virtuous, or vile, and you must specify whether they are a <code>Virtue</code> or a <code>Vice</code> and which of the corresponding seven types it relates to.
+              </p>
+              <p>You must also specify the magnitude of the deed: Minor (1pt), Moderate (2pt), Major (3pt) or or Heinous/Sincere (6 pt) </p>
+            </div>
+            <div class="six columns">
+              <div style="text-align: center;">
+                <img src="./images/deed.png" />
+              </div>
+            </div>
+          </div>
+          <hr>
+          <h4 class="docs-header" id="item-people">Peoples</h4>
+          <div class="row">
+            <div class="six columns">
+              <p>The standard peoples defined in the Helvéczia RPG rules are included in the Peoples Compendium.</p>
+              <p>The benefits and disadvantages of each peoples have been automated, so they should be applied automatically in all circumstances.</p>
+              <p>As noted above, it is complex to add a new type of people, as it requires intimate Knowledge of the system, and your are advised not to try modifying these.</p>
+            </div>
+            <div class="six columns">
+              <div style="text-align: center;">
+                <img src="./images/people.png" />
+              </div>
+            </div>
+          </div>
+          <hr>
+          <h4 class="docs-header" id="item-class">Classes & Specialisms</h4>
+          <div class="row">
+            <div class="six columns">
+              <p>The standard classes and specialisms defined in the Helvéczia RPG rules are included in the Classes and Specialisms Compendium.</p>
+              <p>The benefits and disadvantages of each class and specialism have been automated, so they should be applied automatically in all circumstances.</p>
+              <p>As noted above, it is complex to add a new type of class or specialism, as it requires intimate Knowledge of the system, and your are advised not to try modifying these.</p>
+              <div style="text-align: center;">
+                <img src="./images/specialism.png" />
+              </div>
+            </div>
+            <div class="six columns">
+              <div style="text-align: center;">
+                <img src="./images/classes.png" />
+              </div>
+            </div>
+          </div>
+          <hr>
+        </div>
+        <div class="docs-section">
+          <h2 id="extras" class="docs-header">Extras</h2>
+          <hr>
+          <h4 class="docs-header" id="devils-bible">Devil's Bible</h4>
+          <div class="row">
+            <div class="three columns">
+              <p>If a player wants to make use of the Devil's Bible, you can create a deck for them.</p>
+              <p>Go to the Cards tab and click <em>Add Devil's Bible</em>.</p>
+              <p>This will pop up a dialog asking which player character (only actors owned by a player are choosable) that you want to create a deck for. Here we are selecting Helmut Lang.</p>
+              <p>A Folder for the chosen character will be created with three entries:</p>
+              <ol>
+                <li>Devil's hand for the character</li>
+                <li>The character's returned cards</li>
+                <li>The Devil's Bible</li>
+              </ol>
+              <p>The player should only be able to view the Devil's hand for them. The others should be hidden from them.</p>
+              <p>When the player wants to draw cards from the Devil's Bible, they can click on the <em>Draw</em> button on <em>the Devil's hand for the character</em>. The will be presented with a dialog asking how many cards they would like to draw (1-3). These will be drawn from their personal deck of the Devil's Bible, and kept face down.</p>
+              <p>The player will only see the face down cards, and no details, but the GM sees what the cards actually are, and how much they're worth.</p>
+              <p>If the player successfully cheats the Devil with a hard Temptation save, then you can flip over a card for them to see. If they wish to replace it, you can pass the card to their <em>returned cards pile</em> by clicking on the right arrow against the card, and can draw a new card to replace it.</p>
+              <p>Clicking on <em>Return to Deck</em> on the returned cards pile will then send those cards back into the deck for drawing again.</p>
+            </div>
+            <div class="nine columns">
+              <div style="text-align: center;">
+                <img src="./images/cards.png" />
+              </div>
+              <div style="text-align: center;">
+                <img src="./images/choose_bible.png" />
+              </div>
+              <div style="text-align: center;">
+                <img src="./images/folder_cards.png" />
+              </div>
+              <div style="text-align: center;">
+                <img src="./images/draw_cards.png" />
+              </div>
+              <div style="text-align: center;">
+                <img src="./images/hands.png" />
+              </div>
+              <div style="text-align: center;">
+                <img src="./images/revealed.png" />
+              </div>
+            </div>
+          </div>
+          <hr>
+          <h4 class="docs-header" id="rnd-names">Random Names</h4>
+          <div class="row">
+            <div class="six columns">
+              <p>There are two ways of generating a random name appropriate for a given gender/origin. The first is a fully automated dice icon on the character sheet. The second is button on the Actor tab.</p>
+              <h4>Actor Sheet</h4>
+              <p>On a character or NPC sheet, if you want to generate an appropriate name once you've decided who this person is and where they are from, it's easier to just give them a placeholder name, like 'a' to start with. 
+                Once you're ready to pick a name, click on the nice icon next to their name. This will generate a name approriate for the selected gender (the icon to the left of their name) and origins.</p>
+              <p>Here, for our French male character, we get the name the name Jacquet Thévenet.</p>
+              <p>If you don't like that name, keep clicking until you do!  </p>
+              <p>If you decide to switch the gender, re-roll, and a more appropriate name will be selected.</p>
+            </div>
+            <div class="six columns">
+              <div style="text-align: center;">
+                <img src="./images/empty_name.png" />
+              </div>
+              <div style="text-align: center;">
+                <img src="./images/male_name.png" />
+              </div>
+              <div style="text-align: center;">
+                <img src="./images/female_name.png" />
+              </div>
+            </div>
+            <h4>Dialog</h4>
+              <p>On the Actor tab, you will find a button labelled 'Random Name'. Click this to bring up a dialog box which will ask you for the gender and origin of the name, and whether you want it to be a Helvéczian alternative. (Variations are only offered for German, French or Italian names.)</p>
+            <div class="row">
+              <div style="text-align: center;">
+                <img src="./images/name_generator.png" />
+              </div>
+              <p>Here, for our German male name, we get Matthias Steiger.</p>
+              <p>Clicking on the TICK button will send this name to the Chat window for all to see.</p>
+              <div style="text-align: center;">
+                <img src="./images/name_to_chat.png" />
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
-      <!-- End Document
+    <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    </body>
-  </html>
+  </body>
+</html>
