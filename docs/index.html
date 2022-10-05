@@ -45,9 +45,6 @@
         <div class="container">
           <ul class="navbar-list">
             <li class="navbar-item">
-              <a class="navbar-link" href="#intro">Intro</a>
-            </li>
-            <li class="navbar-item">
               <a class="navbar-link" href="#install">Install</a>
             </li>
             <li class="navbar-item">
@@ -139,7 +136,7 @@
               </div>
             </li>
             <li class="navbar-item">
-              <a class="navbar-link" href="#" data-popover="#xtraNavPop">Extras</a>
+              <a class="navbar-link" href="#" data-popover="#xtraNavPop">Miscellanea</a>
               <div id="xtraNavPop" class="popover">
                 <ul class="popover-list">
                   <li class="popover-item">
@@ -147,6 +144,9 @@
                   </li>
                   <li class="popover-item">
                     <a class="popover-link" href="#rnd-names">Random Names</a>
+                  </li>
+                  <li class="popover-item">
+                    <a class="popover-link" href="#tokens">Tokens</a>
                   </li>
                 </ul>
               </div>
@@ -227,6 +227,14 @@
                 interface over this, but for now, you can get to these effects by
                 ticking this box. It will add a new tab (for the GM) to character and item sheets.
                 <p>For <em>advanced users only!</em></p>
+                </ul>
+              </li>
+              <li><strong>Flip token</strong>
+                <ul>
+                The Helvéczia system provides a selection of interesting images for male and female characters and NPCs, in both portrait and full-length. It adds a bit of
+                flavour to have the full-length token images face in the right direction, to create more of a 'story book' feel.
+                <p>This setting is on by default, but can be disabled
+                if you use your own rotating tokens.</p>
                 </ul>
               </li>
             </ul>
@@ -840,6 +848,20 @@
                 <img src="./images/name_to_chat.png" />
               </div>
             </div>
+          </div>
+        </div>
+        <h4 class="docs-header" id="tokens">Tokens</h4>
+        <div class="row">
+          <div class="twelve columns">
+            <h4>Portrait and Token matching</h4>
+            <p>A set of images for actor portraits and their corresponding full length images have been provided. A naming convention is followed, so that if you choose an image for the portrait of a character,
+              you can then click the <code>sync</code> icon that appears in the top-left corner of the image, and the matching full-length image will be set for the prototype Token for that character or NPC.
+            </p>
+            <div style="text-align: center;">
+              <img src="./images/token-match.png" />
+            </div>
+            <h4>Token Facing</h4>
+            <p>if you select a Token and press <code>SHIFT</code> + a left or right movement key, the token will flip to face the new direction. This is controlled by the <a href="#settings">system settings</a>. </p>
           </div>
         </div>
     </div>
