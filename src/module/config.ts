@@ -49,6 +49,7 @@ export interface HelvecziaConfig {
   };
 
   showEffects: boolean;
+  flipTokens: boolean;
 
   XPLevels: {
     [key: number]: number;
@@ -112,6 +113,7 @@ export const HV: HelvecziaConfig = {
   DEFAULT_PARTY: 'systems/helveczia/assets/people/groups/group_0.png',
 
   showEffects: false,
+  flipTokens: false,
 
   actorClasses: {
     character: HVActor,

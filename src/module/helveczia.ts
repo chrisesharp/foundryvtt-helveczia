@@ -58,6 +58,8 @@ Hooks.once('init', async () => {
   registerHandlebarHelpers();
 
   CONFIG.HV.showEffects = game.settings.get('helveczia', 'effects') as boolean;
+  CONFIG.HV.flipTokens = game.settings.get('helveczia', 'token-flip') as boolean;
+
   CONFIG.Combat.initiative = {
     formula: '1d20+@initiative',
     decimals: 2,
@@ -121,6 +123,13 @@ Hooks.once('ready', async () => {
 // Add any additional hooks if necessary
 Hooks.on('HV.Cards.genCards', HVCardsControl.showDialog);
 Hooks.on('HV.Names.genName', HVNameGenerator.showDialog);
+
+Hooks.on('preUpdateToken', async (tokenDocument, change, _options, _userid) => {
+  if (!CONFIG.HV.flipTokens) return;
+  if (change.rotation === 90 || change.rotation === 270) {
+    change.mirrorX = !tokenDocument.data.mirrorX;
+  }
+});
 
 Hooks.on('applyActiveEffect', async (actor, changeData) => {
   actor.applyCustomEffect(changeData);

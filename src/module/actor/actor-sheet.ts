@@ -182,6 +182,26 @@ export class HVActorSheet extends ActorSheet {
 
     // Active Effect management
     html.find('.effect-control').click((ev) => onManageActiveEffect(ev, this.actor));
+
+    // Sync token with portrait
+    html.find('.token-sync').click(async () => {
+      const portrait = this.actor.img;
+      const path = portrait?.split('/') ?? [];
+      let token = '';
+      while (path.length > 1) {
+        const step = path.shift();
+        token += `${step}/`;
+      }
+      const step = path.shift();
+      token += `lg/${step}`;
+      const data = {
+        token: {
+          img: token,
+        },
+      };
+      await this.actor.data.update(data);
+      ui.notifications.info(game.i18n.localize('HV.TokenSync'));
+    });
   }
 
   /**

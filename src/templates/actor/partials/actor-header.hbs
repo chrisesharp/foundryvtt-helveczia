@@ -5,6 +5,9 @@
         </div>
         <div class="actor-portrait">
             <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+            <div class="token-sync" title="Match token with portrait">
+                <a><i class="fas fa-sync"></i></a>
+            </div>
         </div>
         <div class="actor-name" style="display: inline-flex;">
             <a><i class="fas {{#if (eq sex 'male') }}fa-mars{{else}}fa-venus{{/if}} toggle-gender" data-actor-id="{{ actor._id}}" title="sex"></i></a>

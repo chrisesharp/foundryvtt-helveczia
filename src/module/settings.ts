@@ -21,4 +21,13 @@ export function registerSettings(): void {
     type: Boolean,
     config: true,
   });
+
+  game.settings.register('helveczia', 'token-flip', {
+    name: game.i18n.localize('HV.Setting.tokenFlip'),
+    hint: game.i18n.localize('HV.Setting.tokenFlipHint'),
+    default: true,
+    scope: 'world',
+    type: Boolean,
+    config: true,
+  });
 }

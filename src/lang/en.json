@@ -44,6 +44,8 @@
   "HV.Setting.debugHint": "tick for debug logging level",
   "HV.Setting.effects": "Show Effects Tabs",
   "HV.Setting.effectsHint": "tick for visibility of active effects (advanced)",
+  "HV.Setting.tokenFlip": "Flip token",
+  "HV.Setting.tokenFlipHint": "tick to enable tokens to flip their facing when SHIFT + movement key pressed",
   "HV.tabs.abilities": "Abilities",
   "HV.tabs.skills": "Skills",
   "HV.tabs.combat": "Combat",
@@ -180,5 +182,6 @@
   "HV.dialog.nameerror": "Cannot suggest a {people} name",
   "HV.dialog.sendname": "Send Name to Chat?",
   "HV.dialog.partysheet.name": "The Troupe",
-  "HV.dialog.partysheet.remove": "Remove member"
+  "HV.dialog.partysheet.remove": "Remove member",
+  "HV.TokenSync": "The prototype token image as been synced with the portrait"
 }
