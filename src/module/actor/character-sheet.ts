@@ -191,6 +191,7 @@ export class HVCharacterSheet extends HVActorSheet {
         break;
       case 'weapon':
       case 'armour':
+      case 'book':
       case 'possession':
         const capacitySlots = await this._calculateAvailableSlots();
         log.debug('_onDropItem() | carrying capacity:', capacitySlots);
@@ -212,6 +213,7 @@ export class HVCharacterSheet extends HVActorSheet {
         switch (item.type) {
           case 'weapon':
           case 'armour':
+          case 'book':
           case 'possession':
             item.setFlag('helveczia', 'position', position);
             log.debug(`_onDropItem() | set position of item to ${position}`);

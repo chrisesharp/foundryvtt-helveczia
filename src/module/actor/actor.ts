@@ -92,7 +92,7 @@ export class HVActor extends Actor {
     );
 
     data.possessions = {
-      articles: categories['possession'],
+      articles: categories['possession'].concat(categories['book']),
       weapons: categories['weapon'],
       armour: categories['armour'].sort((a, b) => b.data.data.bonus - a.data.data.bonus),
     };
