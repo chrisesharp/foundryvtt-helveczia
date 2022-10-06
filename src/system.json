@@ -158,12 +158,7 @@
       "type": "RollTable"
     }
   ],
-  "dependencies": [
-    {
-      "name": "socketlib",
-      "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/master/module.json"
-    }
-  ],
+  "dependencies": [],
   "languages": [
     {
       "lang": "en",
