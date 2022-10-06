@@ -84,6 +84,7 @@ export class Student {
           const skill = {
             name: s,
             type: 'skill',
+            img: 'icons/svg/book.svg',
             data: {
               description: studentSpecialisms[s].description,
               ability: '',
@@ -101,7 +102,8 @@ export class Student {
     const gainedSkills = actor.isStudent();
     actor.setFlag('helveczia', 'student-skill', gainedSkills);
     log.debug('Student.getSkillsBonus() |  student-skill flag set to ', gainedSkills);
-    return gainedSkills ? 2 : 0;
+    // base 2 extra to cover Student specialist skills. and 2 extra as a student
+    return gainedSkills ? 4 : 2;
   }
 
   static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {

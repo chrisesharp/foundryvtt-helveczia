@@ -199,7 +199,7 @@ export class HVActorSheet extends ActorSheet {
           img: token,
         },
       };
-      await this.actor.data.update(data);
+      await this.actor.update(data);
       ui.notifications.info(game.i18n.localize('HV.TokenSync'));
     });
   }
@@ -486,7 +486,7 @@ export class HVActorSheet extends ActorSheet {
 
   async _generateCraftSkill(event) {
     event.preventDefault();
-    const existingSkills = (this.actor.data as CharacterActorData).data.skills.map((i) => i.name);
+    const existingSkills = (this.actor.data as CharacterActorData).data?.skills.map((i) => i.name);
     const rndCraft = await this.getRandomCraft(existingSkills);
     if (rndCraft) {
       const craft = { name: rndCraft?.name, ability: (rndCraft.data as SkillItemData).data.ability };

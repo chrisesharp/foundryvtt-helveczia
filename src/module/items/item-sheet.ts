@@ -12,7 +12,7 @@ export class HVItemSheet extends ItemSheet {
       dragDrop: [
         new DragDrop({
           dragSelector: '.item',
-          dropSelector: '.item-list',
+          dropSelector: null,
         }),
       ],
     });

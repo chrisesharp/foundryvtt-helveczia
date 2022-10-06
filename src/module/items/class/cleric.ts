@@ -92,6 +92,7 @@ export class Cleric {
           const skill = {
             name: s,
             type: 'skill',
+            img: 'icons/svg/mystery-man.svg',
             data: {
               description: clericSpecialisms[s].description,
               ability: '',
@@ -109,7 +110,8 @@ export class Cleric {
     const gainedSixthLevelSkills = actor.isCleric() && actor.data.data.level == 6;
     actor.setFlag('helveczia', 'cleric-skill', gainedSixthLevelSkills);
     log.debug('Cleric.getSkillsBonus() |  cleric-skill flag set to ', gainedSixthLevelSkills);
-    return gainedSixthLevelSkills ? 6 : 0;
+    // base 3 extra to cover Cleric specialist skills. and 6 extra at 6th level
+    return gainedSixthLevelSkills ? 9 : 3;
   }
 
   static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
