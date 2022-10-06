@@ -88,7 +88,7 @@ export class HVActor extends Actor {
         acc[item.type] = category;
         return acc;
       },
-      { possession: [], people: [], class: [], skill: [], armour: [], weapon: [], deed: [], spell: [] },
+      { possession: [], people: [], class: [], skill: [], armour: [], weapon: [], deed: [], spell: [], book: [] },
     );
 
     data.possessions = {

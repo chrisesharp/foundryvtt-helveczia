@@ -256,6 +256,9 @@ export class HVCharacterSheet extends HVActorSheet {
       case 'weapon':
         this._sortPossession(event, source);
         return;
+      case 'book':
+        this._sortPossession(event, source);
+        return;
       default:
         return super._onSortItem(event, itemData);
     }
