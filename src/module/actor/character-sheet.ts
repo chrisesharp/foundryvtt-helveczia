@@ -107,9 +107,9 @@ export class HVCharacterSheet extends HVActorSheet {
   async _calculateAvailableSlots(): Promise<any> {
     const sheetData = await this.getData();
     const capacity = this.actor.data.data.capacity - 8;
-    const wornUsed = sheetData.worn.map((i) => i.data.data.encumbrance).reduce((acc, n) => acc + n, 0);
-    const carriedUsed = sheetData.carried.map((i) => i.data.data.encumbrance).reduce((acc, n) => acc + n, 0);
-    const mountUsed = sheetData.mount.map((i) => i.data.data.encumbrance).reduce((acc, n) => acc + n, 0);
+    const wornUsed = sheetData.worn.map((i) => parseInt(i.data.data.encumbrance)).reduce((acc, n) => acc + n, 0);
+    const carriedUsed = sheetData.carried.map((i) => parseInt(i.data.data.encumbrance)).reduce((acc, n) => acc + n, 0);
+    const mountUsed = sheetData.mount.map((i) => parseInt(i.data.data.encumbrance)).reduce((acc, n) => acc + n, 0);
     const worn = 8 - wornUsed;
     const carried = capacity - carriedUsed;
     const mount = 8 - mountUsed;
