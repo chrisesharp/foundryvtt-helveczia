@@ -194,15 +194,22 @@ export class HVActor extends Actor {
    */
 
   _updateAC(data: any): void {
-    // TODO fix armour ordering
     data.ac += data.scores.dex.mod + data.npcModBonus;
     const armour = data.possessions.armour
-      .filter((i) => i.getFlag('helveczia', 'position') === 'worn')
+      .filter((i) => i.getFlag('helveczia', 'position') === 'worn' && i.data.data.shield === false)
       .map((i) => i.data.data.bonus)
       .sort((a, b) => {
         return b - a;
       });
-    data.ac += armour[0] ?? 0;
+    const bestArmour = armour.shift() ?? 0;
+    const shields = data.possessions.armour
+      .filter((i) => i.getFlag('helveczia', 'position') === 'worn' && i.data.data.shield === true)
+      .map((i) => i.data.data.bonus)
+      .sort((a, b) => {
+        return b - a;
+      });
+    const bestShield = shields.shift() ?? 0;
+    data.ac += bestArmour + bestShield;
   }
 
   /**

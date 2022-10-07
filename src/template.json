@@ -126,7 +126,8 @@
     "armour": {
       "templates": ["base"],
       "bonus": 0,
-      "encumbrance": 1
+      "encumbrance": 1,
+      "shield": false
     },
     "weapon": {
       "templates": ["base"],

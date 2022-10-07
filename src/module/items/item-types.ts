@@ -46,6 +46,7 @@ export interface SkillItemData {
 
 type ArmourData = BaseData & {
   bonus: number;
+  shield: boolean;
   encumbrance: number;
 };
 

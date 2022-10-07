@@ -119,6 +119,7 @@
   "HV.initiative": "Initiative",
   "HV.initiative_bonus": "Initiative Bonus",
   "HV.AC": "AC",
+  "HV.Shield": "Shield equivalent",
   "HV.HP.short": "HP",
   "HV.HP.long": "Hit Points",
   "HV.HP.current": "Current HP",

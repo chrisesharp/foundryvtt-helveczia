@@ -15,14 +15,24 @@
               <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.AC' }}">
               <h3 style="display: contents; width: 40px;">{{ localize 'HV.AC' }}<input name="data.bonus" type="text" data-dtype="Number" value="{{ plusminus data.bonus}}"></h3>
               </div>
+              <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.Shield' }}?">
+              <i class="fas fa-shield-alt"></i><input name="data.shield" type="checkbox" data-dtype="Boolean" value="{{ data.shield}}" {{ isChecked data.shield}}>
+              </div>
               <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.Encumbrance' }}">
               <h3 style="display: contents; width: 40px;">{{ localize 'HV.Encumbrance' }}<input name="data.encumbrance" type="text" data-dtype="Number" value="{{ data.encumbrance}}"></h3>
               </div>
             {{else}}
-              <h3>{{ data.cost.value }} {{ data.cost.coin }}</h3>
+              <div style="display: inline-flex;">
+                <h3>{{ data.cost.value }} {{ data.cost.coin }}</h3>
+              </div>
               <div style="display: inline-flex;" title="{{ localize 'HV.AC' }}">
               <h3>{{ localize 'HV.AC' }}: {{ plusminus data.bonus }}</h3>
               </div>
+              {{#if data.shield }}
+              <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.Shield' }}">
+              <i class="fas fa-shield-alt"></i>
+              </div>
+              {{/if}}
               <div style="display: inline-flex;" title="{{ localize 'HV.Encumbrance' }}">
               <h3>{{ localize 'HV.Encumbrance' }}: {{ data.encumbrance }}</h3>
               </div>
