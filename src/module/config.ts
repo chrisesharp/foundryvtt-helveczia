@@ -11,6 +11,7 @@ import { PossessionItem } from './items/possesion/possession-item';
 import { HVActor } from './actor/actor';
 import { HVCharacterCreator } from './apps/chargen';
 import { BookItem } from './items/book/book-item';
+import { KJVBible } from './apps/bible/bible';
 
 export interface HelvecziaConfig {
   socket?: any;
@@ -41,6 +42,7 @@ export interface HelvecziaConfig {
 
   applications: {
     peoplePicker: HVCharacterCreator | null;
+    holyBible: KJVBible | null;
     // classPicker: ClassPicker | null;
   };
 
@@ -146,6 +148,7 @@ export const HV: HelvecziaConfig = {
 
   applications: {
     peoplePicker: null,
+    holyBible: new KJVBible({}),
     // classPicker: ClassPicker,
   },
 
