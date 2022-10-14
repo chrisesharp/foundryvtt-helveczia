@@ -88,6 +88,11 @@ export class HVActorSheet extends ActorSheet {
     // Roll Hit Points.
     html.find('.hitdie').click(this._onRollHitPoints.bind(this));
 
+    // Seek Guidance.
+    html.find('.holy-bible').click((_ev) => {
+      CONFIG.HV.applications.holyBible?.seekGuidance(this.actor);
+    });
+
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 

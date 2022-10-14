@@ -59,10 +59,12 @@ export class HVCharacterSheet extends HVActorSheet {
         (this.actor.getFlag('helveczia', 'rolled-hits-lvl') as number) < this.actor.data.data.level,
     };
     // Add actor, actor data and item
+    // TODO add bible
     data.actor = actorData.data;
     data.data = data.actor.data;
     data.items = this.actor.items.map((i) => i.data);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    data.hasBible = data.items.filter((i) => i.name.includes('Bible')).length > 0;
     data.effects = prepareActiveEffectCategories(this.actor.effects);
     data.maxspecialisms = this.actor.isVagabond()
       ? (actorData.data as CharacterActorData).data.level >= 5

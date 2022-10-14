@@ -1,7 +1,9 @@
 <form autocomplete="off" onsubmit="event.preventDefault();">
-    <div id="chapter"></div>
     <div class="flexrow">
-        <button class="next">{{ localize 'HV.apps.bible.next' }}</button>
-        <button class="rnd">{{ localize 'HV.apps.bible.again' }}</button>
+        <a class="prev-verse" title="{{ localize 'HV.apps.bible.prev' }}"><i class="fas fa-step-backward"></i></a>
+        <a class="next-verse" title="{{ localize 'HV.apps.bible.next' }}"><i class="fas fa-step-forward"></i></a>
+        <a class="send"  title="{{ localize 'HV.apps.bible.share' }}"><i class="fas fa-share"></i></a>
+        <a class="rnd" title="{{ localize 'HV.apps.bible.again' }}"><i class="fas fa-redo"></i></a>
     </div>
+    <div id="chapter" class="chapter"></div>
 </form>

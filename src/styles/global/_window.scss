@@ -109,3 +109,24 @@
     }
   }
 }
+
+div.chapter {
+  font-family: $font-secondary;
+  overflow-y: scroll;
+  overflow: hidden;
+  height: 200px;
+}
+
+div.verse-msg {
+  font-family: $font-secondary;
+}
+
+li.highlighted {
+  color: rgb(24, 23, 23);
+  text-shadow: 0 0 10px red;
+}
+
+i.highlighted {
+  color: rgb(24, 23, 23);
+  text-shadow: 0 0 10px rgb(103, 248, 0);
+}

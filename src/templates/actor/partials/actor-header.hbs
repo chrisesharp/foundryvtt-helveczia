@@ -38,7 +38,13 @@
                 <div class="virtue-balance">
                     <i class="{{balance data.virtue}}" title="{{balanceTip data.virtue}}"></i>
                 </div>
-                <div class="virtue-mark"><i class="fas fa-book-medical"></i></div>
+                <div class="virtue-mark">
+                    {{#if hasBible }}
+                    <a class="holy-bible"><i class="fas fa-book-medical highlighted" title="Seek Guidance"></i></a>
+                    {{else}}
+                    <i class="fas fa-book-medical"></i>
+                    {{/if}}
+                </div>
                 <div class="consumable-counter" title="{{localize 'HV.virtue'}}">
             {{#times (reds data.virtue)}}
             <div class="full-mark-red"></div>

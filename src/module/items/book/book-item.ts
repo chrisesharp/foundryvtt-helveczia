@@ -54,10 +54,16 @@ export class BookItem extends BaseItem {
 
   /** @override */
   static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
+    const top = `<ol class="tag-list">`;
+    const bottom = `</ol>`;
     const itemData = item.data as BookItemData;
+    // let bible = '';
+    // if (item.name?.includes('Bible')) {
+    //   bible = `<li class="tag holy-bible" title="Seek Divine Guidance"><a>guidance</a></li>`;
+    // }
     return `
-    <ol class="tag-list">
+    ${top}
       <li class="tag" title="${game.i18n.localize('HV.Encumbrance')}">${itemData.data.encumbrance ?? 0}</li>
-    </ol>`;
+   ${bottom}`;
   }
 }

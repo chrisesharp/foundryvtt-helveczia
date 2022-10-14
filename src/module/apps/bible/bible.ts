@@ -1,10 +1,14 @@
 import { books } from '../../../assets/holy-bible/books';
 import { marked } from 'marked';
+import { HVActor } from '../../actor/actor';
 
 class Slugger {
   private seen = {};
+  public occurrences: number;
+
   constructor() {
     this.seen = {};
+    this.occurrences = 1;
   }
 
   serialize(value) {
@@ -33,6 +37,7 @@ class Slugger {
     }
     this.seen[originalSlug] = occurenceAccumulator;
     this.seen[slug] = 0;
+    this.occurrences = occurenceAccumulator;
     return slug;
   }
 
@@ -61,12 +66,32 @@ const renderer = {
 
 export class KJVBible extends FormApplication {
   private book = '';
+  private chapter = '';
+  private verse = 1;
+  private occurrences = 1;
   private index = 0;
+  private content = '';
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   constructor(object: {}, options?: any) {
     super(object, options);
+  }
+
+  async seekGuidance(actor?: HVActor) {
+    const speaker = ChatMessage.getSpeaker({ actor: actor });
+    const templateData = {
+      config: CONFIG.HV,
+      speaker: speaker.alias,
+      text: '<h3>seeking guidance from the Holy Writ...</h3>',
+      title: 'Seeking guidance...',
+    };
+    const content = await renderTemplate('systems/helveczia/templates/chat/bible-choose.hbs', templateData);
+    ChatMessage.create({
+      content: content,
+      blind: false,
+    });
     this.random();
+    this.render(true);
   }
 
   get title() {
@@ -78,8 +103,8 @@ export class KJVBible extends FormApplication {
     (options.classes = ['helveczia', 'dialog', 'creator']), (options.id = 'holy-bible');
     options.template = 'systems/helveczia/templates/bible/bible.hbs';
     options.width = 450;
-    options.height = 450;
-    options.resizable = true;
+    options.height = 350;
+    options.resizable = false;
     return options;
   }
 
@@ -105,34 +130,82 @@ export class KJVBible extends FormApplication {
     return `systems/helveczia/assets/holy-bible/${this.book}`;
   }
 
-  next() {
+  async sendVerse() {
+    const templateData = {
+      config: CONFIG.HV,
+      chapter: this.chapter,
+      verse: this.verse,
+      text: $(this.content).find(`li#verse-${this.verse}`).html(),
+      title: 'The Holy Writ guides...',
+    };
+    const content = await renderTemplate('systems/helveczia/templates/chat/bible-verse.hbs', templateData);
+    ChatMessage.create({
+      content: content,
+      blind: false,
+    });
+  }
+
+  previousVerse() {
+    this.verse = Math.max(1, this.verse - 1);
+  }
+
+  nextVerse() {
+    this.verse += 1;
+    if (this.verse > this.occurrences) this.nextChapter();
+  }
+
+  nextChapter() {
     if (this.index < books.length - 1) {
       this.index += 1;
       this.book = books[this.index];
+      this.verse = 1;
     }
   }
 
   random() {
     this.index = Math.floor(Math.random() * books.length);
     this.book = books[this.index];
+    this.occurrences = 1;
+    this.verse = 1;
   }
 
   activateListeners(html) {
     super.activateListeners(html);
+    const verseId = `li#verse-${this.verse}`;
+
     marked.use({ renderer });
-    html.find('.next').click((ev) => {
+
+    html.find('.prev-verse').click((ev) => {
       ev.preventDefault();
-      this.next();
+      this.previousVerse();
       this.render(true);
     });
+
+    html.find('.next-verse').click((ev) => {
+      ev.preventDefault();
+      this.nextVerse();
+      this.render(true);
+    });
+
     html.find('.rnd').click((ev) => {
       ev.preventDefault();
-      this.random();
-      this.render(true);
+      this.seekGuidance();
     });
-    html.find('#chapter').load(this.current, (response) => {
-      const content = marked.parse(response);
-      $('#chapter').html(content);
+
+    html.find('.send').click((ev) => {
+      ev.preventDefault();
+      this.sendVerse();
+    });
+
+    html.find('.chapter').load(this.current, (response) => {
+      this.content = marked.parse(response);
+      const chapter = $('#chapter');
+      this.occurrences = slugger.occurrences;
+      chapter.html(this.content).find(verseId).addClass('highlighted');
+      const chapterTop = (chapter.offset() as JQueryCoordinates).top;
+      const verseTop = ($(verseId).offset() as JQueryCoordinates).top;
+      chapter.scrollTop(verseTop - chapterTop - 70);
+      this.chapter = chapter.children('h1').eq(0).text();
     });
   }
 }
