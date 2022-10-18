@@ -119,8 +119,8 @@ export const registerHandlebarHelpers = async function () {
     return value > 0 ? `+${value}` : value;
   });
 
-  Handlebars.registerHelper('insertLink', function (item) {
-    return TextEditor.enrichHTML(item.id);
+  Handlebars.registerHelper('insertLink', async function (item) {
+    return TextEditor.enrichHTML(item.id, { async: true });
   });
 
   Handlebars.registerHelper('typeOfSkill', function (value) {

@@ -305,7 +305,7 @@ export class HVActorSheet extends ActorSheet {
     const li = $(event.currentTarget).parents('.item-entry');
     const item = this.actor.items.get(li.data('item-id'));
     if (!item) return;
-    const description = TextEditor.enrichHTML(item.system.description);
+    const description = await TextEditor.enrichHTML(item.system.description, { async: true });
     const options = '';
 
     // Toggle summary
