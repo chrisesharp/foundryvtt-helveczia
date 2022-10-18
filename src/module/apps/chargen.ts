@@ -85,7 +85,7 @@ export class HVCharacterCreator extends FormApplication {
   }
 
   static async rollHitPoints(actorData) {
-    const data = actorData.data;
+    const data = actorData.system;
     const level = data.level;
     const hd = data.hp.hd;
     const con = data.scores.con.mod;

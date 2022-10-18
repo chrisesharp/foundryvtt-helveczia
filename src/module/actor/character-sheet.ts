@@ -61,7 +61,7 @@ export class HVCharacterSheet extends HVActorSheet {
     // Add actor, actor data and item
     data.actor = actorData;
     data.data = data.actor.system;
-    data.items = this.actor.items.map((i) => i.system);
+    data.items = this.actor.items.map((i) => i);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.hasBible = data.items.filter((i) => i.name.includes('Bible')).length > 0;
     data.effects = prepareActiveEffectCategories(this.actor.effects);
