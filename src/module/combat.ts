@@ -19,14 +19,16 @@ export class HVCombat extends Combat {
         const currentTurn = current.round + current.turn * turnFraction;
         log.debug(`HVCombat.format() | currentTurn = ${currentTurn}`);
         const toRoll = $(ct).find('.combatant-control.roll').length > 0;
-        if (actor !== null && game.user?.isGM && toRoll) {
-          initiativeCtrl.css('display', 'flex');
-          initiativeCtrl.prepend(
-            `<div class='init-bonus-ctrl'>
-              <a class='combatant-control init-change'><i class='init-mod fas fa-plus fa-xs' title="increase bonus"></i><i class='init-mod fas fa-minus fa-xs' style='display:none;' title="decrease bonus"></i></a>
-              <a class='combatant-control init' style="color:white" title="additional initiative bonus">${initBonus}</a>
-            </div>`,
-          );
+        if (actor !== null) {
+          if (game.user?.isGM && toRoll) {
+            initiativeCtrl.css('display', 'flex');
+            initiativeCtrl.prepend(
+              `<div class='init-bonus-ctrl'>
+                <a class='combatant-control init-change'><i class='init-mod fas fa-plus fa-xs' title="increase bonus"></i><i class='init-mod fas fa-minus fa-xs' style='display:none;' title="decrease bonus"></i></a>
+                <a class='combatant-control init' style="color:white" title="additional initiative bonus">${initBonus}</a>
+              </div>`,
+            );
+          }
           const reloadTrigger = actor.getFlag('helveczia', 'reload-trigger') as number;
           if (reloadTrigger > 0) {
             log.debug(`HVCombat.format() | id:${id} reloadTrigger = ${reloadTrigger}`);
@@ -70,11 +72,11 @@ export class HVCombat extends Combat {
 
   static addListeners(combatTracker, html, data) {
     html.find('.combatant-control.flag').click(async (ev) => {
-      if (!data.user.isGM) {
-        return;
-      }
+      // if (!data.user.isGM) {
+      //   return;
+      // }
       const id = $(ev.currentTarget).closest('.combatant')[0].dataset.combatantId;
-      const combatant = game.combat?.data.combatants.get(id);
+      const combatant = game.combat?.combatants.get(id);
       if (combatant) {
         let reload = combatant?.getFlag('helveczia', 'reloaded') as number;
         reload = Math.max(0, reload - 0.5);
@@ -107,7 +109,7 @@ export class HVCombat extends Combat {
       }
       const keypress = ev.shiftKey;
       const id = $(ev.currentTarget).closest('.combatant')[0].dataset.combatantId;
-      const combatant = game.combat?.data.combatants.get(id);
+      const combatant = game.combat?.combatants.get(id);
       if (combatant) {
         const currentBonus = (combatant?.getFlag('helveczia', 'init-bonus') as number) ?? 0;
         const initBonus = !keypress ? currentBonus + 1 : currentBonus - 1;

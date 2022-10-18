@@ -62,7 +62,7 @@ export class HVDice {
       critical = data.item.system.critical;
       withWeapon = `with their ${data.item.name}`;
       if (data.item.system.reload > 0) {
-        const attacker = data.item.document.actor as HVActor;
+        const attacker = data.item.actor as HVActor;
         await attacker.setFlag('helveczia', 'reload-trigger', data.item.system.reload);
         console.log('fired and set reload-trigger to ', attacker.getFlag('helveczia', 'reload-trigger'));
       }
