@@ -63,7 +63,7 @@ export class BookItem extends BaseItem {
     // }
     return `
     ${top}
-      <li class="tag" title="${game.i18n.localize('HV.Encumbrance')}">${itemData.data.encumbrance ?? 0}</li>
+      <li class="tag" title="${game.i18n.localize('HV.Encumbrance')}">${itemData.encumbrance ?? 0}</li>
    ${bottom}`;
   }
 }

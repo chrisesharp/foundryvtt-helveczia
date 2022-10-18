@@ -9,7 +9,7 @@
         <label>{{localize "CARDS.PassTo"}}</label>
         <div class="form-fields">
             <select name="to">
-                {{selectOptions (cardsFilter card.parent.data.flags.helveczia.playTarget cards) nameAttr="id" labelAttr="name"}}
+                {{selectOptions (cardsFilter card.parent.flags.helveczia.playTarget cards) nameAttr="id" labelAttr="name"}}
             </select>
         </div>
     </div>

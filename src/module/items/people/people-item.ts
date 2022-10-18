@@ -74,7 +74,7 @@ export class PeopleItem extends BaseItem {
     const crafts = actor.items.filter(
       (i) =>
         i.type === 'skill' &&
-        (i.data as SkillItemData).subtype === 'craft' &&
+        (i.system as SkillItemData).subtype === 'craft' &&
         i.getFlag('helveczia', 'locked') === true,
     );
     await Utils.deleteEmbeddedArray(crafts, actor);
@@ -118,11 +118,11 @@ export class PeopleItem extends BaseItem {
     if (data.type === 'skill') {
       if (actor.isDutch()) {
         if (data.name === 'Sail' || data.name === 'Appraise') {
-          data.data.bonus += 2;
+          data.system.bonus += 2;
         }
       } else if (actor.isItalian()) {
         if (data.name === 'Gambling') {
-          data.data.bonus += 2;
+          data.system.bonus += 2;
         }
       }
     }

@@ -108,8 +108,8 @@ export class DeedItem extends BaseItem {
     );
 
     const itemData = item.system as DeedItemData;
-    const magnitude = itemData.data.magnitude;
-    const subtype = itemData.data.subtype;
+    const magnitude = itemData.magnitude;
+    const subtype = itemData.subtype;
     const value = subtype === 'virtue' ? `${magnitude}` : `-${magnitude}`;
     const deedEffect = { key: 'virtue', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: value };
     const effect = await ActiveEffect.create(

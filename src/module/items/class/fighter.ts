@@ -12,7 +12,7 @@ export class Fighter {
 
   static async onCreate(item: HVItem): Promise<void> {
     const itemData = item.system as ClassItemData;
-    if (itemData.data.specialism) {
+    if (itemData.specialism) {
       if (!item.actor?.isFighter()) {
         ui.notifications.error(game.i18n.localize('You must be a fighter for this specialism'));
         return;

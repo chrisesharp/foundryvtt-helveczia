@@ -190,7 +190,7 @@ export class HVCharacterCreator extends FormApplication {
     const sp = await HVCharacterCreator.getDocument(specialismName, specialisms);
     if (sp) {
       await actor.createEmbeddedDocuments('Item', [sp.toObject()]);
-      const hitpoints = await this.rollHitPoints(actor.data);
+      const hitpoints = await this.rollHitPoints(actor);
       const updateData = {
         hp: hitpoints,
       };

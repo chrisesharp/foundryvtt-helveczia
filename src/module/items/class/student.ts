@@ -71,7 +71,7 @@ export class Student {
 
   static async onCreate(item: HVItem): Promise<void> {
     const sourceItemData = item.system as ClassItemData;
-    if (sourceItemData.data.specialism) {
+    if (sourceItemData.specialism) {
       if (!item.actor?.isStudent()) {
         ui.notifications.error(game.i18n.localize('You must be a student for this specialism'));
         return;

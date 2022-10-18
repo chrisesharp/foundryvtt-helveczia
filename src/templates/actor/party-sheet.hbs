@@ -18,12 +18,12 @@
             &nbsp;<span style="font-style: italic;">({{player e.id}})</span>
             {{/if}}
             {{#unless no_origins}}
-            <br> {{ordinal data.data.level }} level {{data.data.people}} {{data.data.class}}
+            <br> {{ordinal data.level }} level {{data.people}} {{data.class}}
             {{/unless}}
           </div>
           {{#if ../user.isGM }}
           <div class="field-row">
-            {{ localize 'HV.tabs.saves'}} {{ plusminus data.data.saves.bravery.mod }} / {{ plusminus data.data.saves.deftness.mod }} / {{ plusminus data.data.saves.temptation.mod }}
+            {{ localize 'HV.tabs.saves'}} {{ plusminus data.saves.bravery.mod }} / {{ plusminus data.saves.deftness.mod }} / {{ plusminus data.saves.temptation.mod }}
           </div>
           <div class="field-row">
             <i class="fas fa-fist-raised" title="{{ localize 'HV.attack.melee.short'}}"></i>{{ plusminus e.system.attack.melee.mod}}
