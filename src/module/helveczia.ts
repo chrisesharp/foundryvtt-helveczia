@@ -127,7 +127,7 @@ Hooks.on('HV.Names.genName', HVNameGenerator.showDialog);
 Hooks.on('preUpdateToken', async (tokenDocument, change, _options, _userid) => {
   if (!CONFIG.HV.flipTokens) return;
   if (change.rotation === 90 || change.rotation === 270) {
-    change.mirrorX = !tokenDocument.data.mirrorX;
+    change.mirrorX = !tokenDocument.mirrorX;
   }
 });
 
@@ -149,7 +149,7 @@ Hooks.on('renderCombatTracker', HVCombat.format);
 Hooks.on('preCreateCombatant', (combatant, _data, _options, _userId) => {
   if (combatant.actor.type === 'party') {
     const members = game.actors?.filter((a) => a.getFlag('helveczia', 'party') === combatant.actor.uuid);
-    const tokenId = combatant.data.tokenId;
+    const tokenId = combatant.tokenId;
     if (combatant.combat.getFlag('helveczia', 'party-token') === tokenId) {
       Hooks.call('removePartyFromCombat', members, combatant);
     } else {
@@ -162,7 +162,7 @@ Hooks.on('preCreateCombatant', (combatant, _data, _options, _userId) => {
 
 Hooks.on('addPartyToCombat', async (members, combatant) => {
   const combat = combatant.combat;
-  await combat.setFlag('helveczia', 'party-token', combatant.data.tokenId);
+  await combat.setFlag('helveczia', 'party-token', combatant.tokenId);
   if (members) {
     const combatants: Combatant[] = [];
     await Promise.all(
@@ -181,7 +181,7 @@ Hooks.on('removePartyFromCombat', async (members: Actor[], combatant: Combatant)
   if (members && combat) {
     const combatantIds = combat.combatants
       .filter((a) => {
-        const id = a.data.actorId;
+        const id = a.actorId;
         return (id != null && actorIds.includes(id)) as boolean;
       })
       .map((c) => c.id ?? '');
