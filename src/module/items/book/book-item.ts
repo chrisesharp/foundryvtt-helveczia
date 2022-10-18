@@ -28,7 +28,7 @@ export class BookItem extends BaseItem {
       const li = $(ev.currentTarget).parents('.item-entry');
       const itemID = li.data('item-id');
       const updateData = {
-        spells: item.data.data.spells.filter((i) => i.id !== itemID),
+        spells: item.system.spells.filter((i) => i.id !== itemID),
       };
       item.update({ data: updateData });
       li.slideUp(200, () => item.render(false));
@@ -48,7 +48,7 @@ export class BookItem extends BaseItem {
   /** @override */
   static getSheetData(sheetData, item) {
     sheetData.coins = CONFIG.HV.coins;
-    sheetData.spells = item.object.data.data?.spells;
+    sheetData.spells = item.object.system?.spells;
     return sheetData;
   }
 

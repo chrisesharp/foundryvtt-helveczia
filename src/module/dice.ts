@@ -81,7 +81,7 @@ export class HVDice {
     if (data.opponent?.id) {
       opponent = game.actors?.get(data.opponent.id);
       if (opponent) {
-        result.target = opponent.data.data.ac;
+        result.target = opponent.system.ac;
         against += `against ${opponent.data.name}`;
       }
     }

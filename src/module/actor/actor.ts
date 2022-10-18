@@ -183,15 +183,15 @@ export class HVActor extends Actor {
   _updateAC(data: any): void {
     data.ac += data.scores.dex.mod + data.npcModBonus;
     const armour = data.possessions.armour
-      .filter((i) => i.getFlag('helveczia', 'position') === 'worn' && i.data.data.shield === false)
-      .map((i) => i.data.data.bonus)
+      .filter((i) => i.getFlag('helveczia', 'position') === 'worn' && i.system.shield === false)
+      .map((i) => i.system.bonus)
       .sort((a, b) => {
         return b - a;
       });
     const bestArmour = armour.shift() ?? 0;
     const shields = data.possessions.armour
-      .filter((i) => i.getFlag('helveczia', 'position') === 'worn' && i.data.data.shield === true)
-      .map((i) => i.data.data.bonus)
+      .filter((i) => i.getFlag('helveczia', 'position') === 'worn' && i.system.shield === true)
+      .map((i) => i.system.bonus)
       .sort((a, b) => {
         return b - a;
       });
@@ -418,7 +418,7 @@ export class HVActor extends Actor {
   }
 
   isNPC(): boolean {
-    return this.data.type === 'npc';
+    return this.type === 'npc';
   }
 
   isFighter(): boolean {
@@ -503,7 +503,7 @@ export class HVActor extends Actor {
         break;
       case 'skill':
         data.resource = '';
-        mod.push(this.data.data.level);
+        mod.push(this.system.level);
         break;
       case 'weapon':
         data.resource = '';
@@ -523,7 +523,7 @@ export class HVActor extends Actor {
     const attribute = data.attr;
     const resource = data.resource;
     if (resource !== '' && attribute) {
-      mod.push(this.data.data[resource][attribute].mod);
+      mod.push(this.system[resource][attribute].mod);
       longName = game.i18n.format(`HV.${resource}.${attribute}.long`);
       log.debug(
         `getRollMods() | name:${longName} - resource=${resource}, attribute=${attribute}, mod=${mod.join('+')}, item=`,
@@ -537,7 +537,7 @@ export class HVActor extends Actor {
             {
               const skill = item.system as SkillItemData;
               const bonus = Math.floor(skill.bonus);
-              const ability = this.data.data.scores[skill.ability]?.mod;
+              const ability = this.system.scores[skill.ability]?.mod;
               mod.push(bonus);
               mod.push(ability);
               longName = item.name ?? game.i18n.localize('HV.skill');

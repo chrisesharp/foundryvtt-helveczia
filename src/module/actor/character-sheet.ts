@@ -160,7 +160,7 @@ export class HVCharacterSheet extends HVActorSheet {
         if (item.system.subtype === 'vagabond' && !this.actor.isVagabond()) {
           return ui.notifications.error(game.i18n.localize('HV.errors.notVagabond'));
         }
-        if ((item.system.subtype === 'craft' || item.data.data.subtype === 'science') && this.actor.isVagabond()) {
+        if ((item.system.subtype === 'craft' || item.system.subtype === 'science') && this.actor.isVagabond()) {
           return ui.notifications.error(game.i18n.localize('HV.errors.areVagabond'));
         }
         break;

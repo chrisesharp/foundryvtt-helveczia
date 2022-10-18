@@ -16,7 +16,7 @@
             <li class="item-entry flexcol" data-item-id="{{item.id}}">
                 <div class="item flexrow">
                     <h4 class="item-name">
-                        {{ deedLocalize  (lookup ../config.cardinalSins item.data.data.cardinality) }} ~ {{item.name}}
+                        {{ deedLocalize  (lookup ../config.cardinalSins item.system.cardinality) }} ~ {{item.name}}
                     </h4>
                     <div class="item-controls">
                         {{#if ../user.isGM }}
@@ -35,7 +35,7 @@
         <li class="item-entry flexcol" data-item-id="{{item.id}}">
             <div class="item flexrow">
                 <h4 class="item-name">
-                    {{ deedLocalize  (lookup ../config.cardinalVirtues item.data.data.cardinality) }} ~ {{item.name}}
+                    {{ deedLocalize  (lookup ../config.cardinalVirtues item.system.cardinality) }} ~ {{item.name}}
                 </h4>
                 <div class="item-controls">
                     {{#if ../user.isGM }}

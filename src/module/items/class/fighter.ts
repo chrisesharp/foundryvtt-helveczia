@@ -30,8 +30,8 @@ export class Fighter {
 
   static getSkillsBonus(actor: HVActor): number {
     if (!actor.isFighter()) return 0;
-    const gainedThirdLevelSkill = actor.data.data.level === 3 || actor.data.data.level === 4;
-    const gainedFifthLevelSkill = actor.data.data.level >= 5;
+    const gainedThirdLevelSkill = actor.system.level === 3 || actor.system.level === 4;
+    const gainedFifthLevelSkill = actor.system.level >= 5;
     actor.setFlag('helveczia', 'fighter-third-skill', gainedThirdLevelSkill);
     actor.setFlag('helveczia', 'fighter-fifth-skill', gainedFifthLevelSkill);
     const gainedSkills = [gainedThirdLevelSkill, gainedFifthLevelSkill]
@@ -44,7 +44,7 @@ export class Fighter {
   }
 
   static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
-    const base = Math.floor(actor.data.data.level / 2);
+    const base = Math.floor(actor.system.level / 2);
     return { bravery: base + 2, deftness: base, temptation: base };
   }
 

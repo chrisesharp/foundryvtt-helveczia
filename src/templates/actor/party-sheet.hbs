@@ -26,15 +26,15 @@
             {{ localize 'HV.tabs.saves'}} {{ plusminus data.data.saves.bravery.mod }} / {{ plusminus data.data.saves.deftness.mod }} / {{ plusminus data.data.saves.temptation.mod }}
           </div>
           <div class="field-row">
-            <i class="fas fa-fist-raised" title="{{ localize 'HV.attack.melee.short'}}"></i>{{ plusminus e.data.data.attack.melee.mod}}
+            <i class="fas fa-fist-raised" title="{{ localize 'HV.attack.melee.short'}}"></i>{{ plusminus e.system.attack.melee.mod}}
             &nbsp;
-            <i class="fas fa-bullseye" title="{{ localize 'HV.attack.ranged.short'}}"></i>{{ plusminus e.data.data.attack.ranged.mod}}
+            <i class="fas fa-bullseye" title="{{ localize 'HV.attack.ranged.short'}}"></i>{{ plusminus e.system.attack.ranged.mod}}
             &nbsp;
-            <i class="fas fa-shield-alt" title="{{ localize 'HV.AC'}}"></i>{{e.data.data.ac}}
+            <i class="fas fa-shield-alt" title="{{ localize 'HV.AC'}}"></i>{{e.system.ac}}
             &nbsp;
-            <i class="fas fa-heart" title="{{ localize 'HV.HP.long'}}"></i>{{e.data.data.hp.value}}
+            <i class="fas fa-heart" title="{{ localize 'HV.HP.long'}}"></i>{{e.system.hp.value}}
             &nbsp;
-            <i class="virtue-balance {{balance e.data.data.virtue}}" title="{{balanceTip e.data.data.virtue}}"></i>{{e.data.data.virtue}}
+            <i class="virtue-balance {{balance e.system.virtue}}" title="{{balanceTip e.system.virtue}}"></i>{{e.system.virtue}}
           </div>
           <div class="field-row">
             <a class="remove"><i class="fas fa-times-circle" title="{{ localize 'HV.dialog.partysheet.remove'}}"></i></a>

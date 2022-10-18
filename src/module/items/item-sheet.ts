@@ -33,7 +33,7 @@ export class HVItemSheet extends ItemSheet {
     let data: any = super.getData();
 
     // enforce data to ensure compatability between 0.7 and 0.8
-    data.data = this.object.data.data;
+    data.data = this.object.system;
 
     // Set owner name if possible
     data.isOwnedBy = this.actor ? this.actor.name : false;

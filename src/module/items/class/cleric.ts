@@ -107,7 +107,7 @@ export class Cleric {
   }
 
   static getSkillsBonus(actor: HVActor): number {
-    const gainedSixthLevelSkills = actor.isCleric() && actor.data.data.level == 6;
+    const gainedSixthLevelSkills = actor.isCleric() && actor.system.level == 6;
     actor.setFlag('helveczia', 'cleric-skill', gainedSixthLevelSkills);
     log.debug('Cleric.getSkillsBonus() |  cleric-skill flag set to ', gainedSixthLevelSkills);
     // base 3 extra to cover Cleric specialist skills. and 6 extra at 6th level
@@ -115,12 +115,12 @@ export class Cleric {
   }
 
   static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
-    const base = Math.floor(actor.data.data.level / 2);
+    const base = Math.floor(actor.system.level / 2);
     return { bravery: base + 2, deftness: base, temptation: base + 2 };
   }
 
   static getSpellSlots(actor: HVActor): number[] {
-    const level = actor.data.data.level;
+    const level = actor.system.level;
     const bonus = actor.getSpellBonus();
     const spells = duplicate(CONFIG.HV.spellSlots[level]);
     for (const i in spells) {

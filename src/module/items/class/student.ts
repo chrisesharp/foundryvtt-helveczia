@@ -107,12 +107,12 @@ export class Student {
   }
 
   static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
-    const base = Math.floor(actor.data.data.level / 2);
+    const base = Math.floor(actor.system.level / 2);
     return { bravery: base, deftness: base, temptation: base + 2 };
   }
 
   static getSpellSlots(actor: HVActor): number[] {
-    const level = actor.data.data.level;
+    const level = actor.system.level;
     const bonus = actor.getSpellBonus();
     const spells = duplicate(CONFIG.HV.spellSlots[level]);
     for (const i in spells) {

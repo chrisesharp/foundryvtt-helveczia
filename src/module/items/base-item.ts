@@ -45,11 +45,11 @@ export abstract class BaseItem {
    * This can be used to add additional information right before rendering.
    */
   static prepareItemData(itemDocument) {
-    const itemData = itemDocument.data;
+    const itemData = itemDocument;
     if (itemData.effects) {
       itemData.effects.forEach(async (e) => {
         try {
-          e.data.origin = itemDocument.uuid;
+          e.origin = itemDocument.uuid;
         } catch (err) {
           log.error('prepareItemData() |', err);
         }

@@ -101,7 +101,7 @@ export class PeopleItem extends BaseItem {
   }
 
   static getCzechSkill(actor: HVActor): number {
-    const gainedSkill = actor.data.data.level >= 4 && (actor.isCleric() || actor.isStudent());
+    const gainedSkill = actor.system.level >= 4 && (actor.isCleric() || actor.isStudent());
     actor.setFlag('helveczia', 'czech-skill', gainedSkill);
     return gainedSkill ? 1 : 0;
   }
