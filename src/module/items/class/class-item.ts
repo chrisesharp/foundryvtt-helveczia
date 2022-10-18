@@ -71,7 +71,7 @@ export class ClassItem extends BaseItem {
   static findProfession(itemData: ItemData): ProfEntry | undefined {
     const prof = ClassItem.professions[itemData.name];
     if (prof) return prof;
-    const parent = capitalize((itemData as ClassItemData).data.parent);
+    const parent = capitalize((itemData as ClassItemData).parent);
     return ClassItem.professions[parent];
   }
 
@@ -127,7 +127,7 @@ export class ClassItem extends BaseItem {
     _userId: string,
   ) {
     if (item.parent) {
-      const prof = ClassItem.findProfession(item.data);
+      const prof = ClassItem.findProfession(item);
       const func = prof?.onCreate;
       if (func) func(item);
     }

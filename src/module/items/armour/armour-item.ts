@@ -38,7 +38,7 @@ export class ArmourItem extends BaseItem {
 
   /** @override */
   static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
-    const itemData = item.data as ArmourItemData;
+    const itemData = item.system as ArmourItemData;
     return `
     <ol class="tag-list">
       <li class="tag" title="${game.i18n.localize('HV.AC')}">+${itemData.data.bonus ?? 0}</li>

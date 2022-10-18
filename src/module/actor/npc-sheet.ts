@@ -43,6 +43,8 @@ export class HVNPCSheet extends HVActorSheet {
     data.possessions = data.data.possessions;
     data.effects = prepareActiveEffectCategories(this.actor.effects);
     data.spellGroups = [1, 2, 3];
+
+    data.enrichedDescription = await TextEditor.enrichHTML(this.object.system.description, { async: true });
     return data;
   }
 

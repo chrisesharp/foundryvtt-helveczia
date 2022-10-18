@@ -31,10 +31,10 @@ export class HVActor extends Actor {
         }
         break;
       case 'npc':
-        this.calculateNPCThreatLevel(actorData);
+        this.calculateNPCThreatLevel();
         break;
       case 'party':
-        this.setPartyData(actorData);
+        this.setPartyData();
         break;
     }
   }
@@ -54,9 +54,9 @@ export class HVActor extends Actor {
     data.experience = CONFIG.HV.challengeAwards[data.level + threat];
   }
 
-  setPartyData(actorData: ActorData): void {
-    actorData.img = actorData.token.img;
-    actorData.token.name = actorData.name;
+  setPartyData(): void {
+    this.img = this.prototypeToken.img;
+    this.prototypeToken.name = this.name;
   }
 
   /** @override */
@@ -508,7 +508,7 @@ export class HVActor extends Actor {
       case 'weapon':
         data.resource = '';
         if (item) {
-          dmg.push((item.data as WeaponItemData).data.damage);
+          dmg.push((item.system as WeaponItemData).damage);
         } else {
           dmg.push('1d3');
         }

@@ -57,7 +57,7 @@ export class DeedItem extends BaseItem {
       },
       { overwrite: true },
     );
-    await item.data.update(data);
+    await item.sourceUpdate(data);
     log.debug('DeedItem.onCreate()|', item, data, options, userId);
   }
 
@@ -88,14 +88,14 @@ export class DeedItem extends BaseItem {
   }
 
   static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
-    const isSin = (item.data as DeedItemData).data.subtype === 'sin';
+    const isSin = (item.system as DeedItemData).subtype === 'sin';
     const mag = isSin
-      ? 0 - Math.floor((item.data as DeedItemData).data.magnitude)
-      : 0 + Math.floor((item.data as DeedItemData).data.magnitude);
+      ? 0 - Math.floor((item.system as DeedItemData).magnitude)
+      : 0 + Math.floor((item.system as DeedItemData).magnitude);
     const value = mag > 0 ? `+${mag}` : mag;
     return `
     <ol class="tag-list">
-      <li class="tag">${game.i18n.localize(`HV.deeds.${(item.data as DeedItemData).data.subtype}`)}</li>
+      <li class="tag">${game.i18n.localize(`HV.deeds.${(item.system as DeedItemData).subtype}`)}</li>
       <li class="tag">${value}</li>
     </ol>`;
   }
@@ -107,11 +107,11 @@ export class DeedItem extends BaseItem {
       item,
     );
 
-    const itemData = item.data as DeedItemData;
+    const itemData = item.system as DeedItemData;
     const magnitude = itemData.data.magnitude;
     const subtype = itemData.data.subtype;
     const value = subtype === 'virtue' ? `${magnitude}` : `-${magnitude}`;
-    const deedEffect = { key: 'data.virtue', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: value };
+    const deedEffect = { key: 'virtue', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: value };
     const effect = await ActiveEffect.create(
       {
         label: game.i18n.localize(`HV.deeds.${subtype}`),

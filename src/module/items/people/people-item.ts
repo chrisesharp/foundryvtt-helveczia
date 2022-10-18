@@ -48,7 +48,7 @@ export class PeopleItem extends BaseItem {
   }
 
   static async onCreateItalian(item: HVItem): Promise<void> {
-    const currenWealth = duplicate((item.actor?.data as HVActorData).data.wealth);
+    const currenWealth = duplicate((item.actor?.system as HVActorData).wealth);
     const fortune = Math.round(Math.random() * 5) + 1;
     currenWealth.th += fortune;
     await item.actor?.update({ data: { wealth: currenWealth } });
@@ -62,7 +62,7 @@ export class PeopleItem extends BaseItem {
   static async cleanupItalian(actor: HVActor): Promise<void> {
     const fortune = actor.getFlag('helveczia', 'italian-fortune') as number;
     if (fortune) {
-      const currenWealth = duplicate((actor?.data as HVActorData).data.wealth);
+      const currenWealth = duplicate((actor?.system as HVActorData).wealth);
       currenWealth.th -= fortune;
       await actor?.update({ data: { wealth: currenWealth } });
     }
@@ -74,7 +74,7 @@ export class PeopleItem extends BaseItem {
     const crafts = actor.items.filter(
       (i) =>
         i.type === 'skill' &&
-        (i.data as SkillItemData).data.subtype === 'craft' &&
+        (i.data as SkillItemData).subtype === 'craft' &&
         i.getFlag('helveczia', 'locked') === true,
     );
     await Utils.deleteEmbeddedArray(crafts, actor);
@@ -152,7 +152,7 @@ export class PeopleItem extends BaseItem {
       },
       { overwrite: true },
     );
-    item.data.update(data);
+    item.updateSource(data);
 
     if (item.parent) {
       const func = PeopleItem.races[data.name].onCreate;

@@ -52,7 +52,7 @@ async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void
     (i) =>
       i.type === 'skill' &&
       i.name === name &&
-      (i.data as SkillItemData).data.subtype === 'magical' &&
+      (i.system as SkillItemData).subtype === 'magical' &&
       (i as HVItem).getFlag('helveczia', 'locked') === true,
   );
   log.debug(`Cleric.deleteSpecialistSkill() | matching skills:`, skills);
@@ -78,8 +78,8 @@ export class Cleric {
 
   static async onCreate(item: HVItem): Promise<void> {
     const actor = item.actor;
-    const sourceItemData = item.data as ClassItemData;
-    if (sourceItemData.data.specialism) {
+    const sourceItemData = item.system as ClassItemData;
+    if (sourceItemData.specialism) {
       if (!actor?.isCleric()) {
         ui.notifications.error(game.i18n.localize('You must be a cleric for this specialism'));
         return;

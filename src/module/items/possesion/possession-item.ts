@@ -26,7 +26,7 @@ export class PossessionItem extends BaseItem {
 
   /** @override */
   static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
-    const itemData = item.data as PossessionItemData;
+    const itemData = item.system as PossessionItemData;
     return `
     <ol class="tag-list">
       <li class="tag" title="${game.i18n.localize('HV.Encumbrance')}">${itemData.data.encumbrance ?? 0}</li>

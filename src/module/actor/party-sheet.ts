@@ -28,6 +28,8 @@ export class HVPartySheet extends HVActorSheet {
     data.virtue = data.party.length
       ? Math.round(data.party.map((i) => parseInt(i.system.virtue)).reduce((acc, n) => acc + n, 0) / data.party.length)
       : 0;
+
+    data.enrichedDescription = await TextEditor.enrichHTML(this.object.system.description, { async: true });
     return data;
   }
 

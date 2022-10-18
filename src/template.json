@@ -3,6 +3,7 @@
     "types": ["character", "npc", "party"],
     "templates": {
       "base": {
+        "description": "",
         "hp": {
           "value": 0,
           "max": 0,

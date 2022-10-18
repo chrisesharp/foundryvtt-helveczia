@@ -45,7 +45,7 @@ async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void
     (i) =>
       i.type === 'skill' &&
       i.name === name &&
-      (i.data as SkillItemData).data.subtype === 'magical' &&
+      (i.system as SkillItemData).subtype === 'magical' &&
       i.getFlag('helveczia', 'locked') === true,
   );
   log.debug(`Student.deleteSpecialistSkill() | matching skills:`, skills);
@@ -70,7 +70,7 @@ export class Student {
   }
 
   static async onCreate(item: HVItem): Promise<void> {
-    const sourceItemData = item.data as ClassItemData;
+    const sourceItemData = item.system as ClassItemData;
     if (sourceItemData.data.specialism) {
       if (!item.actor?.isStudent()) {
         ui.notifications.error(game.i18n.localize('You must be a student for this specialism'));
@@ -131,10 +131,7 @@ export class Student {
     );
     actor.setFlag('helveczia', 'student-class', false);
     const sciences = actor.items.filter(
-      (i) =>
-        i.type === 'skill' &&
-        (i.data as SkillItemData).data.subtype === 'science' &&
-        i.getFlag('helveczia', 'locked') === true,
+      (i) => (i.system as SkillItemData).subtype === 'science' && i.getFlag('helveczia', 'locked') === true,
     );
     if (sciences.length > 0) {
       for (const science of sciences) {

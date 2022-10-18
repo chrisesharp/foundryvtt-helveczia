@@ -41,7 +41,7 @@ export class WeaponItem extends BaseItem {
 
   /** @override */
   static async getTags(item: HVItem, actor: HVActor): Promise<string> {
-    const itemData = item.data as WeaponItemData;
+    const itemData = item.system as WeaponItemData;
     const reload =
       itemData.data.attack === 'ranged'
         ? `<li class="tag" title="${game.i18n.localize('HV.Reload')}">${itemData.data.reload}</li>`
