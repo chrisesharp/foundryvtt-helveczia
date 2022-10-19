@@ -1,4 +1,4 @@
-import { HVChat } from '../chat';
+import { Utils } from '../utils/utils';
 import { HVActor } from './actor';
 import { HVActorSheet } from './actor-sheet';
 import { PartyActorData } from './actor-types';
@@ -73,9 +73,7 @@ export class HVPartySheet extends HVActorSheet {
     if (data.type !== 'Actor') {
       return;
     }
-
-    // const droppedActor = game.actors?.get(data.uuid);
-    const droppedActor = await HVChat.getActorFromUUID(data.uuid);
+    const droppedActor = await Utils.getActorFromUUID(data.uuid);
     if (droppedActor) await this._addActorToParty(droppedActor);
     this.render();
   }

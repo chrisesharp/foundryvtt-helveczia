@@ -21,4 +21,13 @@ export class Utils {
       }, []),
     );
   }
+
+  static async getActorFromUUID(uuid): Promise<HVActor> {
+    const obj = await fromUuid(uuid);
+
+    if (obj instanceof TokenDocument) {
+      return obj.actor as HVActor;
+    }
+    return obj as HVActor;
+  }
 }

@@ -55,7 +55,7 @@ export class HVActor extends Actor {
   }
 
   setPartyData(): void {
-    this.img = this.prototypeToken.img;
+    this.img = this.prototypeToken.texture.src;
     this.prototypeToken.name = this.name;
   }
 
@@ -409,7 +409,9 @@ export class HVActor extends Actor {
         actorLink: true,
         disposition: disposition,
         lockRotation: true,
-        img: data.img,
+        texture: {
+          src: data.img,
+        },
       },
       { overwrite: false },
     );

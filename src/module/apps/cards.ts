@@ -54,12 +54,12 @@ export class HVCardsHand extends CardsHand {
   }
 
   /** @ooverride */
-  getData() {
+  getData(options) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const data: any = super.getData();
+    const data: any = super.getData(options);
     data.isGM = game.user?.isGM;
     data.config = CONFIG.HV;
-    data.total = data.cards.reduce((acc, card) => acc + card.data.value, 0);
+    data.total = data.cards.reduce((acc, card) => acc + card.value, 0);
     return data;
   }
 
@@ -68,56 +68,45 @@ export class HVCardsHand extends CardsHand {
     super.activateListeners(html);
   }
 
-  /** @override */
-  async _onCardControl(event): Promise<void> {
+  // /** @override */
+  async _onCardControl(event) {
     const button = event.currentTarget;
     const li = button.closest('.card');
     const card = li ? this.object.cards.get(li.dataset.cardId) : null;
     const cls = getDocumentClass('Card');
 
+    // Save any pending change to the form
     await this._onSubmit(event, { preventClose: true, preventRender: true });
 
+    // Handle the control action
     switch (button.dataset.action) {
       case 'create':
-        cls.createDialog({}, { parent: this.object, pack: this.object.pack ?? undefined });
-        break;
+        return cls.createDialog({}, { parent: this.object, pack: this.object.pack });
       case 'edit':
-        card?.sheet?.render(true);
-        break;
+        return card.sheet.render(true);
       case 'delete':
-        card?.deleteDialog();
-        break;
+        return card.deleteDialog();
       case 'deal':
-        this.object.dealDialog();
-        break;
+        return this.object.dealDialog();
       case 'draw':
-        this.drawDialog(this.object);
-        break;
+        return this.drawDialog(this.object);
       case 'pass':
-        this.object.passDialog();
-        break;
+        return this.object.passDialog();
       case 'play':
-        if (card) this.playDialog(this.object, card);
-        break;
+        return this.playDialog(this.object, card);
       case 'reset':
-        this.object.resetDialog();
-        break;
+        return this.object.resetDialog();
       case 'shuffle':
-        this._sortStandard = false;
-        this.object.shuffle();
-        break;
+        this.options.sort = this.constructor.SORT_TYPES.SHUFFLED;
+        return this.object.shuffle();
       case 'toggleSort':
-        this._sortStandard = !this._sortStandard;
-        this.render();
-        break;
+        this.options.sort = { standard: 'shuffled', shuffled: 'standard' }[this.options.sort];
+        return this.render();
       case 'nextFace':
-        await card?.update({ face: card.data?.face === null ? 0 : card.data?.face + 1 });
-        return;
+        return card.update({ face: card.face === null ? 0 : card.face + 1 });
       case 'prevFace':
-        await card?.update({ face: card.data?.face === 0 ? null : -1 });
-        return;
+        return card.update({ face: card.face === 0 ? null : card.face - 1 });
     }
-    return;
   }
 
   static async createHandsFor(name: string): Promise<void> {
@@ -170,7 +159,7 @@ export class HVCardsHand extends CardsHand {
         callback: (html) => {
           const form = html.querySelector('form.cards-dialog') as HTMLFormElement;
           if (form) {
-            const fd = new FormDataExtended(form, {}).toObject();
+            const fd = new FormDataExtended(form, {}).object;
             const from = game.cards?.get(sourceDeck);
             const options = { how: CONST.CARD_DRAW_MODES.RANDOM, updateData: { face: null } };
             return source.draw(from, fd.number, options).catch((err) => {
@@ -202,7 +191,7 @@ export class HVCardsHand extends CardsHand {
         callback: (html) => {
           const form = html.querySelector('form.cards-dialog') as HTMLFormElement;
           if (form) {
-            const fd = new FormDataExtended(form, {}).toObject();
+            const fd = new FormDataExtended(form, {}).object;
             const to = game.cards?.get(fd.to as string);
             const options = { action: 'play', updateData: fd.down ? { face: null } : {} };
             return source.pass(to, [card.id], options).catch((err) => {

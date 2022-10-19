@@ -1,6 +1,6 @@
-import { books } from '../../../assets/holy-bible/books';
+import { books } from '../../assets/holy-bible/books';
 import { marked } from 'marked';
-import { HVActor } from '../../actor/actor';
+import { HVActor } from '../actor/actor';
 
 class Slugger {
   private seen = {};

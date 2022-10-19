@@ -200,8 +200,10 @@ export class HVActorSheet extends ActorSheet {
       const step = path.shift();
       token += `lg/${step}`;
       const data = {
-        token: {
-          img: token,
+        prototypeToken: {
+          texture: {
+            src: token,
+          },
         },
       };
       await this.actor.update(data);
