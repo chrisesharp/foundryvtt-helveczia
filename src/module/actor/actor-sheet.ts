@@ -456,7 +456,7 @@ export class HVActorSheet extends ActorSheet {
                 title: title,
                 chatMessage: true,
               });
-              await actor?.update({ system: { virtue: roll.total } });
+              await actor?.update({ system: { virtue: roll.total, origVirtue: roll.total } });
             },
           },
         },

@@ -12,6 +12,7 @@
         "level": 1,
         "people": "",
         "class": "",
+        "origVirtue": 10,
         "virtue": 10,
         "initiative": 0,
         "maxskills": 3,

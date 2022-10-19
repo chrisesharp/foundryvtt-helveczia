@@ -127,6 +127,7 @@ export class HVCharacterCreator extends FormApplication {
         gr: 0,
       },
       virtue: virtue,
+      origVirtue: virtue,
     };
     Object.keys(choice).forEach((key) => {
       updateData.scores[key] = {

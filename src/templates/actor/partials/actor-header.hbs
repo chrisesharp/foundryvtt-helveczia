@@ -96,7 +96,7 @@
                             {{ localize 'HV.virtue' }}:
                         </h4>
                         <div class="attribute-value">
-                            <input name="data.virtue" type="text" data-dtype="Number" value="{{data.virtue}}">
+                            <input name="data.virtue" type="text" data-dtype="Number" value="{{data.virtue}}" disabled> <div>(</div><input name="data.origVirtue" type="text" data-dtype="Number" value="{{data.origVirtue}}" title="{{ localize 'HV.virtueOrig' }}" {{#unless user.isGM}}disabled{{/unless}}><div>)</div>
                         </div>
                     </li>
                 </ol>
