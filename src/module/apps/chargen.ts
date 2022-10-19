@@ -168,7 +168,7 @@ export class HVCharacterCreator extends FormApplication {
     event.preventDefault();
     const actor = this.object as HVActor;
     // // Update the actor
-    await actor.update({ data: formData });
+    await actor.update({ system: formData });
     await actor.setFlag('helveczia', 'abilities-initialized', true);
 
     // // Re-draw the updated sheet
@@ -194,7 +194,7 @@ export class HVCharacterCreator extends FormApplication {
       const updateData = {
         hp: hitpoints,
       };
-      await actor.update({ data: updateData });
+      await actor.update({ system: updateData });
       actor.sheet?.render(true);
     }
   }
