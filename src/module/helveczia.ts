@@ -124,10 +124,11 @@ Hooks.once('ready', async () => {
 Hooks.on('HV.Cards.genCards', HVCardsControl.showDialog);
 Hooks.on('HV.Names.genName', HVNameGenerator.showDialog);
 
-Hooks.on('preUpdateToken', async (tokenDocument, change, _options, _userid) => {
+Hooks.on('preUpdateToken', async (tokenDocument, change, options, _userid) => {
   if (!CONFIG.HV.flipTokens) return;
   if (change.rotation === 90 || change.rotation === 270) {
-    change.mirrorX = !tokenDocument.mirrorX;
+    change.texture = { scaleX: 0 - tokenDocument.texture.scaleX };
+    options.animation = { duration: 0 };
   }
 });
 
