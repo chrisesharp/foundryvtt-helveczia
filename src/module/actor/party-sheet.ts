@@ -1,3 +1,4 @@
+import { HVChat } from '../chat';
 import { HVActor } from './actor';
 import { HVActorSheet } from './actor-sheet';
 import { PartyActorData } from './actor-types';
@@ -18,7 +19,7 @@ export class HVPartySheet extends HVActorSheet {
 
   async getData() {
     const baseData = await super.getData();
-    const actorData = baseData.actor.data as PartyActorData;
+    const actorData = baseData.actor as PartyActorData;
     const data: any = {
       config: CONFIG.HV,
       user: game.user,
@@ -73,7 +74,8 @@ export class HVPartySheet extends HVActorSheet {
       return;
     }
 
-    const droppedActor = game.actors?.get(data.id);
+    // const droppedActor = game.actors?.get(data.uuid);
+    const droppedActor = await HVChat.getActorFromUUID(data.uuid);
     if (droppedActor) await this._addActorToParty(droppedActor);
     this.render();
   }
