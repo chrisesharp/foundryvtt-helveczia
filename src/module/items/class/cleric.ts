@@ -52,7 +52,7 @@ async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void
     (i) =>
       i.type === 'skill' &&
       i.name === name &&
-      (i.data as SkillItemData).data.subtype === 'magical' &&
+      (i.system as SkillItemData).subtype === 'magical' &&
       (i as HVItem).getFlag('helveczia', 'locked') === true,
   );
   log.debug(`Cleric.deleteSpecialistSkill() | matching skills:`, skills);
@@ -78,8 +78,8 @@ export class Cleric {
 
   static async onCreate(item: HVItem): Promise<void> {
     const actor = item.actor;
-    const sourceItemData = item.data as ClassItemData;
-    if (sourceItemData.data.specialism) {
+    const sourceItemData = item.system as ClassItemData;
+    if (sourceItemData.specialism) {
       if (!actor?.isCleric()) {
         ui.notifications.error(game.i18n.localize('You must be a cleric for this specialism'));
         return;
@@ -87,6 +87,9 @@ export class Cleric {
     } else {
       log.debug('Cleric.onCreate() | cleric-class flag set to true');
       actor?.setFlag('helveczia', 'cleric-class', true);
+      const gainedSixthLevelSkills = actor?.isCleric() && actor.system.level == 6;
+      actor?.setFlag('helveczia', 'cleric-skill', gainedSixthLevelSkills);
+      log.debug('Cleric.getSkillsBonus() |  cleric-skill flag set to ', gainedSixthLevelSkills);
       Promise.all(
         Object.keys(clericSpecialisms).map((s) => {
           const skill = {
@@ -107,20 +110,18 @@ export class Cleric {
   }
 
   static getSkillsBonus(actor: HVActor): number {
-    const gainedSixthLevelSkills = actor.isCleric() && actor.data.data.level == 6;
-    actor.setFlag('helveczia', 'cleric-skill', gainedSixthLevelSkills);
-    log.debug('Cleric.getSkillsBonus() |  cleric-skill flag set to ', gainedSixthLevelSkills);
+    const gainedSixthLevelSkills = actor.getFlag('helveczia', 'cleric-skill');
     // base 3 extra to cover Cleric specialist skills. and 6 extra at 6th level
     return gainedSixthLevelSkills ? 9 : 3;
   }
 
   static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
-    const base = Math.floor(actor.data.data.level / 2);
+    const base = Math.floor(actor.system.level / 2);
     return { bravery: base + 2, deftness: base, temptation: base + 2 };
   }
 
   static getSpellSlots(actor: HVActor): number[] {
-    const level = actor.data.data.level;
+    const level = actor.system.level;
     const bonus = actor.getSpellBonus();
     const spells = duplicate(CONFIG.HV.spellSlots[level]);
     for (const i in spells) {

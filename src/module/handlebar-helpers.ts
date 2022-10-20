@@ -120,7 +120,7 @@ export const registerHandlebarHelpers = async function () {
   });
 
   Handlebars.registerHelper('insertLink', function (item) {
-    return TextEditor.enrichHTML(item.id);
+    return TextEditor.enrichHTML(item.id, { async: false });
   });
 
   Handlebars.registerHelper('typeOfSkill', function (value) {

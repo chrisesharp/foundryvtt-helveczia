@@ -21,10 +21,10 @@
             <li class="card flexrow" data-card-id="{{card.id}}">
                 <img class="card-face" data-src="{{card.img}}"  height="48">
                 {{#if (or @root.isGM card.showFace) }}
-                <span class="card-suit">{{card.data.name}}</span>
-                <span class="card-suit">{{card.data.description}}</span>
-                <span class="card-suit">{{card.data.suit}}</span>
-                <span class="card-value">{{card.data.value}}</span>
+                <span class="card-suit">{{card.name}}</span>
+                <span class="card-suit">{{card.description}}</span>
+                <span class="card-suit">{{card.suit}}</span>
+                <span class="card-value">{{card.value}}</span>
                 {{else}}
                 <span class="card-name">?</span>
                 {{/if}}

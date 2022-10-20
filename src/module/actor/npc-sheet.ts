@@ -30,19 +30,21 @@ export class HVNPCSheet extends HVActorSheet {
       sex: this.actor.getFlag('helveczia', 'sex') ?? 'male',
       options: this.options,
       editable: this.isEditable,
-      isToken: this.token && !this.token.data.actorLink,
+      isToken: this.prototypeToken && !this.prototypeToken.actorLink,
       config: CONFIG.HV,
       user: game.user,
-      classes: this.actor.data.data.classes,
+      classes: this.actor.system.classes,
     };
     // Add actor, actor data and item
-    data.actor = actorData.data;
-    data.data = data.actor.data;
-    data.items = this.actor.items.map((i) => i.data);
+    data.actor = actorData;
+    data.data = data.actor.system;
+    data.items = this.actor.items.map((i) => i.system);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.possessions = data.data.possessions;
     data.effects = prepareActiveEffectCategories(this.actor.effects);
     data.spellGroups = [1, 2, 3];
+
+    data.enrichedDescription = await TextEditor.enrichHTML(this.object.system.description, { async: true });
     return data;
   }
 
@@ -69,9 +71,9 @@ export class HVNPCSheet extends HVActorSheet {
       data = JSON.parse(transfer);
       if (data['pack']) {
         const pack = game.packs.get(data['pack']);
-        item = await pack?.getDocument(data['id']);
+        item = await pack?.getDocument(data['uuid']);
       } else {
-        item = game.items?.get(data['id']);
+        item = await fromUuid(data['uuid']);
       }
     } catch (err) {
       return;

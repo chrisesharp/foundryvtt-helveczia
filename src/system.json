@@ -1,5 +1,6 @@
 {
   "name": "helveczia",
+  "id": "helveczia",
   "title": "Helvéczia",
   "description": "Unofficial Implementation of the picaresque fantasy RPG",
   "version": "This is auto replaced",
@@ -11,8 +12,12 @@
       "discord": ""
     }
   ],
-  "minimumCoreVersion": "9",
-  "compatibleCoreVersion": "9",
+  "minimumCoreVersion": "10",
+  "compatibleCoreVersion": "10.285",
+  "compatibility": {
+    "minimum": 10,
+    "verified": "10.285"
+  },
   "scripts": [],
   "esmodules": ["module/helveczia.js"],
   "styles": ["styles/helveczia.css"],
@@ -158,7 +163,6 @@
       "type": "RollTable"
     }
   ],
-  "dependencies": [],
   "languages": [
     {
       "lang": "en",
@@ -174,6 +178,7 @@
   "bugs": "",
   "changelog": "",
   "initiative": "",
+  "socket": true,
   "gridDistance": 1,
   "gridUnits": "",
   "primaryTokenAttribute": "",

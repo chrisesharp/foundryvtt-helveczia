@@ -1,3 +1,4 @@
+import { Utils } from '../utils/utils';
 import { HVActor } from './actor';
 import { HVActorSheet } from './actor-sheet';
 import { PartyActorData } from './actor-types';
@@ -18,7 +19,7 @@ export class HVPartySheet extends HVActorSheet {
 
   async getData() {
     const baseData = await super.getData();
-    const actorData = baseData.actor.data as PartyActorData;
+    const actorData = baseData.actor as PartyActorData;
     const data: any = {
       config: CONFIG.HV,
       user: game.user,
@@ -26,10 +27,10 @@ export class HVPartySheet extends HVActorSheet {
       party: this._preparePartyData(),
     };
     data.virtue = data.party.length
-      ? Math.round(
-          data.party.map((i) => parseInt(i.data.data.virtue)).reduce((acc, n) => acc + n, 0) / data.party.length,
-        )
+      ? Math.round(data.party.map((i) => parseInt(i.system.virtue)).reduce((acc, n) => acc + n, 0) / data.party.length)
       : 0;
+
+    data.enrichedDescription = await TextEditor.enrichHTML(this.object.system.description, { async: true });
     return data;
   }
 
@@ -72,8 +73,7 @@ export class HVPartySheet extends HVActorSheet {
     if (data.type !== 'Actor') {
       return;
     }
-
-    const droppedActor = game.actors?.get(data.id);
+    const droppedActor = await Utils.getActorFromUUID(data.uuid);
     if (droppedActor) await this._addActorToParty(droppedActor);
     this.render();
   }

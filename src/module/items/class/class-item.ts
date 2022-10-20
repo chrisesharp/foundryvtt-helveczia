@@ -13,6 +13,7 @@ import { Vagabond } from './vagabond';
 import { Fighter } from './fighter';
 import { Cleric } from './cleric';
 import { ClassItemData } from '../item-types';
+import { Utils } from '../../utils/utils';
 
 const log = new Logger();
 
@@ -71,7 +72,7 @@ export class ClassItem extends BaseItem {
   static findProfession(itemData: ItemData): ProfEntry | undefined {
     const prof = ClassItem.professions[itemData.name];
     if (prof) return prof;
-    const parent = capitalize((itemData as ClassItemData).data.parent);
+    const parent = capitalize((itemData.system as ClassItemData).parent);
     return ClassItem.professions[parent];
   }
 
@@ -103,6 +104,9 @@ export class ClassItem extends BaseItem {
   }
 
   static onDelete(actor, itemData) {
+    if (!Utils.canModifyActor(game.user, actor)) {
+      return;
+    }
     const prof = ClassItem.findProfession(itemData);
     const func = prof?.onDelete;
     if (func) {
@@ -126,8 +130,11 @@ export class ClassItem extends BaseItem {
     _options: DocumentModificationOptions,
     _userId: string,
   ) {
+    if (!Utils.canModifyActor(game.user, item.actor)) {
+      return;
+    }
     if (item.parent) {
-      const prof = ClassItem.findProfession(item.data);
+      const prof = ClassItem.findProfession(item);
       const func = prof?.onCreate;
       if (func) func(item);
     }

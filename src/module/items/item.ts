@@ -13,10 +13,10 @@ export class HVItem extends Item {
     user: BaseUser,
   ): Promise<void> {
     await super._preCreate(data, options, user);
-    if (CONFIG.HV.itemClasses[this.data.type]) {
-      await CONFIG.HV.itemClasses[this.data.type].preCreate(data, options, user);
+    if (CONFIG.HV.itemClasses[this.type]) {
+      await CONFIG.HV.itemClasses[this.type].preCreate(data, options, user);
     }
-    this.data.update(data);
+    this.updateSource(data);
   }
 
   protected async _onCreate(
@@ -26,8 +26,8 @@ export class HVItem extends Item {
   ): Promise<void> {
     super._onCreate(data, options, userId);
     // Let every itemType augment itself on creation
-    if (CONFIG.HV.itemClasses[this.data.type]) {
-      await CONFIG.HV.itemClasses[this.data.type].onCreate(this, data, options, userId);
+    if (CONFIG.HV.itemClasses[this.type]) {
+      await CONFIG.HV.itemClasses[this.type].onCreate(this, data, options, userId);
     }
   }
 
@@ -35,9 +35,9 @@ export class HVItem extends Item {
     super.prepareData();
 
     // Let every itemType prepare itself
-    if (this.actor?.data) {
-      if (CONFIG.HV.itemClasses[this.data.type]) {
-        CONFIG.HV.itemClasses[this.data.type].prepareItemData(this);
+    if (this.actor) {
+      if (CONFIG.HV.itemClasses[this.type]) {
+        CONFIG.HV.itemClasses[this.type].prepareItemData(this);
       }
     }
   }
@@ -45,7 +45,7 @@ export class HVItem extends Item {
   //** @override */
   protected _onDelete(_options: DocumentModificationOptions, _userId: string): void {
     if (this.isEmbedded) {
-      CONFIG.HV.itemClasses[this.data.type]?.onDelete(this.actor, this.data);
+      CONFIG.HV.itemClasses[this.type]?.onDelete(this.actor, this);
     }
   }
 
@@ -55,28 +55,26 @@ export class HVItem extends Item {
     options: DocumentModificationOptions,
     userId: string,
   ): void {
-    if (CONFIG.HV.itemClasses[this.data.type]) {
-      CONFIG.HV.itemClasses[this.data.type]?.onUpdate(this, changed, options, userId);
+    if (CONFIG.HV.itemClasses[this.type]) {
+      CONFIG.HV.itemClasses[this.type]?.onUpdate(this, changed, options, userId);
     }
     super._onUpdate(changed, options, userId);
   }
 
   /** Augment actor skills  */
   getSkillsBonus(actor) {
-    return CONFIG.HV.itemClasses[this.data.type]
-      ? CONFIG.HV.itemClasses[this.data.type].getSkillsBonus(actor, this.data)
-      : 0;
+    return CONFIG.HV.itemClasses[this.type] ? CONFIG.HV.itemClasses[this.type].getSkillsBonus(actor, this) : 0;
   }
 
   getSaveBase(actor): { bravery: number; deftness: number; temptation: number } {
-    return CONFIG.HV.itemClasses[this.data.type]
-      ? CONFIG.HV.itemClasses[this.data.type].getSaveBase(actor, this.data)
+    return CONFIG.HV.itemClasses[this.type]
+      ? CONFIG.HV.itemClasses[this.type].getSaveBase(actor, this)
       : { bravery: 0, deftness: 0, temptation: 0 };
   }
 
   async createChatMessage(actor: HVActor, message: string): Promise<void> {
-    if (CONFIG.HV.itemClasses[this.data.type]) {
-      CONFIG.HV.itemClasses[this.data.type].createChatMessage(actor, message, this.data);
+    if (CONFIG.HV.itemClasses[this.type]) {
+      CONFIG.HV.itemClasses[this.type].createChatMessage(actor, message, this);
     }
   }
 

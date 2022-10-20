@@ -41,20 +41,20 @@ export class WeaponItem extends BaseItem {
 
   /** @override */
   static async getTags(item: HVItem, actor: HVActor): Promise<string> {
-    const itemData = item.data as WeaponItemData;
+    const itemData = item.system as WeaponItemData;
     const reload =
-      itemData.data.attack === 'ranged'
-        ? `<li class="tag" title="${game.i18n.localize('HV.Reload')}">${itemData.data.reload}</li>`
+      itemData.attack === 'ranged'
+        ? `<li class="tag" title="${game.i18n.localize('HV.Reload')}">${itemData.reload}</li>`
         : '';
-    if (itemData.data?.attack) {
+    if (itemData.attack) {
       return `
     <ol class="tag-list">
-      <li class="tag">${game.i18n.localize(`HV.attack.${itemData.data.attack}.short`)}</li>
+      <li class="tag">${game.i18n.localize(`HV.attack.${itemData.attack}.short`)}</li>
       <li class="tag" title="${game.i18n.localize('HV.bonuses')}">${await actor.getItemRollMod(item.id ?? '')}</li>
-      <li class="tag" title="${game.i18n.localize('HV.Damage')}">${itemData.data.damage}</li>
+      <li class="tag" title="${game.i18n.localize('HV.Damage')}">${itemData.damage}</li>
       ${reload}
-      <li class="tag" title="${game.i18n.localize('HV.Critical')}">${itemData.data.critical.range}+</li>
-      <li class="tag" title="${game.i18n.localize('HV.DamageMultiplier')}">x${itemData.data.critical.multiple}</li>
+      <li class="tag" title="${game.i18n.localize('HV.Critical')}">${itemData.critical.range}+</li>
+      <li class="tag" title="${game.i18n.localize('HV.DamageMultiplier')}">x${itemData.critical.multiple}</li>
     </ol>`;
     }
     return '';

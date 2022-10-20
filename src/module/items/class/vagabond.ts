@@ -12,7 +12,7 @@ async function deleteSpecialism(actor: HVActor, name: string): Promise<void> {
     (i) =>
       i.type === 'skill' &&
       i.name === name &&
-      (i.data as SkillItemData).data.subtype === 'vagabond' &&
+      (i.system as SkillItemData).subtype === 'vagabond' &&
       i.getFlag('helveczia', 'locked') === true,
   );
   log.debug(`Vagabond.deleteSpecialism() | matching skills:`, skills);
@@ -37,8 +37,8 @@ export class Vagabond {
   }
 
   static async onCreate(item: HVItem): Promise<void> {
-    const sourceItemData = item.data as ClassItemData;
-    if (sourceItemData.data.specialism) {
+    const sourceItemData = item.system as ClassItemData;
+    if (sourceItemData.specialism) {
       if (!item.actor?.isVagabond()) {
         ui.notifications.error(game.i18n.localize('You must be a vagabond for this specialism'));
         return;
@@ -103,7 +103,7 @@ export class Vagabond {
   }
 
   static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
-    const base = Math.floor(actor.data.data.level / 2);
+    const base = Math.floor(actor.system.level / 2);
     return { bravery: base, deftness: base + 2, temptation: base };
   }
 

@@ -9,7 +9,7 @@
         <h3>{{ localize 'HV.messages.absolution' }}</h3>
         <ol>
         {{#each absolved as |sin|}}
-            <li>{{ deedLocalize  (lookup ../cardinalSins sin.data.data.cardinality) }} ~ {{sin.name}}</li>
+            <li>{{ deedLocalize  (lookup ../cardinalSins sin.system.cardinality) }} ~ {{sin.name}}</li>
         {{/each}}
         </ol>
         {{else}}

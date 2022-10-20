@@ -9,8 +9,8 @@
  */
 /* -------------------------------------------- */
 
-import { HVActor } from './actor/actor';
 import { Logger } from './logger';
+import { Utils } from './utils/utils';
 
 const log = new Logger();
 
@@ -25,20 +25,11 @@ export function updateChatMessage(actor, msgId, crit) {
 }
 
 export class HVChat {
-  static async getActorFromUUID(uuid): Promise<HVActor> {
-    const obj = await fromUuid(uuid);
-
-    if (obj instanceof TokenDocument) {
-      return obj.actor as HVActor;
-    }
-    return obj as HVActor;
-  }
-
   static async addChatCriticalButton(msg, html, _data) {
     const chatCard = html.find('.helveczia.chat-card');
     if (!chatCard) return;
     try {
-      const actor = await HVChat.getActorFromUUID(chatCard.attr('data-actor-id'));
+      const actor = await Utils.getActorFromUUID(chatCard.attr('data-actor-id'));
       if (actor && actor.isOwner) {
         await HVChat._addCritButton(msg, actor, chatCard);
       }

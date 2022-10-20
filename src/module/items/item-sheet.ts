@@ -28,12 +28,12 @@ export class HVItemSheet extends ItemSheet {
   }
 
   /** @ooverride */
-  getData() {
+  async getData() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let data: any = super.getData();
 
     // enforce data to ensure compatability between 0.7 and 0.8
-    data.data = this.object.data.data;
+    data.data = this.object.system;
 
     // Set owner name if possible
     data.isOwnedBy = this.actor ? this.actor.name : false;
@@ -53,11 +53,13 @@ export class HVItemSheet extends ItemSheet {
     data.config = CONFIG.HV;
     data.effects = prepareActiveEffectCategories(this.item.effects);
 
+    data.enrichedDescription = await TextEditor.enrichHTML(this.object.system.description, { async: true });
+
     return data;
   }
 
   get template() {
-    return `systems/helveczia/templates/item/${this.item.data.type}-sheet.hbs`;
+    return `systems/helveczia/templates/item/${this.item.type}-sheet.hbs`;
   }
 
   activateListeners(html) {
@@ -132,7 +134,7 @@ export class HVItemSheet extends ItemSheet {
     const name = result && result.length > 1 ? result[1] : undefined;
 
     if (name) {
-      const spells = duplicate((this.item.data as BookItemData).data.spells);
+      const spells = duplicate((this.item.system as BookItemData).spells);
       spells.push({ id: link, name: name });
       return this.item.update({ data: { spells: spells } });
     }

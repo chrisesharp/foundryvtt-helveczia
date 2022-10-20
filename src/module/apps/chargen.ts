@@ -85,7 +85,7 @@ export class HVCharacterCreator extends FormApplication {
   }
 
   static async rollHitPoints(actorData) {
-    const data = actorData.data;
+    const data = actorData.system;
     const level = data.level;
     const hd = data.hp.hd;
     const con = data.scores.con.mod;
@@ -127,6 +127,7 @@ export class HVCharacterCreator extends FormApplication {
         gr: 0,
       },
       virtue: virtue,
+      origVirtue: virtue,
     };
     Object.keys(choice).forEach((key) => {
       updateData.scores[key] = {
@@ -168,7 +169,7 @@ export class HVCharacterCreator extends FormApplication {
     event.preventDefault();
     const actor = this.object as HVActor;
     // // Update the actor
-    await actor.update({ data: formData });
+    await actor.update({ system: formData });
     await actor.setFlag('helveczia', 'abilities-initialized', true);
 
     // // Re-draw the updated sheet
@@ -190,11 +191,11 @@ export class HVCharacterCreator extends FormApplication {
     const sp = await HVCharacterCreator.getDocument(specialismName, specialisms);
     if (sp) {
       await actor.createEmbeddedDocuments('Item', [sp.toObject()]);
-      const hitpoints = await this.rollHitPoints(actor.data);
+      const hitpoints = await this.rollHitPoints(actor);
       const updateData = {
         hp: hitpoints,
       };
-      await actor.update({ data: updateData });
+      await actor.update({ system: updateData });
       actor.sheet?.render(true);
     }
   }

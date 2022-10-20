@@ -59,11 +59,11 @@ export class HVDice {
       multiple: 2,
     };
     if (data.item) {
-      critical = data.item.data.critical;
+      critical = data.item.system.critical;
       withWeapon = `with their ${data.item.name}`;
-      if (data.item.data.reload > 0) {
-        const attacker = data.item.document.actor as HVActor;
-        await attacker.setFlag('helveczia', 'reload-trigger', data.item.data.reload);
+      if (data.item.system.reload > 0) {
+        const attacker = data.item.actor as HVActor;
+        await attacker.setFlag('helveczia', 'reload-trigger', data.item.system.reload);
         console.log('fired and set reload-trigger to ', attacker.getFlag('helveczia', 'reload-trigger'));
       }
     }
@@ -81,8 +81,8 @@ export class HVDice {
     if (data.opponent?.id) {
       opponent = game.actors?.get(data.opponent.id);
       if (opponent) {
-        result.target = opponent.data.data.ac;
-        against += `against ${opponent.data.name}`;
+        result.target = opponent.system.ac;
+        against += `against ${opponent.name}`;
       }
     }
 

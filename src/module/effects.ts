@@ -22,7 +22,7 @@ export function createConsequenceEffect(resource: string, value: number, owner: 
   };
   const effectData: ActiveEffectDataConstructorData = {
     icon: 'icons/svg/aura.svg',
-    origin: owner.data.uuid,
+    origin: owner.uuid,
     duration: duration,
     flags: {},
     disabled: false,
@@ -59,7 +59,7 @@ export function onManageActiveEffect(event, owner) {
     case 'delete':
       return effect.delete();
     case 'toggle':
-      return effect.update({ disabled: !effect.data.disabled });
+      return effect.update({ disabled: !effect.disabled });
   }
 }
 
@@ -106,7 +106,7 @@ export function prepareActiveEffectCategories(effects) {
   // Iterate over active effects, classifying them into categories
   for (const e of effects) {
     e._getSourceName(); // Trigger a lookup for the source name
-    if (e.data.disabled) categories.inactive.effects.push(e);
+    if (e.disabled) categories.inactive.effects.push(e);
     else if (e.isTemporary) categories.temporary.effects.push(e);
     else categories.passive.effects.push(e);
   }

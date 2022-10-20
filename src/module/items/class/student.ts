@@ -45,7 +45,7 @@ async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void
     (i) =>
       i.type === 'skill' &&
       i.name === name &&
-      (i.data as SkillItemData).data.subtype === 'magical' &&
+      (i.system as SkillItemData).subtype === 'magical' &&
       i.getFlag('helveczia', 'locked') === true,
   );
   log.debug(`Student.deleteSpecialistSkill() | matching skills:`, skills);
@@ -70,8 +70,8 @@ export class Student {
   }
 
   static async onCreate(item: HVItem): Promise<void> {
-    const sourceItemData = item.data as ClassItemData;
-    if (sourceItemData.data.specialism) {
+    const sourceItemData = item.system as ClassItemData;
+    if (sourceItemData.specialism) {
       if (!item.actor?.isStudent()) {
         ui.notifications.error(game.i18n.localize('You must be a student for this specialism'));
         return;
@@ -100,19 +100,17 @@ export class Student {
 
   static getSkillsBonus(actor: HVActor): number {
     const gainedSkills = actor.isStudent();
-    actor.setFlag('helveczia', 'student-skill', gainedSkills);
-    log.debug('Student.getSkillsBonus() |  student-skill flag set to ', gainedSkills);
     // base 2 extra to cover Student specialist skills. and 2 extra as a student
     return gainedSkills ? 4 : 2;
   }
 
   static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
-    const base = Math.floor(actor.data.data.level / 2);
+    const base = Math.floor(actor.system.level / 2);
     return { bravery: base, deftness: base, temptation: base + 2 };
   }
 
   static getSpellSlots(actor: HVActor): number[] {
-    const level = actor.data.data.level;
+    const level = actor.system.level;
     const bonus = actor.getSpellBonus();
     const spells = duplicate(CONFIG.HV.spellSlots[level]);
     for (const i in spells) {
@@ -131,10 +129,7 @@ export class Student {
     );
     actor.setFlag('helveczia', 'student-class', false);
     const sciences = actor.items.filter(
-      (i) =>
-        i.type === 'skill' &&
-        (i.data as SkillItemData).data.subtype === 'science' &&
-        i.getFlag('helveczia', 'locked') === true,
+      (i) => (i.system as SkillItemData).subtype === 'science' && i.getFlag('helveczia', 'locked') === true,
     );
     if (sciences.length > 0) {
       for (const science of sciences) {

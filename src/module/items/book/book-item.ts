@@ -28,7 +28,7 @@ export class BookItem extends BaseItem {
       const li = $(ev.currentTarget).parents('.item-entry');
       const itemID = li.data('item-id');
       const updateData = {
-        spells: item.data.data.spells.filter((i) => i.id !== itemID),
+        spells: item.system.spells.filter((i) => i.id !== itemID),
       };
       item.update({ data: updateData });
       li.slideUp(200, () => item.render(false));
@@ -48,7 +48,7 @@ export class BookItem extends BaseItem {
   /** @override */
   static getSheetData(sheetData, item) {
     sheetData.coins = CONFIG.HV.coins;
-    sheetData.spells = item.object.data.data?.spells;
+    sheetData.spells = item.object.system?.spells;
     return sheetData;
   }
 
@@ -56,14 +56,14 @@ export class BookItem extends BaseItem {
   static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
     const top = `<ol class="tag-list">`;
     const bottom = `</ol>`;
-    const itemData = item.data as BookItemData;
+    const itemData = item.system as BookItemData;
     // let bible = '';
     // if (item.name?.includes('Bible')) {
     //   bible = `<li class="tag holy-bible" title="Seek Divine Guidance"><a>guidance</a></li>`;
     // }
     return `
     ${top}
-      <li class="tag" title="${game.i18n.localize('HV.Encumbrance')}">${itemData.data.encumbrance ?? 0}</li>
+      <li class="tag" title="${game.i18n.localize('HV.Encumbrance')}">${itemData.encumbrance ?? 0}</li>
    ${bottom}`;
   }
 }
