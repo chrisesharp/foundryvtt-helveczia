@@ -13,6 +13,7 @@ import { Vagabond } from './vagabond';
 import { Fighter } from './fighter';
 import { Cleric } from './cleric';
 import { ClassItemData } from '../item-types';
+import { Utils } from '../../utils/utils';
 
 const log = new Logger();
 
@@ -103,7 +104,7 @@ export class ClassItem extends BaseItem {
   }
 
   static onDelete(actor, itemData) {
-    if (!(game.user?.isGM && actor?.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER))) {
+    if (!Utils.canModifyActor(game.user, actor)) {
       return;
     }
     const prof = ClassItem.findProfession(itemData);
@@ -129,7 +130,7 @@ export class ClassItem extends BaseItem {
     _options: DocumentModificationOptions,
     _userId: string,
   ) {
-    if (!(game.user?.isGM && item.actor?.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER))) {
+    if (!Utils.canModifyActor(game.user, item.actor)) {
       return;
     }
     if (item.parent) {

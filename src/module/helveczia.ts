@@ -34,6 +34,7 @@ import { HVCombat, HVCombatant } from './combat';
 import { HVCardsHand, HVCardsPile, HVCardsControl } from './apps/cards';
 import { HVNameGenerator } from './apps/names';
 import { HVPartySheet } from './actor/party-sheet';
+import { Utils } from './utils/utils';
 
 const log = new Logger();
 
@@ -133,7 +134,7 @@ Hooks.on('preUpdateToken', async (tokenDocument, change, options, _userid) => {
 });
 
 Hooks.on('applyActiveEffect', async (actor, changeData) => {
-  if (!(game.user?.isGM && actor?.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER))) {
+  if (!Utils.canModifyActor(game.user, actor)) {
     return;
   }
   actor.applyCustomEffect(changeData);

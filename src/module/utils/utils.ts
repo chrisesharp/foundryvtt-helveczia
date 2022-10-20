@@ -30,4 +30,13 @@ export class Utils {
     }
     return obj as HVActor;
   }
+
+  static canModifyActor(user: StoredDocument<User> | null, actor: HVActor | null): boolean {
+    return (
+      user != null &&
+      actor != null &&
+      user.isGM &&
+      actor?.testUserPermission(user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER)
+    );
+  }
 }

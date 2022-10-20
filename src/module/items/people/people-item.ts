@@ -153,7 +153,7 @@ export class PeopleItem extends BaseItem {
     _options: DocumentModificationOptions,
     _userId: string,
   ) {
-    if (!(game.user?.isGM && item.actor?.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER))) {
+    if (!Utils.canModifyActor(game.user, item.actor)) {
       return;
     }
 
