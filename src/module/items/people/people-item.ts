@@ -28,7 +28,11 @@ export class PeopleItem extends BaseItem {
     French: {},
     Italian: { onCreate: PeopleItem.onCreateItalian, onDelete: PeopleItem.cleanupItalian },
     Dutch: { onCreate: PeopleItem.onCreateDutch, onDelete: PeopleItem.cleanupDutch },
-    Czech: { skillBonus: PeopleItem.getCzechSkill, onDelete: PeopleItem.cleanupCzechSkill },
+    Czech: {
+      onCreate: PeopleItem.onCreateCzech,
+      skillBonus: PeopleItem.getCzechSkill,
+      onDelete: PeopleItem.cleanupCzechSkill,
+    },
     English: {},
     Gypsy: {},
     Hungarian: {},
@@ -100,9 +104,13 @@ export class PeopleItem extends BaseItem {
     actor?.setFlag('helveczia', 'dutch-skill', false);
   }
 
+  static async onCreateCzech(item: HVItem): Promise<void> {
+    const gainedSkill = item.actor?.system.level >= 4 && (item.actor?.isCleric() || item.actor?.isStudent());
+    item.actor?.setFlag('helveczia', 'czech-skill', gainedSkill);
+  }
+
   static getCzechSkill(actor: HVActor): number {
-    const gainedSkill = actor.system.level >= 4 && (actor.isCleric() || actor.isStudent());
-    actor.setFlag('helveczia', 'czech-skill', gainedSkill);
+    const gainedSkill = actor.getFlag('helveczia', 'czech-skill');
     return gainedSkill ? 1 : 0;
   }
 
@@ -145,6 +153,10 @@ export class PeopleItem extends BaseItem {
     _options: DocumentModificationOptions,
     _userId: string,
   ) {
+    if (!(game.user?.isGM && item.actor?.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER))) {
+      return;
+    }
+
     mergeObject(
       data,
       {

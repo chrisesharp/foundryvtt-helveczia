@@ -72,7 +72,7 @@ export class DeedItem extends BaseItem {
     userId: string,
   ): Promise<void> {
     log.debug('DeedItem.onUpdate()|', item, changed, options, userId);
-    if (!(game.user?.isGM && !item.actor?.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER))) {
+    if (!(game.user?.isGM && item.actor?.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER))) {
       return;
     }
     if (!item.isEmbedded) {

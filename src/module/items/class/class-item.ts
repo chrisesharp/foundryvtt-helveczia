@@ -103,6 +103,9 @@ export class ClassItem extends BaseItem {
   }
 
   static onDelete(actor, itemData) {
+    if (!(game.user?.isGM && actor?.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER))) {
+      return;
+    }
     const prof = ClassItem.findProfession(itemData);
     const func = prof?.onDelete;
     if (func) {
@@ -126,6 +129,9 @@ export class ClassItem extends BaseItem {
     _options: DocumentModificationOptions,
     _userId: string,
   ) {
+    if (!(game.user?.isGM && item.actor?.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER))) {
+      return;
+    }
     if (item.parent) {
       const prof = ClassItem.findProfession(item);
       const func = prof?.onCreate;

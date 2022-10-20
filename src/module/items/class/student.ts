@@ -100,8 +100,6 @@ export class Student {
 
   static getSkillsBonus(actor: HVActor): number {
     const gainedSkills = actor.isStudent();
-    actor.setFlag('helveczia', 'student-skill', gainedSkills);
-    log.debug('Student.getSkillsBonus() |  student-skill flag set to ', gainedSkills);
     // base 2 extra to cover Student specialist skills. and 2 extra as a student
     return gainedSkills ? 4 : 2;
   }
