@@ -133,6 +133,9 @@ Hooks.on('preUpdateToken', async (tokenDocument, change, options, _userid) => {
 });
 
 Hooks.on('applyActiveEffect', async (actor, changeData) => {
+  if (!(game.user?.isGM && actor?.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER))) {
+    return;
+  }
   actor.applyCustomEffect(changeData);
 });
 

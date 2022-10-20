@@ -57,7 +57,7 @@ export class DeedItem extends BaseItem {
       },
       { overwrite: true },
     );
-    await item.sourceUpdate(data);
+    await item.updateSource(data);
     log.debug('DeedItem.onCreate()|', item, data, options, userId);
   }
 
@@ -72,6 +72,9 @@ export class DeedItem extends BaseItem {
     userId: string,
   ): Promise<void> {
     log.debug('DeedItem.onUpdate()|', item, changed, options, userId);
+    if (!(game.user?.isGM && !item.actor?.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER))) {
+      return;
+    }
     if (!item.isEmbedded) {
       await DeedItem.addDeedEffects(item);
     }
