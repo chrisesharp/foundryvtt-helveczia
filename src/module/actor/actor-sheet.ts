@@ -590,8 +590,8 @@ export class HVActorSheet extends ActorSheet {
       const sin = sins.shift();
       if (sin) {
         const mag: number = Math.floor((sin?.system as DeedItemData).magnitude);
-        if (absolvedTotal + mag < roll.total) {
-          absolvedTotal = absolvedTotal + mag;
+        if (absolvedTotal + mag <= roll.total) {
+          absolvedTotal += mag;
           absolved.push(sin);
         }
       }
