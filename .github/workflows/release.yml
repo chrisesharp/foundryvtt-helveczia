@@ -138,7 +138,7 @@ jobs:
     needs:
       - lint
       - test
-      - typecheck
+      # - typecheck
       - build
     runs-on: ubuntu-latest
     steps:
