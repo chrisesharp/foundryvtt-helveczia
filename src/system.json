@@ -13,10 +13,10 @@
     }
   ],
   "minimumCoreVersion": "10",
-  "compatibleCoreVersion": "10.285",
+  "compatibleCoreVersion": "10.290",
   "compatibility": {
     "minimum": 10,
-    "verified": "10.285"
+    "verified": "10.290"
   },
   "scripts": [],
   "esmodules": ["module/helveczia.js"],

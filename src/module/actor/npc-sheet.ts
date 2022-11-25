@@ -1,4 +1,5 @@
 import { prepareActiveEffectCategories } from '../effects';
+import { HVItem } from '../items/item';
 import { Logger } from '../logger';
 import { HVActorSheet } from './actor-sheet';
 
@@ -96,7 +97,21 @@ export class HVNPCSheet extends HVActorSheet {
         break;
     }
     if (shouldContinue) {
-      return super._onDropItem(event, data);
+      const items = (await super._onDropItem(event, data)) as HVItem[];
+      const item = items?.length ? items[0] : null;
+      log.debug('_onDropItem() | created item:', item);
+      if (item) {
+        switch (item.type) {
+          case 'weapon':
+          case 'armour':
+          case 'book':
+          case 'possession':
+            item.setFlag('helveczia', 'position', 'worn');
+            log.debug(`_onDropItem() | set position of item to worn`);
+            break;
+        }
+      }
+      return items;
     }
     return;
   }

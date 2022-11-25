@@ -14,6 +14,17 @@
                 </div>
              </li>
             {{/each }}
+            {{#each possessions.[armour] as |item|}}
+            <li class="item-entry flexcol" data-item-id="{{item.id}}">
+                <div class="item flexrow" data-item-id="{{item.id}}">
+                    <div class="item-image"><img src="{{item.img}}" width="12" height="12"/></div>
+                    <h4 class="item-name">{{item.name}}</h4>
+                    <div class="item-controls">
+                        <a class="item-control item-delete" title="{{localize 'HV.Delete'}} {{localize 'HV.items.armour'}}"><i class="fas fa-trash"></i></a>
+                    </div>
+                </div>
+             </li>
+            {{/each }}
         </ol>
     </div>
     <div class="wealth">
