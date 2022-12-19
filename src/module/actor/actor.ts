@@ -213,9 +213,10 @@ export class HVActor extends Actor {
     data.attack.cc.base = base;
     data.attack.melee.bonus += data.scores.str.mod + virtue + data.npcModBonus;
     data.attack.ranged.bonus += data.scores.dex.mod + virtue + data.npcModBonus;
+    data.attack.cc.bonus += virtue + data.npcModBonus;
     data.attack.melee.mod = data.attack.melee.base + data.attack.melee.bonus;
     data.attack.ranged.mod = data.attack.ranged.base + data.attack.ranged.bonus;
-    data.attack.cc.mod = data.attack.cc.base + virtue + data.attack.cc.bonus;
+    data.attack.cc.mod = data.attack.cc.base + data.attack.cc.bonus;
   }
 
   /**
