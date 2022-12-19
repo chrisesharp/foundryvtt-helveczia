@@ -56,6 +56,7 @@ type BaseData = {
     | {
         melee: RollTarget;
         ranged: RollTarget;
+        cc: RollTarget;
       };
 
   scores:

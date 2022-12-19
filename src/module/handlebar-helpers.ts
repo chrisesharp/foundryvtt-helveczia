@@ -170,7 +170,7 @@ export const registerHandlebarHelpers = async function () {
 
   Handlebars.registerHelper('success', function (roll) {
     let success = 'normal';
-    if (roll >= 18 && roll < 24) success = 'difficult';
+    if (roll >= 18 && roll < 24) success = 'hard';
     else if (roll >= 24) success = 'heroic';
     return game.i18n.localize(`HV.${success}.success`);
   });

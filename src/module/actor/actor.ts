@@ -210,10 +210,12 @@ export class HVActor extends Actor {
     const base = this.isFighter() || this.isNoClass() ? lvl : Math.floor((lvl * 2) / 3);
     data.attack.melee.base = base;
     data.attack.ranged.base = base;
+    data.attack.cc.base = base;
     data.attack.melee.bonus += data.scores.str.mod + virtue + data.npcModBonus;
     data.attack.ranged.bonus += data.scores.dex.mod + virtue + data.npcModBonus;
     data.attack.melee.mod = data.attack.melee.base + data.attack.melee.bonus;
     data.attack.ranged.mod = data.attack.ranged.base + data.attack.ranged.bonus;
+    data.attack.cc.mod = data.attack.cc.base + virtue + data.attack.cc.bonus;
   }
 
   /**
@@ -517,7 +519,7 @@ export class HVActor extends Actor {
         break;
       case 'attack':
         data.resource = 'attack';
-        dmg.push('1d3');
+        if (data.attr !== 'cc') dmg.push('1d3');
         break;
       default:
         break;

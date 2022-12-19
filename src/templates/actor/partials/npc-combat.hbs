@@ -8,10 +8,7 @@
                 </h3>
             </div>
             <div>
-                <h3 title="{{ localize 'HV.MeleeMod' }}">{{ plusminus data.attack.melee.mod }}</h3>
-            </div>
-            <div>
-                <h4> = [ {{ plusminus data.attack.melee.base}} ] + [ {{ plusminus data.attack.melee.bonus }} ]</h4>
+                <h3 title="{{ localize 'HV.MeleeMod' }} [ {{ plusminus data.attack.melee.base}} ] + [ {{ plusminus data.attack.melee.bonus }} ]">{{ plusminus data.attack.melee.mod }}</h3>
             </div>
         </div>
         <div class="combat-ranged">
@@ -21,10 +18,17 @@
                 </h3>
             </div>
             <div>
-                <h4 title="{{ localize 'HV.RangeMod' }}">{{ plusminus data.attack.ranged.mod }}</h4>
+                <h3 title="{{ localize 'HV.RangeMod' }}  [ {{ plusminus data.attack.ranged.base}} ] + [ {{ plusminus data.attack.ranged.bonus }} ]">{{ plusminus data.attack.ranged.mod }}</h3>
+            </div>
+        </div>
+         <div class="combat-ranged">
+            <div>
+                <h3 class="attribute-name" title="{{ localize 'HV.attack.cc.long' }}">
+                    {{ localize 'HV.attack.cc.short' }} :
+                </h3>
             </div>
             <div>
-                <h4> = [ {{ plusminus data.attack.ranged.base}} ] + [ {{ plusminus data.attack.ranged.bonus }} ]</h4>
+                <h3 title="[ {{ plusminus data.attack.cc.base}} ] + [ {{ plusminus data.attack.cc.bonus }} ]">{{ plusminus data.attack.cc.mod }}</h3>
             </div>
         </div>
     </div>
@@ -35,11 +39,10 @@
                 <a class="item-control item-create" title="{{localize 'HV.Add'}} {{localize 'HV.items.weapons'}}" data-type="weapon"><i class="fas fa-plus"></i></a>
             </div>
         </li>
-        <li class="item-rollable flexcol" data-roll="attack" data-attr="melee">
+        <li class="item-rollable flexcol" data-roll="attack" data-attr="cc">
             <div class="item flexrow">
-                <div class="item-image rollable" data-roll="attack" data-attr="melee">&nbsp;<i class="fist fas fa-fist-raised" style="font-size: 1.2em;"></i></div>
-                <h4 class="item-name">{{ localize 'HV.Fist' }}</h4>
-            </div>
+                <div class="item-image rollable" data-roll="attack" data-attr="cc">&nbsp;<i class="fist fas fa-fist-raised" style="font-size: 1.2em;"></i></div>
+                <h4 class="item-name">{{ localize 'HV.attack.cc.long' }}</h4>
         </li>
     {{#each data.possessions.weapons as |item id|}}
         <li class="item-entry item-rollable flexcol" data-item-id="{{item.id}}">

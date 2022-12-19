@@ -38,6 +38,10 @@
           "ranged": {
             "base": 0,
             "bonus": 0
+          },
+          "cc": {
+            "base": 0,
+            "bonus": 0
           }
         },
         "scores": {
