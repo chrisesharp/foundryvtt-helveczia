@@ -38,6 +38,7 @@
     width: 64px;
     object-fit: cover;
     object-position: 50% 0;
+    filter: drop-shadow(0px 0px 1px black);
   }
 
   .hitdie {
@@ -60,7 +61,7 @@
   }
 
   .header-fields {
-    flex: 1;
+    flex-grow: 3;
   }
 
   h1.charname {
