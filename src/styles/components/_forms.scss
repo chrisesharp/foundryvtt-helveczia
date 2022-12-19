@@ -83,11 +83,13 @@
     border: 0;
   }
   h2.cost {
-    margin: 0 0 1px;
+    margin: 0 0 0px;
+    height: var(--form-field-height);
   }
 
   h3.spell-hdr {
-    margin: 0 0 1px;
+    margin: 0 0 0px;
+    height: var(--form-field-height);
   }
 
   h3.deed-hdr {
