@@ -164,7 +164,7 @@ export class HVDice {
 
     return new Promise(async (resolve) => {
       templateData.rollHV = await roll.render();
-      templateData.dmgResult = dmgRoll?.result;
+      templateData.dmgResult = dmgRoll?.total;
       templateData.rollDamage = dmgRoll ? await dmgRoll.render() : undefined;
       renderTemplate(template, templateData).then((content) => {
         chatData.content = content;
