@@ -1,17 +1,24 @@
-.tabs {
-  height: 40px;
-  border-top: 1px solid #aaa;
+nav.tabs {
+  height: 25px;
+  // border-top: 1px solid #aaa;
+  border-top: none;
   border-bottom: 1px solid #aaa;
 
   .item {
-    line-height: 40px;
     font-weight: bold;
     background-image: url('/systems/helveczia/assets/papers2.png');
     background-size: cover;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    filter: brightness(0.9);
   }
 
   .item.active {
-    // text-decoration: underline;
+    border-bottom: none;
     text-shadow: none;
+    filter: none;
+    z-index: 1;
+    font-weight: bold;
+    text-shadow: none;
+    margin-bottom: -1px;
   }
 }
