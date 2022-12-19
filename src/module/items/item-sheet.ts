@@ -21,8 +21,11 @@ export class HVItemSheet extends ItemSheet {
   /** @override */
   activateEditor(target, editorOptions, initialContent) {
     // remove some controls to the editor as the space is lacking
-    if (target == 'data.description') {
-      editorOptions.toolbar = 'styleselect bullist hr table removeFormat save';
+    if (target == 'system.description') {
+      // 'styles bullist numlist image table hr link removeformat code save'
+      editorOptions.toolbar = 'bullist hr link removeFormat save';
+      editorOptions.fitToSize = true;
+      editorOptions.height = 175;
     }
     super.activateEditor(target, editorOptions, initialContent);
   }

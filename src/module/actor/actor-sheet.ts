@@ -22,7 +22,10 @@ export class HVActorSheet extends ActorSheet {
   activateEditor(target, editorOptions, initialContent) {
     // remove some controls to the editor as the space is lacking
     if (target == 'system.description') {
-      editorOptions.toolbar = 'styleselect bullist hr table removeFormat save';
+      // 'styles bullist numlist image table hr link removeformat code save'
+      editorOptions.toolbar = 'bullist hr link removeFormat save';
+      editorOptions.fitToSize = true;
+      editorOptions.height = 175;
     }
     super.activateEditor(target, editorOptions, initialContent);
   }

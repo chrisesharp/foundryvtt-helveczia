@@ -87,6 +87,15 @@
     height: var(--form-field-height);
   }
 
+  h3.cost {
+    margin: 0 0 0px;
+    height: 23px;
+  }
+
+  input.cost {
+    height: 23px;
+  }
+
   h3.spell-hdr {
     margin: 0 0 0px;
     height: var(--form-field-height);
@@ -231,12 +240,13 @@ nav.sheet-tabs.side {
   .tox-edit-area {
     padding: 0 8px;
   }
+
+  .tox-tinymce {
+    height: 200px;
+    min-height: 85px;
+  }
 }
 
-.tox-tinymce {
-  height: 100%;
-  min-height: 85px;
-}
 .helveczia.chat-block {
   margin: 0;
   .chat-header {

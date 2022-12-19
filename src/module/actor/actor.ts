@@ -207,7 +207,7 @@ export class HVActor extends Actor {
   _updateAttackMods(data: any): void {
     const virtue = this.isLowVirtue() ? 1 : 0;
     const lvl = data.level;
-    const base = this.isFighter() || this.isNPC() ? lvl : Math.floor((lvl * 2) / 3);
+    const base = this.isFighter() || this.isNoClass() ? lvl : Math.floor((lvl * 2) / 3);
     data.attack.melee.base = base;
     data.attack.ranged.base = base;
     data.attack.melee.bonus += data.scores.str.mod + virtue + data.npcModBonus;
@@ -419,8 +419,8 @@ export class HVActor extends Actor {
     this.updateSource(data);
   }
 
-  isNPC(): boolean {
-    return this.type === 'npc';
+  isNoClass(): boolean {
+    return this.type === 'npc' && this.itemTypes['class'].length == 0;
   }
 
   isFighter(): boolean {
