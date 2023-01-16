@@ -192,5 +192,6 @@
   "HV.dialog.sendname": "Send Name to Chat?",
   "HV.dialog.partysheet.name": "The Troupe",
   "HV.dialog.partysheet.remove": "Remove member",
+  "HV.dialog.PDF": "Print",
   "HV.TokenSync": "The prototype token image as been synced with the portrait"
 }

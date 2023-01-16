@@ -1,24 +1,26 @@
 import typescript from '@rollup/plugin-typescript';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-// import commonjs from '@rollup/plugin-commonjs';
+import commonjs from '@rollup/plugin-commonjs';
+import babel from '@rollup/plugin-babel';
 
-export default [
-  {
-    input: ['src/module/helveczia.ts'],
-    output: {
-      dir: 'dist/module',
-      format: 'es',
-      sourcemap: true,
-    },
-    plugins: [nodeResolve(), typescript()],
+export default {
+  input: ['src/module/helveczia.ts'],
+  output: {
+    dir: 'dist/module',
+    format: 'es',
+    sourcemap: true,
   },
-  // {
-  //   input: ['src/lib/jspdf.es.min.js'],
-  //   output: {
-  //     dir: 'dist/lib',
-  //     format: 'es',
-  //     sourcemap: true,
-  //   },
-  //   plugins: [nodeResolve(), commonjs()],
-  // },
-];
+  // external: ['canvg', 'html2canvas', 'dompurify'],
+  preserveEntrySignatures: false,
+  plugins: [
+    nodeResolve(),
+    typescript(),
+    commonjs({
+      include: 'node_modules/**',
+    }),
+    babel({
+      exclude: 'node_modules/@babel/runtime/**',
+      babelHelpers: 'bundled',
+    }),
+  ],
+};

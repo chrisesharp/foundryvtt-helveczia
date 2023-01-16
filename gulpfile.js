@@ -31,8 +31,7 @@ let cache;
  * Build the distributable JavaScript code
  */
 function buildCode() {
-  rollupConfig.forEach((c) => (c.cache = cache));
-  return rollupStream(...rollupConfig)
+  return rollupStream({ ...rollupConfig, cache })
     .on('bundle', (bundle) => {
       cache = bundle;
     })
