@@ -1,6 +1,4 @@
 import { jsPDF } from 'jspdf';
-import DOMPurify from 'dompurify';
-import html2canvas from 'html2canvas';
 
 export class HVPDF {
   static getPDFButton(sheet): Application.HeaderButton {

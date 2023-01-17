@@ -18,7 +18,10 @@
     "minimum": 10,
     "verified": "10.290"
   },
-  "scripts": [],
+  "scripts": [
+    "https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.3/purify.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+  ],
   "esmodules": ["module/helveczia.js"],
   "styles": ["styles/helveczia.css"],
   "packs": [
