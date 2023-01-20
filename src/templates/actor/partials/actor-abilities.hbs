@@ -11,7 +11,7 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.str.value" type="text" value="{{data.scores.str.value}}" data-dtype="Number" />
-                <input name="data.scores.str.mod" type="text" value="({{ plusminus data.scores.str.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+                <input id="str-mod" name="data.scores.str.mod" type="text" value="({{ plusminus data.scores.str.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
         </li>
         <li class="attribute ability-score ">
@@ -20,7 +20,7 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.dex.value" type="text" value="{{data.scores.dex.value}}" data-dtype="Number" />
-                <input name="data.scores.dex.mod" type="text" value="({{ plusminus data.scores.dex.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+                <input id="dex-mod" name="data.scores.dex.mod" type="text" value="({{ plusminus data.scores.dex.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
         </li>
     </ol>
@@ -31,7 +31,7 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.con.value" type="text" value="{{data.scores.con.value}}" data-dtype="Number" />
-                <input name="data.scores.con.mod" type="text" value="({{ plusminus data.scores.con.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+                <input id="con-mod" name="data.scores.con.mod" type="text" value="({{ plusminus data.scores.con.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
         </li>
         <li class="attribute ability-score " >
@@ -40,7 +40,7 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.int.value" type="text" value="{{data.scores.int.value}}"data-dtype="Number" />
-                <input name="data.scores.int.mod" type="text" value="({{ plusminus data.scores.int.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+                <input id="int-mod" name="data.scores.int.mod" type="text" value="({{ plusminus data.scores.int.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
         </li>
     </ol>
@@ -51,7 +51,7 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.wis.value" type="text" value="{{data.scores.wis.value}}" data-dtype="Number" />
-                <input name="data.scores.wis.mod" type="text" value="({{ plusminus data.scores.wis.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+                <input id="wis-mod" name="data.scores.wis.mod" type="text" value="({{ plusminus data.scores.wis.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
         </li>
         <li class="attribute ability-score " >
@@ -60,7 +60,7 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.cha.value" type="text" value="{{data.scores.cha.value}}" data-dtype="Number" />
-                <input name="data.scores.cha.mod" type="text" value="({{ plusminus data.scores.cha.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+                <input id="cha-mod" name="data.scores.cha.mod" type="text" value="({{ plusminus data.scores.cha.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
         </li>
     </ol>
