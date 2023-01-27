@@ -623,7 +623,6 @@ export class HVActorSheet extends ActorSheet {
    */
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons();
-
-    return game.user?.isGM ? [HVPDF.getPDFButton(this)].concat(buttons) : buttons;
+    return game.user?.isGM && this.actor.type != 'party' ? [HVPDF.getPDFButton(this)].concat(buttons) : buttons;
   }
 }
