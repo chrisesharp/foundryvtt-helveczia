@@ -141,11 +141,23 @@ export class HVPDF {
         if (spell) memorized.push(spell);
       }
     }
-    const allSpells = [...new Set(memorized)].sort((a, b) => a.system.level - b.system.level);
+    const allSpellNames = new Set(memorized.map((i) => i.name ?? ''));
+    const allSpells: HVItem[] = [];
+    for (const spell of memorized) {
+      if (spell.name && allSpellNames.has(spell.name)) {
+        allSpells.push(spell);
+        allSpellNames.delete(spell.name);
+      }
+    }
     if (allSpells.length) {
       const fontSize = this.doc.getFontSize();
       this.doc.setFontSize(fontSize - 2);
-      await this.printSpells(25, 108, 3, allSpells);
+      await this.printSpells(
+        25,
+        108,
+        3,
+        allSpells.sort((a, b) => a.system.level - b.system.level),
+      );
       this.doc.setFontSize(fontSize);
     }
   }
@@ -394,6 +406,7 @@ export class HVPDF {
         this.doc.text(`${spell.system.area}`, xPos + 154, yPos - 2, { align: 'center' });
         this.doc.setFontSize(fontSize - 2);
         this.printDescription(xPos, yPos + 6, spell.system.description, 4, 128);
+        this.doc.text(`${spell.system.component}`, xPos + 30, yPos + 28);
         this.doc.setFontSize(fontSize);
         count += 1;
       }
