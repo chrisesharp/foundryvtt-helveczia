@@ -1,16 +1,14 @@
-const fs = require('fs-extra');
-const gulp = require('gulp');
-const sass = require('gulp-dart-sass');
-const sourcemaps = require('gulp-sourcemaps');
-const path = require('path');
-const buffer = require('vinyl-buffer');
-const source = require('vinyl-source-stream');
-const yargs = require('yargs');
-const { hideBin } = require('yargs/helpers');
-
-const rollupStream = require('@rollup/stream');
-
-const rollupConfig = require('./rollup.config.cjs');
+import fs from 'fs-extra';
+import gulp from 'gulp';
+import sass from 'gulp-dart-sass';
+import sourcemaps from 'gulp-sourcemaps';
+import path from 'path';
+import buffer from 'vinyl-buffer';
+import source from 'vinyl-source-stream';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import rollupStream from '@rollup/stream';
+import rollupConfig from './rollup.config.js';
 
 /********************/
 /*  CONFIGURATION   */
@@ -29,12 +27,11 @@ const staticFiles = ['assets', 'fonts', 'lang', 'packs', 'templates', 'system.js
 /********************/
 
 let cache;
-
 /**
  * Build the distributable JavaScript code
  */
 function buildCode() {
-  return rollupStream({ ...rollupConfig(), cache })
+  return rollupStream({ ...rollupConfig, cache })
     .on('bundle', (bundle) => {
       cache = bundle;
     })
@@ -155,9 +152,4 @@ async function link() {
   }
 }
 
-module.exports = {
-  watch,
-  build,
-  clean,
-  link,
-};
+export { watch as watch, build as build, clean as clean, link as link };

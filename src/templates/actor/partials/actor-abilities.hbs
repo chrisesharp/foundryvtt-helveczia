@@ -11,7 +11,7 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.str.value" type="text" value="{{data.scores.str.value}}" data-dtype="Number" />
-                <input name="data.scores.str.mod" type="text" value="({{ plusminus data.scores.str.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+                <input id="str-mod" name="data.scores.str.mod" type="text" value="({{ plusminus data.scores.str.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
         </li>
         <li class="attribute ability-score ">
@@ -20,7 +20,7 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.dex.value" type="text" value="{{data.scores.dex.value}}" data-dtype="Number" />
-                <input name="data.scores.dex.mod" type="text" value="({{ plusminus data.scores.dex.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+                <input id="dex-mod" name="data.scores.dex.mod" type="text" value="({{ plusminus data.scores.dex.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
         </li>
     </ol>
@@ -31,7 +31,7 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.con.value" type="text" value="{{data.scores.con.value}}" data-dtype="Number" />
-                <input name="data.scores.con.mod" type="text" value="({{ plusminus data.scores.con.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+                <input id="con-mod" name="data.scores.con.mod" type="text" value="({{ plusminus data.scores.con.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
         </li>
         <li class="attribute ability-score " >
@@ -40,7 +40,7 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.int.value" type="text" value="{{data.scores.int.value}}"data-dtype="Number" />
-                <input name="data.scores.int.mod" type="text" value="({{ plusminus data.scores.int.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+                <input id="int-mod" name="data.scores.int.mod" type="text" value="({{ plusminus data.scores.int.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
         </li>
     </ol>
@@ -51,7 +51,7 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.wis.value" type="text" value="{{data.scores.wis.value}}" data-dtype="Number" />
-                <input name="data.scores.wis.mod" type="text" value="({{ plusminus data.scores.wis.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+                <input id="wis-mod" name="data.scores.wis.mod" type="text" value="({{ plusminus data.scores.wis.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
         </li>
         <li class="attribute ability-score " >
@@ -60,7 +60,7 @@
             </h4>
             <div class="attribute-value">
                 <input name="data.scores.cha.value" type="text" value="{{data.scores.cha.value}}" data-dtype="Number" />
-                <input name="data.scores.cha.mod" type="text" value="({{ plusminus data.scores.cha.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
+                <input id="cha-mod" name="data.scores.cha.mod" type="text" value="({{ plusminus data.scores.cha.mod}})" data-dtype="Number" title="{{ localize 'HV.scores.modifier' }}" disabled />
             </div>
         </li>
     </ol>
@@ -76,20 +76,20 @@
 
     <h3 class="saves-bravery-value">{{ plusminus data.saves.bravery.mod }}</h3>
     <h3 class="saves-bravery-lb">(</h3>
-    <h3 class="saves-bravery-base">{{ plusminus data.saves.bravery.base }}</h3>
-    <h3 class="saves-bravery-bonus">{{ plusminus data.saves.bravery.bonus }}</h3>
+    <h3 id="bravery-base" class="saves-bravery-base">{{ plusminus data.saves.bravery.base }}</h3>
+    <h3 id="bravery-bonus" class="saves-bravery-bonus">{{ plusminus data.saves.bravery.bonus }}</h3>
     <h3 class="saves-bravery-rb">)</h3>
 
     <h3 class="saves-deftness-value" data-roll="save" data-attr="deftness">{{ plusminus data.saves.deftness.mod }}</h3>
     <h3 class="saves-deftness-lb">(</h3>
-    <h3 class="saves-deftness-base">{{ plusminus data.saves.deftness.base }}</h3>
-    <h3 class="saves-deftness-bonus">{{ plusminus data.saves.deftness.bonus }}</h3>
+    <h3 id="deftness-base" class="saves-deftness-base">{{ plusminus data.saves.deftness.base }}</h3>
+    <h3 id="deftness-bonus" class="saves-deftness-bonus">{{ plusminus data.saves.deftness.bonus }}</h3>
     <h3 class="saves-deftness-rb">)</h3>
 
     <h3 class="saves-temptation-value" data-roll="save" data-attr="temptation">{{ plusminus data.saves.temptation.mod }}</h3>
     <h3 class="saves-temptation-lb">(</h3>
-    <h3 class="saves-temptation-base">{{ plusminus data.saves.temptation.base }}</h3>
-    <h3 class="saves-temptation-bonus">{{ plusminus data.saves.temptation.bonus }}</h3>
+    <h3 id="temptation-base" class="saves-temptation-base">{{ plusminus data.saves.temptation.base }}</h3>
+    <h3 id="temptation-bonus" class="saves-temptation-bonus">{{ plusminus data.saves.temptation.bonus }}</h3>
     <h3 class="saves-temptation-rb">)</h3>
 </div>
 {{/if}}

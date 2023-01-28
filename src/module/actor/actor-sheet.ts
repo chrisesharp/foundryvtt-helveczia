@@ -9,6 +9,7 @@ import { CharacterActorData } from './actor-types';
 import { Utils } from '../utils/utils';
 import { HVDice } from '../dice';
 import { HVNameGenerator } from '../apps/names';
+import { HVPDF } from '../pdf';
 
 const log = new Logger();
 
@@ -614,5 +615,14 @@ export class HVActorSheet extends ActorSheet {
     const content = await renderTemplate('systems/helveczia/templates/chat/roll-absolution.hbs', templateData);
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
     await roll.toMessage({ speaker: speaker, flavor: content });
+  }
+
+  /**
+   * Extend and override the sheet header buttons
+   * @override
+   */
+  _getHeaderButtons() {
+    const buttons = super._getHeaderButtons();
+    return game.user?.isGM && this.actor.type != 'party' ? [HVPDF.getPDFButton(this)].concat(buttons) : buttons;
   }
 }
