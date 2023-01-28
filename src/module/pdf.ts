@@ -61,6 +61,7 @@ export class HVPDF {
   y = 0;
   char: character;
   sheet: HVActorSheet;
+  specialisms: HVItem[];
 
   constructor(character, sheet) {
     const pdfOpts: jsPDFOptions = {
@@ -69,12 +70,14 @@ export class HVPDF {
     this.doc = new jsPDF(pdfOpts);
     this.char = character;
     this.sheet = sheet;
+    this.specialisms = this.char.actor.itemTypes['class'].filter((i) => i.system.specialism === true);
   }
 
   async printOfficial() {
     this.doc.setFontSize(14);
     await this.printPage1();
     await this.printPage2();
+    await this.printSpellsPage();
   }
 
   async printPage1(): Promise<void> {
@@ -96,20 +99,90 @@ export class HVPDF {
     this.doc.setFontSize(12);
     x = 52;
     y = 66;
+    this.printStats(x, y);
+    this.printMiddle(x, y);
+    this.printSaves(x, y);
+    await this.printCombat(x, y);
+    await this.printSpecials(x, y);
+
+    x = 20;
+    await this.printSkills(x, y + 86);
+    this.printVal(x + 15, y + 123, `${this.char.actor.system.experience}`);
+    this.printWealth(x, y);
+    await this.printPossessions(x, y + 169);
+  }
+
+  async printPage2(): Promise<void> {
+    this.doc.addPage();
+    const fontSize = this.doc.getFontSize();
+    this.doc.setFontSize(fontSize - 2);
+    this.doc.addImage({
+      imageData: pages[2],
+      x: 0,
+      y: 0,
+      width: 210,
+      height: 295,
+    });
+    await this.printNotes(25, 38);
+    await this.printDeeds(35, 180);
+    this.doc.setFontSize(fontSize);
+  }
+
+  async printSpellsPage(): Promise<void> {
+    const memorized = this.char.actor.itemTypes['spell'];
+    const spellbooks = this.char.actor.itemTypes['book']
+      .filter((i) => i.system.spells.length > 0)
+      .map((i) => i.system.spells)
+      .flat();
+    if (spellbooks.length) {
+      for (const i of spellbooks) {
+        const uuid = i.id.replace('@UUID[', '').split(']')[0];
+        const spell = (await fromUuid(uuid)) as HVItem;
+        if (spell) memorized.push(spell);
+      }
+    }
+    const allSpells = [...new Set(memorized)].sort((a, b) => a.system.level - b.system.level);
+    if (allSpells.length) {
+      const fontSize = this.doc.getFontSize();
+      this.doc.setFontSize(fontSize - 2);
+      await this.printSpells(25, 108, 3, allSpells);
+      this.doc.setFontSize(fontSize);
+    }
+  }
+
+  printStats(x: number, y: number): void {
     this.printAttribute(x, y, `${this.char.actor.system.scores.str.value}`, this.char.strBonus);
     this.printAttribute(x, y + 6, `${this.char.actor.system.scores.dex.value}`, this.char.dexBonus);
     this.printAttribute(x, y + 11, `${this.char.actor.system.scores.con.value}`, this.char.conBonus);
     this.printAttribute(x, y + 17, `${this.char.actor.system.scores.int.value}`, this.char.intBonus);
     this.printAttribute(x, y + 23, `${this.char.actor.system.scores.wis.value}`, this.char.wisBonus);
     this.printAttribute(x, y + 29, `${this.char.actor.system.scores.cha.value}`, this.char.chaBonus);
+  }
+
+  printMiddle(x: number, y: number): void {
     this.printVal(x + 65, y, this.char.initBonus);
     this.printVal(x + 30, y + 5, `${this.char.actor.system.ac}`);
     this.printArmour(x + 23, y + 10);
     this.printVal(x + 30, y + 17, `${this.char.actor.system.hp.value}`);
+  }
+
+  printSaves(x: number, y: number): void {
     this.printTriple(x + 105, y, this.char.bravery, this.char.braveryBase, this.char.braveryBonus);
     this.printTriple(x + 105, y + 5, this.char.deftness, this.char.deftnessBase, this.char.deftnessBonus);
     this.printTriple(x + 105, y + 11, this.char.temptation, this.char.temptationBase, this.char.temptationBonus);
     this.printVal(x + 105, y + 17, `${this.char.actor.system.virtue}`);
+  }
+
+  printSpecials(x: number, y: number): void {
+    const xPos = x + 105;
+    let yPos = y + 46;
+    for (const specialism of this.specialisms) {
+      this.printVal(xPos, yPos, `${specialism.name}`);
+      yPos += 6;
+    }
+  }
+
+  async printCombat(x: number, y: number): Promise<void> {
     this.printTriple(
       x + 18,
       y + 46,
@@ -124,18 +197,16 @@ export class HVPDF {
       plusminus(this.char.actor.system.attack.ranged.base),
       plusminus(this.char.actor.system.attack.ranged.bonus),
     );
+    await this.printWeapons(x - 32, y + 57);
+  }
 
-    x = 20;
-    await this.printWeapons(x, y + 57);
-    await this.printSkills(x, y + 86);
-    this.printVal(x + 15, y + 123, `${this.char.actor.system.experience}`);
+  printWealth(x: number, y: number): void {
     const thalers = `${this.char.actor.system.wealth.th ?? 0}`;
     const pfennigs = `${this.char.actor.system.wealth.pf ?? 0}`;
     const groetschen = `${this.char.actor.system.wealth.gr ?? 0}`;
     this.printVal(x + 99, y + 130, thalers);
     this.printVal(x + 128, y + 130, pfennigs);
     this.printVal(x + 155, y + 130, groetschen);
-    await this.printPossessions(x, y + 169);
   }
 
   printAttribute(x: number, y: number, value: string, bonus: string): void {
@@ -198,7 +269,7 @@ export class HVPDF {
     let xPos = x;
     const startY = y;
     let count = 0;
-    for (const skill of this.char.actor.system.skills) {
+    for (const skill of this.char.actor.itemTypes['skill']) {
       const skillBonusTags = $.parseHTML(await CONFIG.HV.itemClasses['skill'].getTags(skill, this.char.actor));
       const lastTag = $(skillBonusTags).children().last().text();
       const skillBonus = lastTag != '' ? parseInt($(skillBonusTags).children().last().text()) : 0;
@@ -257,29 +328,18 @@ export class HVPDF {
     this.doc.setFontSize(fontSize);
   }
 
-  async printPage2(): Promise<void> {
-    this.doc.addPage();
-    const fontSize = this.doc.getFontSize();
-    this.doc.setFontSize(fontSize - 2);
-    this.doc.addImage({
-      imageData: pages[2],
-      x: 0,
-      y: 0,
-      width: 210,
-      height: 295,
+  printDescription(x: number, y: number, text: string, linespace: number, cols = 100): number {
+    const desc = $.parseHTML(text)[0];
+    const lines = wordwrap($(desc).text(), cols);
+    lines.forEach((line) => {
+      this.doc.text(line, x, y);
+      y += linespace;
     });
-    await this.printNotes(25, 38);
-    await this.printDeeds(35, 180);
-    this.doc.setFontSize(fontSize);
+    return y;
   }
 
   async printNotes(x: number, y: number): Promise<void> {
-    const desc = $.parseHTML(this.char.actor.system.description)[0];
-    const lines = wordwrap($(desc).text(), 100);
-    lines.forEach((line) => {
-      this.doc.text(line, x, y);
-      y += 7;
-    });
+    this.printDescription(x, y, this.char.actor.system.description, 7);
   }
 
   async printDeeds(x: number, y: number): Promise<void> {
@@ -310,12 +370,49 @@ export class HVPDF {
     this.doc.setFontSize(fontSize);
   }
 
+  async printSpells(x: number, y: number, page: number, spells: HVItem[]): Promise<void> {
+    this.doc.addPage();
+    this.doc.addImage({
+      imageData: pages[page],
+      x: 0,
+      y: 0,
+      width: 210,
+      height: 295,
+    });
+    const xPos = x;
+    let yPos = y;
+    let count = 0;
+    while (spells.length > 0) {
+      const spell = spells.shift();
+      if (spell) {
+        this.doc.text(`${spell.name}`, xPos, yPos);
+        this.doc.text(`${spell.system.level}`, xPos + 90, yPos, { align: 'center' });
+        this.doc.text(`${spell.system.range}`, xPos + 112, yPos, { align: 'center' });
+        const fontSize = this.doc.getFontSize();
+        this.doc.setFontSize(fontSize - 4);
+        this.printDescription(xPos + 124, yPos - 2, spell.system.duration, 2, 15);
+        this.doc.text(`${spell.system.area}`, xPos + 154, yPos - 2, { align: 'center' });
+        this.doc.setFontSize(fontSize - 2);
+        this.printDescription(xPos, yPos + 6, spell.system.description, 4, 128);
+        this.doc.setFontSize(fontSize);
+        count += 1;
+      }
+      const slots = 5 + (page - 3) * 2;
+      if (count < slots) {
+        yPos += 35;
+      } else {
+        await this.printSpells(25, 34, 4, spells);
+        break;
+      }
+    }
+  }
+
   static getPDFButton(sheet): Application.HeaderButton {
     const button: Application.HeaderButton = {
       label: game.i18n.localize('HV.dialog.PDF'),
       class: 'configure-actor',
       icon: 'fa-solid fa-file-pdf',
-      onclick: (ev) => {
+      onclick: async (ev) => {
         ui.notifications.info('Generating PDF now');
         HVPDF.printSheet(ev, sheet);
       },
