@@ -1,37 +1,3 @@
-import Document, {
-  Metadata,
-} from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
-import { ActiveEffectDataConstructorData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/activeEffectData';
-import { EffectChangeData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/effectChangeData';
-import { EffectDurationDataSource } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/effectDurationData';
-
-export function createConsequenceEffect(resource: string, value: number, owner: Document<any, any, Metadata<any>>) {
-  const change: Partial<EffectChangeData> = {
-    key: `data.resource.${resource}.value`,
-    mode: 2,
-    value: `${value}`,
-  };
-  const duration: EffectDurationDataSource = {
-    combat: undefined,
-    rounds: undefined,
-    seconds: undefined,
-    startRound: 1,
-    startTime: 0,
-    startTurn: 0,
-    turns: undefined,
-  };
-  const effectData: ActiveEffectDataConstructorData = {
-    icon: 'icons/svg/aura.svg',
-    origin: owner.uuid,
-    duration: duration,
-    flags: {},
-    disabled: false,
-    transfer: true,
-    changes: [change],
-  };
-  return ActiveEffect.create(effectData, { parent: owner });
-}
-
 /**
  * Manage Active Effect instances through the Actor Sheet via effect control buttons.
  * @param {MouseEvent} event      The left-click event on the effect control

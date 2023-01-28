@@ -114,7 +114,7 @@ export class DeedItem extends BaseItem {
     const magnitude = itemData.magnitude;
     const subtype = itemData.subtype;
     const value = subtype === 'virtue' ? `${magnitude}` : `-${magnitude}`;
-    const deedEffect = { key: 'virtue', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: value };
+    const deedEffect = { key: 'system.virtue', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: value };
     const effect = await ActiveEffect.create(
       {
         label: game.i18n.localize(`HV.deeds.${subtype}`),
