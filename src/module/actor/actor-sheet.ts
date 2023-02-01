@@ -203,7 +203,10 @@ export class HVActorSheet extends ActorSheet {
         token += `${step}/`;
       }
 
-      const extraSubfolder = token.match('/assets/people/(fe)*male/g') ? 'lg/' : '';
+      // eslint-disable-next-line prettier/prettier
+      const regex = new RegExp('/assets\/people\/(fe)*male/');
+      const match = token.match(regex);
+      const extraSubfolder = match ? 'lg/' : '';
       step = path.shift();
       token += `${extraSubfolder}${step}`;
       const data = {
