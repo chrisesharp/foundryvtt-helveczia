@@ -197,12 +197,15 @@ export class HVActorSheet extends ActorSheet {
       const portrait = this.actor.img;
       const path = portrait?.split('/') ?? [];
       let token = '';
+      let step;
       while (path.length > 1) {
-        const step = path.shift();
+        step = path.shift();
         token += `${step}/`;
       }
-      const step = path.shift();
-      token += `lg/${step}`;
+
+      const extraSubfolder = token.match('/assets/people/(fe)*male/g') ? 'lg/' : '';
+      step = path.shift();
+      token += `${extraSubfolder}${step}`;
       const data = {
         prototypeToken: {
           texture: {
