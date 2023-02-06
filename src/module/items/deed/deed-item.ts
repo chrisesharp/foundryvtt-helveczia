@@ -72,10 +72,8 @@ export class DeedItem extends BaseItem {
     userId: string,
   ): Promise<void> {
     log.debug('DeedItem.onUpdate()|', item, changed, options, userId);
-    if (!Utils.canModifyActor(game.user, item.actor)) {
-      return;
-    }
-    if (!item.isEmbedded) {
+    // if (!Utils.canModifyActor(game.user, item.actor)) {
+    if (game.user?.isGM && !item.isEmbedded) {
       await DeedItem.addDeedEffects(item);
     }
   }

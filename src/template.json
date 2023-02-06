@@ -149,7 +149,7 @@
     },
     "deed": {
       "templates": ["base"],
-      "subtype": "",
+      "subtype": "sin",
       "magnitude": 1,
       "cardinality": 0
     },
