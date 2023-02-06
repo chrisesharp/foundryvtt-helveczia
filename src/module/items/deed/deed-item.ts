@@ -72,7 +72,6 @@ export class DeedItem extends BaseItem {
     userId: string,
   ): Promise<void> {
     log.debug('DeedItem.onUpdate()|', item, changed, options, userId);
-    // if (!Utils.canModifyActor(game.user, item.actor)) {
     if (game.user?.isGM && !item.isEmbedded) {
       await DeedItem.addDeedEffects(item);
     }
@@ -107,7 +106,7 @@ export class DeedItem extends BaseItem {
       item.effects.filter((_e) => true),
       item,
     );
-
+    await item.updateSource({ effects: [] });
     const itemData = item.system as DeedItemData;
     const magnitude = itemData.magnitude;
     const subtype = itemData.subtype;
