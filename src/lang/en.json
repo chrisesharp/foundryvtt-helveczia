@@ -1,4 +1,7 @@
 {
+  "HV.Import": "Import",
+  "HV.Create": "Create",
+  "HV.Choose": "Choose",
   "HV.Average": "Average",
   "HV.skills.craft": "Craft",
   "HV.skills.science": "Science",
@@ -193,5 +196,6 @@
   "HV.dialog.partysheet.name": "The Troupe",
   "HV.dialog.partysheet.remove": "Remove member",
   "HV.dialog.PDF": "Print",
+  "HV.dialog.StatBlock": "Paste statblock here...",
   "HV.TokenSync": "The prototype token image as been synced with the portrait"
 }

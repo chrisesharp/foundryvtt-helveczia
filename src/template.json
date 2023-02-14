@@ -85,7 +85,8 @@
       "templates": ["base"],
       "levelBonus": "1",
       "baseAC": 10,
-      "experience": 0
+      "experience": 0,
+      "stats": {}
     },
     "party": {
       "templates": []

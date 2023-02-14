@@ -7,6 +7,7 @@ import { Fighter } from '../items/class/fighter';
 import { SkillItemData, WeaponItemData } from '../items/item-types';
 import { PeopleItem } from '../items/people/people-item';
 import { HVItem } from '../items/item';
+import { HVCharacterCreator } from '../apps/chargen';
 
 const log = new Logger();
 
@@ -42,14 +43,15 @@ export class HVActor extends Actor {
   calculateNPCThreatLevel(): void {
     const data = this.system;
     data.ac = data.baseAC;
-    const parts = data.levelBonus.split('+');
-    data.level = parseInt(parts[0]);
+    const groups = data.levelBonus.match(/(?<class>[a-zA-Z\s]*)(?<lvl>\d)\+?(?<threat>[\d\*]*)/)?.groups;
+    data.level = parseInt(groups?.lvl ?? 1);
     let threat = 0;
     data.npcModBonus = 0;
-    if (parts.length > 1) {
-      const bonus = parseInt(parts[1][0]);
+    if (groups?.threat?.length > 0) {
+      const bonus = parseInt(groups.threat[0]);
       data.npcModBonus = bonus;
-      threat = parts[1].length - 1;
+      data.ac -= bonus;
+      threat = groups.threat.length - 1;
     }
     data.experience = CONFIG.HV.challengeAwards[data.level + threat];
   }
@@ -142,7 +144,6 @@ export class HVActor extends Actor {
     for (const key of Object.keys(data.scores)) {
       this._updateAbility(data.scores[key]);
     }
-
     this._updateSaves(data);
     this._updateCombatValues(data);
   }
