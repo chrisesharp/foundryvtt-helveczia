@@ -633,7 +633,7 @@ export class HVActorSheet extends ActorSheet {
    * @override
    */
   _getHeaderButtons() {
-    const buttons = super._getHeaderButtons();
+    const buttons = super._getHeaderButtons().filter((b) => b.class != 'configure-sheet');
     const extras: Application.HeaderButton[] = [];
     if (game.user?.isGM && this.actor.type != 'party') extras.push(HVPDF.getPDFButton(this));
     if (game.user?.isGM && this.actor.type === 'npc') extras.push(NPCGenerator.getButton(this));

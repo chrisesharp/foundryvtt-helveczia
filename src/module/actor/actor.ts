@@ -7,7 +7,6 @@ import { Fighter } from '../items/class/fighter';
 import { SkillItemData, WeaponItemData } from '../items/item-types';
 import { PeopleItem } from '../items/people/people-item';
 import { HVItem } from '../items/item';
-import { HVCharacterCreator } from '../apps/chargen';
 
 const log = new Logger();
 

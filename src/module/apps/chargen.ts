@@ -211,16 +211,19 @@ export class HVCharacterCreator extends FormApplication {
     }
   }
 
-  static async getDocument(name, pack) {
-    const index = await pack?.getIndex();
-    const pId = index?.find((p) => p.name === name)?._id;
-    if (pId) {
-      return pack?.getDocument(pId);
-    } else {
-      const items = game.items?.filter((i) => i.name === name);
-      if (items?.length) {
-        return items[0];
+  static async getDocument(name, ...packs) {
+    for (const pack of packs) {
+      if (pack) {
+        const index = await pack?.getIndex();
+        const pId = index?.find((p) => p.name === name)?._id;
+        if (pId) {
+          return pack?.getDocument(pId);
+        }
       }
+    }
+    const items = game.items?.filter((i) => i.name === name);
+    if (items?.length) {
+      return items[0];
     }
   }
 }

@@ -1,6 +1,10 @@
 import { HVActor } from '../actor/actor';
 import { HVCharacterCreator } from './chargen';
 
+const levelBonusRegEx = /(?<class>[a-zA-Z\s]*)(?<lvl>\d)\+?(?<threat>[\d\*]*)/;
+const skillRegEx = /(?<skillName>[a-zA-Z\s]*)[-+](?<bonus>\d)/;
+const weaponRegEx = /(?<bonus>\+\d)+(?<weaponName>[a-zA-Z\s]*)+(?<dmg>\dd\d[\+]*[\d]*)*(?<notes>.*)/;
+
 export class NPCGenerator extends FormApplication {
   static get defaultOptions() {
     const options = super.defaultOptions;
@@ -76,7 +80,15 @@ export class NPCGenerator extends FormApplication {
   async _updateObject(event: Event, formData: object) {
     event.preventDefault();
     const actor = this.object as HVActor;
-    const groups = formData['system.levelBonus'].match(/(?<class>[a-zA-Z\s]*)(?<lvl>\d)\+?(?<threat>[\d\*]*)/)?.groups;
+    await this.setProfession(actor, formData);
+    await this.addSkills(actor, formData);
+    await this.addWeapons(actor, formData);
+    await actor.update(formData);
+    actor?.sheet?.render(true);
+  }
+
+  async setProfession(actor: HVActor, formData: object): Promise<void> {
+    const groups = formData['system.levelBonus'].match(levelBonusRegEx)?.groups;
     const cls = groups?.class?.trim();
     if (cls) {
       const specialisms = game.packs.find((p) => p.metadata.name == 'specialisms');
@@ -99,8 +111,49 @@ export class NPCGenerator extends FormApplication {
         }
       }
     }
-    await actor.update(formData);
-    actor?.sheet?.render(true);
+  }
+
+  async addSkills(actor: HVActor, formData: object): Promise<void> {
+    const lvlGroups = formData['system.levelBonus'].match(levelBonusRegEx)?.groups;
+    const threat = parseInt(lvlGroups?.lvl) ?? 0;
+    const skills: Record<string, unknown>[] = [];
+    const skillpacks = game.packs.find((p) => p.metadata.name === 'skills');
+    const craftspacks = game.packs.find((p) => p.metadata.name === 'crafts');
+    const sciencepacks = game.packs.find((p) => p.metadata.name === 'sciences');
+
+    for (const skillText of formData['system.stats.skills']) {
+      if (/^[A-Z]/.test(skillText)) {
+        const groups = skillText.match(skillRegEx)?.groups;
+        const skillName = groups?.skillName?.trim();
+        const bonus = parseInt(groups?.bonus) - threat;
+        const skill = await HVCharacterCreator.getDocument(skillName, skillpacks, craftspacks, sciencepacks);
+        if (skill) {
+          const obj = skill.toObject();
+          obj.system.bonus = bonus;
+          skills.push(obj);
+          formData['system.description'] = formData['system.description'].replace(`<p>${skillText}</p>`, '');
+        }
+      }
+    }
+    await actor.createEmbeddedDocuments('Item', skills);
+  }
+
+  async addWeapons(actor: HVActor, formData: object): Promise<void> {
+    const weapons: Record<string, unknown>[] = [];
+    const weaponpacks = game.packs.find((p) => p.metadata.name === 'weapons');
+
+    for (const weaponData of formData['system.stats.atk']) {
+      const weaponName = weaponData.name.capitalize();
+      const description = weaponData.details;
+      const weapon = await HVCharacterCreator.getDocument(weaponName, weaponpacks);
+      if (weapon) {
+        const obj = weapon.toObject();
+        obj.system.description += `<p>${description}</p>`;
+        weapons.push(obj);
+        formData['system.description'] = formData['system.description'].replace(`<p>${weaponData.source}</p>`, '');
+      }
+    }
+    await actor.createEmbeddedDocuments('Item', weapons);
   }
 
   /** @override */
@@ -118,6 +171,7 @@ type Weapon = {
   dmg: string;
   name: string;
   details?: string;
+  source: string;
 };
 
 type NPCData = {
@@ -214,13 +268,14 @@ export class Parser {
   parseAttacks(section: string) {
     const options = section.replace(/[ ]*Atk /, '').split(' or ');
     for (const option of options) {
-      const groups = option.match(/(\+\d)+([a-zA-Z\s]*)+(\dd\d[\+]*[\d]*)*(.*)/);
-      if (groups && groups.length > 4) {
+      const groups = option.match(weaponRegEx)?.groups;
+      if (groups) {
         const weapon: Weapon = {
-          name: groups[2]?.trim(),
-          attack_bonus: groups[1]?.trim(),
-          dmg: groups[3]?.trim(),
-          details: groups[4]?.trim() ?? '',
+          name: groups?.weaponName?.trim(),
+          attack_bonus: groups?.bonus?.trim(),
+          dmg: groups?.dmg?.trim(),
+          details: groups?.notes?.trim() ?? '',
+          source: option,
         };
         this.npc.atk.push(weapon);
       }
@@ -228,7 +283,7 @@ export class Parser {
   }
 
   parseSkills(section: string) {
-    const skills = section.replace('Spec ', '').match(/([a-zA-Z\s\+\d])+/g);
+    const skills = section.replace('Spec ', '').match(new RegExp(skillRegEx, 'g'));
     if (skills) {
       for (const skill of skills) {
         this.npc.skills.push(skill.trim());
