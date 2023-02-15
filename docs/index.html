@@ -80,6 +80,9 @@
                     <a class="popover-link" href="#npc-generation">Generation</a>
                   </li>
                   <li class="popover-item">
+                    <a class="popover-link" href="#npc-import">Importing</a>
+                  </li>
+                  <li class="popover-item">
                     <a class="popover-link" href="#npc-weapons">Weapons & Skills</a>
                   </li>
                 </ul>
@@ -498,6 +501,23 @@
           <div style="text-align: center;">
             <img src="./images/npc-gen-3.png" />
           </div>
+          <h4 class="docs-header" id="npc-import">Importing from a Statblock</h4>
+          <p>
+            You can also create a NPC by clicking the <code>Import</code> button at the top of the sheet, and pasting in a standard statblock as per the rules and adventure material.
+          </p>
+          <p>
+            For example, using the standard form statblock for some Farmers:
+          </p>
+          <code>Free Farmers (1d3): LVL 1; AC 11 (cloth); Atk +1 pitchfork 1d6 or +1 axe 1d6 or +1 halberd 1d10 [+2 AC in formation]; +2/+0/+0; V 3d6.</code>
+          <p></p>
+          <p>
+            This will create a NPC character with the appropriate weapons, skills, etc. as best as it can determine. This is not a perfect science, as statblocks as printed are sometimes not completely conformant,
+            or have confusing text entries....but it will give you a quick start to cutomise. 
+          </p>
+          <p>
+            The key elements that are looked for in a statblock are: 
+            <code>..Name... ([# | formula] appearing): [..Class..|LVL] # ; AC # ; Atk ...weapons... ; Spec ...skills... ; +#/+#/+# ; V [# | formula] . Hp [#| formula]</code>
+          </p>
           <hr>
           <h4 class="docs-header" id="npc-weapons">NPC Weapons & Skills</h4>
           <p>

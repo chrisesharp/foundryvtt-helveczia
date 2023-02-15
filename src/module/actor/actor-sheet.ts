@@ -10,6 +10,7 @@ import { Utils } from '../utils/utils';
 import { HVDice } from '../dice';
 import { HVNameGenerator } from '../apps/names';
 import { HVPDF } from '../pdf';
+import { NPCGenerator } from '../apps/npcgen';
 
 const log = new Logger();
 
@@ -58,8 +59,8 @@ export class HVActorSheet extends ActorSheet {
       await Utils.deleteEmbeddedArray(classes, this.actor);
       return true;
     } else {
-      const requiredProfession = itemData.parent.toLowerCase();
-      const thisActorProfession = this.actor.system.class.toLowerCase();
+      const requiredProfession = itemData.parent?.toLowerCase();
+      const thisActorProfession = this.actor.system.class?.toLowerCase();
       if (thisActorProfession === requiredProfession) {
         if (requiredProfession === 'fighter') {
           log.debug(`_removeClasses() | Removing specialisms for ${thisActorProfession} `);
@@ -436,9 +437,13 @@ export class HVActorSheet extends ActorSheet {
     event.preventDefault();
     const button = $(event.currentTarget);
     const actorId = $(button).data('actorId');
-
-    const content = await renderTemplate('systems/helveczia/templates/actor/dialogs/roll-virtue.hbs', {});
     const title = `${game.i18n.localize('HV.RollVirtue')}`;
+    const formula = `${this.actor.system.origVirtue}`.match(/(\dd\d[\+\-]?\d*)/g)
+      ? this.actor.system.origVirtue
+      : '3d6';
+    const content = await renderTemplate('systems/helveczia/templates/actor/dialogs/roll-virtue.hbs', {
+      formula: formula,
+    });
     new Dialog(
       {
         title: title,
@@ -628,7 +633,10 @@ export class HVActorSheet extends ActorSheet {
    * @override
    */
   _getHeaderButtons() {
-    const buttons = super._getHeaderButtons();
-    return game.user?.isGM && this.actor.type != 'party' ? [HVPDF.getPDFButton(this)].concat(buttons) : buttons;
+    const buttons = super._getHeaderButtons().filter((b) => b.class != 'configure-sheet');
+    const extras: Application.HeaderButton[] = [];
+    if (game.user?.isGM && this.actor.type != 'party') extras.push(HVPDF.getPDFButton(this));
+    if (game.user?.isGM && this.actor.type === 'npc') extras.push(NPCGenerator.getButton(this));
+    return extras.concat(buttons);
   }
 }

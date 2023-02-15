@@ -177,16 +177,27 @@ export class HVCharacterCreator extends FormApplication {
   }
 
   static async setOrigins(actor, peopleName, className) {
-    const professions = game.packs.find((p) => p.metadata.name == 'classes');
-    const peoples = game.packs.find((p) => p.metadata.name == 'peoples');
-    const p = await HVCharacterCreator.getDocument(peopleName, peoples);
-    const c = await HVCharacterCreator.getDocument(className, professions);
-    if (p && c) await actor.createEmbeddedDocuments('Item', [p.toObject(), c.toObject()]);
+    await HVCharacterCreator.setPeoples(actor, peopleName, false);
+    await HVCharacterCreator.setProfession(actor, className, false);
     await actor.setFlag('helveczia', 'origins-initialized', true);
     actor.sheet?.render(true);
   }
 
-  static async setSpecialism(actor, specialismName) {
+  static async setPeoples(actor, peopleName, render = true) {
+    const peoples = game.packs.find((p) => p.metadata.name == 'peoples');
+    const p = await HVCharacterCreator.getDocument(peopleName, peoples);
+    if (p) await actor.createEmbeddedDocuments('Item', [p.toObject()]);
+    actor.sheet?.render(render);
+  }
+
+  static async setProfession(actor, className, render = true) {
+    const professions = game.packs.find((p) => p.metadata.name == 'classes');
+    const c = await HVCharacterCreator.getDocument(className, professions);
+    if (c) await actor.createEmbeddedDocuments('Item', [c.toObject()]);
+    actor.sheet?.render(render);
+  }
+
+  static async setSpecialism(actor, specialismName, render = true) {
     const specialisms = game.packs.find((p) => p.metadata.name == 'specialisms');
     const sp = await HVCharacterCreator.getDocument(specialismName, specialisms);
     if (sp) {
@@ -196,20 +207,23 @@ export class HVCharacterCreator extends FormApplication {
         hp: hitpoints,
       };
       await actor.update({ system: updateData });
-      actor.sheet?.render(true);
+      actor.sheet?.render(render);
     }
   }
 
-  static async getDocument(name, pack) {
-    const index = await pack?.getIndex();
-    const pId = index?.find((p) => p.name === name)?._id;
-    if (pId) {
-      return pack?.getDocument(pId);
-    } else {
-      const items = game.items?.filter((i) => i.name === name);
-      if (items?.length) {
-        return items[0];
+  static async getDocument(name, ...packs) {
+    for (const pack of packs) {
+      if (pack) {
+        const index = await pack?.getIndex();
+        const pId = index?.find((p) => p.name === name)?._id;
+        if (pId) {
+          return pack?.getDocument(pId);
+        }
       }
+    }
+    const items = game.items?.filter((i) => i.name === name);
+    if (items?.length) {
+      return items[0];
     }
   }
 }
