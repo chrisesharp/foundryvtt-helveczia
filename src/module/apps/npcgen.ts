@@ -2,7 +2,7 @@ import { HVActor } from '../actor/actor';
 import { HVCharacterCreator } from './chargen';
 
 const levelBonusRegEx = /(?<class>[a-zA-Z\s]*)(?<lvl>\d)\+?(?<threat>[\d\*]*)/;
-const skillRegEx = /(?<skillName>[\w’\/\s]+)(?<bonus>[-+]\d)*/;
+const skillRegEx = /(?<skillName>[\w’\/\s]+)(?<bonus>[\-\+]\d)*/;
 const weaponRegEx = /(?<bonus>\+\d)+(?<weaponName>[a-zA-Z\s]*)+(?<dmg>\dd\d[\+]*[\d]*)*(?<notes>.*)/;
 
 export class NPCGenerator extends FormApplication {
