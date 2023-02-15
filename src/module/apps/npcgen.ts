@@ -2,7 +2,7 @@ import { HVActor } from '../actor/actor';
 import { HVCharacterCreator } from './chargen';
 
 const levelBonusRegEx = /(?<class>[a-zA-Z\s]*)(?<lvl>\d)\+?(?<threat>[\d\*]*)/;
-const skillRegEx = /(?<skillName>[a-zA-Z\s]*)[-+](?<bonus>\d)/;
+const skillRegEx = /(?<skillName>[\w’\/\s]+)(?<bonus>[-+]\d)*/;
 const weaponRegEx = /(?<bonus>\+\d)+(?<weaponName>[a-zA-Z\s]*)+(?<dmg>\dd\d[\+]*[\d]*)*(?<notes>.*)/;
 
 export class NPCGenerator extends FormApplication {
@@ -39,6 +39,7 @@ export class NPCGenerator extends FormApplication {
       let description = '';
       if (npc.numAppearing?.length && npc.numAppearing != '1')
         description += `<p>Num appearing: ${npc.numAppearing}</p>\n`;
+      if (npc.armour?.length) description += `<p>Armour: ${npc.armour}</p>\n`;
       for (const weapon of npc.atk) {
         description += `<p>${weapon.attack_bonus} ${weapon.name} ${weapon.dmg} ${weapon.details ?? ''}</p>`;
       }
@@ -117,16 +118,23 @@ export class NPCGenerator extends FormApplication {
     const lvlGroups = formData['system.levelBonus'].match(levelBonusRegEx)?.groups;
     const threat = parseInt(lvlGroups?.lvl) ?? 0;
     const skills: Record<string, unknown>[] = [];
-    const skillpacks = game.packs.find((p) => p.metadata.name === 'skills');
-    const craftspacks = game.packs.find((p) => p.metadata.name === 'crafts');
-    const sciencepacks = game.packs.find((p) => p.metadata.name === 'sciences');
+    const skillpack = game.packs.find((p) => p.metadata.name === 'skills');
+    const craftspack = game.packs.find((p) => p.metadata.name === 'crafts');
+    const sciencepack = game.packs.find((p) => p.metadata.name === 'sciences');
+    const specialismspack = game.packs.find((p) => p.metadata.name === 'specialisms');
 
     for (const skillText of formData['system.stats.skills']) {
       if (/^[A-Z]/.test(skillText)) {
         const groups = skillText.match(skillRegEx)?.groups;
         const skillName = groups?.skillName?.trim();
         const bonus = parseInt(groups?.bonus) - threat;
-        const skill = await HVCharacterCreator.getDocument(skillName, skillpacks, craftspacks, sciencepacks);
+        const skill = await HVCharacterCreator.getDocument(
+          skillName,
+          skillpack,
+          craftspack,
+          sciencepack,
+          specialismspack,
+        );
         if (skill) {
           const obj = skill.toObject();
           obj.system.bonus = bonus;
@@ -150,7 +158,10 @@ export class NPCGenerator extends FormApplication {
         const obj = weapon.toObject();
         obj.system.description += `<p>${description}</p>`;
         weapons.push(obj);
-        formData['system.description'] = formData['system.description'].replace(`<p>${weaponData.source}</p>`, '');
+        formData['system.description'] = formData['system.description'].replace(
+          `<p>${weaponData.attack_bonus} ${weaponData.name} ${weaponData.dmg} ${weaponData.details ?? ''}</p>`,
+          '',
+        );
       }
     }
     await actor.createEmbeddedDocuments('Item', weapons);
@@ -206,8 +217,11 @@ export class Parser {
   };
 
   constructor(input: string) {
-    this.input = input.replace(/\n/g, ' ');
-    this.input = this.input.replace(/\./g, ';');
+    this.input = input.replace(/-\n/g, '');
+    this.input = this.input.replace(/\n/g, ' ');
+    this.input = this.input.replace(/(Spells:\s+([0-9+\+\/]*;))/, 'Spells:');
+    this.input = this.input.replace(/\.\sHp\s/g, '; Hp ');
+    this.input = this.input.replace(/\.[\s]+/g, ';');
     this.parse();
   }
 
@@ -225,10 +239,10 @@ export class Parser {
         case section.match(/^AC/)?.input:
           this.parseArmour(section);
           break;
-        case section.match(/^V /)?.input:
+        case section.match(/^V[\s0-9]/)?.input:
           this.parseVirtue(section);
           break;
-        case section.match(/([+-](\d)\/)+([+-](\d))/)?.input:
+        case section.match(/[+-]\d\/[+-]\d\/[+-]\d/)?.input:
           this.parseSaves(section);
           break;
         case section.match(/^Atk/)?.input:
@@ -254,8 +268,8 @@ export class Parser {
   }
 
   parseVirtue(section: string) {
-    const tokens = section.replace('V ', '');
-    this.npc.virtue = tokens.trim();
+    const tokens = section.replace(/V\s?/, '');
+    this.npc.virtue = tokens.replace(/\.$/, '').trim();
   }
 
   parseSaves(section: string) {
