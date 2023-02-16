@@ -165,42 +165,6 @@ export abstract class BaseItem {
     }
   }
 
-  // /**
-  //  * Itemtype agnostic handler for deleting an item via event.
-  //  */
-  // static _onItemDelete(e, sheet) {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-
-  //   const data = e.currentTarget.dataset;
-  //   const item = sheet.actor.items.get(data.item);
-
-  //   new Dialog(
-  //     {
-  //       title: `${game.i18n.localize('FAx.Dialog.DocumentDelete')} ${item.name}`,
-  //       content: game.i18n.localize('FAx.Dialog.DocumentDeleteText'),
-  //       default: 'submit',
-  //       buttons: {
-  //         cancel: {
-  //           icon: '<i class="fas fa-times"></i>',
-  //           label: game.i18n.localize('HV.Cancel'),
-  //           callback: () => null,
-  //         },
-  //         submit: {
-  //           icon: '<i class="fas fa-check"></i>',
-  //           label: game.i18n.localize('HV.Confirm'),
-  //           callback: async () => {
-  //             item.delete();
-  //           },
-  //         },
-  //       },
-  //     },
-  //     {
-  //       classes: ['fatex', 'fatex-dialog'],
-  //     },
-  //   ).render(true);
-  // }
-
   /*************************
    * HELPER FUNCTIONS
    *************************/

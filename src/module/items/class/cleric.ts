@@ -8,40 +8,15 @@ const log = new Logger();
 
 const clericSpecialisms = {
   Spells: {
-    description: `All Clerics who follow the rules and
-    remains remain obedient lambs of the faith
-    may learn spells at places held holy by the
-    Mother Church. The maximal number of
-    spells someone can learn depends on the
-    Cleric’s level, while specific spells are tied
-    to their places of origin: a humble chapel
-    might only have one or two, while a cloister
-    or cathedral could have many powerful
-    ones. Once used, spells are lost, and need to
-    be relearned. Only the rare relics of the
-    saints allow someone to replenish a spell
-    freely. Beginning characters start with a
-    random spell selection.`,
+    description: 'HV.cleric.spells',
     flag: 'cleric-spells',
   },
   Exorcism: {
-    description: `With the word of God, Clerics
-    can command infernal creatures, e.g. devils,
-    evil spirits, vampires, etc. to stop their
-    hauntings and flee. This ability can be used
-    one time per adventure (twice from the
-    fifth level). The targets must roll a Temptation
-    saving throw or flee in panic.`,
+    description: 'HV.cleric.exorcism',
     flag: 'cleric-exorcism',
   },
   Healing: {
-    description: `If the Cleric does not fill his or her
-    mind with spells, unused slots can be used
-    for healing instead. The power of healing is
-    1d6, 2d6 or 3d6 Hp depending on the spell
-    level. This power returns after Sunday mass.
-    Spells which have already been learned cannot
-    be converted to healing.`,
+    description: 'HV.cleric.healing',
     flag: 'cleric-healing',
   },
 };
@@ -101,7 +76,7 @@ export class Cleric {
             type: 'skill',
             img: 'icons/svg/mystery-man.svg',
             data: {
-              description: clericSpecialisms[s].description,
+              description: game.i18n.localize(clericSpecialisms[s].description),
               ability: '',
               subtype: 'magical',
             },

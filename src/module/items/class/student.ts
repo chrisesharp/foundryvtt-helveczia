@@ -8,33 +8,11 @@ const log = new Logger();
 
 const studentSpecialisms = {
   Spells: {
-    description: `Secreted away in dark folios and
-    manuscripts, Student spells must be committed
-    to the mind with difficult methods,
-    Latin formulae, and the study of goetic
-    principles. Furthermore, spells require
-    special material components, which need
-    to be acquired and prepared with no small
-    effort. Once used, spells are gone, and
-    must be relearned; similarly, components
-    are of finite use.`,
+    description: 'HV.student.spells',
     flag: 'student-spells',
   },
   Doctorate: {
-    description: `Students who reach sixth level
-    may obtain a university doctorate by presenting
-    and defending their scientific findings,
-    at no small cost and effort. This is the
-    source of significant prestige, but also has
-    more tangible benefits. The character can
-    distribute 6 extra points among Science skills
-    (although a single skill can only be increased
-    by 3), or learn a completely new Science.
-    Furthermore, not only do they obtain 1d3+3
-    levels’ worth of new spells in the process, but
-    from now on, they can also devise spells of
-    their own, which will bear their name till the
-    end of the world.`,
+    description: 'HV.student.doctorate',
     flag: 'student-doctorate',
   },
 };
@@ -90,7 +68,7 @@ export class Student {
             type: 'skill',
             img: 'icons/svg/book.svg',
             data: {
-              description: studentSpecialisms[s].description,
+              description: game.i18n.localize(studentSpecialisms[s].description),
               ability: '',
               subtype: 'magical',
             },

@@ -180,6 +180,8 @@
   "HV.messages.CriticalFailure": "had a critical failure {wp} {vs}!",
   "HV.messages.absolution": "You have been absolved of the following sins...",
   "HV.messages.noAbsolution": "You were unable to absolve any of your sins.",
+  "HV.withThere": "with there {item}",
+  "HV.against": "against {opponent}",
   "HV.SpellCast": "A spell is cast!",
   "HV.SpellRememorize": "A spell is rememorized.",
   "HV.SpellMemorize": "A spell is memorized.",
@@ -207,6 +209,8 @@
   "HV.RollVirtue": "Roll for Virtue",
   "HV.cards.Total": "Total",
   "HV.cards.Reset": "Return to Deck",
+  "HV.cards.devilsHand": "Devil's hand for {character}",
+  "HV.cards.returned": "{character}'s returned cards",
   "HV.dialog.chooseSpecialism": "Choose your Specialism as a ",
   "HV.dialog.cardgenerator": "Add Devil's Bible",
   "HV.dialog.cardlabel": "Add Devil's Bible for",
@@ -242,5 +246,13 @@
   "HV.peoples.Jewish": "Jewish",
   "HV.deed.hdr": "This deed is a",
   "HV.deed.of": "of",
-  "HV.deed.magnitude": "magnitude"
+  "HV.deed.magnitude": "magnitude",
+  "HV.cleric.spells": "All Clerics who follow the rules and remains remain obedient lambs of the faith may learn spells at places held holy by the Mother Church. The maximal number of spells someone can learn depends on the Cleric's level, while specific spells are tied to their places of origin: a humble chapel might only have one or two, while a cloister or cathedral could have many powerful ones. Once used, spells are lost, and need to be relearned. Only the rare relics of the saints allow someone to replenish a spell freely. Beginning characters start with a random spell selection.",
+  "HV.cleric.exorcism": "With the word of God, Clerics can command infernal creatures, e.g. devils, evil spirits, vampires, etc. to stop their hauntings and flee. This ability can be used one time per adventure (twice from the fifth level). The targets must roll a Temptation saving throw or flee in panic.",
+  "HV.cleric.healing": "If the Cleric does not fill his or her mind with spells, unused slots can be used for healing instead. The power of healing is 1d6, 2d6 or 3d6 Hp depending on the spell level. This power returns after Sunday mass. Spells which have already been learned cannot be converted to healing.",
+  "HV.student.spells": "Secreted away in dark folios and manuscripts, Student spells must be committed to the mind with difficult methods, Latin formulae, and the study of goetic principles. Furthermore, spells require special material components, which need to be acquired and prepared with no small effort. Once used, spells are gone, and must be relearned; similarly, components are of finite use.",
+  "HV.student.doctorate": "Students who reach sixth level may obtain a university doctorate by presenting and defending their scientific findings, at no small cost and effort. This is the source of significant prestige, but also has more tangible benefits. The character can distribute 6 extra points among Science skills (although a single skill can only be increased by 3), or learn a completely new Science. Furthermore, not only do they obtain 1d3+3 levels' worth of new spells in the process, but from now on, they can also devise spells of their own, which will bear their name till the end of the world.",
+  "HV.vagabond.legends": "On a successful check, learn something about the selected location, family, organisation, etc.<p>For Normal DC, the information is general; for Hard DC, it is specific; and for Heroic DC, it can extend to obscure secrets).",
+  "HV.vagabond.sneakAttack": "this ability can be used if the character can strike an unaware opponent - e.g. sneaking up on him, stabbing him under a table during conversation, or sniping him from a tree.<p>For every odd level, a successful sneak attack deals an extra +1d6 damage (up to +3d6 on fifth level).<p>Thrown and missile weapons can also be used, and with the right instrument, it can also incapacitate opponents instead of killing them.",
+  "HV.vagabond.travellersLuck": "Due to Fortune's attentions, the character can add +2 to a saving throw or initiative roll 1d3 times in a single adventure.<p> The boon can be used before or after declaring the roll; <p>the 1d3 to establish Fortune's current generosity should be rolled on the first use."
 }
