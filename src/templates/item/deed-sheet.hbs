@@ -4,11 +4,11 @@
       <div class="header-fields">
           <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
           <div class="deed-header">
-            <h3 class="deed-hdr">This deed is a </h3>
+            <h3 class="deed-hdr">{{ localize 'HV.deed.hdr' }}</h3>
             <select class="deed-option" name="data.subtype" type="text">
              {{selectOptions deedTypes selected=data.subtype localize=true}}
             </select>
-            <h3 class="deed-hdr"> of </h3>
+            <h3 class="deed-hdr"> {{ localize 'HV.deed.of' }} </h3>
             <select class="deed-option" name="data.cardinality" type="number">
             {{#if (eq data.subtype 'virtue')}}
               {{selectOptions cardinalVirtues selected=data.cardinality localize=true}}
@@ -23,7 +23,7 @@
              {{/if}}
           </div>
           <div class="deed-header">
-            <h3 class="deed-hdr"> of </h3>
+            <h3 class="deed-hdr"> {{ localize 'HV.deed.of' }} </h3>
             <select class="deed-option" name="data.magnitude" type="number">
             {{#if (eq data.subtype 'virtue')}}
               {{selectOptions virtueMagnitudes selected=data.magnitude localize=true}}
@@ -31,7 +31,7 @@
               {{selectOptions sinMagnitudes selected=data.magnitude localize=true}}
             {{/if}}
             </select>
-            <h3 class="deed-hdr"> magnitude </h3>
+            <h3 class="deed-hdr"> {{ localize 'HV.deed.magnitude' }} </h3>
           </div>
       </div>
     </header>
