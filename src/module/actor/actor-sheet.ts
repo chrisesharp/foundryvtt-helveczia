@@ -363,7 +363,7 @@ export class HVActorSheet extends ActorSheet {
     const content = await renderTemplate('systems/helveczia/templates/actor/dialogs/choose-origin.hbs', templateData);
     new Dialog(
       {
-        title: `${game.i18n.localize('Choose Origin and Class')}`,
+        title: `${game.i18n.localize('HV.ChooseOriginClass')}`,
         content: content,
         default: 'submit',
         buttons: {
@@ -399,7 +399,7 @@ export class HVActorSheet extends ActorSheet {
     );
     new Dialog(
       {
-        title: `${game.i18n.localize('Choose Specialism')}`,
+        title: `${game.i18n.localize('HV.Choose')} ${game.i18n.localize('HV.Specialism')}`,
         content: content,
         default: 'submit',
         buttons: {
