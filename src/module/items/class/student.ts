@@ -73,7 +73,11 @@ export class Student {
     const sourceItemData = item.system as ClassItemData;
     if (sourceItemData.specialism) {
       if (!item.actor?.isStudent()) {
-        ui.notifications.error(game.i18n.localize('You must be a student for this specialism'));
+        ui.notifications.error(
+          game.i18n.format('HV.errors.requiredProfession', {
+            requiredProfession: game.i18n.localize('HV.class.student'),
+          }),
+        );
         return;
       }
     } else {

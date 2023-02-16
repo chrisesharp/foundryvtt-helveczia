@@ -14,7 +14,11 @@ export class Fighter {
     const itemData = item.system as ClassItemData;
     if (itemData.specialism) {
       if (!item.actor?.isFighter()) {
-        ui.notifications.error(game.i18n.localize('You must be a fighter for this specialism'));
+        ui.notifications.error(
+          game.i18n.format('HV.errors.requiredProfession', {
+            requiredProfession: game.i18n.localize('HV.class.fighter'),
+          }),
+        );
         return;
       }
       log.debug(`Fighter.onCreate() | fighter-specialism flag set to ${item.name}`);

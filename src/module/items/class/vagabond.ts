@@ -40,7 +40,11 @@ export class Vagabond {
     const sourceItemData = item.system as ClassItemData;
     if (sourceItemData.specialism) {
       if (!item.actor?.isVagabond()) {
-        ui.notifications.error(game.i18n.localize('You must be a vagabond for this specialism'));
+        ui.notifications.error(
+          game.i18n.format('HV.errors.requiredProfession', {
+            requiredProfession: game.i18n.localize('HV.class.student'),
+          }),
+        );
         return;
       }
       switch (item.name) {

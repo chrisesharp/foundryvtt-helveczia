@@ -81,7 +81,11 @@ export class Cleric {
     const sourceItemData = item.system as ClassItemData;
     if (sourceItemData.specialism) {
       if (!actor?.isCleric()) {
-        ui.notifications.error(game.i18n.localize('You must be a cleric for this specialism'));
+        ui.notifications.error(
+          game.i18n.format('HV.errors.requiredProfession', {
+            requiredProfession: game.i18n.localize('HV.class.cleric'),
+          }),
+        );
         return;
       }
     } else {
