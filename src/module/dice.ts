@@ -60,7 +60,7 @@ export class HVDice {
     };
     if (data.item) {
       critical = data.item.system.critical;
-      withWeapon = `with their ${data.item.name}`;
+      withWeapon = game.i18n.format('HV.withThere', { item: data.item.name });
       if (data.item.system.reload > 0) {
         const attacker = data.item.actor as HVActor;
         await attacker.setFlag('helveczia', 'reload-trigger', data.item.system.reload);
@@ -82,7 +82,7 @@ export class HVDice {
       opponent = game.actors?.get(data.opponent.id);
       if (opponent) {
         result.target = opponent.system.ac;
-        against += `against ${opponent.name}`;
+        against += game.i18n.format('HV.against', { opponent: opponent.name });
       }
     }
 

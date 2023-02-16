@@ -40,7 +40,11 @@ export class Vagabond {
     const sourceItemData = item.system as ClassItemData;
     if (sourceItemData.specialism) {
       if (!item.actor?.isVagabond()) {
-        ui.notifications.error(game.i18n.localize('You must be a vagabond for this specialism'));
+        ui.notifications.error(
+          game.i18n.format('HV.errors.requiredProfession', {
+            requiredProfession: game.i18n.localize('HV.class.student'),
+          }),
+        );
         return;
       }
       switch (item.name) {
@@ -49,8 +53,7 @@ export class Vagabond {
           item.actor?.setFlag('helveczia', 'vagabond-skills', true);
           break;
         case 'Legends':
-          const legendDescription =
-            'On a successful check, learn something about the selected location, family, organisation, etc.<p>For Normal DC, the information is general; for Hard DC, it is specific; and for Heroic DC, it can extend to obscure secrets).';
+          const legendDescription = game.i18n.localize('HV.vagabond.legends');
           const legendsSkill = {
             name: 'Legends',
             type: 'skill',
@@ -63,8 +66,7 @@ export class Vagabond {
           createSpecialismSkill(item, legendsSkill);
           break;
         case 'Sneak Attack':
-          const sneakDescription =
-            'this ability can be used if the character can strike an unaware opponent – e.g. sneaking up on him, stabbing him under a table during conversation, or sniping him from a tree.<p>For every odd level, a successful sneak attack deals an extra +1d6 damage (up to +3d6 on fifth level).<p>Thrown and missile weapons can also be used, and with the right instrument, it can also incapacitate opponents instead of killing them.';
+          const sneakDescription = game.i18n.localize('HV.vagabond.sneakAttack');
           const sneakSkill = {
             name: 'Sneak Attack',
             type: 'skill',
@@ -77,8 +79,7 @@ export class Vagabond {
           createSpecialismSkill(item, sneakSkill);
           break;
         case "Traveller's Luck":
-          const luckDescription =
-            'Due to Fortune’s attentions, the character can add +2 to a saving throw or initiative roll 1d3 times in a single adventure.<p> The boon can be used before or after declaring the roll; <p>the 1d3 to establish Fortune’s current generosity should be rolled on the first use.';
+          const luckDescription = game.i18n.localize('HV.vagabond.travellersLuck');
           const luckSkill = {
             name: item.name,
             type: 'skill',

@@ -121,7 +121,7 @@ export class HVCardsHand extends CardsHand {
       if (userId) perms[userId] = CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
       await Cards.createDocuments([
         {
-          name: `Devil's hand for ${name}`,
+          name: game.i18n.format('HV.cards.devilsHand', { character: name }),
           type: 'hand',
           _id: randomID(),
           folder: folderId,
@@ -134,7 +134,7 @@ export class HVCardsHand extends CardsHand {
           },
         },
         {
-          name: `${name}'s returned cards`,
+          name: game.i18n.format('HV.cards.returned', { character: name }),
           type: 'pile',
           _id: randomID(),
           folder: folderId,

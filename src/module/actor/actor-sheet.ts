@@ -73,7 +73,9 @@ export class HVActorSheet extends ActorSheet {
         }
         return true;
       }
-      ui.notifications.error(game.i18n.localize(`You must be a ${requiredProfession} for this specialism`));
+      ui.notifications.error(
+        game.i18n.format('HV.errors.requiredProfession', { requiredProfession: requiredProfession }),
+      );
       return false;
     }
   }
@@ -166,7 +168,7 @@ export class HVActorSheet extends ActorSheet {
             await this.actor.deleteEmbeddedDocuments('Item', spell);
           }
         } else {
-          ui.notifications.warn('you have already cast this spell and need to re-memorize it.');
+          ui.notifications.warn(game.i18n.localize('HV.warnings.alreadyCast'));
         }
       }
     });
@@ -361,7 +363,7 @@ export class HVActorSheet extends ActorSheet {
     const content = await renderTemplate('systems/helveczia/templates/actor/dialogs/choose-origin.hbs', templateData);
     new Dialog(
       {
-        title: `${game.i18n.localize('Choose Origin and Class')}`,
+        title: `${game.i18n.localize('HV.ChooseOriginClass')}`,
         content: content,
         default: 'submit',
         buttons: {
@@ -397,7 +399,7 @@ export class HVActorSheet extends ActorSheet {
     );
     new Dialog(
       {
-        title: `${game.i18n.localize('Choose Specialism')}`,
+        title: `${game.i18n.localize('HV.Choose')} ${game.i18n.localize('HV.Specialism')}`,
         content: content,
         default: 'submit',
         buttons: {
@@ -587,11 +589,7 @@ export class HVActorSheet extends ActorSheet {
     const lowVirtue = this.actor.system.virtue < 7;
 
     if (lowVirtue && virtues.length == 0) {
-      ui.notifications.warn(
-        game.i18n.localize(
-          'In such a low state of virtue, you must have at least a moderately good deed for absolution!',
-        ),
-      );
+      ui.notifications.warn(game.i18n.localize('HV.warnings.lowVirtueAbsolution'));
       return;
     }
 
