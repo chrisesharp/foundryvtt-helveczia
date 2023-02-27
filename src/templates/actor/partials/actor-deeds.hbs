@@ -10,7 +10,7 @@
 </div>
 <div class="flexrow">
     <div>
-        <h3 class="centred">Sins</h3>
+        <h3 class="centred">{{ localize 'HV.deeds.sins' }}</h3>
         <ol class="item-list centred">
         {{#each data.sins as |item id|}}
             <li class="item-entry flexcol" data-item-id="{{item.id}}">
@@ -29,7 +29,7 @@
         </ol>
     </div>
     <div>
-        <h3 class="centred">Virtues</h3>
+        <h3 class="centred">{{ localize 'HV.deeds.virtues' }}</h3>
         <ol class="item-list centred">
         {{#each data.virtues as |item id|}}
         <li class="item-entry flexcol" data-item-id="{{item.id}}">
