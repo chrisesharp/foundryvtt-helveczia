@@ -66,9 +66,6 @@ export class Cleric {
     } else {
       log.debug('Cleric.onCreate() | cleric-class flag set to true');
       actor?.setFlag('helveczia', 'cleric-class', true);
-      const gainedSixthLevelSkills = actor?.isCleric() && actor.system.level == 6;
-      actor?.setFlag('helveczia', 'cleric-skill', gainedSixthLevelSkills);
-      log.debug('Cleric.getSkillsBonus() |  cleric-skill flag set to ', gainedSixthLevelSkills);
       Promise.all(
         Object.keys(clericSpecialisms).map((s) => {
           const skill = {
@@ -89,7 +86,7 @@ export class Cleric {
   }
 
   static getSkillsBonus(actor: HVActor): number {
-    const gainedSixthLevelSkills = actor.getFlag('helveczia', 'cleric-skill');
+    const gainedSixthLevelSkills = actor?.isCleric() && actor.system.level == 6;
     // base 3 extra to cover Cleric specialist skills. and 6 extra at 6th level
     return gainedSixthLevelSkills ? 9 : 3;
   }
@@ -117,8 +114,6 @@ export class Cleric {
         return deleteSpecialistSkill(actor, s);
       }),
     );
-    log.debug('Cleric.cleanup() |  cleric-skill flag set to false');
-    actor.setFlag('helveczia', 'cleric-skill', false);
     log.debug('Cleric.cleanup() |  cleric-class flag set to false');
     actor.setFlag('helveczia', 'cleric-class', false);
   }
