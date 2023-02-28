@@ -57,10 +57,6 @@ export class BookItem extends BaseItem {
     const top = `<ol class="tag-list">`;
     const bottom = `</ol>`;
     const itemData = item.system as BookItemData;
-    // let bible = '';
-    // if (item.name?.includes('Bible')) {
-    //   bible = `<li class="tag holy-bible" title="Seek Divine Guidance"><a>guidance</a></li>`;
-    // }
     return `
     ${top}
       <li class="tag" title="${game.i18n.localize('HV.Encumbrance')}">${itemData.encumbrance ?? 0}</li>

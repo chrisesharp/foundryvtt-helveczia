@@ -23,6 +23,8 @@
   "HV.class.student": "Student",
   "HV.Specialism": "Specialism",
   "HV.bonusSkills": "Bonus skills: {num} {skill} as a {role}, at {level} level",
+  "HV.bonusGermanCraftSkill": "Due to their diligence, they learn an extra, randomly rolled Craft skill with a +2 bonus. In this trade, they are already considered journeymen by guild standards, and enjoy all attendant benefits.  Germans can become masters in their craft  at 4th level.",
+  "HV.bonusStudentScienceSkill": "Random science known from their Student studies.",
   "HV.skillType": "A {type} skill",
   "HV.Level": "LVL",
   "HV.randomCraft": "Roll for Random Craft",

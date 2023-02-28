@@ -216,7 +216,7 @@ Hooks.on('renderSidebarTab', async (object, html) => {
     const site = 'https://chrisesharp.github.io/foundryvtt-helveczia';
     const styling = 'border:none;margin-right:2px;vertical-align:middle;margin-bottom:5px';
     $(
-      `<button data-action="userguide"><img src='/systems/dee/assets/default/icons/magic.png' width='16' height='16' style='${styling}'/>Helvéczia Guide</button>`,
+      `<button data-action="userguide"><img src='/systems/helveczia/assets/icons/shilling.png' width='16' height='16' style='${styling}'/>Helvéczia Guide</button>`,
     ).insertAfter(docs);
     html.find('button[data-action="userguide"]').click(() => {
       const fv = new FrameViewer();

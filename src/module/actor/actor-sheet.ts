@@ -514,8 +514,7 @@ export class HVActorSheet extends ActorSheet {
     const rndCraft = await this.getRandomCraft(existingSkills);
     if (rndCraft) {
       const craft = { name: rndCraft?.name, ability: (rndCraft.system as SkillItemData).ability };
-      const description =
-        'Due to their diligence, they learn an extra, randomly rolled Craft skill with a +2 bonus. In this trade, they are already considered journeymen by guild standards, and enjoy all attendant benefits.  Germans can become masters in their craft  at 4th level.';
+      const description = game.i18n.localize('HV.bonusGermanCraftSkill');
       const skill = {
         name: craft.name,
         type: 'skill',
@@ -551,7 +550,7 @@ export class HVActorSheet extends ActorSheet {
     const rndSkill = await this.getRandomScience(existingSkills);
     if (rndSkill != null) {
       const skillData = { name: rndSkill.name, ability: (rndSkill.system as SkillItemData).ability };
-      const description = 'Random science known from their Student studies.';
+      const description = game.i18n.localize('HV.bonusStudentScienceSkill');
       const skill = {
         name: skillData.name,
         type: 'skill',

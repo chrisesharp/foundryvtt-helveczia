@@ -72,9 +72,6 @@ export class HVCombat extends Combat {
 
   static addListeners(combatTracker, html, data) {
     html.find('.combatant-control.flag').click(async (ev) => {
-      // if (!data.user.isGM) {
-      //   return;
-      // }
       const id = $(ev.currentTarget).closest('.combatant')[0].dataset.combatantId;
       const combatant = game.combat?.combatants.get(id);
       if (combatant) {
