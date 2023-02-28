@@ -180,7 +180,7 @@
   "HV.messages.CriticalFailure": "had a critical failure {wp} {vs}!",
   "HV.messages.absolution": "You have been absolved of the following sins...",
   "HV.messages.noAbsolution": "You were unable to absolve any of your sins.",
-  "HV.withThere": "with there {item}",
+  "HV.withTheir": "with their {item}",
   "HV.against": "against {opponent}",
   "HV.SpellCast": "A spell is cast!",
   "HV.SpellRememorize": "A spell is rememorized.",

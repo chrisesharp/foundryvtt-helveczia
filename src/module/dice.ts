@@ -60,7 +60,7 @@ export class HVDice {
     };
     if (data.item) {
       critical = data.item.system.critical;
-      withWeapon = game.i18n.format('HV.withThere', { item: data.item.name });
+      withWeapon = game.i18n.format('HV.withTheir', { item: data.item.name });
       if (data.item.system.reload > 0) {
         const attacker = data.item.actor as HVActor;
         await attacker.setFlag('helveczia', 'reload-trigger', data.item.system.reload);
