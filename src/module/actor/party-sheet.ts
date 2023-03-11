@@ -39,7 +39,7 @@ export class HVPartySheet extends HVActorSheet {
   }
 
   async _addActorToParty(actor: HVActor) {
-    if (actor.type !== 'character') {
+    if (actor.type === 'party') {
       return;
     }
     await actor.setFlag(game.system.id, 'party', this.actor.uuid);
