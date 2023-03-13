@@ -187,7 +187,7 @@ export class HVActorSheet extends ActorSheet {
             item.setFlag('helveczia', 'castSpell', false);
           }
         } else {
-          await item.createChatMessage(this.actor, 'HV.SpellLost');
+          await item.createChatMessage(this.actor, 'HV.SpellLost.short');
         }
       }
     });
