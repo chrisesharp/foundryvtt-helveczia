@@ -461,7 +461,7 @@ export class HVActor extends Actor {
   }
 
   isLowVirtue(): boolean {
-    return this.system.virtue < 7;
+    return this.system.virtue <= 7;
   }
 
   isHighVirtue(): boolean {

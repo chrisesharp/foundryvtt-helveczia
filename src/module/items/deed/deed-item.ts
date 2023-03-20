@@ -106,11 +106,10 @@ export class DeedItem extends BaseItem {
       item.effects.filter((_e) => true),
       item,
     );
-    await item.updateSource({ effects: [] });
     const itemData = item.system as DeedItemData;
     const magnitude = itemData.magnitude;
     const subtype = itemData.subtype;
-    const value = subtype === 'virtue' ? `${magnitude}` : `-${magnitude}`;
+    const value = subtype === 'virtue' ? magnitude : 0 - magnitude;
     const deedEffect = { key: 'system.virtue', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: value };
     const effect = await ActiveEffect.create(
       {
@@ -125,5 +124,6 @@ export class DeedItem extends BaseItem {
     if (effect) {
       await item.updateEmbeddedDocuments('ActiveEffect', [{ _id: effect.id, effects: [effect] }]);
     }
+    await item.updateSource({ effects: [effect] });
   }
 }
