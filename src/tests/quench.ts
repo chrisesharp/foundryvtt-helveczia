@@ -1,7 +1,9 @@
 import { nameTests } from './names.test';
+import { actorTests } from './actor.test';
 
 function registerQuenchTests(quench) {
-  quench.registerBatch('helveczia.samples', nameTests);
+  quench.registerBatch('helveczia.names', nameTests);
+  quench.registerBatch('helveczia.actor', actorTests);
 }
 
 export function init() {

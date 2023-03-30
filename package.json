@@ -28,7 +28,7 @@
     "lint": "eslint --ext .ts,.js,.cjs .",
     "lint:fix": "eslint --ext .ts,.js,.cjs --fix .",
     "format": "prettier --write \"./**/*.(ts|js|cjs|json|yml|scss)\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 0",
     "cypress:open": "cypress open",
     "postinstall": "husky install"
   },
