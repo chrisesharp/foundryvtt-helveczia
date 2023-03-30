@@ -49,7 +49,7 @@ export class HVNameGenerator {
     });
   }
 
-  static async showDialog(options = {}): Promise<void> {
+  static async showDialog(options = {}): Promise<Dialog | unknown> {
     const buttons = {
       ok: {
         label: game.i18n.localize('HV.dialog.findname'),
@@ -71,7 +71,7 @@ export class HVNameGenerator {
       },
     };
     const html = await renderTemplate('systems/helveczia/templates/names/dialog-name.hbs', {});
-    new Dialog({
+    return new Dialog({
       title: game.i18n.localize('HV.dialog.namegenerator'),
       content: html,
       buttons: buttons,
