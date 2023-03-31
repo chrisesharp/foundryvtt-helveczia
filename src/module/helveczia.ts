@@ -35,6 +35,7 @@ import { HVCardsHand, HVCardsPile, HVCardsControl } from './apps/cards';
 import { HVNameGenerator } from './apps/names';
 import { HVPartySheet } from './actor/party-sheet';
 import { Utils } from './utils/utils';
+import { init as quench_tests_init } from '../tests/quench';
 
 const log = new Logger();
 
@@ -99,6 +100,8 @@ Hooks.once('init', async () => {
   Items.registerSheet('helveczia', PeopleSheet, { types: ['people'] });
   Items.registerSheet('helveczia', SpellSheet, { types: ['spell'] });
   Items.registerSheet('helveczia', BookSheet, { types: ['book'] });
+
+  quench_tests_init(); // Will have no effect unless Quench is active
 });
 
 // Setup system
