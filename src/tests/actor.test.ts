@@ -6,13 +6,13 @@ export function actorTests(context) {
     title: string;
     init: string;
     virtue: number;
-    balance: string;
+    balance?: string;
     ac: number;
     saves: string[];
     combat: string[];
     tabs: string[];
     skills: string;
-    actor?: Actor;
+    pc?: boolean;
   };
 
   describe(
@@ -22,13 +22,15 @@ export function actorTests(context) {
 
       const characters: Character[] = [
         // eslint-disable-next-line prettier/prettier
-        { name: 'Aurel Vajthy', title: '2nd level Hungarian Hussar', init:'0', virtue: 6, balance: '-left', ac: 15, tabs: ['fighter'], saves: ['+4', '+1', '+2'], combat: ['+7', '+3', '+3'], skills: '5 / 5' },
+        { name: 'Aurel Vajthy', title: '2nd level Hungarian Hussar', init:'0', virtue: 6, balance: '-left', ac: 15, tabs: ['fighter'], saves: ['+4', '+1', '+2'], combat: ['+7', '+3', '+3'], skills: '5 / 5', pc: true },
         // eslint-disable-next-line prettier/prettier
-        { name: 'Gerhardt Maier', title: '2nd level German Cleric', init:'+1',virtue: 15, balance: '-right', ac: 13, tabs: ['cleric'], saves: ['+4', '+3', '+6'], combat: ['+1', '+2', '+1'], skills: '8 / 8' },
+        { name: 'Gerhardt Maier', title: '2nd level German Cleric', init:'+1',virtue: 15, balance: '-right', ac: 13, tabs: ['cleric'], saves: ['+4', '+3', '+6'], combat: ['+1', '+2', '+1'], skills: '8 / 8', pc: true },
         // eslint-disable-next-line prettier/prettier
-        { name: 'Isolde Knecht', title: '4th level German Student', init:'0',virtue: 11, balance: '', ac: 12, tabs: ['student'], saves: ['+3', '+2', '+5'], combat: ['+4', '+2', '+2'], skills: '10 / 10' },
+        { name: 'Isolde Knecht', title: '4th level German Student', init:'0',virtue: 11, balance: '', ac: 12, tabs: ['student'], saves: ['+3', '+2', '+5'], combat: ['+4', '+2', '+2'], skills: '10 / 10', pc: true },
         // eslint-disable-next-line prettier/prettier
-        { name: 'Jan Olbrecht', title: '2nd level Czech Vagabond', init:'+1', virtue: 7, balance: '-left', ac: 13, tabs: ['vagabond'], saves: ['+3', '+4', '+2'], combat: ['+3', '+3', '+2'], skills: '7 / 7' }
+        { name: 'Jan Olbrecht', title: '2nd level Czech Vagabond', init:'+1', virtue: 7, balance: '-left', ac: 13, tabs: ['vagabond'], saves: ['+3', '+4', '+2'], combat: ['+3', '+3', '+2'], skills: '7 / 7', pc: true },
+        // eslint-disable-next-line prettier/prettier
+        { name: 'Krampus', title: '3+2*', init:'+2', virtue: 2, ac: 13, tabs: [], saves: ['+5', '+3', '+3'], combat: ['+6', '+6', '+6'], skills: ''}
       ];
 
       before(() => {});
@@ -39,7 +41,7 @@ export function actorTests(context) {
 
       after(() => {});
 
-      characters.forEach(({ name, title, init, virtue, balance, ac, tabs, saves, combat, skills }) => {
+      characters.forEach(({ name, title, init, virtue, balance, ac, tabs, saves, combat, skills, pc }) => {
         describe(`render ${name}'s actor sheet correctly`, async () => {
           let sheet: any;
           let $html: any;
@@ -54,7 +56,9 @@ export function actorTests(context) {
             await actor?.sheet?.render(true);
 
             [sheet, $html] = await rendered.promise();
-            classPeopleLevel = $html.find('div.actor-class').text().replace(/\s+/g, ' ').trim();
+            classPeopleLevel = pc
+              ? $html.find('div.actor-class').text().replace(/\s+/g, ' ').trim()
+              : $html.find('input[name="data.levelBonus"]').val();
           });
 
           it('has correct title', () => {
@@ -88,7 +92,8 @@ export function actorTests(context) {
           });
 
           it('has correct tabs', () => {
-            const pcTabs = ['abilities', 'combat', 'skills', 'possessions', 'deeds', 'editor'];
+            const pcTabs = ['abilities', 'combat', 'skills', 'possessions', 'editor'];
+            if (pc) pcTabs.push('deeds');
             pcTabs.forEach((tab) => {
               const thisTab = $html.find(`[data-tab="${tab}"]`);
               expect(thisTab.length).to.equal(2); // tab sheet and navigation entry
@@ -100,25 +105,27 @@ export function actorTests(context) {
           });
 
           it('has correct virtue', () => {
-            const reds = $html.find('.full-mark-red').length;
-            const blues = $html.find('.full-mark-blue').length;
-            const greens = $html.find('.full-mark-green').length;
-            const empties = $html.find('.empty-mark').length;
-            expect(reds + blues + greens).to.equal(virtue);
-            expect(empties).to.equal(21 - virtue);
             expect($html.find('input[name="data.virtue"]').val()).to.equal(`${virtue}`);
-            const leftBalance = $html.find('.virtue-balance').find(`.fa-balance-scale${balance}:first-child`);
-            expect(leftBalance.length).to.equal(1);
-            const origVirtue = parseInt($html.find('input[name="data.origVirtue"]').val());
-            const sins = actor?.system.deeds
-              .filter((d) => d.system.subtype === 'sin')
-              .map((d) => parseInt(d.system.magnitude))
-              .reduce((partialSum, a) => partialSum + a, 0);
-            const virtues = actor?.system.deeds
-              .filter((d) => d.system.subtype === 'virtue')
-              .map((d) => parseInt(d.system.magnitude))
-              .reduce((partialSum, a) => partialSum + a, 0);
-            expect(origVirtue + virtues - sins).to.equal(virtue);
+            if (pc) {
+              const reds = $html.find('.full-mark-red').length;
+              const blues = $html.find('.full-mark-blue').length;
+              const greens = $html.find('.full-mark-green').length;
+              const empties = $html.find('.empty-mark').length;
+              expect(reds + blues + greens).to.equal(virtue);
+              expect(empties).to.equal(21 - virtue);
+              const leftBalance = $html.find('.virtue-balance').find(`.fa-balance-scale${balance}:first-child`);
+              expect(leftBalance.length).to.equal(1);
+              const origVirtue = parseInt($html.find('input[name="data.origVirtue"]').val());
+              const sins = actor?.system.deeds
+                .filter((d) => d.system.subtype === 'sin')
+                .map((d) => parseInt(d.system.magnitude))
+                .reduce((partialSum, a) => partialSum + a, 0);
+              const virtues = actor?.system.deeds
+                .filter((d) => d.system.subtype === 'virtue')
+                .map((d) => parseInt(d.system.magnitude))
+                .reduce((partialSum, a) => partialSum + a, 0);
+              expect(origVirtue + virtues - sins).to.equal(virtue);
+            }
           });
           // expect({ foo: 'bar' }).to.matchSnapshot();
           after(async () => {
