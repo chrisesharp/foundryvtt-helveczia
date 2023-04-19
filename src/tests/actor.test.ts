@@ -21,6 +21,7 @@ export function actorTests(context) {
       this.timeout(10000);
 
       const characters: Character[] = [
+        // Aurel gets +2 AC for being Hungarian
         // eslint-disable-next-line prettier/prettier
         { name: 'Aurel Vajthy', title: '2nd level Hungarian Hussar', init:'0', virtue: 6, balance: '-left', ac: 15, tabs: ['fighter'], saves: ['+4', '+1', '+2'], combat: ['+7', '+3', '+3'], skills: '5 / 5', pc: true },
         // eslint-disable-next-line prettier/prettier
