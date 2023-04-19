@@ -42,7 +42,7 @@ export class Vagabond {
       if (!item.actor?.isVagabond()) {
         ui.notifications.error(
           game.i18n.format('HV.errors.requiredProfession', {
-            requiredProfession: game.i18n.localize('HV.class.student'),
+            requiredProfession: game.i18n.localize('HV.class.vagabond'),
           }),
         );
         return;
