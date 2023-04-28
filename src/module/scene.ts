@@ -3,8 +3,8 @@ export class HVSceneConfig extends SceneConfig {
     const $html = await super._renderInner(data);
     if (game.settings.get('helveczia', 'token-depth')) {
       // add scene config for scale factor
-      const scale = (this.object as Scene)?.flags?.helveczia['scale'] ?? CONFIG.HV.DEFAULT_SCENE_SCALE;
-      const elevation = (this.object as Scene)?.flags?.helveczia['elevation'] ?? CONFIG.HV.DEFAULT_ELEVATION;
+      const scale = (this.object as Scene)?.flags?.helveczia?.scale ?? CONFIG.HV.DEFAULT_SCENE_SCALE;
+      const elevation = (this.object as Scene)?.flags?.helveczia?.elevation ?? CONFIG.HV.DEFAULT_ELEVATION;
       const scaling = $(`<hr><div class="form-group">
           <label>${game.i18n.localize('HV.Setting.tokenScale')}</label>
           <div class="form-fields">

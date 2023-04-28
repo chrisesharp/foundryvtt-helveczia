@@ -1,12 +1,15 @@
 export function registerKeyBindings(): void {
+  const scaleFunc = () => {
+    const settings = canvas?.scene?.flags['helveczia'] ?? {};
+    const scaleSetting = Math.max(0.05, Math.min(0.95, Math.abs(parseFloat(settings.scale))));
+    return isFinite(scaleSetting) ? scaleSetting : CONFIG.HV.DEFAULT_SCENE_SCALE;
+  };
   if (CONFIG.HV.depthTokens) {
     game.keybindings.register('helveczia', 'hv-token-forward', {
       name: 'token-forward',
       editable: [{ key: 'PageDown', modifiers: ['Shift'] }],
       onDown: () => {
-        const settings = canvas?.scene?.flags['helveczia'] ?? {};
-        const scale = parseFloat(settings.scale) ?? CONFIG.HV.DEFAULT_SCENE_SCALE;
-        setElevation(1, 1 + scale);
+        setElevation(1, 1 + scaleFunc());
         return true;
       },
     });
@@ -14,9 +17,7 @@ export function registerKeyBindings(): void {
       name: 'token-back',
       editable: [{ key: 'PageUp', modifiers: ['Shift'] }],
       onDown: () => {
-        const settings = canvas?.scene?.flags['helveczia'] ?? {};
-        const scale = parseFloat(settings.scale) ?? CONFIG.HV.DEFAULT_SCENE_SCALE;
-        setElevation(-1, 1 - scale);
+        setElevation(-1, 1 - scaleFunc());
         return true;
       },
     });
