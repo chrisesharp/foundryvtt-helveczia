@@ -34,9 +34,9 @@ export function registerSettings(): void {
   game.settings.register('helveczia', 'token-depth', {
     name: game.i18n.localize('HV.Setting.tokenDepth'),
     hint: game.i18n.localize('HV.Setting.tokenDepthHint'),
-    default: true,
+    default: false,
     scope: 'world',
     type: Boolean,
-    config: false,
+    config: true,
   });
 }
