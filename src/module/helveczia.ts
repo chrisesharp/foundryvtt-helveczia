@@ -36,6 +36,9 @@ import { HVNameGenerator } from './apps/names';
 import { HVPartySheet } from './actor/party-sheet';
 import { Utils } from './utils/utils';
 import { init as quench_tests_init } from '../tests/quench';
+import { registerKeyBindings } from './keys';
+import { HVToken } from './token';
+import { HVSceneConfig } from './scene';
 
 const log = new Logger();
 
@@ -50,17 +53,21 @@ Hooks.once('init', async () => {
   CONFIG.HV = HV;
   CONFIG.Actor.documentClass = HVActor;
   CONFIG.Item.documentClass = HVItem;
+  CONFIG.Token.objectClass = HVToken;
   CONFIG.Combatant.documentClass = HVCombatant;
   CONFIG.Combat.documentClass = HVCombat;
 
   // Register custom system settings
   registerSettings();
+  CONFIG.HV.showEffects = game.settings.get('helveczia', 'effects') as boolean;
+  CONFIG.HV.flipTokens = game.settings.get('helveczia', 'token-flip') as boolean;
+  CONFIG.HV.depthTokens = game.settings.get('helveczia', 'token-depth') as boolean;
 
   // Register custom handlebar helpers
   registerHandlebarHelpers();
 
-  CONFIG.HV.showEffects = game.settings.get('helveczia', 'effects') as boolean;
-  CONFIG.HV.flipTokens = game.settings.get('helveczia', 'token-flip') as boolean;
+  // Register special keys
+  registerKeyBindings();
 
   CONFIG.Combat.initiative = {
     formula: '1d20+@initiative',
@@ -100,6 +107,9 @@ Hooks.once('init', async () => {
   Items.registerSheet('helveczia', PeopleSheet, { types: ['people'] });
   Items.registerSheet('helveczia', SpellSheet, { types: ['spell'] });
   Items.registerSheet('helveczia', BookSheet, { types: ['book'] });
+
+  DocumentSheetConfig.unregisterSheet(Scene, 'core', SceneConfig);
+  DocumentSheetConfig.registerSheet(Scene, 'core', HVSceneConfig);
 
   quench_tests_init(); // Will have no effect unless Quench is active
 });

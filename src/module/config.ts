@@ -17,6 +17,9 @@ export interface HelvecziaConfig {
   createCardsFor?: (string) => void;
   DEFAULT_TOKEN: string;
   DEFAULT_PARTY: string;
+  DEFAULT_ELEVATION: number;
+  DEFAULT_SCENE_SCALE: number;
+
   actorClasses: {
     [key: string]: typeof HVActor;
     [key: number]: typeof HVActor;
@@ -50,6 +53,7 @@ export interface HelvecziaConfig {
 
   showEffects: boolean;
   flipTokens: boolean;
+  depthTokens: boolean;
 
   XPLevels: {
     [key: number]: number;
@@ -111,9 +115,12 @@ export interface HelvecziaConfig {
 export const HV: HelvecziaConfig = {
   DEFAULT_TOKEN: 'systems/helveczia/assets/people/male/man_0.png',
   DEFAULT_PARTY: 'systems/helveczia/assets/people/groups/group_0.png',
+  DEFAULT_ELEVATION: 3,
+  DEFAULT_SCENE_SCALE: 0.1,
 
   showEffects: false,
   flipTokens: false,
+  depthTokens: false,
 
   actorClasses: {
     character: HVActor,
