@@ -27,7 +27,7 @@ export function registerKeyBindings(): void {
 async function setElevation(elevationChange, scaleChange) {
   const tokens = canvas?.tokens?.controlled ?? [];
   const updates = tokens.map((token) => {
-    const elevation = token.document.elevation + elevationChange;
+    const elevation = parseInt(token.document.elevation) + elevationChange;
     return {
       _id: token.id,
       elevation: elevation >= 0 ? elevation : 0,
