@@ -146,6 +146,14 @@ Hooks.on('preUpdateToken', async (tokenDocument, change, options, _userid) => {
   }
 });
 
+Hooks.on('refreshToken', async (token, _options) => {
+  // if (options.refreshElevation) {
+  //   options.refreshElevation = !CONFIG.HV.depthTokens;
+  //   token.renderFlags.set(options);
+  // }
+  if (CONFIG.HV.depthTokens) token.tooltip.text = '';
+});
+
 Hooks.on('applyActiveEffect', async (actor, changeData) => {
   if (!Utils.canModifyActor(game.user, actor)) {
     return;

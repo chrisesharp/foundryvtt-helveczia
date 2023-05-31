@@ -12,11 +12,11 @@
       "discord": ""
     }
   ],
-  "minimumCoreVersion": "10",
-  "compatibleCoreVersion": "10.290",
+  "minimumCoreVersion": "11",
+  "compatibleCoreVersion": "11",
   "compatibility": {
-    "minimum": 10,
-    "verified": "10.290"
+    "minimum": 11,
+    "verified": "11.299"
   },
   "scripts": [
     "https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.3/purify.min.js",
