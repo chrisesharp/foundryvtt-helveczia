@@ -142,7 +142,7 @@ Hooks.on('preUpdateToken', async (tokenDocument, change, options, _userid) => {
   if (!CONFIG.HV.flipTokens) return;
   if (change.rotation === 90 || change.rotation === 270) {
     change.texture = { scaleX: 0 - tokenDocument.texture.scaleX };
-    options.animation = { duration: 0 };
+    options.animation = { duration: 100 };
   }
 });
 

@@ -16,7 +16,7 @@
   "compatibleCoreVersion": "11",
   "compatibility": {
     "minimum": 11,
-    "verified": "11.300"
+    "verified": "11"
   },
   "scripts": [
     "https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.3/purify.min.js",
