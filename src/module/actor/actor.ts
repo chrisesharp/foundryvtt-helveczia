@@ -47,7 +47,7 @@ export class HVActor extends Actor {
     let threat = 0;
     data.npcModBonus = 0;
     if (groups?.threat?.length > 0) {
-      const bonus = parseInt(groups.threat[0]);
+      const bonus = isNaN(groups.threat[0]) ? 0 : parseInt(groups.threat[0]);
       data.npcModBonus = bonus;
       data.ac -= bonus;
       threat = groups.threat.length - 1;
