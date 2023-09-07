@@ -110,8 +110,10 @@ export class PeopleItem extends BaseItem {
   }
 
   static getCzechSkill(actor: HVActor): number {
-    const gainedSkill = actor.getFlag('helveczia', 'czech-skill');
-    return gainedSkill ? 1 : 0;
+    const isStudentOrCleric = actor?.isCleric() || actor?.isStudent();
+    const gainedSkill = isStudentOrCleric && actor.system.level >= 4 ? 1 : 0;
+    const scienceSkill = isStudentOrCleric ? 1 : 0;
+    return gainedSkill + scienceSkill;
   }
 
   static async cleanupCzechSkill(actor: HVActor): Promise<void> {
