@@ -128,11 +128,11 @@ export class PeopleItem extends BaseItem {
     if (data.type === 'skill') {
       if (actor.isDutch()) {
         if (data.name === 'Sail' || data.name === 'Appraise') {
-          data.system.bonus += 2;
+          data.system.bonus = 2;
         }
       } else if (actor.isItalian()) {
         if (data.name === 'Gambling') {
-          data.system.bonus += 2;
+          data.system.bonus = 2;
         }
       }
     }
