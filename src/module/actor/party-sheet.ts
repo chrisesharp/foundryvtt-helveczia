@@ -10,7 +10,7 @@ export class HVPartySheet extends HVActorSheet {
       classes: ['helveczia', 'party-sheet'],
       template: 'systems/helveczia/templates/party/party-sheet.hbs',
       width: width,
-      height: 350,
+      height: 450,
       resizable: true,
       dragDrop: [{ dragSelector: '.directory-item .actor', dropSelector: null }],
       tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'summary' }],
