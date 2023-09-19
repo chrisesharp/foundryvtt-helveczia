@@ -30,7 +30,7 @@ export class HVChat {
     if (!chatCard) return;
     try {
       const actor = await Utils.getActorFromUUID(chatCard.attr('data-actor-id'));
-      if (actor && actor.isOwner) {
+      if (actor?.isOwner) {
         await HVChat._addCritButton(msg, actor, chatCard);
       }
     } catch (e) {

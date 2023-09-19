@@ -14,7 +14,7 @@ export class HVCombat extends Combat {
         const id = ct.dataset.combatantId;
         const cmbtant = combatTracker.viewed.combatants.get(id) as Combatant;
         const actor = cmbtant.actor;
-        const initBonus = cmbtant.getFlag('helveczia', 'init-bonus') ?? 0;
+        const initBonus = (cmbtant.getFlag('helveczia', 'init-bonus') as number) ?? 0;
         const initiativeCtrl = $(ct).find('.token-initiative');
         const currentTurn = current.round + current.turn * turnFraction;
         log.debug(`HVCombat.format() | currentTurn = ${currentTurn}`);
