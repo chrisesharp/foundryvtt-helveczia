@@ -12,6 +12,7 @@ export class HVPartySheet extends HVActorSheet {
       width: width,
       height: 450,
       resizable: true,
+      scrollY: ['.party-members'],
       dragDrop: [{ dragSelector: '.directory-item .actor', dropSelector: null }],
       tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'summary' }],
     });
