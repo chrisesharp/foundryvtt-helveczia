@@ -71,6 +71,7 @@ export class HVNameGenerator {
       },
     };
     const html = await renderTemplate('systems/helveczia/templates/names/dialog-name.hbs', {});
+    options['width'] = 425;
     return new Dialog({
       title: game.i18n.localize('HV.dialog.namegenerator'),
       content: html,
