@@ -19,3 +19,5 @@ To install in Foundry VTT, provide this manifest URL:
 A big thank you to Gabor Lux for his support and permission to use material from the Helvéczia RPG.
 
 I would also like to give a big thank you to Tóth György Szilveszter for his very comprehensive testing and translation work!
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F1F6T5AXX)
