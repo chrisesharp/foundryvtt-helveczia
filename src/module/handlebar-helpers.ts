@@ -1,3 +1,6 @@
+import { Cleric } from './items/class/cleric';
+import { Student } from './items/class/student';
+
 export const registerHandlebarHelpers = async function () {
   Handlebars.registerHelper('gt', function (a, b) {
     return a > b;
@@ -86,6 +89,14 @@ export const registerHandlebarHelpers = async function () {
 
   Handlebars.registerHelper('deedLocalize', function (text) {
     return game.i18n.localize(`HV.deeds.${text}`);
+  });
+
+  Handlebars.registerHelper('isStudentSpecialSkill', function (name) {
+    return Student.specialisms().includes(name);
+  });
+
+  Handlebars.registerHelper('isClericSpecialSkill', function (name) {
+    return Cleric.specialisms().includes(name);
   });
 
   Handlebars.registerHelper('concat', function (args) {
