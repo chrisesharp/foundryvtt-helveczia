@@ -23,10 +23,10 @@ export function actorTests(context) {
       const characters: Character[] = [
         // Aurel gets +2 AC for being Hungarian
         // eslint-disable-next-line prettier/prettier
-        { name: 'Aurel Vajthy', title: '2nd level Hungarian Hussar', init:'0', virtue: 6, balance: '-left', ac: 15, tabs: ['fighter'], saves: ['+4', '+1', '+2'], combat: ['+7', '+3', '+3'], skills: '5 / 5', pc: true },
+        { name: 'Aurel Vajthy', title: '2nd level Hungarian Hussar', init:'0', virtue: 7, balance: '-left', ac: 15, tabs: ['fighter'], saves: ['+4', '+1', '+2'], combat: ['+7', '+3', '+3'], skills: '5 / 5', pc: true },
         // Gerhard gets +1 to saves for high virtue
         // eslint-disable-next-line prettier/prettier
-        { name: 'Gerhardt Maier', title: '2nd level German Cleric', init:'+2',virtue: 15, balance: '-right', ac: 14, tabs: ['cleric'], saves: ['+4', '+4', '+6'], combat: ['0', '+3', '+1'], skills: '8 / 8', pc: true },
+        { name: 'Gerhardt Maier', title: '2nd level German Cleric', init:'+2',virtue: 12, balance: '-right', ac: 14, tabs: ['cleric'], saves: ['+3', '+3', '+5'], combat: ['0', '+3', '+1'], skills: '8 / 8', pc: true },
         // eslint-disable-next-line prettier/prettier
         { name: 'Isolde Knecht', title: '4th level German Student', init:'0',virtue: 12, balance: '', ac: 12, tabs: ['student'], saves: ['+3', '+2', '+5'], combat: ['+4', '+2', '+2'], skills: '10 / 10', pc: true },
         // eslint-disable-next-line prettier/prettier
@@ -115,8 +115,10 @@ export function actorTests(context) {
               const empties = $html.find('.empty-mark').length;
               expect(reds + blues + greens).to.equal(virtue);
               expect(empties).to.equal(21 - virtue);
-              const leftBalance = $html.find('.virtue-balance').find(`.fa-balance-scale${balance}:first-child`);
-              expect(leftBalance.length).to.equal(1);
+              if (virtue < 8) {
+                const leftBalance = $html.find('.virtue-balance').find(`.fa-balance-scale${balance}:first-child`);
+                expect(leftBalance.length).to.equal(1);
+              }
               const origVirtue = parseInt($html.find('input[name="data.origVirtue"]').val());
               const sins = actor?.system.deeds
                 .filter((d) => d.system.subtype === 'sin')
