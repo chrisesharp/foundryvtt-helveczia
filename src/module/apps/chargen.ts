@@ -90,6 +90,9 @@ export class HVCharacterCreator extends FormApplication {
     const hd = data.hp.hd;
     const con = data.scores.con.mod;
     const rollParts = [`${level - 1}d${hd}`, `${hd}+${con}`, `${con}*${level - 1}`];
+    if (data.npcModBonus > 0) {
+      rollParts.push(`${level}*${data.npcModBonus}`);
+    }
     const roll = await HVCharacterCreator.rollScore(rollParts);
     log.debug('Hitpoints rolled for :', actorData.name, rollParts.join('+'), roll.total);
     return {
