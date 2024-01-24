@@ -223,16 +223,22 @@ export class HVActor extends Actor {
    * Update base & bonus for saves
    */
   _updateSaves(data: any) {
-    const virtue = this.isHighVirtue() ? 1 : 0;
-    data.saves.bravery.bonus += data.scores.con.mod + virtue + data.npcModBonus;
-    data.saves.deftness.bonus += data.scores.dex.mod + virtue + data.npcModBonus;
-    data.saves.temptation.bonus += data.scores.wis.mod + virtue + data.npcModBonus;
+    if (this.type === 'npc' && data.stats.saves) {
+      data.saves.bravery.mod = parseInt(data.stats.saves.bravery);
+      data.saves.deftness.mod = parseInt(data.stats.saves.deftness);
+      data.saves.temptation.mod = parseInt(data.stats.saves.temptation);
+    } else {
+      const virtue = this.isHighVirtue() ? 1 : 0;
+      data.saves.bravery.bonus += data.scores.con.mod + virtue + data.npcModBonus;
+      data.saves.deftness.bonus += data.scores.dex.mod + virtue + data.npcModBonus;
+      data.saves.temptation.bonus += data.scores.wis.mod + virtue + data.npcModBonus;
 
-    const bases = data.classes.length > 0 ? data.classes[0]?.getSaveBase(this) : Fighter.getSaveBase(this);
-    for (const saveType of Object.keys(data.saves)) {
-      const save = data.saves[saveType];
-      save.base = bases ? bases[saveType] : 0;
-      save.mod = save.base + save.bonus;
+      const bases = data.classes.length > 0 ? data.classes[0]?.getSaveBase(this) : Fighter.getSaveBase(this);
+      for (const saveType of Object.keys(data.saves)) {
+        const save = data.saves[saveType];
+        save.base = bases ? bases[saveType] : 0;
+        save.mod = save.base + save.bonus;
+      }
     }
   }
 
