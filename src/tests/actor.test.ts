@@ -138,6 +138,6 @@ export function actorTests(context) {
         });
       });
     },
-    { displayName: 'QUENCH: Snapshot Test', snapBaseDir: '__snapshots__/quench-with-a-twist' },
+    { displayName: 'QUENCH: Snapshot Test' },
   );
 }

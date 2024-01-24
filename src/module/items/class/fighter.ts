@@ -49,10 +49,13 @@ export class Fighter {
     return { bravery: base + 2, deftness: base, temptation: base };
   }
 
-  static async cleanup(actor: HVActor, _item: any): Promise<void> {
-    await actor.setFlag('helveczia', 'fighter-class', false);
-    log.debug('Fighter.getSkillsBonus() |  fighter-class flag set to false');
-    await actor.setFlag('helveczia', 'fighter-specialism', false);
-    log.debug('Fighter.getSkillsBonus() |  fighter-specialism flag set to false');
+  static async cleanup(actor: HVActor, item: any): Promise<void> {
+    if (item.system.specialism) {
+      await actor.setFlag('helveczia', 'fighter-specialism', false);
+      log.debug('Fighter.getSkillsBonus() |  fighter-specialism flag set to false');
+    } else {
+      await actor.setFlag('helveczia', 'fighter-class', false);
+      log.debug('Fighter.getSkillsBonus() |  fighter-class flag set to false');
+    }
   }
 }
