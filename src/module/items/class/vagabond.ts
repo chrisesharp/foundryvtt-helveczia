@@ -36,6 +36,10 @@ export class Vagabond {
     return ['Improved Initiative', 'Legends', 'Sneak Attack', "Traveller's Luck", 'Vagabond Skills'];
   }
 
+  static specialistSkills(): string[] {
+    return ['Legends', 'Sneak Attack', "Traveller's Luck"];
+  }
+
   static async onCreate(item: HVItem): Promise<void> {
     const sourceItemData = item.system as ClassItemData;
     if (sourceItemData.specialism) {
@@ -99,8 +103,16 @@ export class Vagabond {
   }
 
   static getSkillsBonus(actor: HVActor): number {
-    const gainedSkills = actor.isVagabond() && actor.getFlag('helveczia', 'vagabond-skills');
-    return gainedSkills ? 4 : 0;
+    // 2 base specialist skills + 4 from vagabond skills + 1 from 5th level
+    const base = Vagabond.hasSpecialistSkills(actor);
+    const gainedSkills = actor.isVagabond() && actor.getFlag('helveczia', 'vagabond-skills') ? 4 : 0;
+    const levelSkill = actor.isVagabond() && actor.system.level >= 5 ? 1 : 0;
+    return base + gainedSkills + levelSkill;
+  }
+
+  static hasSpecialistSkills(actor: HVActor): number {
+    const bonuses = actor.system.specialisms.filter((i) => Vagabond.specialistSkills().includes(i.name)).length;
+    return bonuses;
   }
 
   static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
