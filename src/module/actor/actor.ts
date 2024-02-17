@@ -452,6 +452,10 @@ export class HVActor extends Actor {
     return this.isNamedType('Hungarian', 'people');
   }
 
+  isCzech(): boolean {
+    return this.isNamedType('Czech', 'people');
+  }
+
   isDutch(): boolean {
     return this.isNamedType('Dutch', 'people');
   }
@@ -461,7 +465,6 @@ export class HVActor extends Actor {
   }
 
   isNamedType(name: string, type: string): boolean {
-    // const namedClass = actorData.items.find((i) => i.type === type && i.name === name);
     const namedClass = this.itemTypes[type].find((i) => i.name === name);
     return namedClass !== undefined;
   }

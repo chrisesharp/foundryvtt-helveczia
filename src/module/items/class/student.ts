@@ -62,7 +62,8 @@ export class Student {
       }
 
       if (item.name === 'Doctorate') {
-        if (item.actor.system.level == 6) {
+        const reqLevel = item.actor.isCzech() ? 4 : 6;
+        if (item.actor.system.level >= reqLevel) {
           log.debug('Student.onCreate() | student-doctorate flag set to true');
           await item.actor?.setFlag('helveczia', 'student-doctorate', true);
           Math.floor(Math.random());
@@ -74,6 +75,8 @@ export class Student {
             .sort()
             .reverse();
           await item.actor?.setFlag('helveczia', 'student-dr-spells', extra_spells);
+          const totalExtra = extra_spells.reduce((acc, val) => acc + val, 0);
+          ui.notifications.info(game.i18n.localize('HV.student.docBonus') + `: ${totalExtra}`);
         } else {
           ui.notifications.error(game.i18n.localize('HV.errors.requiredLevel'));
         }
