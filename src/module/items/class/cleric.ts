@@ -19,7 +19,13 @@ const clericSpecialisms = {
     description: 'HV.cleric.healing',
     flag: 'cleric-healing',
   },
+  Doctorate: {
+    description: 'HV.cleric.doctorate',
+    flag: 'cleric-doctorate',
+  },
 };
+
+const specialistSkills = ['Spells', 'Exorcism', 'Healing'];
 
 async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void> {
   log.debug(`Cleric.deleteSpecialistSkill() | deleting ${name}`);
@@ -67,7 +73,7 @@ export class Cleric {
       log.debug('Cleric.onCreate() | cleric-class flag set to true');
       actor?.setFlag('helveczia', 'cleric-class', true);
       Promise.all(
-        Object.keys(clericSpecialisms).map((s) => {
+        specialistSkills.map((s) => {
           const skill = {
             name: s,
             type: 'skill',
@@ -86,9 +92,10 @@ export class Cleric {
   }
 
   static getSkillsBonus(actor: HVActor): number {
-    const gainedSixthLevelSkills = actor?.isCleric() && actor.system.level == 6;
-    // base 3 extra to cover Cleric specialist skills. and 6 extra at 6th level
-    return gainedSixthLevelSkills ? 9 : 3;
+    const gainedSkills = actor?.isCleric() && actor.system.level == 6;
+    // base 3 extra to cover Cleric specialist skills. and 1 extra at 6th level
+    const bonusSkills = specialistSkills.length;
+    return gainedSkills ? bonusSkills + 1 : bonusSkills;
   }
 
   static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {

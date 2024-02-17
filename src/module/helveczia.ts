@@ -124,6 +124,8 @@ Hooks.once('setup', async () => {
 Hooks.once('ready', async () => {
   // Do anything once the system is ready
   if (game.user?.isGM) {
+    Utils.migrate();
+
     const hungarians = game.actors?.filter((i) => i.isHungarian());
     if (hungarians?.length) {
       Promise.all(hungarians?.map(async (actor) => await actor.setFlag('helveczia', 'fate-invoked', false)));

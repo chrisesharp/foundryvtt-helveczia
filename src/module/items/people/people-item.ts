@@ -105,15 +105,14 @@ export class PeopleItem extends BaseItem {
   }
 
   static async onCreateCzech(item: HVItem): Promise<void> {
-    const gainedSkill = item.actor?.system.level >= 4 && (item.actor?.isCleric() || item.actor?.isStudent());
+    const gainedSkill = item.actor?.isCleric() || item.actor?.isStudent();
     item.actor?.setFlag('helveczia', 'czech-skill', gainedSkill);
   }
 
   static getCzechSkill(actor: HVActor): number {
     const isStudentOrCleric = actor?.isCleric() || actor?.isStudent();
-    const gainedSkill = isStudentOrCleric && actor.system.level >= 4 ? 1 : 0;
     const scienceSkill = isStudentOrCleric ? 1 : 0;
-    return gainedSkill + scienceSkill;
+    return scienceSkill;
   }
 
   static async cleanupCzechSkill(actor: HVActor): Promise<void> {

@@ -17,6 +17,8 @@ const studentSpecialisms = {
   },
 };
 
+const specialistSkills = ['Spells'];
+
 async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void> {
   log.debug(`Student.deleteSpecialistSkill() | deleting ${name}`);
   const skills = actor.items.filter(
@@ -62,7 +64,7 @@ export class Student {
       log.debug('Student.onCreate() | student-class flag set to true');
       item.actor?.setFlag('helveczia', 'student-class', true);
       Promise.all(
-        Object.keys(studentSpecialisms).map((s) => {
+        specialistSkills.map((s) => {
           const skill = {
             name: s,
             type: 'skill',
@@ -81,9 +83,10 @@ export class Student {
   }
 
   static getSkillsBonus(actor: HVActor): number {
-    const gainedSkills = actor.isStudent();
-    // base 2 extra to cover Student specialist skills. and 2 extra as a student
-    return gainedSkills ? 4 : 2;
+    const gainedSkills = actor.isStudent() && actor.system.level == 6;
+    // base 2 extra to cover Student specialist skills. and 2 extra science as a student
+    const bonusSkills = specialistSkills.length + 2;
+    return gainedSkills ? bonusSkills + 1 : bonusSkills;
   }
 
   static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {

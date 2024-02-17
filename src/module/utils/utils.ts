@@ -1,5 +1,8 @@
 import { HVActor } from '../actor/actor';
 import { HVItem } from '../items/item';
+import { Logger } from '../logger';
+
+const log = new Logger();
 
 type EmbeddedSubject = HVItem | HVActor;
 
@@ -9,6 +12,10 @@ export enum EmbeddedObject {
 }
 
 type EmbeddedObjectType = HVItem | ActiveEffect;
+
+const migrations = {
+  '3.0.10': migrateTo3_1_0,
+};
 
 export class Utils {
   static async deleteEmbeddedArray(arr: EmbeddedObjectType[], subject: EmbeddedSubject) {
@@ -39,4 +46,39 @@ export class Utils {
       actor?.testUserPermission(user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER)
     );
   }
+
+  static migrate() {
+    if (!game.user?.isGM) {
+      return;
+    }
+
+    const currentVersion = game.settings.get('helveczia', 'systemMigrationVersion') as string;
+    Object.keys(migrations).forEach(function (key) {
+      if (!currentVersion || isNewerVersion(key, currentVersion)) migrations[key]();
+    });
+  }
+}
+
+async function migrateTo3_1_0() {
+  const options = { permanent: true };
+  ui.notifications.warn('Migrating your data to version 3.1.0. Please, wait until it finishes.', options);
+  for (const actor of game.actors?.contents) {
+    await migrateTo3_1_Actor(actor);
+  }
+  await game.settings.set('helveczia', 'systemMigrationVersion', game.system.version);
+  ui.notifications.info('Data migrated to version 3.1.0.', options);
+}
+
+function migrateTo3_1_Actor(actor: HVActor) {
+  if (actor.type != 'character') return;
+
+  const skills = actor.items.filter(
+    (i) =>
+      i.type === 'skill' &&
+      i.name === 'Doctorate' &&
+      i.system.subtype === 'magical' &&
+      i.getFlag('helveczia', 'locked') === true,
+  );
+  log.debug(`utils.migrateTo3_1_Actor() | updating ${actor.name}`);
+  return Utils.deleteEmbeddedArray(skills, actor);
 }

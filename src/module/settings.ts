@@ -39,4 +39,11 @@ export function registerSettings(): void {
     type: Boolean,
     config: true,
   });
+
+  game.settings.register('helveczia', 'systemMigrationVersion', {
+    config: false,
+    scope: 'world',
+    type: String,
+    default: '',
+  });
 }
