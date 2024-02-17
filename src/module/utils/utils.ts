@@ -69,7 +69,7 @@ async function migrateTo3_1_0() {
   ui.notifications.info('Data migrated to version 3.1.0.', options);
 }
 
-function migrateTo3_1_Actor(actor: HVActor) {
+async function migrateTo3_1_Actor(actor: HVActor) {
   if (actor.type != 'character') return;
 
   const skills = actor.items.filter(
@@ -79,6 +79,12 @@ function migrateTo3_1_Actor(actor: HVActor) {
       i.system.subtype === 'magical' &&
       i.getFlag('helveczia', 'locked') === true,
   );
+  if (actor.isStudent() && actor.system.level < 6) {
+    await actor.setFlag('helveczia', 'student-doctorate', false);
+  }
+  if (actor.isCleric() && actor.system.level < 6) {
+    await actor.setFlag('helveczia', 'cleric-doctorate', false);
+  }
   log.debug(`utils.migrateTo3_1_Actor() | updating ${actor.name}`);
   return Utils.deleteEmbeddedArray(skills, actor);
 }

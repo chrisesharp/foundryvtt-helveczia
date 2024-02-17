@@ -39,6 +39,7 @@ export class HVCharacterSheet extends HVActorSheet {
       fighter_class: this.actor.getFlag('helveczia', 'fighter-class'),
       vagabond_class: this.actor.getFlag('helveczia', 'vagabond-class'),
       cleric_class: this.actor.isCleric(),
+      cleric_doctorate: this.actor.getFlag('helveczia', 'cleric-doctorate'),
       fighter_specialism: this.actor.getFlag('helveczia', 'fighter-specialism'),
       fighter_third_skill: this.actor.getFlag('helveczia', 'fighter-third-skill'),
       fighter_fifth_skill: this.actor.getFlag('helveczia', 'fighter-fifth-skill'),
@@ -46,6 +47,7 @@ export class HVCharacterSheet extends HVActorSheet {
       student_skills_generated:
         this.actor.getFlag('helveczia', 'student-skill-generated-1') &&
         this.actor.getFlag('helveczia', 'student-skill-generated-2'),
+      student_doctorate: this.actor.getFlag('helveczia', 'student-doctorate'),
       bonusSpellsChosen: this.actor.getFlag('helveczia', 'bonusSpellsChosen') as number,
       options: this.options,
       editable: this.isEditable,

@@ -44,7 +44,6 @@ export class HVActorSheet extends ActorSheet {
 
   async _removePeoples(item): Promise<boolean> {
     if (item.name === this.actor.system.people) return false;
-    // const peoples = this.actor.items.filter((i) => i.type == 'people');
     const peoples = this.actor.itemTypes['people'];
     await Utils.deleteEmbeddedArray(peoples, this.actor);
     return true;

@@ -69,6 +69,15 @@ export class Cleric {
         );
         return;
       }
+
+      if (item.name === 'Doctorate') {
+        if (item.actor.system.level == 6) {
+          log.debug('Cleric.onCreate() | cleric-doctorate flag set to true');
+          item.actor?.setFlag('helveczia', 'cleric-doctorate', true);
+        } else {
+          ui.notifications.error(game.i18n.localize('HV.errors.requiredLevel'));
+        }
+      }
     } else {
       log.debug('Cleric.onCreate() | cleric-class flag set to true');
       actor?.setFlag('helveczia', 'cleric-class', true);
@@ -92,10 +101,10 @@ export class Cleric {
   }
 
   static getSkillsBonus(actor: HVActor): number {
-    const gainedSkills = actor?.isCleric() && actor.system.level == 6;
+    const doctorateSkill = actor.getFlag('helveczia', 'student-doctorate');
     // base 3 extra to cover Cleric specialist skills. and 1 extra at 6th level
     const bonusSkills = specialistSkills.length;
-    return gainedSkills ? bonusSkills + 1 : bonusSkills;
+    return doctorateSkill ? bonusSkills + 1 : bonusSkills;
   }
 
   static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
@@ -114,7 +123,11 @@ export class Cleric {
     return spells;
   }
 
-  static async cleanup(actor: HVActor, _item: any): Promise<void> {
+  static async cleanup(actor: HVActor, item: any): Promise<void> {
+    const sourceItemData = item.system as ClassItemData;
+    if (sourceItemData.specialism) {
+      return;
+    }
     Promise.all(
       Object.keys(clericSpecialisms).map((s) => {
         actor?.setFlag('helveczia', clericSpecialisms[s].flag, false);
@@ -122,6 +135,6 @@ export class Cleric {
       }),
     );
     log.debug('Cleric.cleanup() |  cleric-class flag set to false');
-    actor.setFlag('helveczia', 'cleric-class', false);
+    await actor.setFlag('helveczia', 'cleric-class', false);
   }
 }

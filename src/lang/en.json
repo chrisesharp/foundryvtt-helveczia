@@ -207,6 +207,7 @@
   "HV.errors.areVagabond": "A vagabond cannot acquire this skill!",
   "HV.errors.maxSpells": "You already have as many level {level} spells as you can remember!",
   "HV.errors.requiredProfession": "You must be a {requiredProfession} for this specialism",
+  "HV.errors.requiredLevel": "You must be 6th level for this specialism",
   "HV.warnings.alreadyCast": "you have already cast this spell and need to re-memorize it.",
   "HV.warnings.lowVirtueAbsolution": "In such a low state of virtue, you must have at least a moderately good deed for absolution!",
   "HV.needed": "Needed ",

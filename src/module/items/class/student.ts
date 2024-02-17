@@ -60,6 +60,15 @@ export class Student {
         );
         return;
       }
+
+      if (item.name === 'Doctorate') {
+        if (item.actor.system.level == 6) {
+          log.debug('Student.onCreate() | student-doctorate flag set to true');
+          item.actor?.setFlag('helveczia', 'student-doctorate', true);
+        } else {
+          ui.notifications.error(game.i18n.localize('HV.errors.requiredLevel'));
+        }
+      }
     } else {
       log.debug('Student.onCreate() | student-class flag set to true');
       item.actor?.setFlag('helveczia', 'student-class', true);
@@ -83,10 +92,10 @@ export class Student {
   }
 
   static getSkillsBonus(actor: HVActor): number {
-    const gainedSkills = actor.isStudent() && actor.system.level == 6;
+    const doctorateSkill = actor.getFlag('helveczia', 'student-doctorate');
     // base 2 extra to cover Student specialist skills. and 2 extra science as a student
     const bonusSkills = specialistSkills.length + 2;
-    return gainedSkills ? bonusSkills + 1 : bonusSkills;
+    return doctorateSkill ? bonusSkills + 1 : bonusSkills;
   }
 
   static getSaveBase(actor: HVActor): { bravery: number; deftness: number; temptation: number } {
@@ -105,14 +114,18 @@ export class Student {
     return spells;
   }
 
-  static async cleanup(actor: HVActor, _item: any): Promise<void> {
+  static async cleanup(actor: HVActor, item: any): Promise<void> {
+    const sourceItemData = item.system as ClassItemData;
+    if (sourceItemData.specialism) {
+      return;
+    }
     Promise.all(
       Object.keys(studentSpecialisms).map((s) => {
         actor?.setFlag('helveczia', studentSpecialisms[s].flag, false);
         return deleteSpecialistSkill(actor, s);
       }),
     );
-    actor.setFlag('helveczia', 'student-class', false);
+    await actor.setFlag('helveczia', 'student-class', false);
     const sciences = actor.items.filter(
       (i) => (i.system as SkillItemData).subtype === 'science' && i.getFlag('helveczia', 'locked') === true,
     );

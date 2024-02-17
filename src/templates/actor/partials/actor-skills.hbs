@@ -16,6 +16,14 @@
             {{#unless student_skills_generated}}
             <button class="generate-science-skills"><i class="fa fa-dice"></i>{{ localize 'HV.randomScience' }}</button>
             {{/unless}}
+            {{#if student_doctorate }}
+            <h4>{{bonusSkills '1' 'Science' 'Doctorate' '6'}}</h4>
+            {{/if}}
+        {{/if}}
+        {{#if cleric_class }}
+            {{#if cleric_doctorate }}
+            <h4>{{bonusSkills '1' 'Science' 'Doctorate' '6'}}</h4>
+            {{/if}}
         {{/if}}
         {{#if czech_skill }}
             <h4>{{bonusSkills '1' 'Science' 'Czech' '1'}}</h4>

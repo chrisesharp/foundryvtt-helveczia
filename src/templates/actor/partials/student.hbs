@@ -12,6 +12,14 @@
             </div>
         </li>
     {{/each}}
+    {{#each data.specialisms as |item id|}}
+        <li class="item-entry flexcol" data-item-id="{{item.id}}">
+            <div class="item flexrow">
+                <div class="item-image" data-item-id="{{item.id}}"><img src="{{item.img}}" width="24" height="24"/></div>
+                <h4 class="item-name">{{item.name}}</h4>
+            </div>
+        </li>
+    {{/each}}
     {{#each data.skills as |item id|}}
         {{#if (isStudentSpecialSkill item.name) }}
         <li class="item-entry flexcol" data-item-id="{{item.id}}">
