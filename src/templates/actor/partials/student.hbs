@@ -36,6 +36,9 @@
             <li class="flexrow item-header">
                     <h2 class="centred">~ {{ localize "HV.MemorizedSpells"}}  ~</h2>
             </li>
+            {{#if student_doctorate }}
+                <h4 class="centred">{{ localize "HV.student.docBonus"}} ~ {{student_dr_spells}}</h4>
+            {{/if}}
             {{> "systems/helveczia/templates/actor/partials/spells.hbs"}}
         </ol>
     </section>

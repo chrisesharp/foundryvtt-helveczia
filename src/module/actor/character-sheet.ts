@@ -48,6 +48,7 @@ export class HVCharacterSheet extends HVActorSheet {
         this.actor.getFlag('helveczia', 'student-skill-generated-1') &&
         this.actor.getFlag('helveczia', 'student-skill-generated-2'),
       student_doctorate: this.actor.getFlag('helveczia', 'student-doctorate'),
+      student_dr_spells: this.actor.getFlag('helveczia', 'student-dr-spells'),
       bonusSpellsChosen: this.actor.getFlag('helveczia', 'bonusSpellsChosen') as number,
       options: this.options,
       editable: this.isEditable,

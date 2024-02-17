@@ -64,7 +64,16 @@ export class Student {
       if (item.name === 'Doctorate') {
         if (item.actor.system.level == 6) {
           log.debug('Student.onCreate() | student-doctorate flag set to true');
-          item.actor?.setFlag('helveczia', 'student-doctorate', true);
+          await item.actor?.setFlag('helveczia', 'student-doctorate', true);
+          Math.floor(Math.random());
+          const extra_spells = [
+            1 + Math.round(Math.random()),
+            1 + Math.round(Math.random()),
+            1 + Math.round(Math.random()),
+          ]
+            .sort()
+            .reverse();
+          await item.actor?.setFlag('helveczia', 'student-dr-spells', extra_spells);
         } else {
           ui.notifications.error(game.i18n.localize('HV.errors.requiredLevel'));
         }
@@ -107,8 +116,11 @@ export class Student {
     const level = actor.system.level;
     const bonus = actor.getSpellBonus();
     const spells = duplicate(CONFIG.HV.spellSlots[level]);
+    const extra_spells = actor.getFlag('helveczia', 'student-doctorate')
+      ? actor.getFlag('helveczia', 'student-dr-spells')
+      : [0, 0, 0];
     for (const i in spells) {
-      spells[i] += bonus[i];
+      spells[i] += bonus[i] + extra_spells[i];
     }
     log.debug(`Student.getSpellSlots() | INT of ${bonus} results in `, spells);
     return spells;
