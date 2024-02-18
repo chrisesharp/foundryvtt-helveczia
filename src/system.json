@@ -30,140 +30,105 @@
       "name": "npcs",
       "label": "NPCs",
       "package": "helveczia",
-      "path": "packs/npcs.db",
+      "path": "packs/npcs",
       "type": "Actor"
     },
     {
       "name": "peoples",
       "label": "Peoples",
       "package": "helveczia",
-      "path": "packs/peoples.db",
+      "path": "packs/peoples",
       "type": "Item"
     },
     {
       "name": "books",
       "label": "Books",
       "package": "helveczia",
-      "path": "packs/books.db",
+      "path": "packs/books",
       "type": "Item"
     },
     {
       "name": "deeds",
       "label": "Deeds",
       "package": "helveczia",
-      "path": "packs/deeds.db",
+      "path": "packs/deeds",
       "type": "Item"
     },
     {
       "name": "classes",
       "label": "Classes",
       "package": "helveczia",
-      "path": "packs/classes.db",
+      "path": "packs/classes",
       "type": "Item"
     },
     {
       "name": "skills",
       "label": "Skills",
       "package": "helveczia",
-      "path": "packs/skills.db",
+      "path": "packs/skills",
       "type": "Item"
     },
     {
-      "name": "craft-skills",
+      "name": "crafts",
       "label": "Crafts",
       "package": "helveczia",
-      "path": "packs/craft-skills.db",
+      "path": "packs/crafts",
       "type": "Item"
     },
     {
-      "name": "science-skills",
+      "name": "sciences",
       "label": "Sciences",
       "package": "helveczia",
-      "path": "packs/science-skills.db",
+      "path": "packs/sciences",
       "type": "Item"
     },
     {
       "name": "specialisms",
       "label": "Specialisms",
       "package": "helveczia",
-      "path": "packs/specialisms.db",
+      "path": "packs/specialisms",
       "type": "Item"
     },
     {
       "name": "armour",
       "label": "Armour",
       "package": "helveczia",
-      "path": "packs/armour.db",
+      "path": "packs/armour",
       "type": "Item"
     },
     {
       "name": "weapons",
       "label": "Weapons",
       "package": "helveczia",
-      "path": "packs/weapons.db",
+      "path": "packs/weapons",
       "type": "Item"
     },
     {
       "name": "equipment",
       "label": "Equipment",
       "package": "helveczia",
-      "path": "packs/equipment.db",
+      "path": "packs/equipment",
       "type": "Item"
     },
     {
-      "name": "student-spells-1",
-      "label": "Student Spells - Level 1",
+      "name": "spells",
+      "label": "Spells",
       "package": "helveczia",
-      "path": "packs/student-spells-1.db",
-      "type": "Item"
-    },
-    {
-      "name": "student-spells-2",
-      "label": "Student Spells - Level 2",
-      "package": "helveczia",
-      "path": "packs/student-spells-2.db",
-      "type": "Item"
-    },
-    {
-      "name": "student-spells-3",
-      "label": "Student Spells - Level 3",
-      "package": "helveczia",
-      "path": "packs/student-spells-3.db",
-      "type": "Item"
-    },
-    {
-      "name": "cleric-spells-1",
-      "label": "Cleric Spells - Level 1",
-      "package": "helveczia",
-      "path": "packs/cleric-spells-1.db",
-      "type": "Item"
-    },
-    {
-      "name": "cleric-spells-2",
-      "label": "Cleric Spells - Level 2",
-      "package": "helveczia",
-      "path": "packs/cleric-spells-2.db",
-      "type": "Item"
-    },
-    {
-      "name": "cleric-spells-3",
-      "label": "Cleric Spells - Level 3",
-      "package": "helveczia",
-      "path": "packs/cleric-spells-3.db",
+      "path": "packs/spells",
       "type": "Item"
     },
     {
       "name": "cards",
       "label": "Cards",
       "package": "helveczia",
-      "path": "packs/cards.db",
+      "path": "packs/cards",
       "type": "Cards"
     },
     {
       "name": "rolltables",
       "label": "Rolltables",
       "package": "helveczia",
-      "path": "packs/rolltables.db",
+      "path": "packs/rolltables",
       "type": "RollTable"
     }
   ],
