@@ -69,16 +69,12 @@ async function copyFiles() {
  * Build packs
  */
 async function buildPacks() {
-  fs.readdir(packsDirectory, (err, dirs) => {
-    //handling error
-    if (err) {
-      return console.log('Unable to scan directory: ' + err);
-    }
-    //listing all files using forEach
-    dirs.forEach(async (dir) => {
-      await compilePack(`${packsDirectory}/${dir}`, `${distDirectory}/packs/${dir}`);
-    });
-  });
+  const dirs = fs.readdirSync(packsDirectory);
+  if (dirs.length) {
+    await Promise.all(
+      dirs.map(async (dir) => await compilePack(`${packsDirectory}/${dir}`, `${distDirectory}/packs/${dir}`)),
+    );
+  }
 }
 
 /**
