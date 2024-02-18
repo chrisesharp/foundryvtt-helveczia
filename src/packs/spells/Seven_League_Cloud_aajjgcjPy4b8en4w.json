@@ -1,0 +1,35 @@
+{
+  "_id": "aajjgcjPy4b8en4w",
+  "name": "Seven League Cloud",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "long",
+    "duration": "30 minutes",
+    "area": "around oneself",
+    "save": "-",
+    "component": "glass tube",
+    "description": "<p class=\"p1\">Only hidden paths beyond the main roads and lands afar from the inhabited valleys are suitable for the use of this spell, which causes a cloud to descend from the sky and shroud the area in dense fog. Those who step into the cloud on foot or astride their mounts, will emerge from it in other lands. Where exactly depends on the position of the planets and other signs, which a skilled astrologer might read (Hard Astrology), but sometimes, the travellers will find themselves in lands which are found on neither maps, nor in written accounts.</p>\n<p class=\"p1\">Component: a glass tube should be filled with the essence of Phosphor, and together with a magnetised staff, used to command the cloud.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219669,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!aajjgcjPy4b8en4w"
+}

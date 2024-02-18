@@ -1,0 +1,35 @@
+{
+  "_id": "Moeem2Jhhzn2czwJ",
+  "name": "Invisible Dog Pack",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "medium",
+    "duration": "30 mins + 1 hour/level",
+    "area": "one group",
+    "save": "bravery",
+    "component": "whip",
+    "description": "<p class=\"p1\">The spell&rsquo;s targets are chased by a pack of black dogs: and although the hounds appear as mere swirling forms to the careful observer, those with insufficient Bravery will still run from them. The pack follows its quarries for half an hour, and will not let them return for another hour per level. Those who are lazy to run or clumsy (a badly failed initiative countercheck) are attacked and badly torn (3d6 Hp, but only knockout damage).</p>\n<p class=\"p1\">Component: a whip must be made from the hair of seven black dogs, and marinated in the brew of their drained blood.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215595,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!Moeem2Jhhzn2czwJ"
+}

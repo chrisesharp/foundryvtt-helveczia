@@ -1,0 +1,30 @@
+{
+  "name": "Traveller's Luck",
+  "type": "class",
+  "img": "icons/svg/coins.svg",
+  "effects": [],
+  "folder": "SsAP5eF6CyQzPsPM",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>Due to Fortune&rsquo;s attentions, the character can add +2 to a saving throw or initiative roll 1d3 times in a single adventure. The boon can be used before or after declaring the roll; the 1d3 to establish</p>\n<p>Fortune&rsquo;s current generosity should be rolled on the first use.</p>",
+    "specialism": true,
+    "parent": "vagabond"
+  },
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708207568709,
+    "modifiedTime": 1708208114804,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "G6Dh7kntzhcWkit4",
+  "sort": 0,
+  "_key": "!items!G6Dh7kntzhcWkit4"
+}

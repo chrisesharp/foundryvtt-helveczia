@@ -1,0 +1,33 @@
+{
+  "name": "Padlock, excellent",
+  "type": "possession",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "_id": "R4plh0dCeGt31cK1",
+  "system": {
+    "description": "",
+    "cost": {
+      "value": "2",
+      "coin": "th"
+    },
+    "encumbrance": "1"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209756115,
+    "modifiedTime": 1708209776360,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!R4plh0dCeGt31cK1"
+}

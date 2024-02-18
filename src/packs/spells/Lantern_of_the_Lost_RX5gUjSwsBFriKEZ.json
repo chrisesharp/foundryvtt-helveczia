@@ -1,0 +1,39 @@
+{
+  "_id": "RX5gUjSwsBFriKEZ",
+  "name": "Lantern of the Lost",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "DklZOXwgGCjyQb5s",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "cleric",
+    "range": "-",
+    "duration": "instantaneous",
+    "area": "-",
+    "save": "-",
+    "component": "",
+    "data": {
+      "level": 2,
+      "class": "cleric"
+    },
+    "description": "<p class=\"p1\">It is a great relief for those who have been lost or found themselves in peril, for a heavenly sign or stroke of inspiration will show them how they might escape from their predicament. It only works if the company includes at least one person of high Virtue.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329180640,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!RX5gUjSwsBFriKEZ"
+}

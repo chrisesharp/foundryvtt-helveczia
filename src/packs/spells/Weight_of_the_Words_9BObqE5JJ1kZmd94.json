@@ -1,0 +1,35 @@
+{
+  "_id": "9BObqE5JJ1kZmd94",
+  "name": "Weight of the Words",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "short",
+    "duration": "until thorough penance",
+    "area": "one target",
+    "save": "temptation",
+    "component": "vulgar breviary",
+    "description": "<p class=\"p1\">An instructive spell. It only affects those in a state of low Virtue, but it affects them most unpleasantly. As they swear, their words are twisted by the magic, and returned to torment them: e.g. if they say &ldquo;a pox on this house&rdquo;, then all within will suffer it, themselves included; and if they mention the Devil, he will surely pay a visit in short order. There is no way out from this catch until the victim does penance, and achieves average Virtue.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219668,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!9BObqE5JJ1kZmd94"
+}

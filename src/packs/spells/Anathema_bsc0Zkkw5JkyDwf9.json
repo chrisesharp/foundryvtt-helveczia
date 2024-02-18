@@ -1,0 +1,39 @@
+{
+  "_id": "bsc0Zkkw5JkyDwf9",
+  "name": "Anathema",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "DklZOXwgGCjyQb5s",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "cleric",
+    "range": "short",
+    "duration": "quarter of an hour",
+    "area": "one group",
+    "save": "temptation",
+    "component": "",
+    "data": {
+      "level": 2,
+      "class": "cleric"
+    },
+    "description": "<p class=\"p1\">Those who hear the word of excommunication will be barred from both the Cleric and a holy site: they may neither approach nor attack them unless they themselves are endangered by either. It is only useful against those with average or low Virtue, but the latter save at -2.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329180641,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!bsc0Zkkw5JkyDwf9"
+}

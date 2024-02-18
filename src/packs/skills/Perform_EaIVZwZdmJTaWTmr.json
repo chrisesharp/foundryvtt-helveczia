@@ -1,0 +1,31 @@
+{
+  "_id": "EaIVZwZdmJTaWTmr",
+  "name": "Perform",
+  "type": "skill",
+  "img": "icons/svg/temple.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>The character can play the zither, bagpipes, has skill in mummery or other fine arts.</p>",
+    "ability": "cha",
+    "subtype": "practical",
+    "bonus": 0
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209591012,
+    "modifiedTime": 1708209691064,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!EaIVZwZdmJTaWTmr"
+}

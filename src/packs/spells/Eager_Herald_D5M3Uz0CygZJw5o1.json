@@ -1,0 +1,39 @@
+{
+  "_id": "D5M3Uz0CygZJw5o1",
+  "name": "Eager Herald",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "DklZOXwgGCjyQb5s",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "cleric",
+    "range": "long",
+    "duration": "within 1 minute",
+    "area": "around oneself/village",
+    "save": "bravery",
+    "component": "",
+    "data": {
+      "level": 2,
+      "class": "cleric"
+    },
+    "description": "<p class=\"p1\">Evil often does its work at night, and its work often lasts till cockcrow. But if this cock were to speak early, the plans might be unfinished &ndash; and so, this spell immediately calls the dawn&rsquo;s messenger, and with it sunrise. It is a real miracle, but should only be used by those who are sure of its usefulness: for every hour miraculously received, the Cleric must later sleep an entire week; and if the spell was used for an evil purpose, so many years.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329180639,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!D5M3Uz0CygZJw5o1"
+}

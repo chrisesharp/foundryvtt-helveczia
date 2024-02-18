@@ -1,0 +1,35 @@
+{
+  "_id": "sWx5yrKqgWJjSgHb",
+  "name": "Monsieur Navarre's Transformed Visage",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "touch",
+    "duration": "one day or more",
+    "area": "one person",
+    "save": "bravery",
+    "component": "silver sheet",
+    "description": "<p class=\"p1\">With this sinister method, the magister can exchange their face with another, if they fail their saving throw. It affects only the two faces, so they must employ additional masquerade to appear fully identical to the victim, but even so, it can be used for such bloodcurdling misdeeds that not a word of them will be mentioned here. The next day, the target can make another save, unless prevented by sleep or worse fates.</p>\n<p class=\"p1\">Component: a silver sheet, prepared with rare acids and salts, and kept between black paper sheets, must be swiped between the two lit faces, causing them to appear on it, then it must be flipped very quickly.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219670,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!sWx5yrKqgWJjSgHb"
+}

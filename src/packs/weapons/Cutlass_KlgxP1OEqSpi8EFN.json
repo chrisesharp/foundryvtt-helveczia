@@ -1,0 +1,41 @@
+{
+  "name": "Cutlass",
+  "type": "weapon",
+  "img": "icons/svg/sword.svg",
+  "effects": [],
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "attack": "melee",
+    "damage": "1d6",
+    "critical": {
+      "range": "18",
+      "multiple": "2"
+    },
+    "encumbrance": "1",
+    "bonus": "0",
+    "reload": 0,
+    "cost": {
+      "value": "2",
+      "coin": "th"
+    }
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1676469704233,
+    "modifiedTime": 1708208898589,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "KlgxP1OEqSpi8EFN",
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!KlgxP1OEqSpi8EFN"
+}

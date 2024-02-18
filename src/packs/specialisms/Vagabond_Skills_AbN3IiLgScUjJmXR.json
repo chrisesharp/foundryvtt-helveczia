@@ -1,0 +1,30 @@
+{
+  "name": "Vagabond Skills",
+  "type": "class",
+  "img": "icons/svg/coins.svg",
+  "effects": [],
+  "folder": "SsAP5eF6CyQzPsPM",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>The character can select and learn four extra skills which help in concealment, subterfuge, larceny and getting rich in general.</p>\n<p>Science and Craft skills &ndash; which are marks of a life lived usefully &ndash; cannot be chosen.</p>",
+    "specialism": true,
+    "parent": "vagabond"
+  },
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708207568709,
+    "modifiedTime": 1708208114804,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "AbN3IiLgScUjJmXR",
+  "sort": 0,
+  "_key": "!items!AbN3IiLgScUjJmXR"
+}

@@ -1,0 +1,35 @@
+{
+  "_id": "gfajFvomSp6sYlJK",
+  "name": "Endowment of the Word",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "touch",
+    "duration": "< 1 month",
+    "area": "one person",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">This formula lies under a cardinal&rsquo;s seal anywhere it is found, to be opened only at the hour of great need and danger. This way, one of the spells of a holy edifice can be planted within someone&rsquo;s mind, in a way that it is lost in its place of origin, but the subject can recall it again and again every day, making him or her the carrier of the Word. If they so desire, they can dissolve the binding at the morning or evening</p>\n<p class=\"p1\">prayer, but if they should suffer accidental death, there is a 1:6 probability the spell will be lost. Needless to say, this favour is like a precious treasure, and even heavier responsibility comes with it.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185173,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!gfajFvomSp6sYlJK"
+}

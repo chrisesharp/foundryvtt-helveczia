@@ -1,0 +1,35 @@
+{
+  "_id": "fCUxNyItNnZzcXUz",
+  "name": "Pietro Scaraffa's Nitrous Webs",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "short",
+    "duration": "15 minutes",
+    "area": "a room",
+    "save": "deftness",
+    "component": "webs",
+    "description": "<p class=\"p1\">It is a very evil spell, for it drapes a room, clearing or such in heavy webs laden with nitre. Those who fail their Deftness save are stuck in the web, and they suffer 1d6 Hp per round from terrible coughing (a Bravery save can be rolled every round). Once stuck, breaking from the webs requires a Hard Deftness save. The web can be set aflame with a brand or torch, in which case all stuck therein suffer 3d4 Hp damage.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219670,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!fCUxNyItNnZzcXUz"
+}

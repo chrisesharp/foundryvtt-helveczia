@@ -1,0 +1,39 @@
+{
+  "_id": "dSON1UYmV1Ce6afv",
+  "name": "Miraculous Medicine",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "DklZOXwgGCjyQb5s",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "cleric",
+    "range": "touch",
+    "duration": "instantaneous",
+    "area": "one person",
+    "save": "-",
+    "component": "",
+    "data": {
+      "level": 2,
+      "class": "cleric"
+    },
+    "description": "<p class=\"p1\">It cures certain afflictions, e.g. sickness and poison, although it can only offer temporary relief for the plague, gout and the common cold. Furthermore, it returns 2d6 Hp plus 1 per two caster levels. The tears of holy icons have similar powers if they are used to cleanse the body.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329180641,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!dSON1UYmV1Ce6afv"
+}

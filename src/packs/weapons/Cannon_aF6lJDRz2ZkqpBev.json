@@ -1,0 +1,41 @@
+{
+  "_id": "aF6lJDRz2ZkqpBev",
+  "name": "Cannon",
+  "type": "weapon",
+  "img": "icons/svg/sword.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<ul>\n<li>3 rounds to arm</li>\n<li>Explodes on a natural 1 (fumble)</li>\n<li>May damage multile targets close to each other</li>\n</ul>",
+    "attack": "ranged",
+    "damage": "3d10x",
+    "critical": {
+      "range": "20",
+      "multiple": "3"
+    },
+    "encumbrance": "8",
+    "bonus": "0",
+    "reload": "3",
+    "cost": {
+      "value": "50",
+      "coin": "th"
+    }
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1676469704232,
+    "modifiedTime": 1708208898589,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!aF6lJDRz2ZkqpBev"
+}

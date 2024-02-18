@@ -1,0 +1,31 @@
+{
+  "_id": "sVyGvLiUzm7B8ppB",
+  "name": "Jump",
+  "type": "skill",
+  "img": "icons/svg/temple.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>The character can jump across wider or taller obstacles, and reduce the consequences of a fall (one die on a Normal result, two dice on a Hard result, and three dice on a Heroic result). If the check is unsuccessful, the character falls.</p>",
+    "ability": "str",
+    "subtype": "practical",
+    "bonus": 0
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209591012,
+    "modifiedTime": 1708209691064,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!sVyGvLiUzm7B8ppB"
+}

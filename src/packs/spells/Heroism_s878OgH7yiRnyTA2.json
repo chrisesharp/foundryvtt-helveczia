@@ -1,0 +1,35 @@
+{
+  "_id": "s878OgH7yiRnyTA2",
+  "name": "Heroism",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "-",
+    "duration": "30 minutes",
+    "area": "one person",
+    "save": "-",
+    "component": "bottle of Tokaj",
+    "description": "<p class=\"p1\">Such miracles could only happen on the Olympus of old, that someone could perform so well in all things: for anything they try, they will accomplish it like a hero (receiving an 18 in each ability score). It is only the extraordinary effect of the Tokaj which does not work, as it is consumed by the spell in its entirety.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219670,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!s878OgH7yiRnyTA2"
+}

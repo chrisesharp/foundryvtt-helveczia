@@ -1,0 +1,214 @@
+{
+  "name": "Heavy Guard",
+  "type": "npc",
+  "img": "systems/helveczia/assets/people/male/man_39.png",
+  "items": [
+    {
+      "_id": "RdM3JwqWux1HrKtj",
+      "name": "Halberd",
+      "type": "weapon",
+      "img": "icons/svg/sword.svg",
+      "effects": [],
+      "folder": "pXBS1uYcZbpuURHn",
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Item.8cGp6iz1Z8e4tmrf"
+        }
+      },
+      "system": {
+        "description": "<ul>\n<li>Two-handed, giving <strong>1.5 * Strength bonus</strong> to damage</li>\n<li>Double damage when readied against charging opponent</li>\n<li>+2 AC if used in a formation</li>\n</ul>",
+        "attack": "melee",
+        "damage": "1d10",
+        "critical": {
+          "range": "20",
+          "multiple": "3"
+        },
+        "encumbrance": "1",
+        "bonus": "0",
+        "reload": 0,
+        "cost": {
+          "value": "1",
+          "coin": "th"
+        }
+      },
+      "ownership": {
+        "default": 2,
+        "k52po8UVGe0kJkBK": 3
+      },
+      "_stats": {
+        "systemId": null,
+        "systemVersion": null,
+        "coreVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "_key": "!actors.items!eYRvC1SUt8Nu7CjH.RdM3JwqWux1HrKtj"
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "hp": {
+      "value": 0,
+      "max": 0,
+      "hd": 8
+    },
+    "level": 1,
+    "people": "",
+    "class": "",
+    "origVirtue": 10,
+    "virtue": 10,
+    "initiative": 0,
+    "maxskills": 3,
+    "saves": {
+      "bravery": {
+        "base": 0,
+        "bonus": 0
+      },
+      "deftness": {
+        "base": 0,
+        "bonus": 0
+      },
+      "temptation": {
+        "base": 0,
+        "bonus": 0
+      }
+    },
+    "attack": {
+      "melee": {
+        "base": 0,
+        "bonus": 0
+      },
+      "ranged": {
+        "base": 0,
+        "bonus": 0
+      },
+      "cc": {
+        "base": 0,
+        "bonus": 0
+      }
+    },
+    "scores": {
+      "str": {
+        "value": 10,
+        "base": 10
+      },
+      "dex": {
+        "value": 10,
+        "base": 10
+      },
+      "con": {
+        "value": 10,
+        "base": 10
+      },
+      "int": {
+        "value": 10,
+        "base": 10
+      },
+      "wis": {
+        "value": 10,
+        "base": 10
+      },
+      "cha": {
+        "value": 10,
+        "base": 10
+      }
+    },
+    "wealth": {
+      "th": 0,
+      "pf": 0,
+      "gr": 0
+    },
+    "levelBonus": "2",
+    "baseAC": 13,
+    "experience": 100,
+    "stats": {}
+  },
+  "ownership": {
+    "default": 0,
+    "k52po8UVGe0kJkBK": 3,
+    "G5iize41GRbYKQLE": 3
+  },
+  "prototypeToken": {
+    "name": "Heavy Guard",
+    "displayName": 30,
+    "actorLink": true,
+    "width": 1,
+    "height": 1,
+    "lockRotation": true,
+    "rotation": 0,
+    "alpha": 1,
+    "light": {
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "coloration": 1,
+      "dim": 0,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false,
+        "type": null
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      },
+      "color": null,
+      "attenuation": 0.5
+    },
+    "disposition": -1,
+    "displayBars": 0,
+    "bar1": {
+      "attribute": null
+    },
+    "bar2": {
+      "attribute": null
+    },
+    "flags": {},
+    "randomImg": false,
+    "texture": {
+      "src": "systems/helveczia/assets/people/male/man_39.png",
+      "tint": null,
+      "scaleX": 1,
+      "scaleY": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0
+    },
+    "sight": {
+      "angle": 360,
+      "enabled": true,
+      "range": 30,
+      "brightness": 0,
+      "visionMode": "basic",
+      "attenuation": 0.1,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "appendNumber": false,
+    "prependAdjective": false,
+    "detectionModes": []
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708210083779,
+    "modifiedTime": 1708210105028,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "eYRvC1SUt8Nu7CjH",
+  "sort": 700000,
+  "_key": "!actors!eYRvC1SUt8Nu7CjH"
+}

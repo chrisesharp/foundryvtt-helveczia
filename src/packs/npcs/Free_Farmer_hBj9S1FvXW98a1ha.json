@@ -1,0 +1,213 @@
+{
+  "name": "Free Farmer",
+  "type": "npc",
+  "img": "systems/helveczia/assets/people/male/man_18.png",
+  "items": [
+    {
+      "_id": "JnVEMCvS8EUVUIgX",
+      "name": "Pitchfork",
+      "type": "weapon",
+      "img": "icons/svg/item-bag.svg",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "system": {
+        "description": "",
+        "attack": "melee",
+        "damage": "1d6",
+        "critical": {
+          "range": "20",
+          "multiple": "2"
+        },
+        "encumbrance": "1",
+        "bonus": "0",
+        "reload": 0,
+        "cost": {
+          "value": "",
+          "coin": "th"
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "k52po8UVGe0kJkBK": 3
+      },
+      "_stats": {
+        "systemId": null,
+        "systemVersion": null,
+        "coreVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "_key": "!actors.items!hBj9S1FvXW98a1ha.JnVEMCvS8EUVUIgX"
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "helveczia": {
+      "rolled-hits-lvl": 1
+    },
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "hp": {
+      "value": 8,
+      "max": 8,
+      "hd": 8
+    },
+    "level": 1,
+    "people": "",
+    "class": "",
+    "origVirtue": 10,
+    "virtue": 11,
+    "initiative": 0,
+    "maxskills": 3,
+    "saves": {
+      "bravery": {
+        "base": 0,
+        "bonus": 0
+      },
+      "deftness": {
+        "base": 0,
+        "bonus": 0
+      },
+      "temptation": {
+        "base": 0,
+        "bonus": 0
+      }
+    },
+    "attack": {
+      "melee": {
+        "base": 0,
+        "bonus": 0
+      },
+      "ranged": {
+        "base": 0,
+        "bonus": 0
+      },
+      "cc": {
+        "base": 0,
+        "bonus": 0
+      }
+    },
+    "scores": {
+      "str": {
+        "value": 10,
+        "base": 10
+      },
+      "dex": {
+        "value": 10,
+        "base": 10
+      },
+      "con": {
+        "value": 10,
+        "base": 10
+      },
+      "int": {
+        "value": 10,
+        "base": 10
+      },
+      "wis": {
+        "value": 10,
+        "base": 10
+      },
+      "cha": {
+        "value": 10,
+        "base": 10
+      }
+    },
+    "wealth": {
+      "th": 0,
+      "pf": 0,
+      "gr": 0
+    },
+    "levelBonus": "1",
+    "baseAC": 11,
+    "experience": 50,
+    "stats": {}
+  },
+  "ownership": {
+    "default": 0,
+    "k52po8UVGe0kJkBK": 3,
+    "G5iize41GRbYKQLE": 3
+  },
+  "prototypeToken": {
+    "name": "Free Farmer",
+    "displayName": 30,
+    "actorLink": true,
+    "width": 1,
+    "height": 1,
+    "lockRotation": true,
+    "rotation": 0,
+    "alpha": 1,
+    "light": {
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "coloration": 1,
+      "dim": 0,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false,
+        "type": null
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      },
+      "color": null,
+      "attenuation": 0.5
+    },
+    "disposition": -1,
+    "displayBars": 0,
+    "bar1": {
+      "attribute": null
+    },
+    "bar2": {
+      "attribute": null
+    },
+    "flags": {},
+    "randomImg": false,
+    "texture": {
+      "src": "systems/helveczia/assets/people/male/man_18.png",
+      "tint": null,
+      "scaleX": 1,
+      "scaleY": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0
+    },
+    "sight": {
+      "angle": 360,
+      "enabled": true,
+      "range": 30,
+      "brightness": 0,
+      "visionMode": "basic",
+      "attenuation": 0.1,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "appendNumber": false,
+    "prependAdjective": false,
+    "detectionModes": []
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708210081713,
+    "modifiedTime": 1708210105028,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "hBj9S1FvXW98a1ha",
+  "sort": 900000,
+  "_key": "!actors!hBj9S1FvXW98a1ha"
+}

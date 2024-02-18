@@ -1,0 +1,31 @@
+{
+  "_id": "9AdEa46JdrpYr3lE",
+  "name": "Alchemy",
+  "type": "skill",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>The ability to mix various special formulae, e.g. acids, tinctures, medicines, etc. It is particularly useful in creating spell components. Its use typically requires an equipped laboratory. With the skill, the character can also identify various chemicals, poisons and elixirs.</p>",
+    "ability": "int",
+    "subtype": "magical",
+    "bonus": 0
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209591012,
+    "modifiedTime": 1708209691064,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!9AdEa46JdrpYr3lE"
+}

@@ -1,0 +1,61 @@
+{
+  "name": "Duellist",
+  "type": "class",
+  "img": "icons/svg/combat.svg",
+  "effects": [
+    {
+      "_id": "J6pL2OyA8npp0K9H",
+      "changes": [
+        {
+          "key": "system.attack.cc.bonus",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "icons/svg/aura.svg",
+      "origin": "Item.3KN6hLQ73A5StIt7",
+      "transfer": true,
+      "flags": {},
+      "tint": null,
+      "name": "Duellist Prowess",
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!IdjDhEByevYndi74.J6pL2OyA8npp0K9H"
+    }
+  ],
+  "folder": "Ov21n03SbW2TZT8u",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>Those who can dance with a sharp blade in the hand, will only enter the field in light armour.</p>\n<p>They can transfer part or whole of their base attack bonus to AC to protect either themselves or others. This AC bonus can be granted to one person for every odd level. If it is higher than their Strength bonus, they can&nbsp; use their Dexterity bonus for melee attacks.</p>\n<p>Finally, they receive a +2 to all combat checks.</p>",
+    "specialism": true,
+    "parent": "fighter"
+  },
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708207568709,
+    "modifiedTime": 1708208114804,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "IdjDhEByevYndi74",
+  "sort": 600000,
+  "_key": "!items!IdjDhEByevYndi74"
+}

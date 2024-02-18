@@ -1,0 +1,35 @@
+{
+  "_id": "BmaTwGwJ6XuZPWX8",
+  "name": "Miraculous Chalice",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "DklZOXwgGCjyQb5s",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "cleric",
+    "range": "short",
+    "duration": "until cockscrow",
+    "area": "one group",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">The likeness of a splendid chalice appears above the darkness-shrouded campsite, and this vision will keep both enemies and beasts from the resting company.</p>\n<p class=\"p1\">Everyone will recover +2 Hp over this time. The spell is broken only if an evil heart contemplating treachery hides among them.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329180639,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!BmaTwGwJ6XuZPWX8"
+}

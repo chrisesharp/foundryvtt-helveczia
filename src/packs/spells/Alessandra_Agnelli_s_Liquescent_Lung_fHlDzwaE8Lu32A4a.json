@@ -1,0 +1,35 @@
+{
+  "_id": "fHlDzwaE8Lu32A4a",
+  "name": "Alessandra Agnelli's Liquescent Lung",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "touch",
+    "duration": "until it is healed",
+    "area": "one target",
+    "save": "bravery",
+    "component": "lung of a corpse in tincture",
+    "description": "<p class=\"p1\">An unusually diabolical spell, for a single touch will turn the victim&rsquo;s lungs withered and aqueous, unless he or she saves successfully. The pitiful wreck can only cough and shuffle, since every exertion &ndash; fighting, running, riding a galloping horse, and so forth &ndash; requires a saving throw to avoid taking 1d3 damage, or 1d6 for greater physical efforts.</p>\n<p class=\"p1\">Component: it needs the lung of a corpse who had died of consumption; and a tincture, in which the student shall preserve it.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219670,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!fHlDzwaE8Lu32A4a"
+}

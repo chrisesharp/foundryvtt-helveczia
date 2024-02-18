@@ -1,0 +1,66 @@
+{
+  "_id": "Kv9SZAYFB86pPUW0",
+  "name": "French",
+  "type": "people",
+  "img": "icons/svg/village.svg",
+  "effects": [
+    {
+      "_id": "0k4Utx7BImax8nyN",
+      "changes": [
+        {
+          "key": "system.ac",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        },
+        {
+          "key": "system.saves.deftness.bonus",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "icons/svg/aura.svg",
+      "origin": "Item.P5iel5HLazmmbUyW",
+      "transfer": true,
+      "flags": {},
+      "name": "Finesse",
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!Kv9SZAYFB86pPUW0.0k4Utx7BImax8nyN"
+    }
+  ],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>Although Burgundy, Occitania and Auvergne still contest his immense might, only the Sultan of the Turks is a greater sovereign than the French king.</p>\n<p>The inhabitants of this vast and prosperous land respect flair and finesse above all, and in their own way, both nobles and commoners excel at its practice.</p>\n<p>&nbsp;</p>\n<p>They receive +1 to their AC and Deftness saving throws.</p>",
+    "quantity": null,
+    "weight": null
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209071901,
+    "modifiedTime": 1708209087587,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!Kv9SZAYFB86pPUW0"
+}

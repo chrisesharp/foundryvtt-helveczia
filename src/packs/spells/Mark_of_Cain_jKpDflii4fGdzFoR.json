@@ -1,0 +1,35 @@
+{
+  "_id": "jKpDflii4fGdzFoR",
+  "name": "Mark of Cain",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "short",
+    "duration": "forever",
+    "area": "one person",
+    "save": "bravery",
+    "component": "",
+    "description": "<p class=\"p1\">It is only useful against the most hardened sinners, with a Virtue no more than 3. If they fail their save, a burning mark will appear on their forehead, which immediately causes 3d6+6 damage and remains in place until they die. If the spell should kill the subject, they instantaneously burn to ashes, and their smouldering bones are dragged down to Hell by devils with shovels and pitchforks. Using this spell is a most pious and exemplary undertaking.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185173,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!jKpDflii4fGdzFoR"
+}

@@ -1,0 +1,35 @@
+{
+  "_id": "cADNtoPGMdpiFNoD",
+  "name": "Demoniacal Hourglass",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "short",
+    "duration": "6 hour",
+    "area": "locked room",
+    "save": "bravery",
+    "component": "death-carved hourglass",
+    "description": "<p class=\"p1\">Six hours are granted to those in front of whom this hourglass is turned: when their time is up, they must roll their saving throw or be claimed by Death. Until then, they can ponder life&rsquo;s finite nature and other interesting matters. But it is better to have them bound securely, for if they can turn the glass or escape the room before the sand runs out, the whole thing will be for nothing. And if they would even smash the glass, the caster will suffer 3d3 Hp damage.</p>\n<p class=\"p1\">Component: not just any kind of hourglass will do, but one where Death looks upon the watcher from every carved surface.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219670,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!cADNtoPGMdpiFNoD"
+}

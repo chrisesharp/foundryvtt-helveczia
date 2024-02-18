@@ -1,0 +1,35 @@
+{
+  "_id": "9AvIqu2bIYgKxUCM",
+  "name": "Magnetic Gaze",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "medium",
+    "duration": "2-3 hours",
+    "area": "oneself + viewers",
+    "save": "temptation",
+    "component": "magnetic stone",
+    "description": "<p class=\"p1\">When the caster of the spell walks down the street, every eye turns towards them, because everyone sees something interesting in their person. It cannot be said what lurks in mens&rsquo; hearts and minds, but everyone will find their own reason. Thus, this spell will lead to many useful and interesting encounters, but especially with birds of a feather. Used the other way, it will do the exact opposite, i.e. deflect attention from themselves, and even those who see them will find nothing interesting about them to linger on. It is not without risk to use this, as sometimes it also affects one&rsquo;s own gaze, and the caster can thus become self-absorbed or forget about oneself. Also and furthermore, not all attention is beneficial.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215594,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!9AvIqu2bIYgKxUCM"
+}

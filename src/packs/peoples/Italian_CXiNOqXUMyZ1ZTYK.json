@@ -1,0 +1,30 @@
+{
+  "_id": "CXiNOqXUMyZ1ZTYK",
+  "name": "Italian",
+  "type": "people",
+  "img": "icons/svg/village.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>As many miniature empires stand on the disorderly land of Italy as small towns elsewhere. A few, such as the Papal State, Florenczia or Veneczia, are larger in size and influence, and there is always someone who would conquer his neighbours by stepping into the sandals of the old Romans. Easy come,&nbsp;easy go &ndash; Italians win much and lose much, for they know that their kindred possess both God&rsquo;s good graces, and Fortune&rsquo;s bounty in generous measure.</p>\n<ul>\n<li>As people close to His Holiness the Roman Pope, they recover +1 Virtue after each confession.</li>\n<li>As Fortune&rsquo;s favourites, they begin with +1d6 Th, and later, they are followed by good luck in cards and dice (+2 to the skill, even untrained).</li>\n<li>The Umbrian Rule: Unless otherwise specified, two Italians always have a 1:6 probability of being mortal enemies due to city-vs-city rivalry, family vendetta, or factional strife.</li>\n</ul>",
+    "quantity": null,
+    "weight": null
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209071901,
+    "modifiedTime": 1708209087587,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!CXiNOqXUMyZ1ZTYK"
+}

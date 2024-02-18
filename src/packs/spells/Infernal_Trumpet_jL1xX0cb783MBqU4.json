@@ -1,0 +1,35 @@
+{
+  "_id": "jL1xX0cb783MBqU4",
+  "name": "Infernal Trumpet",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "short",
+    "duration": "quarter of an hour",
+    "area": "those in the way",
+    "save": "bravery",
+    "component": "ball of materials",
+    "description": "<p class=\"p1\">Heaven forfend it should upset the reader, but this horrendous trumpeting is accomplished with the awful gasses of the buttocks, and it is accompanied by such uncouth smells that those it affects receive -2 to all rolls, and if they should fail their saving throw, will be unable to act for a full round. It is best not to speak of this any further.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207951,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!jL1xX0cb783MBqU4"
+}

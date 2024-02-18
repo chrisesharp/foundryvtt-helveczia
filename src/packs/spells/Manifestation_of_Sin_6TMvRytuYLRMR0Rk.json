@@ -1,0 +1,35 @@
+{
+  "_id": "6TMvRytuYLRMR0Rk",
+  "name": "Manifestation of Sin",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "medium",
+    "duration": "one minute",
+    "area": "one group",
+    "save": "temptation",
+    "component": "",
+    "description": "<p class=\"p1\">It shows a radiant figure, on whom the onlookers shall see their personified sins and all the otherworldly punishment they can expect. This dismal spectacle is enough to make the cowardly sort of brigand run, or to make such miscreants uncertain about going through with their evil intentions. It is notable that this apparition is more terrible at night, for sins appear less macabre by daylight (+2 to saving throws). It is useless against those with high Virtue, for those who shun sin need not fear its consequences.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175535,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!6TMvRytuYLRMR0Rk"
+}

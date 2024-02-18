@@ -1,0 +1,35 @@
+{
+  "_id": "Kwz3G4KGrZIkWneB",
+  "name": "Wolstand's Kinetic Fireball",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "medium",
+    "duration": "-",
+    "area": "one target",
+    "save": "-",
+    "component": "sulphur",
+    "description": "<p class=\"p1\">It hurls a spinning-sputtering fiery globe against the target, which explodes on contact for 3d6 damage. Good aim is necessary, but armour is useless against it &ndash; only shields and quickness are of use.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215595,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!Kwz3G4KGrZIkWneB"
+}

@@ -1,0 +1,35 @@
+{
+  "name": "Splendid Entrapment",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "_id": "040oJ5rqy3fc4f2T",
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "medium",
+    "duration": "until broken or cast again",
+    "area": "one target",
+    "save": "-",
+    "component": "crystal globe",
+    "description": "<p>If the target fails his saving throw, he will find himself trapped within the crystal globe used as the component, reduced to the size of a mouse. The only way to escape the prison is to smash the globe, cast the spell again, or if the victim breaks free with a Hard Strength check (only one attempt is possible).</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215594,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!040oJ5rqy3fc4f2T"
+}

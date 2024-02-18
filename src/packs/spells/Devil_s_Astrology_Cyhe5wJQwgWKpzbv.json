@@ -1,0 +1,35 @@
+{
+  "_id": "Cyhe5wJQwgWKpzbv",
+  "name": "Devil's Astrology",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "-",
+    "duration": "until sign is read",
+    "area": "-",
+    "save": "-",
+    "component": "astrological map",
+    "description": "<p class=\"p1\">It gives guidance in a difficult situation or conundrum. The Devil will help read the stars (+6 Astrology), and provide a deeper understanding of the important conjunctions. But let the one beware who would follow his advice: harm and treachery lies therein for the unwary.</p>\n<p class=\"p1\">Component: an astrological map (5 Th), but as the spell is used again and again, so do the constellations become more and more disordered, and the chance of a mistake higher and higher. It can be used two times as much as a regular component, but once consumed, the whole thing ignites and burns into ashes.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215595,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!Cyhe5wJQwgWKpzbv"
+}

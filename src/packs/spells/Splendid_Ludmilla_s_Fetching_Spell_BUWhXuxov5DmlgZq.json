@@ -1,0 +1,35 @@
+{
+  "_id": "BUWhXuxov5DmlgZq",
+  "name": "Splendid Ludmilla's Fetching Spell",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "one day's distance per two levels",
+    "duration": "-",
+    "area": "one target",
+    "save": "deftness",
+    "component": "magical herbs",
+    "description": "<p class=\"p1\">Someone known to the caster can be brought before them from a distance of one day&rsquo;s walk for every two levels. The subject will be there in half an hour, for unless they roll a successful Deftness save, a big, black, hairy beast will seize and carry them to the spot. It only works on someone the Student has known for a longer time, and can exactly remember, so it cannot be used for just anyone&rsquo;s harassment. It was made by Splendid Ludmilla, who was indeed very beautiful, but most bad-tempered.</p>\n<p class=\"p1\">Component: magical herbs must be cooked in a cauldron; and the animal, when it arrives, must be thrown a slab of salt, lest it becomes enraged.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215595,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!BUWhXuxov5DmlgZq"
+}

@@ -1,0 +1,35 @@
+{
+  "_id": "Ys8VOT4oZLQSJKpy",
+  "name": "Dance and Merriment",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "medium",
+    "duration": "2 rounds per level",
+    "area": "see rules",
+    "save": "bravery",
+    "component": "golden stringed fiddle",
+    "description": "<p class=\"p1\">Dancing is only merry when it is on one&rsquo;s volition, as the example of this spell shows so well. It forces its subjects to dance, and it can be cast three different ways. First, on an entire crowd (Bravery), who will dance vigorously, receiving -2 to all other actions. Second, on a smaller group, who will dance so quickly that they must roll a Deftness save each round or lose their actions. The third is the most evil of them all, for it makes one subject dance so wildly that if they fail their Temptation, they lose</p>\n<p class=\"p1\">1d3+1 Hp per round, and will not cease from the merriment even if incapacitated or dead. Of course, those who would like (although it would be hard to imagine in the third case) can continue dancing after the spell is over and done with.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219669,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!Ys8VOT4oZLQSJKpy"
+}

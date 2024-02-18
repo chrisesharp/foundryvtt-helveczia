@@ -1,0 +1,35 @@
+{
+  "_id": "wPHPQzcAAE8k0bH1",
+  "name": "Quid Pro Quo",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "long",
+    "duration": "as long as needed",
+    "area": "one person",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">The consequences of the considered deed are oft returned with interest to the one who had planned it: be it good or evil. This saying is manifested by the Cleric spell that proves the saying by the inscrutable will of Providence. The lesson can come for a current or future deed; sudden action or well-planned scheme; but when it is meted out, it will come quickly, and everyone will see its morals. Those who perceive the spell&rsquo;s essence are unaffected, for they are not an honest soul &ndash; and woe to anyone who would abuse it for the benefit of themselves or their company!</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185174,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!wPHPQzcAAE8k0bH1"
+}

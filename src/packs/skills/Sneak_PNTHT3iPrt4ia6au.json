@@ -1,0 +1,31 @@
+{
+  "_id": "PNTHT3iPrt4ia6au",
+  "name": "Sneak",
+  "type": "skill",
+  "img": "icons/svg/temple.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>Silent and quick movement, as well as the skill to conceal one&rsquo;s self, belongings and companions, even where others would find this impossible &ndash; e.g. darker corners, shadows or shallow recesses.</p>",
+    "ability": "dex",
+    "subtype": "practical",
+    "bonus": 0
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209591012,
+    "modifiedTime": 1708209691064,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!PNTHT3iPrt4ia6au"
+}

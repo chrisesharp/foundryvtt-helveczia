@@ -1,0 +1,35 @@
+{
+  "_id": "ouancWIi3ar9ADpa",
+  "name": "Wheel of Fire",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "long",
+    "duration": "1 round per level",
+    "area": "all in path",
+    "save": "deftness",
+    "component": "pot or pitcher",
+    "description": "<p class=\"p1\">The wheel created by this spell is as tall as a man, and as it rolls, it goes through anyone (3d6 Hp) who does not roll a saving throw for half damage. It can roll in any one direction each round, although its route can have a slight arc. As many sparks as it spews around, it will surely set dry grass and wood aflame.</p>\n<p class=\"p1\">Component: a pot or pitcher must be turned into an instrument capable of detonation, and then stuffed with grease, glue, gunpowder, nails and scrap metal. Although it is heavy (taking up two places in the inventory), if it isn&rsquo;t used for the spell, it will remain useful as an incendiary device (4d6+ Hp, Deftness 1/2).</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219670,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!ouancWIi3ar9ADpa"
+}

@@ -1,0 +1,35 @@
+{
+  "_id": "CDYLUfobsMotHyrY",
+  "name": "Searing Seeds of Dr. Faustus",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "short",
+    "duration": "one round per level",
+    "area": "multiple targets",
+    "save": "deftness",
+    "component": "amber seeds",
+    "description": "<p class=\"p1\">Like a farmer sows seeds, so does the Student hurl embers, which burst into fire anywhere they can. Throwing embers below the feet causes 2d4 Hp, or its half on a successful save, but in that case, the target must jump from where they were standing.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215595,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!CDYLUfobsMotHyrY"
+}

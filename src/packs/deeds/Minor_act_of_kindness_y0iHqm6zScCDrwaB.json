@@ -1,0 +1,65 @@
+{
+  "_id": "y0iHqm6zScCDrwaB",
+  "name": "Minor act of kindness",
+  "type": "deed",
+  "img": "icons/svg/aura.svg",
+  "effects": [
+    {
+      "icon": "icons/svg/aura.svg",
+      "origin": "Compendium.helveczia-content.deeds.Item.y0iHqm6zScCDrwaB",
+      "transfer": true,
+      "changes": [
+        {
+          "key": "system.virtue",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        }
+      ],
+      "name": "Virtue",
+      "_id": "XzYMeJmVhK9vCgnM",
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "statuses": [],
+      "flags": {},
+      "_key": "!items.effects!y0iHqm6zScCDrwaB.XzYMeJmVhK9vCgnM"
+    }
+  ],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "subtype": "virtue",
+    "magnitude": "1",
+    "cardinality": "3",
+    "type": ["favour", "sin"],
+    "quantity": null,
+    "weight": null,
+    "value": "1"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209943665,
+    "modifiedTime": 1708209980883,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!y0iHqm6zScCDrwaB"
+}

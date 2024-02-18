@@ -1,0 +1,35 @@
+{
+  "_id": "jOxzngJaR3Yhs2Mg",
+  "name": "Pacem in Terris",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "long",
+    "duration": "one day and one night",
+    "area": "in hearing distance",
+    "save": "temptation",
+    "component": "",
+    "description": "<p class=\"p1\">It is very nice words which speak for peace, and those who hear them shall cast their weapons on the ground to wait and listen. Even the wild beasts and the creatures of Hell will lie down, for Love is before all. This is equivalent to a confession, and restores 1d3+2 Virtue. The peace will last one day and one night, and if it is uttered in or before battle, it will cease or never take place. Someone who uses this formula will be as weak as a new-born babe for seven days. If only these words were proclaimed from every pulpit! &ndash; but alas, they are nowhere to be found.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185173,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!jOxzngJaR3Yhs2Mg"
+}

@@ -1,0 +1,31 @@
+{
+  "_id": "P1S3Le1d7B7CFkaC",
+  "name": "Track",
+  "type": "skill",
+  "img": "icons/svg/temple.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>The character can follow trails, and roughly identify them &ndash; establishing how old they are, who made them, how many of them were there, how quickly did they travel, and other useful details.</p>",
+    "ability": "wis",
+    "subtype": "practical",
+    "bonus": 0
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209591012,
+    "modifiedTime": 1708209691064,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!P1S3Le1d7B7CFkaC"
+}

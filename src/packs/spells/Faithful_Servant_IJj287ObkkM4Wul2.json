@@ -1,0 +1,35 @@
+{
+  "_id": "IJj287ObkkM4Wul2",
+  "name": "Faithful Servant",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "short",
+    "duration": "1 hour",
+    "area": "around oneself",
+    "save": "-",
+    "component": "rice powder, ground glass",
+    "description": "<p class=\"p1\">This liveried and wig-wearing fellow is very obliging, although it is only the transparent outlines and some kind of pale glittering that make him visible. He follows his master or mistress faithfully, and while he cannot leave too far, nor can he speak, he will help as well as he can. He can even be given a light sword, although he must be a commoner, as he is very unskilled, and dissipates from a single stab.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207948,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!IJj287ObkkM4Wul2"
+}

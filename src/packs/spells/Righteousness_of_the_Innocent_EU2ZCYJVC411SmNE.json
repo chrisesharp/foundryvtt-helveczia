@@ -1,0 +1,35 @@
+{
+  "_id": "EU2ZCYJVC411SmNE",
+  "name": "Righteousness of the Innocent",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "medium",
+    "duration": "no more than a day",
+    "area": "one person",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">The Cleric, or anyone he endows with this assistance, receives a Charisma of 18, but for only one purpose: to persuade others of the truth of an accused innocent.</p>\n<p class=\"p1\">It only has effect if the defender has a high Virtue, and the accused at least 3, for the Lord turns his back on reprobates. If the accused is acquitted, they must go on pilgrimage within one month, or order a thanksgiving mass. But if the accused should indeed be guilty, the defender&rsquo;s Charisma shall fall to 3, and he will lose 2 points of Virtue for his misdeeds. This stems from the cloister of Saint Raymond the Unborn, but it is now spread to other parts.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175535,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!EU2ZCYJVC411SmNE"
+}

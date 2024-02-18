@@ -1,0 +1,39 @@
+{
+  "_id": "Y8bD7uKUw7ZfWmSf",
+  "name": "Stumble",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "DklZOXwgGCjyQb5s",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "cleric",
+    "range": "touch",
+    "duration": "until cockscrow",
+    "area": "one doorway",
+    "save": "deftness",
+    "component": "",
+    "data": {
+      "level": 2,
+      "class": "cleric"
+    },
+    "description": "<p class=\"p1\">Thus, one can draw a line before a door, gate or other doorway with holy water, and this threshold will make the sinful stumble. Those who come under the burden of sins, with low Virtue, shall fall on their face and start to swear; those who would come to steal will break their leg; and those who contemplate murder will break their necks.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329180641,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!Y8bD7uKUw7ZfWmSf"
+}

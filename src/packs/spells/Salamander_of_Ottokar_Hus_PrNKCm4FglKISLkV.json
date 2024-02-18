@@ -1,0 +1,35 @@
+{
+  "_id": "PrNKCm4FglKISLkV",
+  "name": "Salamander of Ottokar Hus",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "long",
+    "duration": "one month or less",
+    "area": "-",
+    "save": "-",
+    "component": "precious fluids",
+    "description": "<p class=\"p1\">A spectacle from the sphere of fire, better known in the vulgar as a salamander lizard. It most often reposes in its alembic, but at night, it can be asked questions, and it will answer in its sputtering voice, once per week, or twice from fifth level. Conversely, if it is released somewhere, it will enter a house which is pointed out for it, and burn it to the ground as if a brand has been thrown on it. It is very finicky, particularly about water, which extinguishes it.</p>\n<p class=\"p1\">Component: it must be brought up in an alembic from the mixture of ferment and certain most precious bodily fluids. Its nourishment shall be embers, sulphur, and phosphorus, and as it is very ravenous, its weekly upkeep is 1 Th above the regular costs.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215596,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!PrNKCm4FglKISLkV"
+}

@@ -1,0 +1,35 @@
+{
+  "_id": "oBdB0PobfsQQinXv",
+  "name": "Bountiful Herbalist",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "very long",
+    "duration": "one hour per level",
+    "area": "around oneself",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">If the Cleric needs some kind of herb, they must name what they want, and this spell will lead them to its place if it is found in range &ndash; although there is no guarantee the way will be either safe or easy. Only those who know what they seek can use the spell.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175539,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!oBdB0PobfsQQinXv"
+}

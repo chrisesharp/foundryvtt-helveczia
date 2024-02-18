@@ -1,0 +1,35 @@
+{
+  "_id": "RUBWTXFnC20hJJQ8",
+  "name": "Indecent Gossip",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "medium",
+    "duration": "< 1 hour",
+    "area": "one target",
+    "save": "bravery",
+    "component": "goatskin bagpipes",
+    "description": "<p class=\"p1\">It is well known there are some who can speak with their belly as well as with their mouth. This is the ability the spell grants to the subject, but as some say, the words come not from the belly, but slightly lower. In any event, the Devil&rsquo;s incitement it must be, for whatever voice speaks there, it says very indecent and improper things, against the subject&rsquo;s will, and most loudly.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207948,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!RUBWTXFnC20hJJQ8"
+}

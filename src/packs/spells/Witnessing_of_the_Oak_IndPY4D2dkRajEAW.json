@@ -1,0 +1,35 @@
+{
+  "_id": "IndPY4D2dkRajEAW",
+  "name": "Witnessing of the Oak",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "medium",
+    "duration": "instantaneous, or one day",
+    "area": "oak tree",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">This is used if a great danger threatens the congregation. The Cleric should gather great and small under the tree, and call on the majestic oak to obey in the name of our Lord Jesus Christ and All Saints. Then, the tree falls and strikes dead those of the flock who contemplate evil; or with the other use, keeps all safe from any foe for one day under its crown. But it might be that there will be many false ones to die this</p>\n<p class=\"p1\">way, or that the foes will surround the tree and wait for the end of the spell, for there is no way in, but there is no way out either. In conclusion, it is hazardous to use, and few dare to do it.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185173,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!IndPY4D2dkRajEAW"
+}

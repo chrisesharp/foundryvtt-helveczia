@@ -1,0 +1,35 @@
+{
+  "_id": "VcxYhb29tf8PCEcI",
+  "name": "Bitter Nourishment",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "touch",
+    "duration": "one day per level",
+    "area": "a table",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">It renders food so bitter that even swallowing it should count as penance. Therefore, many take it for a punishment of Gluttony, although it has a noteworthy use: it gives +2 to saving throws against poison until the spell&rsquo;s time is over.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175536,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!VcxYhb29tf8PCEcI"
+}

@@ -1,0 +1,35 @@
+{
+  "_id": "XWFuuVYS01qaJu4D",
+  "name": "Skeleton Key",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "touch",
+    "duration": "one attempt per two levels",
+    "area": "a lock",
+    "save": "-",
+    "component": "fingerbone",
+    "description": "<p class=\"p1\">Touching the enchanted fingerbone of a hanged man to a lock, it tries to unlock it as a master thief of equivalent level and 18 Dexterity. If the roll is 1, it breaks into the lock.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207949,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!XWFuuVYS01qaJu4D"
+}

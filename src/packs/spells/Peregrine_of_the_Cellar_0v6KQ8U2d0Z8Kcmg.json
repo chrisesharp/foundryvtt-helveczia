@@ -1,0 +1,35 @@
+{
+  "_id": "0v6KQ8U2d0Z8Kcmg",
+  "name": "Peregrine of the Cellar",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "medium",
+    "duration": "a few hours",
+    "area": "a room",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">Without fail, it detects the bacon, sausages and other food in a storeroom or cellar, and wine if desired. Its other use is the discovery of hidden chambers, which the wandering friar finds with a 1:2 probability if they contain anything edible. During fasting, it has another use, as it shows bacon, pork and so forth, and thus keeps the pious away from temptation. This makes it feasible the formula could have come from the Jews.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175533,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!0v6KQ8U2d0Z8Kcmg"
+}

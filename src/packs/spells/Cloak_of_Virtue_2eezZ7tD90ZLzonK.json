@@ -1,0 +1,35 @@
+{
+  "_id": "2eezZ7tD90ZLzonK",
+  "name": "Cloak of Virtue",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "-",
+    "duration": "one day or night",
+    "area": "one person",
+    "save": "temptation",
+    "component": "rosary, incense, holy water",
+    "description": "<p class=\"p1\">It lends the mirage of high Virtue to someone who would find it hard to achieve it with tiresome work. As they turn this way or that, people will believe them very virtuous, which is useful for many things. However, the bedazzlement only affects those who are themselves in a state of medium or low Virtue.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207947,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!2eezZ7tD90ZLzonK"
+}

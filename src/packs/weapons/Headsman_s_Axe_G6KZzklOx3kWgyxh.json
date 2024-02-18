@@ -1,0 +1,41 @@
+{
+  "_id": "G6KZzklOx3kWgyxh",
+  "name": "Headsman's Axe",
+  "type": "weapon",
+  "img": "icons/svg/sword.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "attack": "melee",
+    "damage": "1d12",
+    "critical": {
+      "range": "20",
+      "multiple": "3"
+    },
+    "encumbrance": "2",
+    "bonus": "0",
+    "reload": 0,
+    "cost": {
+      "value": "2",
+      "coin": "th"
+    }
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1676469704231,
+    "modifiedTime": 1708208898589,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!G6KZzklOx3kWgyxh"
+}

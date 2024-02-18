@@ -1,0 +1,79 @@
+{
+  "name": "Champion",
+  "type": "class",
+  "img": "icons/svg/combat.svg",
+  "effects": [
+    {
+      "_id": "8a9i75IKy1YWUTrO",
+      "changes": [
+        {
+          "key": "system.saves.bravery.bonus",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        },
+        {
+          "key": "system.saves.deftness.bonus",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        },
+        {
+          "key": "system.saves.temptation.bonus",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        },
+        {
+          "key": "system.hp.hd",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "icons/svg/aura.svg",
+      "origin": "Item.HnFICIz5UiS73zW0",
+      "transfer": true,
+      "flags": {},
+      "tint": null,
+      "name": "Champion",
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!v343w2GF8UHOBSYl.8a9i75IKy1YWUTrO"
+    }
+  ],
+  "folder": "Ov21n03SbW2TZT8u",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>Grizzled, hardy folks from the mountains, the darkest forests, and the strongmen of town fairs. Their muscles are like tempered steel, their bones forged iron.</p>\n<p>They roll their Hp with a mighty 1d12, and receive a +1 to all their saving throws.</p>",
+    "specialism": true,
+    "parent": "fighter"
+  },
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708207568709,
+    "modifiedTime": 1708208114804,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "v343w2GF8UHOBSYl",
+  "sort": 500000,
+  "_key": "!items!v343w2GF8UHOBSYl"
+}

@@ -484,12 +484,12 @@ export class HVActorSheet extends ActorSheet {
   }
 
   async getRandomCraft(existingSkills: string[]): Promise<StoredDocument<HVItem> | null> {
-    const craftPack = game.packs.find((p) => p.metadata.name === 'craft-skills');
+    const craftPack = game.packs.find((p) => p.metadata.name === 'crafts');
     return this.getRandomSkill(craftPack, existingSkills);
   }
 
   async getRandomScience(existingSkills: string[]): Promise<StoredDocument<HVItem> | null> {
-    const sciencePack = game.packs.find((p) => p.metadata.name === 'science-skills');
+    const sciencePack = game.packs.find((p) => p.metadata.name === 'sciences');
     return this.getRandomSkill(sciencePack, existingSkills);
   }
 

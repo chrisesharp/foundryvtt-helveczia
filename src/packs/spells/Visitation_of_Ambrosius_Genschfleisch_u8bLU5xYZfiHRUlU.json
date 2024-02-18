@@ -1,0 +1,35 @@
+{
+  "_id": "u8bLU5xYZfiHRUlU",
+  "name": "Visitation of Ambrosius Genschfleisch",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "within seven days walking",
+    "duration": "until cockscrow",
+    "area": "one or more targets",
+    "save": "temptation",
+    "component": "mandragora root",
+    "description": "<p class=\"p1\">This enchantment is effective over great distances, bringing a procession of infernal demons, devils, and apparitions into the subject&rsquo;s sleeping chamber. It can only be used on a Saturday, as this is the time of the witches&rsquo; sabbath, when the striga, witches, dead souls, etc. make merry. These miraculous beings torment the virtuous so that they find no rest, and (unless they roll a Hard Temptation save) even suffer 1d6 Hp plus 2 for the Student&rsquo;s every level. However, someone of lax morals will bear no harm, and may even join the procession, who will engage in dalliance, licentious drinking, and other sinful actions at their ultimate destination. The spell also poses a risk to the caster (who must fall asleep to use it), as there is a 1:3 probability of being drawn into the dream, where the target has a 1:3 chance to spot the features of his bewitcher among the swirling souls and apparitions. Otherwise, the spell can be used on multiple targets &ndash; as many as the mandragora allows.</p>\n<p class=\"p1\">Component: no lesser thing is needed here than the mandragora root, which costs 25 Th if bought &ndash; but it can be used twice more than usual.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215597,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!u8bLU5xYZfiHRUlU"
+}

@@ -1,0 +1,35 @@
+{
+  "_id": "1bhb4kOUGnFqfnVm",
+  "name": "Cagliostro's Purse",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "",
+    "duration": "until cockscrow",
+    "area": "",
+    "save": "-",
+    "component": "See below",
+    "description": "<p class=\"p1\">It creates false gold coins, 1d6 in number, which look genuine until disappearing with the next cockcrow. One can reach into the purse a second time, but there is a 1:6 probability all coins disappear at once; on the third try, this chance is 1:3; and afterwards, 1:2. Those who keep the gold for long often believe they have lost it or been pickpocketed &ndash; but the earlier they lose it, the easier they become suspicious.</p>\n<p class=\"p1\">Component: a silk purse stuffed with fool&rsquo;s gold. It also works with goat&rsquo;s crap, but it shall remain behind in the mark&rsquo;s pocket or cashbox.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207947,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!1bhb4kOUGnFqfnVm"
+}

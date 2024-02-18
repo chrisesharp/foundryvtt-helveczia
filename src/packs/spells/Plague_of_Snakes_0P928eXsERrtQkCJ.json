@@ -1,0 +1,35 @@
+{
+  "_id": "0P928eXsERrtQkCJ",
+  "name": "Plague of Snakes",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "very long",
+    "duration": "weeks or until penance",
+    "area": "village",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">The sinful often need little more than gentle guidance and a few kind words to mend their ways; but alas, some are relentless in their insubordination. This spell brings a plague of snakes to a large area, which, although not venomous, will appear everywhere in great numbers, and torment the locals as they can. They will have neither rest nor work, and the most sinful will have the worst of it. It is a fair warning to use this spell, although it is more merciful to terminate it once the people repent.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185172,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!0P928eXsERrtQkCJ"
+}

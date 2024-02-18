@@ -90,11 +90,13 @@ export class HVItemSheet extends ItemSheet {
     if (itemId) {
       let item = game.items?.get(itemId);
       if (!item) {
-        for (const packName of CONFIG.HV.spellPacks) {
-          const pack = game.packs.get(packName);
-          item = ((await pack?.getDocument(itemId)) as StoredDocument<HVItem>) ?? undefined;
-          if (item) break;
-        }
+        const pack = game.packs.get('helveczia.spells');
+        item = ((await pack?.getDocument(itemId)) as StoredDocument<HVItem>) ?? undefined;
+        // for (const packName of CONFIG.HV.spellPacks) {
+        //   const pack = game.packs.get(packName);
+        //   item = ((await pack?.getDocument(itemId)) as StoredDocument<HVItem>) ?? undefined;
+        //   if (item) break;
+        // }
       }
       dragData['type'] = 'Item';
       dragData['data'] = item?.data;

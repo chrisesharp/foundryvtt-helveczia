@@ -1,0 +1,30 @@
+{
+  "name": "Legends",
+  "type": "class",
+  "img": "icons/svg/coins.svg",
+  "effects": [],
+  "folder": "SsAP5eF6CyQzPsPM",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>It is especially the Meistersinger and grey veterans who know it well that every mountain, spring and ruined post station has its story, and one who knows these stories can avoid unforeseen danger, or get involved in lucrative adventures.</p>\n<p>The character gains the Legends (Wis) skill.</p>",
+    "specialism": true,
+    "parent": "vagabond"
+  },
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708207568709,
+    "modifiedTime": 1708208114804,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "Hkytc1JjxtVWx2DA",
+  "sort": 300000,
+  "_key": "!items!Hkytc1JjxtVWx2DA"
+}

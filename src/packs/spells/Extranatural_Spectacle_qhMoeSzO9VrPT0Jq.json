@@ -1,0 +1,35 @@
+{
+  "_id": "qhMoeSzO9VrPT0Jq",
+  "name": "Extranatural Spectacle",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "medium",
+    "duration": "10 minutes",
+    "area": "around oneself",
+    "save": "bravery",
+    "component": "",
+    "description": "<p class=\"p1\">The likeness of beautiful and terrible things, perhaps out of the Revelations or other similar writings, is manifested on the sky: and most will consider this a momentous occasion, while others, less sure of faith in their state of low Virtue, will experience confusion and the icy fear of Death. Those in a state of high Virtue, will be reassured, and the few whose life and faith are one (21 Virtue), stand proud. Many such signs in the sky have been seen since Christendom has not been whole: and some fear there will be more terrible ones yet while it stays unmended.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185174,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!qhMoeSzO9VrPT0Jq"
+}

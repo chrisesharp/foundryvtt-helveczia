@@ -1,0 +1,31 @@
+{
+  "_id": "bIoRqOWhyktdWU71",
+  "name": "Watchmaker",
+  "type": "skill",
+  "img": "icons/svg/hanging-sign.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "ability": "dex",
+    "subtype": "craft",
+    "bonus": 0
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708239818140,
+    "modifiedTime": 1708239915521,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!bIoRqOWhyktdWU71"
+}

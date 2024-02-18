@@ -1,0 +1,35 @@
+{
+  "_id": "VEK7xYi8MKAGQ4Mv",
+  "name": "Armour of Virtue",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "touch",
+    "duration": "quarter of an hour",
+    "area": "one person",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">Those who are strong of heart and noble of spirit are dressed in armour surrounded by a halo of pure light: this grants an AC bonus equal to their Virtue above 14, and for a 21, one more point. It also increases all saving throws by +1 at 14 Virtue, +2 at 17 Virtue, and +3 at 21 Virtue. If the target is already wearing armour, the stronger value prevails, but they still receive the saving throw bonus.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185173,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!VEK7xYi8MKAGQ4Mv"
+}

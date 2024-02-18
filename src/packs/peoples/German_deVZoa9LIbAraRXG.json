@@ -1,0 +1,30 @@
+{
+  "_id": "deVZoa9LIbAraRXG",
+  "name": "German",
+  "type": "people",
+  "img": "icons/svg/village.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>Through industry and numbers, Germans have risen as Christendom&rsquo;s mightiest strain, although what the will of Fate has lifted, it has immediately fractured into a hundred little towns and principalities.</p>\n<p>These would be useless to recount, for they include peaceful lands as well as empires teeming with garrisons and blue-uniformed soldiers. Yet all Germans seek to learn the trade of one of their ancestors, and practice it with considerable skill.</p>\n<p>Due to their diligence, they learn an extra, randomly rolled Craft skill with a +2 bonus. In this trade, they are already considered journeymen by guild standards, and enjoy all attendant benefits.</p>\n<p>Germans can become masters in their craft at 4th level.</p>",
+    "quantity": null,
+    "weight": null
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209071901,
+    "modifiedTime": 1708209087587,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!deVZoa9LIbAraRXG"
+}

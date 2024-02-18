@@ -1,0 +1,35 @@
+{
+  "_id": "gsqOGenoJ650ODxu",
+  "name": "Will-o'-the-Wisp",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "long",
+    "duration": "one hour per level",
+    "area": "far away",
+    "save": "-",
+    "component": "funeral candle",
+    "description": "<p class=\"p1\">It creates light such as seen in the marshes, i.e. a pale, wandering globe that might just be a candle or lantern. It goes very far indeed, and is especially drawn towards danger. Many will follow it, for foolishness has no remedy. It will only stay aglow at night, underground, or in a very dark forest.</p>\n<p class=\"p1\">Component: it needs a funeral candle from the grave of someone who has drowned.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207950,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!gsqOGenoJ650ODxu"
+}

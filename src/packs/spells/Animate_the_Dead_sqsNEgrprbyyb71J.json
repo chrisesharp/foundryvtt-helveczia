@@ -1,0 +1,35 @@
+{
+  "_id": "sqsNEgrprbyyb71J",
+  "name": "Animate the Dead",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "short",
+    "duration": "instantaneous",
+    "area": "one group",
+    "save": "-",
+    "component": "a flute of human bone",
+    "description": "<p class=\"p1\">Only those who lie in unhallowed ground, and have not received extreme unction can be brought back from the dead. They will dig themselves out from below their mounds, and serve their caller as Skeletons (level 1) or Walking Corpses (level 2+1), numbering twice his levels. It can be used multiple times in succession, but if the unburied dead gather in large numbers in one place, a most evil resolve can arise among their ranks.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219671,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!sqsNEgrprbyyb71J"
+}

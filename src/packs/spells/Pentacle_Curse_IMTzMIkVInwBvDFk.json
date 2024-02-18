@@ -1,0 +1,35 @@
+{
+  "_id": "IMTzMIkVInwBvDFk",
+  "name": "Pentacle Curse",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "short",
+    "duration": "until it is broken",
+    "area": "one person",
+    "save": "temptation",
+    "component": "pentacle seal",
+    "description": "<p class=\"p1\">It places such a charm upon a subject that all their members are weighted down as by heavy chains and irons. They receive a -4 to all rolls, and this curse lasts until someone regains the pentacle seal, and crushes it under a millstone. A Jewish foreman had once said that a miracle rabbi could solve the pentacle as a puzzle, and take it apart axe by axe, but who knows the truth of this claim.</p>\n<p class=\"p1\">Component: a pentacle seal, which must be made of a brass alloy, inlaid with golden axes, and decorated with intricate engravings for a total cost of 25 Th. It can be used multiple times, but it is only good for one curse at once, and only one may be carried.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219668,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!IMTzMIkVInwBvDFk"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Student Spells - Level 3",
+  "type": "Item",
+  "color": null,
+  "folder": null,
+  "_id": "ziA7MU7yGTlbURi0",
+  "sorting": "a",
+  "sort": 600000,
+  "flags": {},
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209245445,
+    "modifiedTime": 1708209351206,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_key": "!folders!ziA7MU7yGTlbURi0"
+}

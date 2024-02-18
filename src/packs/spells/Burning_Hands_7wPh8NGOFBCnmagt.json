@@ -1,0 +1,35 @@
+{
+  "_id": "7wPh8NGOFBCnmagt",
+  "name": "Burning Hands",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "short",
+    "duration": "-",
+    "area": "those in the way",
+    "save": "bravery",
+    "component": "sulphur and saltpetre",
+    "description": "<p class=\"p1\">The fiery blast radiating from the hands inflicts 3d4 Hp damage, and one more per level; also setting flammable things ablaze.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215594,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!7wPh8NGOFBCnmagt"
+}

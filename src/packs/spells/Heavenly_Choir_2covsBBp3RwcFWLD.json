@@ -1,0 +1,35 @@
+{
+  "_id": "2covsBBp3RwcFWLD",
+  "name": "Heavenly Choir",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "medium",
+    "duration": "special",
+    "area": "hearers",
+    "save": "temptation",
+    "component": "",
+    "description": "<p class=\"p1\">The music of the spheres is brought to the Earth with this word, but only as long as the Cleric continues to sing, or recites from the Holy Writ. Those with high Virtue are healed 1d6+level Hp, and gain +2 to any roll of their choice each round; while those with low Virtue suffer the opposite effect, and a further 1d4 Hp damage every round.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185172,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!2covsBBp3RwcFWLD"
+}

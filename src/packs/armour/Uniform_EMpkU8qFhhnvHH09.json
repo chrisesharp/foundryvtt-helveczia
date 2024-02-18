@@ -1,0 +1,36 @@
+{
+  "_id": "EMpkU8qFhhnvHH09",
+  "name": "Uniform",
+  "type": "armour",
+  "img": "icons/svg/shield.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "bonus": 1,
+    "encumbrance": 1,
+    "shield": false,
+    "cost": {
+      "value": "3",
+      "coin": "pf"
+    },
+    "img": "icons/shield.svg"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708208271532,
+    "modifiedTime": 1708208938561,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!EMpkU8qFhhnvHH09"
+}

@@ -1,0 +1,35 @@
+{
+  "_id": "jgsfrdn2qaS0FWB9",
+  "name": "Might of Hercules",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "-",
+    "duration": "half an hour",
+    "area": "one person",
+    "save": "-",
+    "component": "bull's kidney",
+    "description": "<p class=\"p1\">It gives nothing else but the 18 Strength of the antique hero, and with it, the ability to work tirelessly. It lasts only a small time, but enough for miraculous works by those who aren&rsquo;t too lazy to exploit its potential.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215597,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!jgsfrdn2qaS0FWB9"
+}

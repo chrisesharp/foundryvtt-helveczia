@@ -1,0 +1,35 @@
+{
+  "_id": "pnD5vXjYaiQgxCvY",
+  "name": "Fireball",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "long",
+    "duration": "instantaneous",
+    "area": "20' radius",
+    "save": "deftness",
+    "component": "black rooster egg",
+    "description": "<p class=\"p1\">A small spark flies from the index finger of the spellcaster, and, flying to its intended destination, it detonates with much sound and fury. The damage of the blast is 5d6 Hp, which will surely obliterate doors, ramparts and footbridges. It can be very dangerous in enclosed spaces, as it follows their shape and dimensions, and it may engulf its caster.</p>\n<p class=\"p1\">Component: the egg of a black rooster, to be kept in warm manure, then in live embers and a sulphurous bath, until it turns into a fiery black Sphere.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219670,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!pnD5vXjYaiQgxCvY"
+}

@@ -1,0 +1,35 @@
+{
+  "_id": "wBQJGbZmSRSSQ83Z",
+  "name": "Soothing Balm",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "touch",
+    "duration": "instantaneous",
+    "area": "one person",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">This magic is for pain-ease, lesser wounds and small afflictions, for it heals 1d6 Hp and 1 more per two levels. It also dispels the effects of many harmful spells, but does not help with poison or disease.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175540,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!wBQJGbZmSRSSQ83Z"
+}

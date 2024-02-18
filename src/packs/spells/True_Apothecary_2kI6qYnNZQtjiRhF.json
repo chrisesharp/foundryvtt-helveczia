@@ -1,0 +1,35 @@
+{
+  "_id": "2kI6qYnNZQtjiRhF",
+  "name": "True Apothecary",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "touch",
+    "duration": "instantaneous",
+    "area": "one person",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">It is a very effective healing spell, for it not only returns 3d6 Hp and 1 more per level, but it is also useful against diseases and poisons; and with longer resting, even mortal wounds. This may not return the lives of the dead, although for certain great afflictions like the plague, hunchback, Cholera Morbus, the French disease or similar, it may be either a treatment or at least a pain-ease. This healing ability is also the power of major relics, and it is usually learned in spell form where they are being kept.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185172,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!2kI6qYnNZQtjiRhF"
+}

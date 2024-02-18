@@ -1,0 +1,35 @@
+{
+  "_id": "SGRDlLRnRk4GBtwN",
+  "name": "Alluring Likeness",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "long",
+    "duration": "1/hr per 2 levels",
+    "area": "nearby",
+    "save": "temptation",
+    "component": "mirror with gold rim",
+    "description": "<p class=\"p1\">It only affects a target with high Virtue, whose image it duplicates into a faerie likeness. The conjurer can control this mirage, give it commands or speak with its mouth, although its appearance is slightly aethereal, and its speech unintelligible.</p>\n<p class=\"p1\">Someone who comes close can become suspicious, receiving a saving throw.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215596,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!SGRDlLRnRk4GBtwN"
+}

@@ -1,0 +1,31 @@
+{
+  "_id": "H7QaaJgCH6RF8hTW",
+  "name": "Astrology",
+  "type": "skill",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>With&nbsp;this skill, the character can determine the company&rsquo;s position on the map (usually by hex). It can also be used to prepare a simple horoscope by the subject&rsquo;s star signs (this provides a premonition of something useful). A calendar and clear night sky must be available.</p>",
+    "ability": "wis",
+    "subtype": "magical",
+    "bonus": 0
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209591012,
+    "modifiedTime": 1708209691064,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!H7QaaJgCH6RF8hTW"
+}

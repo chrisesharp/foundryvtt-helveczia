@@ -1,0 +1,31 @@
+{
+  "_id": "YqJBsdHjFVROt0xd",
+  "name": "Anatomy",
+  "type": "skill",
+  "img": "icons/svg/book.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "ability": "int",
+    "subtype": "science",
+    "bonus": 0
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708239767417,
+    "modifiedTime": 1708239790275,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!YqJBsdHjFVROt0xd"
+}

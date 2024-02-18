@@ -1,0 +1,35 @@
+{
+  "_id": "jxSQ7SGNzacdZjti",
+  "name": "There is No Greater Ass",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "medium",
+    "duration": "one day, then until cockscrow",
+    "area": "one subject",
+    "save": "temptation",
+    "component": "",
+    "description": "<p class=\"p1\">The sinful and thoughtless man often remains without a lesson. If he must learn proper behaviour, this spell comes in handy, for he can see the bad example on himself. Should he do anything so foolish or scatterbrained that an ass would not do so, he will grow the long ears of the same, and cry out: &ldquo;Hee haw! Hee haw! There is no greater ass!&rdquo; Every time he makes a foolish misstep, his ears will grow longer, and he can eat nothing but hay. Care must be taken, however, because if the ears are trimmed by the unwise, they will stay that way the other day.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175538,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!jxSQ7SGNzacdZjti"
+}

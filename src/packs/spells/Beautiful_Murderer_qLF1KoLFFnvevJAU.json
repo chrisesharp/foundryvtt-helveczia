@@ -1,0 +1,35 @@
+{
+  "_id": "qLF1KoLFFnvevJAU",
+  "name": "Beautiful Murderer",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "short",
+    "duration": "until cut down",
+    "area": "rosebush",
+    "save": "-",
+    "component": "see rules",
+    "description": "<p class=\"p1\">Enchanting looks often conceal treacherous intent, and it is rightly so with this spell. A rosebush is enchanted with the blood of its victim, awakening its bloodthirst and malevolence. From then on, it is a level 3+2 monster (Killer Vine), waiting for someone to pick one of its flowers, or get close enough to its thorns to engulf and exsanguinate the victim.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215597,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!qLF1KoLFFnvevJAU"
+}

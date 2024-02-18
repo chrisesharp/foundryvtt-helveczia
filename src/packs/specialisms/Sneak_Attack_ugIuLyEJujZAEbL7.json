@@ -1,0 +1,30 @@
+{
+  "name": "Sneak Attack",
+  "type": "class",
+  "img": "icons/svg/coins.svg",
+  "effects": [],
+  "folder": "SsAP5eF6CyQzPsPM",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>This ability can be used if the character can strike an unaware opponent &ndash; e.g. sneaking up on him, stabbing him under a table during conversation, or sniping him from a tree.</p>\n<p>For every odd level, a successful sneak attack deals an extra +1d6 damage (up to +3d6 on fifth level).</p>\n<p>Thrown and missile weapons can also be used, and with the right instrument, it can also incapacitate opponents instead of killing them.</p>",
+    "specialism": true,
+    "parent": "vagabond"
+  },
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708207568709,
+    "modifiedTime": 1708208114804,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "ugIuLyEJujZAEbL7",
+  "sort": 100000,
+  "_key": "!items!ugIuLyEJujZAEbL7"
+}

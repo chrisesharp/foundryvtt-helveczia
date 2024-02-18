@@ -1,0 +1,30 @@
+{
+  "name": "Hussar",
+  "type": "class",
+  "img": "icons/svg/combat.svg",
+  "effects": [],
+  "folder": "Ov21n03SbW2TZT8u",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>The best Hussars are the Hungarians and the Poles, but their regiment have also emerged elsewhere.</p>\n<p>From the saddle, these light cavalrymen receive an extra attack every round with a +1 base attack bonus.</p>",
+    "specialism": true,
+    "parent": "fighter"
+  },
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708207568709,
+    "modifiedTime": 1708208114804,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "p1gqdfLXpSIhInTc",
+  "sort": 400000,
+  "_key": "!items!p1gqdfLXpSIhInTc"
+}

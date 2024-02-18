@@ -1,0 +1,35 @@
+{
+  "_id": "gMcAHweNyjRpCgT9",
+  "name": "Comprehensive Sermon",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "medium",
+    "duration": "< 3 hours",
+    "area": "hearers",
+    "save": "temptation",
+    "component": "",
+    "description": "<p class=\"p1\">It is not right if the flock does not listen to the Word. But should it start with this spell, they will become very attentive, and will not leave until it is all finished &ndash; in fact, even more people will come to hear the preacher. Those who would leave must roll a saving throw; and as long as the sermon is ongoing, neither the preacher nor their companions will be harmed. There are not many who would thus collect the birds</p>\n<p class=\"p1\">and wild beasts around them to preach the Good Book, but the Franciscan brothers have done all that and more miraculous things.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175537,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!gMcAHweNyjRpCgT9"
+}

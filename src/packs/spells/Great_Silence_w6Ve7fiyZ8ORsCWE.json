@@ -1,0 +1,35 @@
+{
+  "_id": "w6Ve7fiyZ8ORsCWE",
+  "name": "Great Silence",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "medium",
+    "duration": "until absolution or 1 month",
+    "area": "one space",
+    "save": "bravery",
+    "component": "",
+    "description": "<p class=\"p1\">The silence before Creation is brought upon an open or closed space, which might be as large as a small village. Thereafter, only the Word written inside the Holy Bible can sound within; and only from those who can roll a successful saving throw. Let them prepare well, those who would turn to this: for if they misuse it, they must roll a save themselves, or be struck by the spell of The Mute.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185174,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!w6Ve7fiyZ8ORsCWE"
+}

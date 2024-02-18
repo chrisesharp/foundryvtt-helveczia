@@ -1,0 +1,35 @@
+{
+  "_id": "bW62VGaer2gXyjPJ",
+  "name": "Commandment",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "medium",
+    "duration": "5 minutes",
+    "area": "1 + 1 target/ 3 levels",
+    "save": "temptation",
+    "component": "",
+    "description": "<p class=\"p1\">Faith&rsquo;s might and authority is shown in the short commandment, which those who fail their saving throws will fulfil without hesitation. Thus, a sentry could open a door, a miser could open his purse, a group of brigands could grant passage, or a headsman could lay down his raised axe. If the command is against the nature and orders of the subjects, they may change their intentions after a short time has passed.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175536,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!bW62VGaer2gXyjPJ"
+}

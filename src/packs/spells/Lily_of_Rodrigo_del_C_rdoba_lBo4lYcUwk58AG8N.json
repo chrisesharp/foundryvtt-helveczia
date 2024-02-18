@@ -1,0 +1,35 @@
+{
+  "_id": "lBo4lYcUwk58AG8N",
+  "name": "Lily of Rodrigo del Córdoba",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "short",
+    "duration": "until fraternity dissolved",
+    "area": "one group",
+    "save": "bravery",
+    "component": "lily",
+    "description": "<p class=\"p1\">The members of a secret Hispanian society are said to have been the first to swear over an enchanted lily that they will never harm the others, all repeating: &ldquo;As this lily to my brother I pass, so should Death strike me down if the circle I break.&rdquo; On all their meetings, they repeated the vow, until one Rodrigo del Cordoba opened the chest where they stored the flower, and exchanged it for another. So did he give up the other conspirators, and if he did not devise this clever stratagem, he would have had to roll a Hard Bravery save on the next meeting, or fall dead among the others.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215597,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!lBo4lYcUwk58AG8N"
+}

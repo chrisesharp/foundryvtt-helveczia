@@ -1,0 +1,35 @@
+{
+  "_id": "im4n9b2i2R7x9RUN",
+  "name": "Invisibility",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "-",
+    "duration": "30 minutes - 1 hour",
+    "area": "one person",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">There are none who do not desire this spell, and this is just why it is guarded so carefully by so few. Someone who dons the mantle of invisibility can walk to and fro as if they were not there (although they must take care about their tracks, noise, and smell) and do as they please. It only ends before its time if the subject is wounded.</p>\n<p class=\"p1\">Component: paints must be mixed into a colour the eye cannot see, requiring extraordinary materials.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219670,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!im4n9b2i2R7x9RUN"
+}

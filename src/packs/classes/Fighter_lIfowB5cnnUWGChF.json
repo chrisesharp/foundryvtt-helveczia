@@ -1,0 +1,93 @@
+{
+  "_id": "lIfowB5cnnUWGChF",
+  "name": "Fighter",
+  "type": "class",
+  "img": "icons/svg/combat.svg",
+  "effects": [
+    {
+      "_id": "xm5qP3qbOo8FTONX",
+      "changes": [
+        {
+          "key": "system.attack",
+          "mode": 0,
+          "value": "{\"type\":\"attack_bonus\",\"value\":\"fighter\"}",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "icons/svg/aura.svg",
+      "origin": "Item.aPsOFzXLQ69oRIo4",
+      "transfer": true,
+      "flags": {},
+      "tint": null,
+      "name": "Fighter Attack",
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!lIfowB5cnnUWGChF.xm5qP3qbOo8FTONX"
+    },
+    {
+      "_id": "r6yU45Zgfr611V8I",
+      "changes": [
+        {
+          "key": "system.hp.hd",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "icons/svg/aura.svg",
+      "origin": "Item.aPsOFzXLQ69oRIo4",
+      "transfer": true,
+      "flags": {},
+      "tint": null,
+      "name": "Hit Dice",
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!lIfowB5cnnUWGChF.r6yU45Zgfr611V8I"
+    }
+  ],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>As Helv&eacute;czia is populated by a free folk, it sends many fighters and mercenaries to the rest of the world, where they enjoy considerable, although often ill reputation. Even His Holiness, the Roman Pope, Pius XXVI is guarded from the dangers of heresy and treacherous intent by the Helv&eacute;czian Guard.</p>\n<p>Just as many fighters come to the land of Helv&eacute;czia, for fame, fortune, and freedom (mostly from prosecution).</p>\n<p>Fighters stand their own in melee combat and ranged engagements, and take wounds much better than other classes.</p>\n<ul>\n<li>Attack bonus: Level*1</li>\n<li>Saving throws: Bravery by the first, Deftness and Temptation by the second column</li>\n<li>Weapon use: any</li>\n<li>Armour use: any</li>\n<li>Hp: 1d10 per level</li>\n</ul>\n<p>&nbsp;</p>\n<p>All Fighters benefit from the following:</p>\n<ul>\n<li>Reflecting their practice and worldly experience, they receive an extra skill on the 3rd and 5th level.</li>\n</ul>",
+    "specialism": false,
+    "parent": "",
+    "quantity": null,
+    "weight": null
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209033701,
+    "modifiedTime": 1708209053920,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!lIfowB5cnnUWGChF"
+}

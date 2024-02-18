@@ -1,0 +1,35 @@
+{
+  "_id": "HwKRzaReNJcQbhQr",
+  "name": "Deus Vult!",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "-",
+    "duration": "2 + 1 round/level",
+    "area": "a company",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">It was the prayer of the crusaders, but it remains useful in the time of new heresies. Every true Christian around the Cleric receives +1 to their attacks, damage, and AC; +2 if they have high Virtue, and +3 if it is 21. All unbelievers in the area, whether heretic, Mohammedan, Jew or pagan, must roll a Temptation saving throw or they are only able to defend themselves; and if they roll very badly, throw themselves on the ground and discard their weapons, or run in panic. This is indeed so for all who are not Christians, even if they were the Cleric&rsquo;s trusted friends; and likewise, it has an effect on all Students, unless they have confessed their sins and achieved a state of high Virtue.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185172,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!HwKRzaReNJcQbhQr"
+}

@@ -1,0 +1,35 @@
+{
+  "_id": "q2POsCZc3alxXrsk",
+  "name": "Sleep",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "short",
+    "duration": "until awakened",
+    "area": "two targets per level",
+    "save": "temptation",
+    "component": "dust of rose petals",
+    "description": "<p class=\"p1\">Those who fall under the spell&rsquo;s effects will feel drowsy, falling to the ground in peaceful slumber.</p>\n<p class=\"p1\">Only shaking and shouting will awaken them, as they sleep most deeply &ndash; and if they are undisturbed, they might sleep until the Last Judgement.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215597,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!q2POsCZc3alxXrsk"
+}

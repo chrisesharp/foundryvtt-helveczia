@@ -1,0 +1,35 @@
+{
+  "_id": "Xp0uJxBpB4klNH7i",
+  "name": "Circumscribation",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "very short",
+    "duration": "until cockscrow",
+    "area": "chamber-sized circle",
+    "save": "-",
+    "component": "a Turkish yatagan",
+    "description": "<p class=\"p1\">This is used as it follows. A circle must be drawn with the point of a yatagan, and until cockcrow, anyone who steps through the line will be cut into pieces by blades &ndash; i.e. they will receive one strike for every caster level, at the Student&rsquo;s fighting competency. The circle is visible as a ring of shiny steel, and it can be heard as the scraping sound of metal.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215597,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!Xp0uJxBpB4klNH7i"
+}

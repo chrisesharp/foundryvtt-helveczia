@@ -9,6 +9,7 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import rollupStream from '@rollup/stream';
 import rollupConfig from './rollup.config.js';
+import { compilePack } from '@foundryvtt/foundryvtt-cli';
 
 /********************/
 /*  CONFIGURATION   */
@@ -20,7 +21,8 @@ const distDirectory = './dist';
 const stylesDirectory = `${sourceDirectory}/styles`;
 const stylesExtension = 'scss';
 const sourceFileExtension = 'ts';
-const staticFiles = ['assets', 'fonts', 'lang', 'packs', 'templates', 'system.json', 'template.json'];
+const staticFiles = ['assets', 'fonts', 'lang', 'templates', 'system.json', 'template.json'];
+const packsDirectory = `${sourceDirectory}/packs`;
 
 /********************/
 /*      BUILD       */
@@ -64,6 +66,22 @@ async function copyFiles() {
 }
 
 /**
+ * Build packs
+ */
+async function buildPacks() {
+  fs.readdir(packsDirectory, (err, dirs) => {
+    //handling error
+    if (err) {
+      return console.log('Unable to scan directory: ' + err);
+    }
+    //listing all files using forEach
+    dirs.forEach(async (dir) => {
+      await compilePack(`${packsDirectory}/${dir}`, `${distDirectory}/packs/${dir}`);
+    });
+  });
+}
+
+/**
  * Watch for changes for each build step
  */
 function watch() {
@@ -76,7 +94,7 @@ function watch() {
   );
 }
 
-const build = gulp.series(clean, gulp.parallel(buildCode, buildStyles, copyFiles));
+const build = gulp.series(clean, gulp.parallel(buildCode, buildStyles, buildPacks, copyFiles));
 
 /********************/
 /*      CLEAN       */
@@ -86,7 +104,7 @@ const build = gulp.series(clean, gulp.parallel(buildCode, buildStyles, copyFiles
  * Remove built files from `dist` folder while ignoring source files
  */
 async function clean() {
-  const files = [...staticFiles, 'module'];
+  const files = [...staticFiles, 'module', 'packs'];
 
   if (fs.existsSync(`${stylesDirectory}/${name}.${stylesExtension}`)) {
     files.push('styles');

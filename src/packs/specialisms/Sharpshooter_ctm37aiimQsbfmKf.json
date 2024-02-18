@@ -1,0 +1,61 @@
+{
+  "name": "Sharpshooter",
+  "type": "class",
+  "img": "icons/svg/combat.svg",
+  "effects": [
+    {
+      "_id": "lPkjMXSm2c0kaTQ6",
+      "changes": [
+        {
+          "key": "system.attack.ranged.bonus",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "icons/svg/aura.svg",
+      "origin": "Item.p96VzZiFLUxkGuWq",
+      "transfer": true,
+      "flags": {},
+      "tint": null,
+      "name": "Sharpshooter",
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!ctm37aiimQsbfmKf.lPkjMXSm2c0kaTQ6"
+    }
+  ],
+  "folder": "Ov21n03SbW2TZT8u",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>Although pistols and rifles are more often used to fire volleys due to their general inaccuracy, some have still mastered</p>\n<p>them to the point of impressive precision.</p>\n<p>Sharpshooters may only wear light armour, but with firearms and other missiles, they either receive +2 to their attacks, or they can reload faster: pistols, carbines and crossbows in 1/2 round, blunderbusses and muskets in 1 round, and cannons in 2 1/2 rounds. They can always choose between the two options according to their present situation.</p>",
+    "specialism": true,
+    "parent": "fighter"
+  },
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708207568709,
+    "modifiedTime": 1708208114804,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "ctm37aiimQsbfmKf",
+  "sort": 200000,
+  "_key": "!items!ctm37aiimQsbfmKf"
+}

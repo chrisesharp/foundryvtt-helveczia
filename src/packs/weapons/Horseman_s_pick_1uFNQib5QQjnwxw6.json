@@ -1,0 +1,41 @@
+{
+  "name": "Horseman's pick",
+  "type": "weapon",
+  "img": "icons/svg/sword.svg",
+  "effects": [],
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<ul>\n<li>Can be used one-handed, or two-handed, giving<strong> 1.5 Strength bonus</strong> to damage.</li>\n<li>Armour-piercing, ignores armour - price doubled.</li>\n</ul>",
+    "attack": "melee",
+    "damage": "1d6",
+    "critical": {
+      "range": "20",
+      "multiple": "3"
+    },
+    "encumbrance": "1",
+    "bonus": "0",
+    "reload": 0,
+    "cost": {
+      "value": "61",
+      "coin": "th"
+    }
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1676469704233,
+    "modifiedTime": 1708208898589,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "1uFNQib5QQjnwxw6",
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!1uFNQib5QQjnwxw6"
+}

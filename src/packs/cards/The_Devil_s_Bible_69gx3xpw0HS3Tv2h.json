@@ -1,0 +1,1024 @@
+{
+  "_id": "69gx3xpw0HS3Tv2h",
+  "name": "The Devil's Bible",
+  "type": "deck",
+  "description": "",
+  "img": "icons/svg/card-hand.svg",
+  "cards": [
+    {
+      "_id": "PYexQTeLFOALTMPR",
+      "name": "7 of Acorns",
+      "description": "",
+      "type": "base",
+      "suit": "Acorns",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "acorns-07",
+          "img": "systems/helveczia/assets/cards/acorns-07.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 3,
+      "flags": {},
+      "value": 7,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.PYexQTeLFOALTMPR",
+      "cards": []
+    },
+    {
+      "_id": "2jmC0fxcVbLtJ4LS",
+      "name": "8 of Acorns",
+      "description": "",
+      "type": "base",
+      "suit": "Acorns",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "acorns-08",
+          "img": "systems/helveczia/assets/cards/acorns-08.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 4,
+      "flags": {},
+      "value": 8,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.2jmC0fxcVbLtJ4LS",
+      "cards": []
+    },
+    {
+      "_id": "KVHlBcDoWBbrSDxI",
+      "name": "9 of Acorns",
+      "description": "",
+      "type": "base",
+      "suit": "Acorns",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "acorns-09",
+          "img": "systems/helveczia/assets/cards/acorns-09.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 5,
+      "flags": {},
+      "value": 9,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.KVHlBcDoWBbrSDxI",
+      "cards": []
+    },
+    {
+      "_id": "g3DIUzPTZNJPKw9g",
+      "name": "10 of Acorns",
+      "description": "",
+      "type": "base",
+      "suit": "Acorns",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "acorns-10",
+          "img": "systems/helveczia/assets/cards/acorns-10.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 6,
+      "flags": {},
+      "value": 10,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.g3DIUzPTZNJPKw9g",
+      "cards": []
+    },
+    {
+      "_id": "QQYTTSyeedDnpz5l",
+      "name": "Ace of Acorns",
+      "description": "Tél (Winter) in the Mountains",
+      "type": "base",
+      "suit": "Acorns",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "acorns-ace",
+          "img": "systems/helveczia/assets/cards/acorns-ace.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 7,
+      "flags": {},
+      "value": 11,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.QQYTTSyeedDnpz5l",
+      "cards": []
+    },
+    {
+      "_id": "5GiHkvNTxpX1njNO",
+      "name": "King of Acorns",
+      "description": "if the character is 5th or 6th level",
+      "type": "base",
+      "suit": "Acorns",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "acorns-king",
+          "img": "systems/helveczia/assets/cards/acorns-king.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 2,
+      "flags": {},
+      "value": 4,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.5GiHkvNTxpX1njNO",
+      "cards": []
+    },
+    {
+      "_id": "CPXEJG5Isb3zcsAX",
+      "name": "Over of Acorns",
+      "description": "Tell Vilmos in great Peril",
+      "type": "base",
+      "suit": "Acorns",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "acorns-over",
+          "img": "systems/helveczia/assets/cards/acorns-over.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 1,
+      "flags": {},
+      "value": 3,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.CPXEJG5Isb3zcsAX",
+      "cards": []
+    },
+    {
+      "_id": "7F2hGeEBrX6iEJZA",
+      "name": "Under of Acorns",
+      "description": "Harras Rudolf in Combat",
+      "type": "base",
+      "suit": "Acorns",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "acorns-under",
+          "img": "systems/helveczia/assets/cards/acorns-under.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "value": 2,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.7F2hGeEBrX6iEJZA",
+      "cards": []
+    },
+    {
+      "_id": "iI4dgdlqj85hAz2j",
+      "name": "7 of Gourds",
+      "description": "",
+      "type": "base",
+      "suit": "Gourds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "gourds-07",
+          "img": "systems/helveczia/assets/cards/gourds-07.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 11,
+      "flags": {},
+      "value": 7,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.iI4dgdlqj85hAz2j",
+      "cards": []
+    },
+    {
+      "_id": "7jMz50bfLNZiDSjn",
+      "name": "8 of Gourds",
+      "description": "",
+      "type": "base",
+      "suit": "Gourds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "gourds-08",
+          "img": "systems/helveczia/assets/cards/gourds-08.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 12,
+      "flags": {},
+      "value": 8,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.7jMz50bfLNZiDSjn",
+      "cards": []
+    },
+    {
+      "_id": "GfNTYPYvU3Di0lrD",
+      "name": "9 of Gourds",
+      "description": "",
+      "type": "base",
+      "suit": "Gourds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "gourds-09",
+          "img": "systems/helveczia/assets/cards/gourds-09.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 13,
+      "flags": {},
+      "value": 9,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.GfNTYPYvU3Di0lrD",
+      "cards": []
+    },
+    {
+      "_id": "igeMIrkpVtgu7jjk",
+      "name": "10 of Gourds",
+      "description": "",
+      "type": "base",
+      "suit": "Gourds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "gourds-10",
+          "img": "systems/helveczia/assets/cards/gourds-10.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 14,
+      "flags": {},
+      "value": 10,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.igeMIrkpVtgu7jjk",
+      "cards": []
+    },
+    {
+      "_id": "CpYhPeF6aFAjCSzg",
+      "name": "Ace of Gourds",
+      "description": "Nyár (Summer) on a Field",
+      "type": "base",
+      "suit": "Gourds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "gourds-ace",
+          "img": "systems/helveczia/assets/cards/gourds-ace.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 15,
+      "flags": {},
+      "value": 11,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.CpYhPeF6aFAjCSzg",
+      "cards": []
+    },
+    {
+      "_id": "tIJPApm2rPEWMJ1G",
+      "name": "King of Gourds",
+      "description": "if the character is 5th or 6th level",
+      "type": "base",
+      "suit": "Gourds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "gourds-king",
+          "img": "systems/helveczia/assets/cards/gourds-king.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 10,
+      "flags": {},
+      "value": 4,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.tIJPApm2rPEWMJ1G",
+      "cards": []
+    },
+    {
+      "_id": "JmrA4HnGtB6QKlwa",
+      "name": "Over of Gourds",
+      "description": "Stüszi vadász on a Journey",
+      "type": "base",
+      "suit": "Gourds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "gourds-over",
+          "img": "systems/helveczia/assets/cards/gourds-over.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 9,
+      "flags": {},
+      "value": 3,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.JmrA4HnGtB6QKlwa",
+      "cards": []
+    },
+    {
+      "_id": "exDs1T2Lrw5GMfSw",
+      "name": "Under of Gourds",
+      "description": "Reding Itell by the Law",
+      "type": "base",
+      "suit": "Gourds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "gourds-under",
+          "img": "systems/helveczia/assets/cards/gourds-under.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 8,
+      "flags": {},
+      "value": 2,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.exDs1T2Lrw5GMfSw",
+      "cards": []
+    },
+    {
+      "_id": "4az7AO6h466kzCEX",
+      "name": "7 of Greens",
+      "description": "",
+      "type": "base",
+      "suit": "Greens",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "greens-07",
+          "img": "systems/helveczia/assets/cards/greens-07.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 19,
+      "flags": {},
+      "value": 7,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.4az7AO6h466kzCEX",
+      "cards": []
+    },
+    {
+      "_id": "jzNHgdXB7CVw4TNq",
+      "name": "8 of Greens",
+      "description": "",
+      "type": "base",
+      "suit": "Greens",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "greens-08",
+          "img": "systems/helveczia/assets/cards/greens-08.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 20,
+      "flags": {},
+      "value": 8,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.jzNHgdXB7CVw4TNq",
+      "cards": []
+    },
+    {
+      "_id": "LWFWWoumYYwR0JBZ",
+      "name": "9 of Greens",
+      "description": "",
+      "type": "base",
+      "suit": "Greens",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "greens-09",
+          "img": "systems/helveczia/assets/cards/greens-09.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 21,
+      "flags": {},
+      "value": 9,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.LWFWWoumYYwR0JBZ",
+      "cards": []
+    },
+    {
+      "_id": "0HaUqhH4K02X83vK",
+      "name": "10 of Greens",
+      "description": "",
+      "type": "base",
+      "suit": "Greens",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "greens-10",
+          "img": "systems/helveczia/assets/cards/greens-10.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 22,
+      "flags": {},
+      "value": 10,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.0HaUqhH4K02X83vK",
+      "cards": []
+    },
+    {
+      "_id": "6GwUGCZOHMFJH6oV",
+      "name": "Ace of Greens",
+      "description": "Ősz (Fall) in a Forest",
+      "type": "base",
+      "suit": "Greens",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "greens-ace",
+          "img": "systems/helveczia/assets/cards/greens-ace.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 23,
+      "flags": {},
+      "value": 11,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.6GwUGCZOHMFJH6oV",
+      "cards": []
+    },
+    {
+      "_id": "rMOclxFV7cqTyycB",
+      "name": "King of Greens",
+      "description": "if the character is 5th or 6th level",
+      "type": "base",
+      "suit": "Greens",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "greens-king",
+          "img": "systems/helveczia/assets/cards/greens-king.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 18,
+      "flags": {},
+      "value": 4,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.rMOclxFV7cqTyycB",
+      "cards": []
+    },
+    {
+      "_id": "mznFytKSsSHPfrxw",
+      "name": "Over of Greens",
+      "description": "Rudenz Ulrich in a Ruse",
+      "type": "base",
+      "suit": "Greens",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "greens-over",
+          "img": "systems/helveczia/assets/cards/greens-over.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 17,
+      "flags": {},
+      "value": 3,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.mznFytKSsSHPfrxw",
+      "cards": []
+    },
+    {
+      "_id": "QgmBFUl0yqiCGyco",
+      "name": "Under of Greens",
+      "description": "Fürst Walter in Bargains",
+      "type": "base",
+      "suit": "Greens",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "greens-under",
+          "img": "systems/helveczia/assets/cards/greens-under.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 16,
+      "flags": {},
+      "value": 2,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.QgmBFUl0yqiCGyco",
+      "cards": []
+    },
+    {
+      "_id": "d5fzvaUwikkEa57s",
+      "name": "7 of Reds",
+      "description": "",
+      "type": "base",
+      "suit": "Reds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "reds-07",
+          "img": "systems/helveczia/assets/cards/reds-07.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 27,
+      "flags": {},
+      "value": 7,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.d5fzvaUwikkEa57s",
+      "cards": []
+    },
+    {
+      "_id": "pExUY8atp1usd1Ec",
+      "name": "8 of Reds",
+      "description": "",
+      "type": "base",
+      "suit": "Reds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "reds-08",
+          "img": "systems/helveczia/assets/cards/reds-08.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 28,
+      "flags": {},
+      "value": 8,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.pExUY8atp1usd1Ec",
+      "cards": []
+    },
+    {
+      "_id": "zdBVxdTM77yKZ6Bs",
+      "name": "9 of Reds",
+      "description": "",
+      "type": "base",
+      "suit": "Reds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "reds-09",
+          "img": "systems/helveczia/assets/cards/reds-09.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 29,
+      "flags": {},
+      "value": 9,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.zdBVxdTM77yKZ6Bs",
+      "cards": []
+    },
+    {
+      "_id": "eYotZzfMY59k3u2d",
+      "name": "10 of Reds",
+      "description": "",
+      "type": "base",
+      "suit": "Reds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "reds-10",
+          "img": "systems/helveczia/assets/cards/reds-10.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 30,
+      "flags": {},
+      "value": 10,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.eYotZzfMY59k3u2d",
+      "cards": []
+    },
+    {
+      "_id": "Z07ZIR5t9DovZCQa",
+      "name": "Ace of Reds",
+      "description": "Tavasz (Spring) in Settlement",
+      "type": "base",
+      "suit": "Reds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "reds-ace",
+          "img": "systems/helveczia/assets/cards/reds-ace.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 31,
+      "flags": {},
+      "value": 11,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.Z07ZIR5t9DovZCQa",
+      "cards": []
+    },
+    {
+      "_id": "YnlxGKIRULMrx2fb",
+      "name": "King of Reds",
+      "description": "if the character is 5th or 6th level",
+      "type": "base",
+      "suit": "Reds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "reds-king",
+          "img": "systems/helveczia/assets/cards/reds-king.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 26,
+      "flags": {},
+      "value": 4,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.YnlxGKIRULMrx2fb",
+      "cards": []
+    },
+    {
+      "_id": "r1874RlWQ1ltcpFg",
+      "name": "Over of Reds",
+      "description": "Geßler Hermann at Superiors",
+      "type": "base",
+      "suit": "Reds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "reds-over",
+          "img": "systems/helveczia/assets/cards/reds-over.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 25,
+      "flags": {},
+      "value": 3,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.r1874RlWQ1ltcpFg",
+      "cards": []
+    },
+    {
+      "_id": "xnNeBxcntZBl3FXv",
+      "name": "Under of Reds",
+      "description": "Kuoni pásztor at the Poor",
+      "type": "base",
+      "suit": "Reds",
+      "back": {
+        "img": "systems/helveczia/assets/cards/reverse.png",
+        "name": "reverse",
+        "text": ""
+      },
+      "faces": [
+        {
+          "name": "reds-under",
+          "img": "systems/helveczia/assets/cards/reds-under.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "ZtwgnrxWeU3gsOO4",
+      "rotation": 0,
+      "sort": 24,
+      "flags": {},
+      "value": 2,
+      "system": {},
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!69gx3xpw0HS3Tv2h.xnNeBxcntZBl3FXv",
+      "cards": []
+    }
+  ],
+  "width": null,
+  "height": null,
+  "rotation": 0,
+  "displayCount": false,
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {},
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708208968599,
+    "modifiedTime": 1708209117284,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!cards!69gx3xpw0HS3Tv2h"
+}

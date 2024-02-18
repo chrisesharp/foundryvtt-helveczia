@@ -1,0 +1,35 @@
+{
+  "_id": "pab1KxOZ8VxyVWyO",
+  "name": "Emilio Sciarelli's Spectacle",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "-",
+    "duration": "one day or one night",
+    "area": "one person",
+    "save": "-",
+    "component": "tanned dogskin",
+    "description": "<p class=\"p1\">It clothes a person in very fine and expensive attire, who may walk around in them according to their wishes. The evening toll or cockcrow ends it.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207951,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!pab1KxOZ8VxyVWyO"
+}

@@ -1,0 +1,35 @@
+{
+  "_id": "jkl6BsRxmtl6G3LS",
+  "name": "Horrendous Surprise",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "touch",
+    "duration": "one week",
+    "area": "closed chest",
+    "save": "deftness",
+    "component": "wooden puppet",
+    "description": "<p class=\"p1\">One must only touch the chest and say the words, and when someone first opens the lid, a horrible, painted jack-in-the-box with several knives for its hands will spring forth to stab the opener in the heart. If the victim fails their save, they suffer 2d6 Hp damage for the puppet&lsquo;s knives, and +1d6 for every odd level for the surprise. Curiosity has killed many a cat with this formula &ndash; but not always those the puppet&rsquo;s maker intended.</p>\n<p class=\"p1\">Component: a wooden puppet, which must be assembled from springs, gears and knives (6 Th).</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215597,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!jkl6BsRxmtl6G3LS"
+}

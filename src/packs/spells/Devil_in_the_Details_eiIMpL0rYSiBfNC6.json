@@ -1,0 +1,35 @@
+{
+  "_id": "eiIMpL0rYSiBfNC6",
+  "name": "Devil in the Details",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "short",
+    "duration": "10 minutes",
+    "area": "a few rooms",
+    "save": "-",
+    "component": "sulphur",
+    "description": "<p class=\"p1\">It conjures a very tiny Devilkin the size of a thumb. This pitchfork-wielding little fellow runs like a mouse, and can fit through the tiniest cracks. He can spy on conversations, steal small objects, or try to unlock a door or chest from the inside. He is level 1, AC 14, causes 1 Hp damage, and has all of 1 Hp, so he can be swatted like a fat horsefly.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207950,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!eiIMpL0rYSiBfNC6"
+}

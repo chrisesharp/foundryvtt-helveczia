@@ -1,0 +1,39 @@
+{
+  "_id": "WPRclzetPiS15LaE",
+  "name": "Hands of St Laurence",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "DklZOXwgGCjyQb5s",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "cleric",
+    "range": "-",
+    "duration": "quarter of an hour",
+    "area": "cleric and companions",
+    "save": "-",
+    "component": "",
+    "data": {
+      "level": 2,
+      "class": "cleric"
+    },
+    "description": "<p class=\"p1\">The Cleric is not burned by fire, nor choked by smoke; and if they were hit by a flaming beam in a burning building, they can cast it aside as if they had Strength: 18. This is only valid for natural fires lit by normal means, and not salamanders, alchemical mixtures, the dragons of legend or the other fires of Hell &ndash; although even then, the damage is halved.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329180640,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!WPRclzetPiS15LaE"
+}

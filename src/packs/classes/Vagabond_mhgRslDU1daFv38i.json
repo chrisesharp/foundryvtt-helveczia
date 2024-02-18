@@ -1,0 +1,105 @@
+{
+  "_id": "mhgRslDU1daFv38i",
+  "name": "Vagabond",
+  "type": "class",
+  "img": "icons/svg/coins.svg",
+  "effects": [
+    {
+      "_id": "JJZAEtiB0B7DOteB",
+      "changes": [
+        {
+          "key": "system.saves.deftness.base",
+          "mode": 0,
+          "value": "{\"type\":\"save\",\"primary\":\"true\"}",
+          "priority": null
+        },
+        {
+          "key": "system.saves.bravery.base",
+          "mode": 0,
+          "value": "{\"type\":\"save\",\"primary\":\"false\"}",
+          "priority": null
+        },
+        {
+          "key": "system.saves.temptation.base",
+          "mode": 0,
+          "value": "{\"type\":\"save\",\"primary\":\"false\"}",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "icons/svg/aura.svg",
+      "origin": "Item.JZr56IoZquOrwlPL",
+      "transfer": true,
+      "flags": {},
+      "tint": null,
+      "name": "Saves",
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!mhgRslDU1daFv38i.JJZAEtiB0B7DOteB"
+    },
+    {
+      "_id": "KCH70gHQpjKjHgre",
+      "changes": [
+        {
+          "key": "system.attack",
+          "mode": 0,
+          "value": "{\"type\":\"attack_bonus\"}",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "icons/svg/aura.svg",
+      "origin": "Item.JZr56IoZquOrwlPL",
+      "transfer": true,
+      "flags": {},
+      "tint": null,
+      "name": "Attack",
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!mhgRslDU1daFv38i.KCH70gHQpjKjHgre"
+    }
+  ],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>On the roads of Helv&eacute;czia and other lands, it is common to see travellers with their walking stick or humble steed: journeyman and hobbling beggar, dark-hearted knave and harried peddler, Meistersinger and crafty pickpocket. Entrusting themselves to Fortune&rsquo;s good grace, their best are equally skilled at duelling and other useful tricks.</p>\n<ul>\n<li>Attack bonus: Level*2/3</li>\n<li>Saving throw: Deftness by the first, Bravery and Temptation by the second column</li>\n<li>Weapon use: any</li>\n<li>Armour use: light only</li>\n<li>Hp: 1d8 per level</li>\n</ul>",
+    "specialism": false,
+    "parent": "",
+    "quantity": null,
+    "weight": null
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209033701,
+    "modifiedTime": 1708209053920,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!mhgRslDU1daFv38i"
+}

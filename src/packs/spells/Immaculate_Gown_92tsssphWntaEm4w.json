@@ -1,0 +1,39 @@
+{
+  "_id": "92tsssphWntaEm4w",
+  "name": "Immaculate Gown",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "DklZOXwgGCjyQb5s",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "cleric",
+    "range": "-",
+    "duration": "30 minutes",
+    "area": "one person",
+    "save": "deftness",
+    "component": "",
+    "data": {
+      "level": 2,
+      "class": "cleric"
+    },
+    "description": "<p class=\"p1\">The gown, or robes of the subject appear especially clean and devoid of any dirt. And those who would touch them with malice, by hand or object, will be burned for 2d6 Hp, plus 1 more per level. Even those who save suffer half the damage. However, it is useless against missile weapons.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329180639,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!92tsssphWntaEm4w"
+}

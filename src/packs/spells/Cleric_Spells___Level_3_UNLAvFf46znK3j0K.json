@@ -1,0 +1,19 @@
+{
+  "name": "Cleric Spells - Level 3",
+  "type": "Item",
+  "color": null,
+  "folder": null,
+  "_id": "UNLAvFf46znK3j0K",
+  "sorting": "a",
+  "sort": 300000,
+  "flags": {},
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209267528,
+    "modifiedTime": 1708209351206,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_key": "!folders!UNLAvFf46znK3j0K"
+}

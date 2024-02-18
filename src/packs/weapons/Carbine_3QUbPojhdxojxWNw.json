@@ -1,0 +1,41 @@
+{
+  "_id": "3QUbPojhdxojxWNw",
+  "name": "Carbine",
+  "type": "weapon",
+  "img": "icons/svg/sword.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<ul>\n<li>Range 15 metres</li>\n<li>1 round to arm</li>\n<li>Misfires on a natural 1 (fumble)</li>\n</ul>",
+    "attack": "ranged",
+    "damage": "1d10x",
+    "critical": {
+      "range": "20",
+      "multiple": "3"
+    },
+    "encumbrance": "1",
+    "bonus": "0",
+    "reload": "1",
+    "cost": {
+      "value": "8",
+      "coin": "th"
+    }
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1676469704229,
+    "modifiedTime": 1708208898589,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!3QUbPojhdxojxWNw"
+}

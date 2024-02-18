@@ -1,0 +1,39 @@
+{
+  "_id": "Mjsrk41vr4zTxMBV",
+  "name": "Prohibited Passages",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "DklZOXwgGCjyQb5s",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "cleric",
+    "range": "short",
+    "duration": "one day",
+    "area": "a cross, and around",
+    "save": "temptation",
+    "component": "",
+    "data": {
+      "level": 2,
+      "class": "cleric"
+    },
+    "description": "<p class=\"p1\">It is used on a cross, whose shadow afterwards no sinner can pass; only those who have high Virtue. Even approaching it requires a saving throw. If someone were to force themselves, or touch the cross, a heavy burden crushes them for 3d6 Hp damage, and another per level. On characters with average Virtue, this counts as knockout damage, but the more sinful will be crushed to death.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329180640,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!Mjsrk41vr4zTxMBV"
+}

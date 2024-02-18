@@ -1,0 +1,30 @@
+{
+  "name": "Weapon Master",
+  "type": "class",
+  "img": "icons/svg/combat.svg",
+  "effects": [],
+  "folder": "Ov21n03SbW2TZT8u",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>Those who see their training as a higher calling will fight with their chosen weapon like a whirlwind.</p>\n<p>On every odd level, due to their special combat experience, they receive +2 to the damage of a selected weapon type (e.g. swords, polearms, bludgeoning weapons, etc.).&nbsp; Selected twice, the bonus increases to +3, or they receive +1 to hit; selected three times, they receive both benefits.</p>",
+    "specialism": true,
+    "parent": "fighter"
+  },
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708207568709,
+    "modifiedTime": 1708208114804,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "h7Pv7zYmCrrypqmz",
+  "sort": 100000,
+  "_key": "!items!h7Pv7zYmCrrypqmz"
+}

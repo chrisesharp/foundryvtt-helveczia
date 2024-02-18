@@ -1,0 +1,39 @@
+{
+  "_id": "hQCOWgv08seSieqa",
+  "name": "Guardian Sword",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "DklZOXwgGCjyQb5s",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "cleric",
+    "range": "touch",
+    "duration": "until defeated",
+    "area": "little space",
+    "save": "-",
+    "component": "",
+    "data": {
+      "level": 2,
+      "class": "cleric"
+    },
+    "description": "<p class=\"p1\">It raises a sword glowing with holy light and floating in the air to protect a place. If an interloper &ndash; anyone with low or average Virtue, or approaching with bad intentions &ndash; would disturb it, the weapon attacks, and fights them like a knight. The sword is level 3+1 (from fifth level, 4+2), has AC 15, and inflicting 1d10+3 Hp damage. This spell is only kept by the followers of Saint Stephen or Saint Ladislaus of Hungary,</p>\n<p class=\"p1\">and they will only give it to those who have earned it.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329180642,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!hQCOWgv08seSieqa"
+}

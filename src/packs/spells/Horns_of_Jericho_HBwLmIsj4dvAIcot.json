@@ -1,0 +1,35 @@
+{
+  "_id": "HBwLmIsj4dvAIcot",
+  "name": "Horns of Jericho",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "long",
+    "duration": "quarter of an hour",
+    "area": "hearers",
+    "save": "bravery",
+    "component": "",
+    "description": "<p class=\"p1\">Mighty horns resound in the sky, aiding the Lord&rsquo;s servants in multiple known ways. If enemy hosts, brigands, or Heaven forbid the Devil&rsquo;s own would approach, there is a great clamour, and those who are weak in spirit run like cowards; while those who have a low Virtue, must cover their ears and cease fighting at once. The harmonies, which have undone the walls of Jericho in their time, can even today bring down lesser stone barriers, clean out collapsed passages, or batter down gates, so that someone who is stuck can escape unharmed: but it is also useful to make buildings totter and collapse into rubble.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185172,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!HBwLmIsj4dvAIcot"
+}

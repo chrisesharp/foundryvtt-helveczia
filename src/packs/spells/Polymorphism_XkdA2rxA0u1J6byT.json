@@ -1,0 +1,35 @@
+{
+  "_id": "XkdA2rxA0u1J6byT",
+  "name": "Polymorphism",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "short",
+    "duration": "until dispelled",
+    "area": "one subjet",
+    "save": "bravery",
+    "component": "snakeskin",
+    "description": "<p class=\"p1\">It enchants someone into animal form if they fail their saving throw, but this animal can talk, and a lover&rsquo;s kiss or a few other practices can release it from its predicament.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215596,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!XkdA2rxA0u1J6byT"
+}

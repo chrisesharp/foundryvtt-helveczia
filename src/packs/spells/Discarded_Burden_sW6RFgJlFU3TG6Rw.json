@@ -1,0 +1,35 @@
+{
+  "_id": "sW6RFgJlFU3TG6Rw",
+  "name": "Discarded Burden",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "touch",
+    "duration": "until removed",
+    "area": "one place",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">With this spell, the Cleric removes the holy cross from around their neck. Be it simple wood or gemstudded gold, it will suddenly become heavy like lead, and only seven strong men can move or lift its weight &ndash; but if an innocent with a Virtue of 21 would try, they will find it as light as a feather. The cross, if he or she is not the previous sort, even the Cleric may not again take up; a new one must be acquired, but until that time, they suffer a -2 against Temptation.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175539,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!sW6RFgJlFU3TG6Rw"
+}

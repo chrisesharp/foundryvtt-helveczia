@@ -1,0 +1,41 @@
+{
+  "_id": "1Yd2183kF2GyViwN",
+  "name": "Zweihander",
+  "type": "weapon",
+  "img": "icons/svg/sword.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<ul>\n<li>\n<p>Two-handed, giving 1.5 Strength bonus to damage</p>\n</li>\n<li>\n<p>Double damage when readied against charging opponents</p>\n</li>\n<li>+2 AC</li>\n</ul>",
+    "attack": "melee",
+    "damage": "2d6",
+    "critical": {
+      "range": "19",
+      "multiple": "2"
+    },
+    "encumbrance": "2",
+    "bonus": "0",
+    "reload": 0,
+    "cost": {
+      "value": "6",
+      "coin": "th"
+    }
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1676469704229,
+    "modifiedTime": 1708208898589,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!1Yd2183kF2GyViwN"
+}

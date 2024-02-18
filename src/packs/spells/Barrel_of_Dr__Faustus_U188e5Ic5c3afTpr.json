@@ -1,0 +1,35 @@
+{
+  "_id": "U188e5Ic5c3afTpr",
+  "name": "Barrel of Dr. Faustus",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "short",
+    "duration": "quarter of an hour",
+    "area": "one or more objects",
+    "save": "deftness",
+    "component": "brass pendulum",
+    "description": "<p class=\"p1\">A movement of the hand can command lifeless items to rise and act according to the Student&rsquo;s will. At first level, this power is sufficient for a chair; at third, a table or multiple chairs; and at fifth, a great barrel, multiple tables, or all the chairs of a tavern (and according to their Analogy). Although their movement is inaccurate and not very fast, a quick movement of the hand, which dispels the magic or reduces its power by one degree, will make the objects ram their targets, against which a saving throw is applicable, and whose damage is variable (although rarely lethal).</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207949,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!U188e5Ic5c3afTpr"
+}

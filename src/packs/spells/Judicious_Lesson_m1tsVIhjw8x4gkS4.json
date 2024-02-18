@@ -1,0 +1,35 @@
+{
+  "_id": "m1tsVIhjw8x4gkS4",
+  "name": "Judicious Lesson",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "medium",
+    "duration": "until end of fight",
+    "area": "courtyard",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">The mischievous man must be taught a regular lesson, and &ndash; as the wise Solomon was wont to say in the Good Book &ndash; there is no better way than to be generous with the stick. Hence, this spell animates a stick, staff, or cudgel of this sort, in two different manners. In a fight, they may be sent against the enemy, fighting at level 1+1 by default; at 2+1 from third level, and at 3+1 from fifth level, with an AC of 12 and damage of 1d6+1 or 1d8+1. It causes no lasting damage, only dispensing a sound thrashing. With the other method, it can be used to guard a storeroom, chest, cellar or similar, and if a mischievous intruder would disturb it, the staff, propped against wall or bench, will rise and give them Hell. It can dispense one more strike than it has levels, but if the fool should flee from the scene of the crime, it will not follow, but settle down again. This lasts until the staff is broken.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175539,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!m1tsVIhjw8x4gkS4"
+}

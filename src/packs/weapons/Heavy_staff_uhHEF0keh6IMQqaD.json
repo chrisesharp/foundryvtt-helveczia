@@ -1,0 +1,41 @@
+{
+  "name": "Heavy staff",
+  "type": "weapon",
+  "img": "icons/svg/sword.svg",
+  "effects": [],
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<ul>\n<li>two-handed, giving <strong>1.5 * Strength bonus</strong>&nbsp;to damage</li>\n</ul>",
+    "attack": "melee",
+    "damage": "1d8",
+    "critical": {
+      "range": "20",
+      "multiple": "2"
+    },
+    "encumbrance": "1",
+    "bonus": "0",
+    "reload": 0,
+    "cost": {
+      "value": "3",
+      "coin": "pf"
+    }
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1676469704232,
+    "modifiedTime": 1708208898589,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "uhHEF0keh6IMQqaD",
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!uhHEF0keh6IMQqaD"
+}

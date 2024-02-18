@@ -1,0 +1,35 @@
+{
+  "_id": "nYFi4X4G9C7z2foi",
+  "name": "True Visage",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "short",
+    "duration": "one minute",
+    "area": "one subject",
+    "save": "temptation",
+    "component": "",
+    "description": "<p class=\"p1\">It removes all forms of masquerade or transformation from the target, and if they hide a particularly heavy sin, it shows its unmistakeable signs as well (e.g. a strangler would be seen with hands dripping blood, or a false witness with a lizard&rsquo;s tongue). It lasts for a minute even with a successful save, but a failed check will make it last for a full day. The real question is whom to use it on, and when.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175539,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!nYFi4X4G9C7z2foi"
+}

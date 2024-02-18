@@ -1,0 +1,35 @@
+{
+  "_id": "iV1TP3rHI8TDJBoY",
+  "name": "Turnaround Spell",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "medium",
+    "duration": "one round per level",
+    "area": "a group's weapons",
+    "save": "deftness",
+    "component": "",
+    "description": "<p class=\"p1\">It is a particularly useful spell against those who would break the peace, for one word will turn their weapons &lsquo;gainst them. When they would roll to hit, they must also roll a Deftness save: if they fail, they will strike themselves.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175537,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!iV1TP3rHI8TDJBoY"
+}

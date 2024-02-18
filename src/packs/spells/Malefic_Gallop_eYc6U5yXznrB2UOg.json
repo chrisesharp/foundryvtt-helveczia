@@ -1,0 +1,35 @@
+{
+  "_id": "eYc6U5yXznrB2UOg",
+  "name": "Malefic Gallop",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "touch",
+    "duration": "one day",
+    "area": "must be cast on a horse",
+    "save": "bravery",
+    "component": "poison",
+    "description": "<p class=\"p1\">One may travel very far at the cost of the steed&rsquo;s life by using this spell: twice as far as they would regularly go in a day, which should be enough to achieve their goal or leave behind their pursuers. By the hour the time is up, the horse is bloated, foaming at the mouth, and it will expire among terrible contortions. There are some which survive it with a saving throw, but only the best, and even they must rest a week and be nursed with medicines. It might be cast on a man, but only the most debased might do such a thing, and they also get a Temptation save to avoid the effects.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207950,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!eYc6U5yXznrB2UOg"
+}

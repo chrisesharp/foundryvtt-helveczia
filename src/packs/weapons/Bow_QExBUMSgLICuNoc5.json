@@ -1,0 +1,41 @@
+{
+  "name": "Bow",
+  "type": "weapon",
+  "img": "icons/svg/sword.svg",
+  "system": {
+    "description": "<p>Range 30m</p>",
+    "attack": "ranged",
+    "damage": "1d6",
+    "critical": {
+      "range": "20",
+      "multiple": "3"
+    },
+    "encumbrance": "1",
+    "bonus": "0",
+    "reload": "0",
+    "cost": {
+      "value": "2",
+      "coin": "th"
+    }
+  },
+  "effects": [],
+  "flags": {
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1676470844036,
+    "modifiedTime": 1708208898589,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "QExBUMSgLICuNoc5",
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!QExBUMSgLICuNoc5"
+}

@@ -1,0 +1,65 @@
+{
+  "_id": "l2UIgWbL2uhUlcBo",
+  "name": "Polish",
+  "type": "people",
+  "img": "icons/svg/village.svg",
+  "effects": [
+    {
+      "_id": "70lFIw204yx1ZrBW",
+      "changes": [
+        {
+          "key": "system.attack.melee.bonus",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.ac",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "icons/svg/aura.svg",
+      "origin": "Item.kEJ07So5t0H0raZu",
+      "transfer": true,
+      "flags": {},
+      "tint": null,
+      "name": "Heroic",
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!l2UIgWbL2uhUlcBo.70lFIw204yx1ZrBW"
+    }
+  ],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>The grand empire of the Poles reaches from Cracovia to Livonia, and they are worthy companions to Hungarians in both gallantry and drinking. The grace of the Virgin Mary has brought glory and luck upon the head of Mih&aacute;ly B&aacute;thory II, but no riches: country and nobility have been so impoverished, that their best are forced to try their luck abroad.</p>\n<ul>\n<li>They receive +2 to attacks and AC in melee combat.</li>\n<li>They must send at least half of their money by post to maintain their holdings at home, or to the benefit of the Virgin Mary of Czesztochowa. If they gain a great treasure, they will easily find it snatched from them at the gamemaster&rsquo;s discretion.</li>\n</ul>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209071901,
+    "modifiedTime": 1708209087587,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!l2UIgWbL2uhUlcBo"
+}

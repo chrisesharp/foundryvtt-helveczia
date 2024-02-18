@@ -1,0 +1,35 @@
+{
+  "_id": "ZGCQThAQs6voBbzj",
+  "name": "Dreadful Shield of Dr. Faustus",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "-",
+    "duration": "7 hours+",
+    "area": "oneself",
+    "save": "-",
+    "component": "skulls of 7 knaves",
+    "description": "<p class=\"p1\">It is a very strong protection, but one must have a heart of stone to turn to its help. It provides +4 AC, and while a hit above the increased rating causes regular damage, a hit falling on the shield will strike someone nearby, or within a quarter mile area at random. It takes seven strikes, and dissipates thereafter. It is a most terrible thing if it brings down the innocent, and who knows what consequences this will bring.</p>\n<p class=\"p1\">Component: the skulls of seven knaves are required, all undone by the headsman. Then, they must be placed at the points of a seven-pointed star made of Cordoban wax, wherein the magister must stand and carve himself a seal.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219669,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!ZGCQThAQs6voBbzj"
+}

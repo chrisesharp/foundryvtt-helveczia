@@ -1,0 +1,35 @@
+{
+  "_id": "xnKD87hdgZDrnJpU",
+  "name": "Splendid Ludmilla's Spin-around Spell",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "short",
+    "duration": "three rounds",
+    "area": "one target",
+    "save": "deftness",
+    "component": "5 Pf piece",
+    "description": "<p class=\"p1\">It gives the subject a mighty spin, so that they will only stop spinning in the third round, and if they fail their save, their coins and items will be scattered around and about. While they spin, they receive +4 to AC and +2 to Deftness saves, so it has a slight benefit. Splendid Ludmilla used to make use of it on those who asked her for a dance, but also to plunder honest citizens, or teach them a lesson when she was in a bad mood.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207951,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!xnKD87hdgZDrnJpU"
+}

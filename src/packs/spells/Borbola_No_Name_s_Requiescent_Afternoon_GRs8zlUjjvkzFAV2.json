@@ -1,0 +1,35 @@
+{
+  "_id": "GRs8zlUjjvkzFAV2",
+  "name": "Borbola No-Name's Requiescent Afternoon",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "-",
+    "duration": "three hours",
+    "area": "oneself",
+    "save": "-",
+    "component": "small crystal globe",
+    "description": "<p class=\"p1\">Borbala Stranz, blessed by ample graces and loveliness, who had taken her name after renouncing her family and betrothed, devised this spell so that she might be free from suitors, cavaliers, thieves and other harassers. It surrounds the caster with an invisible force like a shell, which can be neither passed nor bothered. Only arrow or bullet will pierce it, but even so, it grants +2 AC. It also works in the reverse direction.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219668,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!GRs8zlUjjvkzFAV2"
+}

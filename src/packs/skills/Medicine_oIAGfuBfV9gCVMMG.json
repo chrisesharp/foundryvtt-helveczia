@@ -1,0 +1,31 @@
+{
+  "_id": "oIAGfuBfV9gCVMMG",
+  "name": "Medicine",
+  "type": "skill",
+  "img": "icons/svg/temple.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>The knowledge of binding wounds, as well as treating or alleviating poison and disease.&nbsp;Used after a fight or other injury, the character who has been treated gains back 1d4 Hp on a Normal result, 1d4+2 Hp on a Hard result, and 1d4+4 Hp on a Heroic result.</p>",
+    "ability": "wis",
+    "subtype": "practical",
+    "bonus": 0
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209591012,
+    "modifiedTime": 1708209691064,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!oIAGfuBfV9gCVMMG"
+}

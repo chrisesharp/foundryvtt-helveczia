@@ -1,0 +1,41 @@
+{
+  "name": "Main-gauche",
+  "type": "weapon",
+  "img": "icons/svg/sword.svg",
+  "effects": [],
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<ul>\n<li>Left-handed - +2 AC</li>\n</ul>",
+    "attack": "melee",
+    "damage": "1d4",
+    "critical": {
+      "range": "19",
+      "multiple": "2"
+    },
+    "encumbrance": "1",
+    "bonus": "0",
+    "reload": 0,
+    "cost": {
+      "value": "8",
+      "coin": "pf"
+    }
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1676469704232,
+    "modifiedTime": 1708208898589,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "YqeNWrIb4T5xyrBj",
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!YqeNWrIb4T5xyrBj"
+}

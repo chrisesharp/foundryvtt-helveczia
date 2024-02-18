@@ -1,0 +1,35 @@
+{
+  "_id": "4uV1vGtwpcYhrkJm",
+  "name": "Pietro Scaraffa's Timeworn Hideaway",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "medium",
+    "duration": "permanent",
+    "area": "a courtyard",
+    "save": "-",
+    "component": "dust from graves",
+    "description": "<p class=\"p1\">This spell conceals a hiding place, side path or concealed corpse, for it creates conditions which would make it seem the place has been abandoned since time immemorial: debris, ivy and dust covers everything. It would even enchant a smaller hut into an old ruin, but only if it is abandoned.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207948,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!4uV1vGtwpcYhrkJm"
+}

@@ -1,0 +1,63 @@
+{
+  "_id": "wAWtAz5QVyA3lxYX",
+  "name": "Cleric",
+  "type": "class",
+  "img": "icons/svg/mystery-man.svg",
+  "effects": [
+    {
+      "_id": "812D2z40bm4K8XAi",
+      "changes": [
+        {
+          "key": "system.attack",
+          "mode": 0,
+          "value": "{\"type\":\"attack_bonus\"}",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "icons/svg/aura.svg",
+      "origin": "Item.WnY4nVorWwMKnKlJ",
+      "transfer": true,
+      "flags": {},
+      "tint": null,
+      "name": "Attack",
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!wAWtAz5QVyA3lxYX.812D2z40bm4K8XAi"
+    }
+  ],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>The canons of the Mother Church, followed by its humble servants, are stricter interpretations of Virtue, and they are further supplemented by the vows of the different orders &ndash; canons and canonesses regular, monastics (monks and nuns), mendicants (friars and religious sisters), and&nbsp; clerks regular (priests). In the lands of Helv.czia, although the delusions of the Calvinist heresy have fallen on fertile soil in multiple cantons, and they have utterly seized the republic of Gen&eacute;via, faith stands powerful still, and a multitude of churches, chapels and cloisters preach the Lord&rsquo;s glory.</p>\n<p>Although religion has called men to deliver the sermon, women of the other orders can also receive the grace of clerical calling, if more rarely.</p>\n<ul>\n<li>Attack bonus: Level*2/3</li>\n<li>Saving throws: Bravery and Temptation by the first, Deftness by the second column</li>\n<li>Weapon use: only staves and clubs, and only in self-defence</li>\n<li>Armour use: not allowed</li>\n<li>Hp: 1d8 per level</li>\n</ul>\n<p>Every Cleric, should they be man or woman, wandering preacher, dean or hermit, must obey the following rules. Breaking any of them counts as a Virtue loss one point heavier than usual.</p>\n<ul>\n<li>Celibacy: maintaining bodily and spiritual purity.</li>\n<li>Obedience: respect towards ecclesiastic higher-ups, following their orders (if they are erroneous or detrimental, it is permitted to sidestep them, but only through their formal fulfilment).</li>\n<li>Pax Dei: upkeep and represent the Lord&rsquo;s peace. Clerics may only fight with clubs, staves (including heavy staves, but, unlike in the more permissive Gothic ages, excluding maces and such), their hands. and &ndash; unless receiving prior absolution, or confronting devil&rsquo;s spawn and affronts against nature &ndash; only in self-defence. They may not kill their enemies, or wear heavier armour than a habit or cassock. It must be noted that these restrictions are based on custom, and do not physically prevent or even hinder the use of arms and armour.</li>\n</ul>\n<p>As it can be plainly seen, the Cleric&rsquo;s calling is a heavy burden, and there is no shortage of lapsed novices, or priests who are lax in Virtue. Although the Holy Inquisition is trying to seek out the wayward and the sinful to return them to the righteous path, their numbers are small, a mere mouthful of clean water in a churning sea of sin.</p>\n<ul>\n<li>Clerics in a state of low Virtue may not obtain new spells until they return to at least an average rating via confession, good works and atonement.</li>\n<li>There are reprobates who step on the road to perdition and sin: they may freely change to the profession of Students, starting to study their spells at an equivalent level, but they may nevermore return to the embrace of the Mother Church!</li>\n</ul>",
+    "specialism": false,
+    "parent": "",
+    "quantity": null,
+    "weight": null
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209033701,
+    "modifiedTime": 1708209053920,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!wAWtAz5QVyA3lxYX"
+}

@@ -1,0 +1,41 @@
+{
+  "_id": "s1TwNrwOtyy4lYO7",
+  "name": "Mace",
+  "type": "weapon",
+  "img": "icons/svg/sword.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>Can be used one-handed, or two-handed to give <strong>1.5</strong></p>\n<p><strong>Strength bonus</strong> to damage</p>",
+    "attack": "melee",
+    "damage": "1d8",
+    "critical": {
+      "range": "20",
+      "multiple": "2"
+    },
+    "encumbrance": "1",
+    "bonus": "0",
+    "reload": 0,
+    "cost": {
+      "value": "6",
+      "coin": "pf"
+    }
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1676469704233,
+    "modifiedTime": 1708208898589,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!s1TwNrwOtyy4lYO7"
+}

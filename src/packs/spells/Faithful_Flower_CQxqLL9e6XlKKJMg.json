@@ -1,0 +1,35 @@
+{
+  "_id": "CQxqLL9e6XlKKJMg",
+  "name": "Faithful Flower",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "DklZOXwgGCjyQb5s",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "cleric",
+    "range": "-",
+    "duration": "seven days",
+    "area": "one target",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">This modest but nice flower is usually given to those who embark on a journey, as it will glow like a candle at night, and in the morning, its bearer will always heal 2 extra Hp from resting, and another if they are in a state of high Virtue. In a great need, it can be transferred to another, but never taken back. Should it come into sinful hands, someone with low Virtue: it immediately turns dark and wilts.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329180639,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!CQxqLL9e6XlKKJMg"
+}

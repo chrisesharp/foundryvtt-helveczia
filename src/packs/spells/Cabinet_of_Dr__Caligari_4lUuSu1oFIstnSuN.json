@@ -1,0 +1,35 @@
+{
+  "_id": "4lUuSu1oFIstnSuN",
+  "name": "Cabinet of Dr. Caligari",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "-",
+    "duration": "until cockscrow",
+    "area": "-",
+    "save": "-",
+    "component": "silk purse",
+    "description": "<p class=\"p1\">It is an unholy spell indeed, for it brings a dead body under a fallible will. This servant, which regularly slumbers within a chest, will arise on command, and, following the caster&rsquo;s iniquitous instructions, slips out at night to kill and plunder. The murderous corpse is level 3+3, and most tough (see Corpse, Walking).</p>\n<p class=\"p1\">Component: a drowned cadaver that must be kept in a coffin, until it ferments during its decomposition.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219668,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!4lUuSu1oFIstnSuN"
+}

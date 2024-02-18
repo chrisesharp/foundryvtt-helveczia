@@ -1,0 +1,19 @@
+{
+  "name": "Fighter",
+  "sorting": "a",
+  "folder": null,
+  "type": "Item",
+  "_id": "Ov21n03SbW2TZT8u",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708207526722,
+    "modifiedTime": 1708208114791,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_key": "!folders!Ov21n03SbW2TZT8u"
+}

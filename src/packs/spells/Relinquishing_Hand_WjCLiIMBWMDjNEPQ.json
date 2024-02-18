@@ -1,0 +1,35 @@
+{
+  "_id": "WjCLiIMBWMDjNEPQ",
+  "name": "Relinquishing Hand",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "long",
+    "duration": "instantaneous",
+    "area": "one target",
+    "save": "temptation",
+    "component": "",
+    "description": "<p class=\"p1\">There is nothing more terrible than the Mother Church enraged: the hand that nurtures and accepts can, in a time of need, strike sin with exemplary strictness. This spell can be used on those who have committed grave deeds against the divine and mortal order: if they fail their save, they may not enter a church or hallowed ground until they have regretted their terrible deed, and done atonement.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185173,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!WjCLiIMBWMDjNEPQ"
+}

@@ -1,0 +1,31 @@
+{
+  "_id": "qEeDXsxrjpl4OHzk",
+  "name": "Cryptography (Magical)",
+  "type": "skill",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>With the skill, the character can decipher or prepare writings and signs in other languages, including occult symbols and cryptography.&nbsp;</p>",
+    "ability": "int",
+    "subtype": "magical",
+    "bonus": 0
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209591012,
+    "modifiedTime": 1708209691064,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!qEeDXsxrjpl4OHzk"
+}

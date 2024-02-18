@@ -1,0 +1,35 @@
+{
+  "_id": "CRNRJgHxt0xZ0jAr",
+  "name": "Ephemeral Foundation",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "medium",
+    "duration": "quarter of an hour",
+    "area": "around oneself",
+    "save": "deftness",
+    "component": "",
+    "description": "<p class=\"p1\">Those without the firm moral compass of high Virtue must make a Deftness save or be knocked about like so many chess pieces, suffering 3d6 Hp damage and losing 1d3 rounds worth of actions. If they would get up, they must roll another save, or remain fallen. Characters in a state of a high Virtue receive +3 to their AC. It distinguishes not between friend or foe: but only betwixt the righteous and the unworthy.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185172,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!CRNRJgHxt0xZ0jAr"
+}

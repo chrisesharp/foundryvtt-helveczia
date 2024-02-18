@@ -1,0 +1,35 @@
+{
+  "_id": "DgEJzRpBKfpihRt6",
+  "name": "Warts and Boils",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "short",
+    "duration": "until healed",
+    "area": "one target",
+    "save": "bravery",
+    "component": "soap of toads, rats, etc.",
+    "description": "<p class=\"p1\">Ugly warts, boils and blemishes cover the target&rsquo;s face, rendering them hideous to behold. Only daily washing or various tinctures make it go away.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207948,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!DgEJzRpBKfpihRt6"
+}

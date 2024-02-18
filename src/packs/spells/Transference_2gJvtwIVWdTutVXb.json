@@ -1,0 +1,35 @@
+{
+  "_id": "2gJvtwIVWdTutVXb",
+  "name": "Transference",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "touch",
+    "duration": "no more than a week",
+    "area": "one subject",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">With this method, the Cleric can lend a spell to a layperson, who may use it within a week. Until the spell is used, the week expires, or the subject dies, the Cleric cannot learn a new one to replace it.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175534,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!2gJvtwIVWdTutVXb"
+}

@@ -1,0 +1,35 @@
+{
+  "_id": "byBXZtE7tOQY01W0",
+  "name": "Headsman's Jilt",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "touch",
+    "duration": "one night+",
+    "area": "another",
+    "save": "bravery",
+    "component": "lilies",
+    "description": "<p class=\"p1\">This is a good remedy for those who have had their heads taken by the executioner&rsquo;s sword or axe. When they are buried, they must be exhumed and their head put back on the stump. A man will surely live one night, but at cockcrow, he must roll a Bravery save or their head will fall off, and may not be restored again. There may be other drawbacks which are not well known, for few dare to play such games with Death.</p>\n<p class=\"p1\">Component: lilies must be distilled into an essence, and before the execution, the headsman&rsquo;s instrument, then the subject&rsquo;s neck anointed.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219669,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!byBXZtE7tOQY01W0"
+}

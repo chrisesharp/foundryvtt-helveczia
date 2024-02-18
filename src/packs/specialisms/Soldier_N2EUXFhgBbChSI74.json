@@ -1,0 +1,67 @@
+{
+  "name": "Soldier",
+  "type": "class",
+  "img": "icons/svg/combat.svg",
+  "effects": [
+    {
+      "_id": "NevmrJ3crU3T14qz",
+      "changes": [
+        {
+          "key": "system.attack.melee.bonus",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        },
+        {
+          "key": "system.attack.ranged.bonus",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "icons/svg/aura.svg",
+      "origin": "Item.9jx6XGFanCKkqssZ",
+      "transfer": true,
+      "flags": {},
+      "tint": null,
+      "name": "Soldier's Prowess",
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!N2EUXFhgBbChSI74.NevmrJ3crU3T14qz"
+    }
+  ],
+  "folder": "Ov21n03SbW2TZT8u",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>The most common representatives of the class, equally adept at warfare and&nbsp;combat against multiple opponents.</p>\n<p>Firstly, they receive +1 to their base attack bonus, which always puts them one level higher&nbsp;than their peers, and gives them a secondary&nbsp;attack at level 5.</p>\n<p>Furthermore, they can&nbsp;carry over their damage: if their attack reduces an opponent to 0 Hp, the remaining damage carries over to the next foe.</p>",
+    "specialism": true,
+    "parent": "fighter"
+  },
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708207568709,
+    "modifiedTime": 1708208114804,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "N2EUXFhgBbChSI74",
+  "sort": 300000,
+  "_key": "!items!N2EUXFhgBbChSI74"
+}

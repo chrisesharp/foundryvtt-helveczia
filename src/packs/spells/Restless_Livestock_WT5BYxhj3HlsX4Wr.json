@@ -1,0 +1,35 @@
+{
+  "_id": "WT5BYxhj3HlsX4Wr",
+  "name": "Restless Livestock",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "medium",
+    "duration": "one hour",
+    "area": "animals in a farmyard",
+    "save": "temptation",
+    "component": "animal brain fluid",
+    "description": "<p class=\"p1\">The spell makes all household animals go furiously mad, and kick, butt or bite out of control; tear their fetters, knock over the fence; and run or attack their owner. This only brings a small calamity to a henhouse, but where there are sheep, horses, oxen, and hunting dogs, it is no joking matter. When the spell&rsquo;s power is exhausted, all of them will return fatigued to their rest, unless they have strayed far; but from</p>\n<p class=\"p1\">then on, they will be less obedient.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215596,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!WT5BYxhj3HlsX4Wr"
+}

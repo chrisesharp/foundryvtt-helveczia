@@ -1,0 +1,31 @@
+{
+  "_id": "NXtr7N3KtA34x8dp",
+  "name": "Open Locks",
+  "type": "skill",
+  "img": "icons/svg/coins.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>With the aid of false keys and other instruments, the character can open various mechanical locks, and sabotage or figure out fine machinery. On an unsuccessful roll, the mechanism is&nbsp; beyond the character&rsquo;s ken.</p>",
+    "ability": "dex",
+    "subtype": "vagabond",
+    "bonus": 0
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209591012,
+    "modifiedTime": 1708209691064,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!NXtr7N3KtA34x8dp"
+}

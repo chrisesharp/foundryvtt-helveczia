@@ -1,0 +1,125 @@
+{
+  "name": "Through branch and bush",
+  "img": "icons/svg/d20-grey.svg",
+  "description": "The mournful catalogue of results",
+  "results": [
+    {
+      "_id": "grlIRWdhhRoRtG2V",
+      "type": 0,
+      "text": "The bellies of birds and beasts became his earthly coffin",
+      "weight": 1,
+      "range": [1, 2],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "documentId": null,
+      "_key": "!tables.results!QGwa13xeTarSbucp.grlIRWdhhRoRtG2V"
+    },
+    {
+      "_id": "KZq9anMhiFj7TqOp",
+      "type": 0,
+      "text": "He was lost without trace on the paths of the wilderness",
+      "weight": 1,
+      "range": [3, 3],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "documentId": null,
+      "_key": "!tables.results!QGwa13xeTarSbucp.KZq9anMhiFj7TqOp"
+    },
+    {
+      "_id": "LpFkRFtatt6hXMfC",
+      "type": 0,
+      "text": "He was found insane by those who happened upon him",
+      "weight": 1,
+      "range": [4, 4],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "documentId": null,
+      "_key": "!tables.results!QGwa13xeTarSbucp.LpFkRFtatt6hXMfC"
+    },
+    {
+      "_id": "qv03DbiEukLxQodp",
+      "type": 0,
+      "text": "He fell into the hands of robbers or worse, and who knows how he might be freed",
+      "weight": 1,
+      "range": [5, 5],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "documentId": null,
+      "_key": "!tables.results!QGwa13xeTarSbucp.qv03DbiEukLxQodp"
+    },
+    {
+      "_id": "FdL7liNSmGgyg2do",
+      "type": 0,
+      "text": "He was found alive, but robbed below the glaciers",
+      "weight": 1,
+      "range": [6, 7],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "documentId": null,
+      "_key": "!tables.results!QGwa13xeTarSbucp.FdL7liNSmGgyg2do"
+    },
+    {
+      "_id": "u0baED2N0cYUwIUq",
+      "type": 0,
+      "text": "After much wandering, wounded he came to his destination",
+      "weight": 1,
+      "range": [8, 8],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "documentId": null,
+      "_key": "!tables.results!QGwa13xeTarSbucp.u0baED2N0cYUwIUq"
+    },
+    {
+      "_id": "1HWXIHJWSPDLy9dP",
+      "type": 0,
+      "text": "He returned from his travels with a strange locale on his mind",
+      "weight": 1,
+      "range": [9, 9],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "documentId": null,
+      "_key": "!tables.results!QGwa13xeTarSbucp.1HWXIHJWSPDLy9dP"
+    },
+    {
+      "_id": "7HyiDkuQbIDI30zG",
+      "type": 0,
+      "text": "He returned unharmed and hale to where his journey began",
+      "weight": 1,
+      "range": [10, 12],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "documentId": null,
+      "_key": "!tables.results!QGwa13xeTarSbucp.7HyiDkuQbIDI30zG"
+    }
+  ],
+  "formula": "1d12",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "_id": "QGwa13xeTarSbucp",
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209155822,
+    "modifiedTime": 1708209166496,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!tables!QGwa13xeTarSbucp"
+}

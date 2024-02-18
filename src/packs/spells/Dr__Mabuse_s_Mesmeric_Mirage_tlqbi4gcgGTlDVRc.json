@@ -1,0 +1,35 @@
+{
+  "_id": "tlqbi4gcgGTlDVRc",
+  "name": "Dr. Mabuse's Mesmeric Mirage",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "-",
+    "duration": "one hour",
+    "area": "one target",
+    "save": "-",
+    "component": "spectacles",
+    "description": "<p class=\"p1\">Mesmerism based on eye contact and the transfer of will is so strong that the target will move as in a daze, and under commands, act under hypnotic suggestions, albeit clumsily. If it is used with the better kind of glasses, a command can also be implanted in the mind, which remains a secret to the victim, but within an hour, it can be activated by the fitting circumstances.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207951,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!tlqbi4gcgGTlDVRc"
+}

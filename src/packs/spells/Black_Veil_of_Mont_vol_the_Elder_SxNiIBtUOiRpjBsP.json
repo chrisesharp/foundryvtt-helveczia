@@ -1,0 +1,35 @@
+{
+  "_id": "SxNiIBtUOiRpjBsP",
+  "name": "Black Veil of Montévol the Elder",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "-",
+    "duration": "one toll of the bell",
+    "area": "oneself",
+    "save": "-",
+    "component": "funeral shroud in lead box",
+    "description": "<p class=\"p1\">With this veil, one can creep like a shadow, at the ability of an equivalent-level Vagabond with Dexterity: 18. Few will notice the character, who can in turn strangle his or her enemies (with a combat check, after a short struggle: if the opponent wins, the veil is torn away and the advantage is gone).</p>\n<p class=\"p1\">Component: the funeral shroud of a widow who has died of grief, crushed along with the dust of spiders, and warded from light in a lead box.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219669,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!SxNiIBtUOiRpjBsP"
+}

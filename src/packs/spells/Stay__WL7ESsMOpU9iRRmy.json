@@ -1,0 +1,35 @@
+{
+  "_id": "WL7ESsMOpU9iRRmy",
+  "name": "Stay!",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "long",
+    "duration": "instantaneous",
+    "area": "hearers",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">A single word will stop mill, marching army, lifted sword, avalanche, falling man and holiday procession, and there are none who could resist it. But let them be of good judgement who would use it: for if the command would lead into sin, it will fall threefold on the speaker&rsquo;s Virtue.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185173,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!WL7ESsMOpU9iRRmy"
+}

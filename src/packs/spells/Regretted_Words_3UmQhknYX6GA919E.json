@@ -1,0 +1,35 @@
+{
+  "_id": "3UmQhknYX6GA919E",
+  "name": "Regretted Words",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "medium",
+    "duration": "one week",
+    "area": "one person",
+    "save": "temptation",
+    "component": "",
+    "description": "<p class=\"p1\">Sin is sin in the form of thought, word, action and omission; and this formula draws attention to its second kind, as someone who would speak ugliness, perfidy or evil with their mouth, will have centipedes, worms and cellar beetles come from between their lips. There is no acquittal until the week is over &ndash; but then there is no need to have a foul mouth either.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175534,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!3UmQhknYX6GA919E"
+}

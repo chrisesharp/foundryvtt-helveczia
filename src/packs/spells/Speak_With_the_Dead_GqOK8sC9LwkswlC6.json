@@ -1,0 +1,35 @@
+{
+  "_id": "GqOK8sC9LwkswlC6",
+  "name": "Speak With the Dead",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "LUIL15KYrp683hE7",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "student",
+    "range": "short",
+    "duration": "one minute",
+    "area": "one or more corpses",
+    "save": "temptation",
+    "component": "burial shroud",
+    "description": "<p class=\"p1\">Thus may one speak to the unblessed dead, and compel them to answer and unveil their secrets. But the caster must beware lest he draw their ire, for only their patience is greater than their wrath; and if the question is foolish, or in opposition to their life&rsquo;s work, the dead may deny the answer or awaken. It does not work on those who have died in the Lord; which goes to show the great importance of taking one&rsquo;s extreme unction.</p>\n<p class=\"p1\">Component: a burial shroud, which has rested on the eyes of a doctor, and been sprinkled with consecrated oil after exhumation.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329215595,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!GqOK8sC9LwkswlC6"
+}

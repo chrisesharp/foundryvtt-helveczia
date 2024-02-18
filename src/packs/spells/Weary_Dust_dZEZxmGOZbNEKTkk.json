@@ -1,0 +1,35 @@
+{
+  "_id": "dZEZxmGOZbNEKTkk",
+  "name": "Weary Dust",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "UNLAvFf46znK3j0K",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "cleric",
+    "range": "medium",
+    "duration": "instantaneous",
+    "area": "before oneself, and around",
+    "save": "bravery",
+    "component": "",
+    "description": "<p class=\"p1\">All things and beings taken from dust, and beyond their allotted time must save immediately or crumble into dust. It is very useful against the undead, but it is not always effective on the stronger ones, as some of them still have duties to accomplish in this world.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329185173,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!dZEZxmGOZbNEKTkk"
+}

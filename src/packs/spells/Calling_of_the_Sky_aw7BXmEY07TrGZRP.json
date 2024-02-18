@@ -1,0 +1,35 @@
+{
+  "_id": "aw7BXmEY07TrGZRP",
+  "name": "Calling of the Sky",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ziA7MU7yGTlbURi0",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "3",
+    "class": "student",
+    "range": "bird flight",
+    "duration": "one command",
+    "area": "around oneself",
+    "save": "deftness",
+    "component": "large crystal",
+    "description": "<p class=\"p1\">The forces of nature may be commanded with this spell, as it calls in place the birds of the mountains and fields; and they will come in a great cloud of a thousand, fast like the whirlwind. And these birds will answer a question about what they saw, and one more for every third level; they can also bring here or carry away that which a thousand birds could carry (those who resist can roll a Hard Deftness save); or they can attack a group, who will suffer 6d6 Hp damage from the swarm, Deftness halving damage. It may be that they can also be asked other things, but if the request is foolish or against nature, the caster will be torn into shreds. It can only be used on a tall mountaintop, ridge or similar place.</p>\n<p class=\"p1\">Component: a large, clear crystal ball, symbolising the sky and drawing the birds in place. It costs at least 15 Th, and it will split after a single use.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329219669,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!aw7BXmEY07TrGZRP"
+}

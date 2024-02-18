@@ -1,0 +1,35 @@
+{
+  "_id": "2aNk3eKyIXrKazxl",
+  "name": "Ensorcelled Javelin",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "medium",
+    "duration": "-",
+    "area": "one target",
+    "save": "-",
+    "component": "lead shaft",
+    "description": "<p class=\"p1\">It hurls a narrow lead javelin at a foe, who takes 2d6 Hp and 1 more for every level. It must be aimed to hit, but strikes through armour and shield.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207947,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!2aNk3eKyIXrKazxl"
+}

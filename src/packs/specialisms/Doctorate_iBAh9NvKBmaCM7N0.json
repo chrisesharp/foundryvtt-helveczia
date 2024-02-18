@@ -1,0 +1,28 @@
+{
+  "folder": "jYzqAI6RbyYhjCtW",
+  "name": "Doctorate",
+  "type": "class",
+  "img": "icons/svg/cowled.svg",
+  "system": {
+    "description": "<p>Clerics who reach the sixth level may obtain a doctorate from a university. Beyond prestige, this degree confers special advantages. The character can distribute 6 extra points among Science skills (although a single skill can only be increased by 3), or learn a completely new Science.</p>\n<p>Second, they will either be granted custody of a holy relic or an important ecclesiastic holding, and both benefits will also be accompanied&amp;nbsp;by 2d4*10 armed retainers.</p>",
+    "specialism": true,
+    "parent": "cleric"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708207703796,
+    "modifiedTime": 1708208114820,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "_id": "iBAh9NvKBmaCM7N0",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!iBAh9NvKBmaCM7N0"
+}

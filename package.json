@@ -36,6 +36,7 @@
   "devDependencies": {
     "@babel/runtime": "^7.20.7",
     "@ethaks/fvtt-quench": "^0.8.1",
+    "@foundryvtt/foundryvtt-cli": "^1.0.2",
     "@league-of-foundry-developers/foundry-vtt-types": "file:../../League-Of-Foundry-Developers/foundry-vtt-types",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^24.0.0",

@@ -1,0 +1,35 @@
+{
+  "_id": "goffMomRuNG5GNaE",
+  "name": "Tadeusz' Regrettable Feast",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "short",
+    "duration": "until feast ends",
+    "area": "a table",
+    "save": "bravery",
+    "component": "garbage",
+    "description": "<p class=\"p1\">It creates a heavily laden banquet table, with delicacies enough to have eight men gorge themselves through the evening. It is only afterwards that they realise the succulent viands were cowpies, the soup a muddy swill, the sweets horse crap, the fruits rotten mash, the Champagne wine &ndash; Heaven forfend! &ndash; horse piss, et cetera. Then, they must roll a Bravery save, or they will lie in sickbed for a week. Many have sought Tadeusz, but no matter how diligently they did, they could never find him.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207950,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!goffMomRuNG5GNaE"
+}

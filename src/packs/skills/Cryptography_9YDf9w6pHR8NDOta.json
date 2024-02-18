@@ -1,0 +1,31 @@
+{
+  "_id": "9YDf9w6pHR8NDOta",
+  "name": "Cryptography",
+  "type": "skill",
+  "img": "icons/svg/coins.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>Allows the character to look for &ldquo;beggars&rsquo; signs&rdquo; (Gaunerzinken), hidden signs left behind by travellers to warn of danger, inform others of a generous host, mark a safe camping site, and so on. Civilised areas have signs with a 1:2 probability; semi-civilised ones with 1:3, and wilderness with a 1:6. The character must be actively looking for beggars&rsquo; signs to find them (i.e. make a skill check).</p>",
+    "ability": "int",
+    "subtype": "vagabond",
+    "bonus": 0
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708209591012,
+    "modifiedTime": 1708209691064,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!9YDf9w6pHR8NDOta"
+}

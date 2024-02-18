@@ -1,0 +1,35 @@
+{
+  "_id": "jQTwsJXTZORJ7qmy",
+  "name": "Detect Evil",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "ER3HMq6AdzRgV93H",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "cleric",
+    "range": "short",
+    "duration": "1 hour per level",
+    "area": "one person",
+    "save": "-",
+    "component": "",
+    "description": "<p class=\"p1\">It shows nearby evil wills and objects, but only if they are genuinely rotten, Virtue 3 or below. Similarly, it can sense the might of this evil, which can be meagre, sizeable, considerable, and finally very great. Whether this refers to several smaller influences or a single very significant one, the formula does not tell.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329175537,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!jQTwsJXTZORJ7qmy"
+}

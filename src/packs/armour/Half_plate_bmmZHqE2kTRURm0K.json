@@ -1,0 +1,36 @@
+{
+  "_id": "bmmZHqE2kTRURm0K",
+  "name": "Half-plate",
+  "type": "armour",
+  "img": "icons/svg/shield.svg",
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "bonus": 7,
+    "encumbrance": 2,
+    "shield": false,
+    "cost": {
+      "value": "40",
+      "coin": "th"
+    },
+    "img": "icons/shield.svg"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1708208271532,
+    "modifiedTime": 1708208938561,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!bmmZHqE2kTRURm0K"
+}

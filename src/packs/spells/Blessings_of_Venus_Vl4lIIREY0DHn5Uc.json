@@ -1,0 +1,35 @@
+{
+  "_id": "Vl4lIIREY0DHn5Uc",
+  "name": "Blessings of Venus",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "-",
+    "duration": "one night",
+    "area": "one person",
+    "save": "bravery",
+    "component": "tonic",
+    "description": "<p class=\"p1\">It grants the target mighty amorous powers and copious appetite, so that they may frolic and make merry all night according to their pleasures. It must be used with some care, as someone who overindulges in such substitutes must eventually roll a Bravery save, or they will start to bear the features of satyrs.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207949,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!Vl4lIIREY0DHn5Uc"
+}

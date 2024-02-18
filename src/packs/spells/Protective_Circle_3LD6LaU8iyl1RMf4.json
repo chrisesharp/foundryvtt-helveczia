@@ -1,0 +1,39 @@
+{
+  "_id": "3LD6LaU8iyl1RMf4",
+  "name": "Protective Circle",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "DklZOXwgGCjyQb5s",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "2",
+    "class": "cleric",
+    "range": "very short",
+    "duration": "until cockscrow",
+    "area": "a circle up to a chamber",
+    "save": "temptation",
+    "component": "",
+    "data": {
+      "level": 2,
+      "class": "cleric"
+    },
+    "description": "<p class=\"p1\">This circle grants defence from the Devil, as well as other creatures and spirits against the natural order. The circle is drawn with chalk and holy water, one in one direction, and the other in the opposite (and those who know the ways of magic know which way for which). It either keeps its intended subjects outside, or it keeps them within &ndash; and they may only step through if they succeed at both saving throws &ndash; and even then for only one round. If they fail one save, they are thrown back; and if they fail both, they take 2d6 Hp damage. This is the only spell known to be used by both Clerics and Students.</p>\n<p class=\"p1\">Component: if it is used by Students, they will also require ground silver dust, which is endowed with the essences of the spheres in the correct lunar phase.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329180638,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!3LD6LaU8iyl1RMf4"
+}

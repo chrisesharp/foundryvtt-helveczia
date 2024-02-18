@@ -1,0 +1,35 @@
+{
+  "_id": "Dh09lYBdCn4Jycct",
+  "name": "Mirror of Narcissus",
+  "type": "spell",
+  "img": "icons/svg/daze.svg",
+  "effects": [],
+  "folder": "MUygynGYWUAKLwPj",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "level": "1",
+    "class": "student",
+    "range": "-",
+    "duration": "a few hours",
+    "area": "oneself",
+    "save": "temptation",
+    "component": "a beautiful mirror",
+    "description": "<p class=\"p1\">Those who look into the character&rsquo;s eyes, and weigh their persona, will find them just like themselves; and very many have a good opinion about the same. Only those who are in doubt may try to save &ndash; and yet often, they are the most self-important of all.</p>"
+  },
+  "_stats": {
+    "systemId": "helveczia",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1672329207948,
+    "modifiedTime": 1708209351245,
+    "lastModifiedBy": "G5iize41GRbYKQLE"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "G5iize41GRbYKQLE": 3
+  },
+  "_key": "!items!Dh09lYBdCn4Jycct"
+}
