@@ -234,7 +234,7 @@ export class HVActorSheet extends ActorSheet {
     // Get the type of item to create.
     const type = header.dataset.type;
     // Grab any data associated with this control.
-    const data = duplicate(header.dataset);
+    const data = foundry.utils.duplicate(header.dataset);
     // Initialize a default name.
     const name = `New ${type.capitalize()}`;
     // Prepare the item object.
@@ -592,7 +592,7 @@ export class HVActorSheet extends ActorSheet {
     }
 
     const italian = this.actor.isItalian() ? 1 : 0;
-    const roll = await new Roll('1d3 + 1 + @italian', { italian: italian }).evaluate({ async: true });
+    const roll = await new Roll('1d3 + 1 + @italian', { italian: italian }).evaluate();
 
     const absolved: HVItem[] = [];
     let absolvedTotal = 0;

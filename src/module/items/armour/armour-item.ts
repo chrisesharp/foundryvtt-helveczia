@@ -21,7 +21,7 @@ export class ArmourItem extends BaseItem {
   }
 
   static async preCreate(data: ItemDataConstructorData, _options: DocumentModificationOptions, _user: BaseUser) {
-    mergeObject(
+    foundry.utils.mergeObject(
       data,
       {
         img: ArmourItem.DEFAULT_TOKEN,

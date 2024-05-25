@@ -78,7 +78,7 @@ export class HVChat {
 
   static async _applyChatCritRoll({ actor, cb, target, formula, dmgResult, multiplier }): Promise<void> {
     $(cb).find('.critical-button').remove();
-    const roll = await new Roll(formula).evaluate({ async: true });
+    const roll = await new Roll(formula).evaluate();
     const rolledDie = roll.terms[0] as Die;
     const rolledResult = rolledDie.results[0]?.result;
     let result: string;

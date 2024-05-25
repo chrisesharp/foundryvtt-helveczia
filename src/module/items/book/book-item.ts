@@ -36,7 +36,7 @@ export class BookItem extends BaseItem {
   }
 
   static async preCreate(data: ItemDataConstructorData, _options: DocumentModificationOptions, _user: BaseUser) {
-    mergeObject(
+    foundry.utils.mergeObject(
       data,
       {
         img: BookItem.DEFAULT_TOKEN,

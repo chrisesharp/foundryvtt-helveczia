@@ -148,8 +148,8 @@
   "changelog": "",
   "initiative": "",
   "socket": true,
-  "gridDistance": 1,
-  "gridUnits": "",
+  "grid.distance": 1,
+  "grid.units": "",
   "primaryTokenAttribute": "",
   "secondaryTokenAttribute": ""
 }

@@ -4,7 +4,7 @@ import { BookItemData } from './item-types';
 
 export class HVItemSheet extends ItemSheet {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['helveczia', 'sheet', 'item'],
       width: 450,
       height: 500,
@@ -139,7 +139,7 @@ export class HVItemSheet extends ItemSheet {
     const name = result && result.length > 1 ? result[1] : undefined;
 
     if (name) {
-      const spells = duplicate((this.item.system as BookItemData).spells);
+      const spells = foundry.utils.duplicate((this.item.system as BookItemData).spells);
       spells.push({ id: link, name: name });
       return this.item.update({ data: { spells: spells } });
     }

@@ -32,7 +32,7 @@ export class DeedItem extends BaseItem {
   }
 
   static async preCreate(data: ItemDataConstructorData, _options: DocumentModificationOptions, _user: BaseUser) {
-    mergeObject(
+    foundry.utils.mergeObject(
       data,
       {
         img: DeedItem.DEFAULT_TOKEN,
@@ -50,7 +50,7 @@ export class DeedItem extends BaseItem {
     if (!item.isEmbedded) {
       await DeedItem.addDeedEffects(item);
     }
-    mergeObject(
+    foundry.utils.mergeObject(
       data,
       {
         img: DeedItem.DEFAULT_TOKEN,

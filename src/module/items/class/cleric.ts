@@ -115,7 +115,7 @@ export class Cleric {
   static getSpellSlots(actor: HVActor): number[] {
     const level = actor.system.level;
     const bonus = actor.getSpellBonus();
-    const spells = duplicate(CONFIG.HV.spellSlots[level]);
+    const spells = foundry.utils.duplicate(CONFIG.HV.spellSlots[level]);
     for (const i in spells) {
       spells[i] += bonus[i];
     }

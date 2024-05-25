@@ -56,7 +56,7 @@ export class SpellItem extends BaseItem {
   }
 
   static async preCreate(data: ItemDataConstructorData, _options: DocumentModificationOptions, _user: BaseUser) {
-    mergeObject(
+    foundry.utils.mergeObject(
       data,
       {
         img: SpellItem.DEFAULT_TOKEN,
