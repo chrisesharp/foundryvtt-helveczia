@@ -20,7 +20,7 @@
             {{#if result.isSuccess}}
                 {{#if result.isCrit}}
                 <div class='roll-result roll-success'>
-                    <b>{{localize 'HV.critical.success'}}</b>
+                    <b>{{localize 'HV.success.critical'}}</b>
                 </div>
                 <div>{{{rollHV}}}</div>
                 <div class="critical-roll" data-id="critical" data-formula="{{ result.formula }}" data-dmg-result="{{ dmgResult }}" data-multiplier="{{ result.multiplier }}" data-target="{{ result.target}}" >

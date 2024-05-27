@@ -23,8 +23,8 @@ export function registerSettings(): void {
   });
 
   game.settings.register('helveczia', 'token-flip', {
-    name: game.i18n.localize('HV.Setting.tokenFlip'),
-    hint: game.i18n.localize('HV.Setting.tokenFlipHint'),
+    name: game.i18n.localize('HV.Setting.token.Flip'),
+    hint: game.i18n.localize('HV.Setting.token.FlipHint'),
     default: true,
     scope: 'world',
     type: Boolean,
@@ -32,8 +32,8 @@ export function registerSettings(): void {
   });
 
   game.settings.register('helveczia', 'token-depth', {
-    name: game.i18n.localize('HV.Setting.tokenDepth'),
-    hint: game.i18n.localize('HV.Setting.tokenDepthHint'),
+    name: game.i18n.localize('HV.Setting.token.Depth'),
+    hint: game.i18n.localize('HV.Setting.token.DepthHint'),
     default: false,
     scope: 'world',
     type: Boolean,

@@ -74,7 +74,7 @@ export class SpellItem extends BaseItem {
     sheetData.classes = classes;
     const saves = {};
     CONFIG.HV.saves.forEach((a) => {
-      saves[a] = game.i18n.localize(`HV.saves.${a}.long`);
+      saves[a] = game.i18n.localize(`HV.saves.${a}`);
     });
     saves['-'] = '-';
     sheetData.saves = saves;
@@ -84,7 +84,7 @@ export class SpellItem extends BaseItem {
   /** @override */
   static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
     const itemData = item.system as SpellItemData;
-    const tag = itemData.save !== '-' ? game.i18n.localize(`HV.saves.${itemData.save}.long`) : undefined;
+    const tag = itemData.save !== '-' ? game.i18n.localize(`HV.saves.${itemData.save}`) : undefined;
     const line = tag ? `<li class="tag" title="${game.i18n.localize('HV.Save')}">${tag}</li>` : '';
     return `
     <ol class="tag-list">
