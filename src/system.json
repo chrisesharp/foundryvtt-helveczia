@@ -14,7 +14,7 @@
   ],
   "compatibility": {
     "minimum": 11,
-    "verified": "12"
+    "verified": 12
   },
   "scripts": [
     "https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.3/purify.min.js",
