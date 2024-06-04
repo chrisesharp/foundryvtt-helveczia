@@ -113,7 +113,7 @@ export class HVCharacterCreator extends FormApplication {
         type: 'result',
       },
     };
-    return new Roll(rollParts.join('+'), data).evaluate({ async: true });
+    return new Roll(rollParts.join('+'), data).evaluate();
   }
 
   async _onSubmit(event: Event): Promise<any> {

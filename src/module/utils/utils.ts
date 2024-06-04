@@ -43,7 +43,7 @@ export class Utils {
       user != null &&
       actor != null &&
       user.isGM &&
-      actor?.testUserPermission(user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER)
+      actor?.testUserPermission(user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)
     );
   }
 
@@ -54,7 +54,7 @@ export class Utils {
 
     const currentVersion = game.settings.get('helveczia', 'systemMigrationVersion') as string;
     Object.keys(migrations).forEach(function (key) {
-      if (!currentVersion || isNewerVersion(key, currentVersion)) migrations[key]();
+      if (!currentVersion || foundry.utils.isNewerVersion(key, currentVersion)) migrations[key]();
     });
   }
 }

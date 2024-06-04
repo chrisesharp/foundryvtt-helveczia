@@ -3,7 +3,7 @@ import { HVItemSheet } from '../item-sheet';
 
 export class ClassSheet extends HVItemSheet {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['helveczia', 'sheet', 'item'],
       width: 500,
       height: 450,

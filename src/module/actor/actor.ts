@@ -403,7 +403,7 @@ export class HVActor extends Actor {
 
     const defaultToken = data.type === 'party' ? CONFIG.HV.DEFAULT_PARTY : CONFIG.HV.DEFAULT_TOKEN;
 
-    mergeObject(
+    foundry.utils.mergeObject(
       data,
       {
         img: defaultToken,
@@ -411,7 +411,7 @@ export class HVActor extends Actor {
       { overwrite: false },
     );
 
-    mergeObject(
+    foundry.utils.mergeObject(
       data.prototypeToken,
       {
         displayName: CONST.TOKEN_DISPLAY_MODES.HOVER,

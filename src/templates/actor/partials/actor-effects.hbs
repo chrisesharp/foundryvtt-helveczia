@@ -6,7 +6,7 @@
         <div class="effect-source">{{ localize 'HV.Source' }}</div>
         <div class="effect-source">{{ localize 'HV.Duration' }}</div>
         <div class="item-controls effect-controls flexrow">
-            <a class="effect-control" data-action="create" title="{{localize 'HV.EffectCreate'}}">
+            <a class="effect-control" data-action="create" title="{{localize 'HV.effect.Create'}}">
             <i class="fas fa-plus"></i> {{localize "HV.Add"}}
             </a>
         </div>
@@ -21,13 +21,13 @@
             <div class="effect-source">{{effect.sourceName}}</div>
             <div class="effect-duration">{{effect.duration.label}}</div>
             <div class="item-controls effect-controls flexrow">
-            <a class="effect-control" data-action="toggle" title="{{localize 'HV.EffectToggle'}}">
+            <a class="effect-control" data-action="toggle" title="{{localize 'HV.effect.Toggle'}}">
                 <i class="fas {{#if effect.disabled}}fa-check{{else}}fa-times{{/if}}"></i>
             </a>
-            <a class="effect-control" data-action="edit" title="{{localize 'HV.EffectEdit'}}">
+            <a class="effect-control" data-action="edit" title="{{localize 'HV.effect.Edit'}}">
                 <i class="fas fa-edit"></i>
             </a>
-            <a class="effect-control" data-action="delete" title="{{localize 'HV.EffectDelete'}}">
+            <a class="effect-control" data-action="delete" title="{{localize 'HV.effect.Delete'}}">
                 <i class="fas fa-trash"></i>
             </a>
             </div>

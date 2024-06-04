@@ -118,7 +118,7 @@ export class HVCardsHand extends CardsHand {
       const deck = game.cards?.get(result.id);
       const folderId = deck?.folder?.id;
       const perms = {};
-      if (userId) perms[userId] = CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
+      if (userId) perms[userId] = CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
       await Cards.createDocuments([
         {
           name: game.i18n.format('HV.cards.devilsHand', { character: name }),

@@ -135,11 +135,11 @@ export class HVDice {
       data.roll.target = form.difficulty.value;
     }
 
-    const roll = await new Roll(parts.join('+'), data).evaluate({ async: true });
+    const roll = await new Roll(parts.join('+'), data).evaluate();
 
     let dmgRoll: Evaluated<Roll<any>>;
     if (data.roll.dmg?.length) {
-      dmgRoll = await new Roll(data.roll.dmg.join('+'), data).evaluate({ async: true });
+      dmgRoll = await new Roll(data.roll.dmg.join('+'), data).evaluate();
     }
 
     // Convert the roll to a chat message and return the roll
