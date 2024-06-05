@@ -4,7 +4,6 @@
   "title": "Helvéczia",
   "description": "Unofficial Implementation of the picaresque fantasy RPG",
   "version": "This is auto replaced",
-  "author": "chrisesharp",
   "authors": [
     {
       "name": "chrisesharp",
@@ -146,8 +145,10 @@
   "changelog": "",
   "initiative": "",
   "socket": true,
-  "grid.distance": 1,
-  "grid.units": "",
+  "grid": {
+    "distance": 5,
+    "units": "ft"
+  },
   "primaryTokenAttribute": "",
   "secondaryTokenAttribute": ""
 }
