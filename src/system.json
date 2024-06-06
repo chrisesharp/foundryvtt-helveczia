@@ -133,6 +133,11 @@
       "lang": "en",
       "name": "English",
       "path": "lang/en.json"
+    },
+    {
+      "lang": "hu",
+      "name": "Hungarian",
+      "path": "lang/hu.json"
     }
   ],
   "url": "This is auto replaced",
