@@ -57,6 +57,8 @@ Hooks.once('init', async () => {
   CONFIG.Combatant.documentClass = HVCombatant;
   CONFIG.Combat.documentClass = HVCombat;
 
+  CONFIG.ActiveEffect.legacyTransferral = false;
+
   // Register custom system settings
   registerSettings();
   CONFIG.HV.showEffects = game.settings.get('helveczia', 'effects') as boolean;

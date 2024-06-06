@@ -121,11 +121,9 @@ export class DeedItem extends BaseItem {
       },
       { parent: item },
     );
-    console.log('>>>', item);
     if (effect) {
       await item.updateEmbeddedDocuments('ActiveEffect', [{ _id: effect._id, effects: [effect] }]);
     }
-    console.log('<<<', item);
-    // item.updateSource({ effects: [effect] });
+    item.updateSource({ effects: [effect] });
   }
 }
