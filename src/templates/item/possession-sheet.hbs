@@ -7,13 +7,13 @@
           <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
           <div class="form-group">
             <h2 class="cost">{{ localize "HV.Cost" }}: </h2>
-            <input name="data.cost.value" type="text" value="{{data.cost.value}}">
-            <select name="data.cost.coin" type="text">
+            <input name="system.cost.value" type="text" value="{{data.cost.value}}">
+            <select name="system.cost.coin" type="text">
              {{selectOptions coins selected=data.cost.coin}}
             </select>
           </div>
           <div class="form-group" title="{{ localize 'HV.Encumbrance' }}">
-              <h2 class="cost">{{ localize 'HV.Encumbrance' }}:</h2><input name="data.encumbrance" type="text" value="{{ data.encumbrance }}">
+              <h2 class="cost">{{ localize 'HV.Encumbrance' }}:</h2><input name="system.encumbrance" type="text" value="{{ data.encumbrance }}">
           </div>
       </div>
     </header>

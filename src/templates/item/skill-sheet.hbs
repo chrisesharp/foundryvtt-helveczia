@@ -6,14 +6,14 @@
       <div class="header-fields">
         <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
           {{#if isGM }}
-            <select name="data.subtype" type="text">
+            <select name="system.subtype" type="text">
             {{selectOptions skillTypes selected=data.subtype localize=true}}
             </select> {{ localize 'HV.skill' }}
-            <select name="data.ability" type="text">
+            <select name="system.ability" type="text">
             {{selectOptions abilities selected=data.ability localize=true}}
             </select> {{ localize 'HV.ability' }}
             <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.bonus' }}">
-             <h3 style="display: contents; width: 40px;">{{ localize 'HV.additionalBonus' }}<input name="data.bonus" type="text" data-dtype="Number" value="{{data.bonus}}"></h3>
+             <h3 style="display: contents; width: 40px;">{{ localize 'HV.additionalBonus' }}<input name="system.bonus" type="text" data-dtype="Number" value="{{data.bonus}}"></h3>
             </div>
           {{else}}
           <div style="display: inline-flex;" title="{{ localize 'HV.bonus' }}">

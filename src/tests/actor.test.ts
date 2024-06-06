@@ -60,7 +60,7 @@ export function actorTests(context) {
             [sheet, $html] = await rendered.promise();
             classPeopleLevel = pc
               ? $html.find('div.actor-class').text().replace(/\s+/g, ' ').trim()
-              : $html.find('input[name="data.levelBonus"]').val();
+              : $html.find('input[name="system.levelBonus"]').val();
           });
 
           it('has correct title', () => {
@@ -69,11 +69,11 @@ export function actorTests(context) {
           });
 
           it('has correct initiative', () => {
-            expect($html.find('input[name="data.initiative"]').val()).to.equal(init);
+            expect($html.find('input[name="system.initiative"]').val()).to.equal(init);
           });
 
           it('has correct AC', () => {
-            expect($html.find('input[name="data.ac"]').val()).to.equal(`${ac}`);
+            expect($html.find('input[name="system.ac"]').val()).to.equal(`${ac}`);
           });
 
           it('has correct saves', () => {
@@ -107,7 +107,7 @@ export function actorTests(context) {
           });
 
           it('has correct virtue', () => {
-            expect($html.find('input[name="data.virtue"]').val()).to.equal(`${virtue}`);
+            expect($html.find('input[name="system.virtue"]').val()).to.equal(`${virtue}`);
             if (pc) {
               const reds = $html.find('.full-mark-red').length;
               const blues = $html.find('.full-mark-blue').length;
@@ -119,7 +119,7 @@ export function actorTests(context) {
                 const leftBalance = $html.find('.virtue-balance').find(`.fa-balance-scale${balance}:first-child`);
                 expect(leftBalance.length).to.equal(1);
               }
-              const origVirtue = parseInt($html.find('input[name="data.origVirtue"]').val());
+              const origVirtue = parseInt($html.find('input[name="system.origVirtue"]').val());
               const sins = actor?.system.deeds
                 .filter((d) => d.system.subtype === 'sin')
                 .map((d) => parseInt(d.system.magnitude))

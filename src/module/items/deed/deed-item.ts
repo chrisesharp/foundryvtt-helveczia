@@ -57,7 +57,7 @@ export class DeedItem extends BaseItem {
       },
       { overwrite: true },
     );
-    await item.updateSource(data);
+    item.updateSource(data);
     log.debug('DeedItem.onCreate()|', item, data, options, userId);
   }
 
@@ -114,16 +114,18 @@ export class DeedItem extends BaseItem {
     const effect = await ActiveEffect.create(
       {
         label: game.i18n.localize(`HV.deeds.${subtype}`),
-        icon: 'icons/svg/aura.svg',
+        img: 'icons/svg/aura.svg',
         origin: item.uuid,
         transfer: true,
         changes: [deedEffect],
       },
       { parent: item },
     );
+    console.log('>>>', item);
     if (effect) {
-      await item.updateEmbeddedDocuments('ActiveEffect', [{ _id: effect.id, effects: [effect] }]);
+      await item.updateEmbeddedDocuments('ActiveEffect', [{ _id: effect._id, effects: [effect] }]);
     }
-    await item.updateSource({ effects: [effect] });
+    console.log('<<<', item);
+    // item.updateSource({ effects: [effect] });
   }
 }

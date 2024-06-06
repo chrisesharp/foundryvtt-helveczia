@@ -8,18 +8,18 @@
           <div class="form-group">
             {{#if isGM }}
               <h3 class="cost">{{ localize "HV.Cost" }}: </h3>
-              <input class="cost" name="data.cost.value" type="text" value="{{data.cost.value}}">
-              <select name="data.cost.coin" type="text">
+              <input class="cost" name="system.cost.value" type="text" value="{{data.cost.value}}">
+              <select name="system.cost.coin" type="text">
               {{selectOptions coins selected=data.cost.coin}}
               </select>
               <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.AC' }}">
-                <h3 class="cost">{{ localize 'HV.AC' }}</h3><input class="cost" name="data.bonus" type="text" data-dtype="Number" value="{{ plusminus data.bonus}}">
+                <h3 class="cost">{{ localize 'HV.AC' }}</h3><input class="cost" name="system.bonus" type="text" data-dtype="Number" value="{{ plusminus data.bonus}}">
               </div>
               <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.Shield' }}?">
-                <i class="fas fa-shield-alt"></i><input class="cost" name="data.shield" type="checkbox" data-dtype="Boolean" value="{{ data.shield}}" {{ isChecked data.shield}}>
+                <i class="fas fa-shield-alt"></i><input class="cost" name="system.shield" type="checkbox" data-dtype="Boolean" value="{{ data.shield}}" {{ isChecked data.shield}}>
               </div>
               <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.Encumbrance' }}">
-                <h3 class="cost">{{ localize 'HV.Encumbrance' }}</h3><input class="cost" name="data.encumbrance" type="text" data-dtype="Number" value="{{ data.encumbrance}}">
+                <h3 class="cost">{{ localize 'HV.Encumbrance' }}</h3><input class="cost" name="system.encumbrance" type="text" data-dtype="Number" value="{{ data.encumbrance}}">
               </div>
             {{else}}
               <h3 class="cost">Cost:</h3>
@@ -28,13 +28,13 @@
               </div>
 
               <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.AC' }}">
-                <h3 class="cost">{{ localize 'HV.AC' }}</h3><input class="cost" name="data.bonus" type="text" data-dtype="Number" value="{{ plusminus data.bonus}}" disabled>
+                <h3 class="cost">{{ localize 'HV.AC' }}</h3><input class="cost" name="system.bonus" type="text" data-dtype="Number" value="{{ plusminus data.bonus}}" disabled>
                 {{#if ( isChecked data.shield) }}
                 <i class="fas fa-shield-alt"></i>
                 {{/if}}
               </div>
               <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.Encumbrance' }}">
-                <h3 class="cost">{{ localize 'HV.Encumbrance' }}</h3><input class="cost" name="data.encumbrance" type="text" data-dtype="Number" value="{{ data.encumbrance}}" disabled>
+                <h3 class="cost">{{ localize 'HV.Encumbrance' }}</h3><input class="cost" name="system.encumbrance" type="text" data-dtype="Number" value="{{ data.encumbrance}}" disabled>
               </div>
             {{/if}}
           </div>

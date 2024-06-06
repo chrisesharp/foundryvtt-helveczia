@@ -7,8 +7,8 @@
     </header>
     <header class="sheet-header">
     <div class="header-fields">
-          <h4 class="specialism flexrow">{{ localize "HV.Specialism" }}:<input id="specialism" name="data.specialism" type="checkbox" {{ isChecked data.specialism}}/>
-          <select id="parent" name="data.parent" {{#unless data.specialism }}style="display: none;"{{/unless}}>
+          <h4 class="specialism flexrow">{{ localize "HV.Specialism" }}:<input id="specialism" name="system.specialism" type="checkbox" {{ isChecked data.specialism}}/>
+          <select id="parent" name="system.parent" {{#unless data.specialism }}style="display: none;"{{/unless}}>
             {{selectOptions classes selected=data.parent}}
           </select>
           </h4>

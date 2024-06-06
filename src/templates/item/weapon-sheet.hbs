@@ -9,12 +9,12 @@
       <div class="header-fields">
           <div class="form-group">
             <h2 class="cost">{{ localize "HV.Cost" }}: </h2>
-            <input name="data.cost.value" type="text" value="{{data.cost.value}}">
-            <select name="data.cost.coin" type="text">
+            <input name="system.cost.value" type="text" value="{{data.cost.value}}">
+            <select name="system.cost.coin" type="text">
              {{selectOptions coins selected=data.cost.coin}}
             </select>
              <h2 class="cost">{{ localize "HV.Encumbrance" }}: </h2>
-            <input name="data.encumbrance" type="text" value="{{data.encumbrance}}">
+            <input name="system.encumbrance" type="text" value="{{data.encumbrance}}">
           </div>
       </div>
     </header>
@@ -27,17 +27,17 @@
     <section class="sheet-body">
       <div class="tab damage" data-group="primary" data-tab="damage">
         <div class="flexrow">
-          <select class="flex1" name="data.attack" type="text">
+          <select class="flex1" name="system.attack" type="text">
             {{selectOptions attacks selected=data.attack localize=true}}
           </select>
           {{#if (eq data.attack 'ranged')}}
-          <h3 class="flex2 flexrow">{{ localize 'HV.Reload'}}:<input name="data.reload" type="text" value="{{data.reload}}"/></h3>
+          <h3 class="flex2 flexrow">{{ localize 'HV.Reload'}}:<input name="system.reload" type="text" value="{{data.reload}}"/></h3>
           {{/if}}
-          <h3 class="flex2 flexrow">{{ localize 'HV.additionalBonus' }}:<input name="data.bonus" type="text" value="{{data.bonus}}"/></h3>
+          <h3 class="flex2 flexrow">{{ localize 'HV.additionalBonus' }}:<input name="system.bonus" type="text" value="{{data.bonus}}"/></h3>
         </div>
-        <h3>{{ localize 'HV.tabs.damage'}}:<input name="data.damage" type="text" value="{{data.damage}}" placeholder="1d3"/></h3>
-        <h3>{{ localize 'HV.Critical'}} on:<input name="data.critical.range" type="text" value="{{data.critical.range}}"/></h3>
-        <h3>{{ localize 'HV.DamageMultiplier'}}:<input name="data.critical.multiple" type="text" value="{{data.critical.multiple}}"/></h3>
+        <h3>{{ localize 'HV.tabs.damage'}}:<input name="system.damage" type="text" value="{{data.damage}}" placeholder="1d3"/></h3>
+        <h3>{{ localize 'HV.Critical'}} on:<input name="system.critical.range" type="text" value="{{data.critical.range}}"/></h3>
+        <h3>{{ localize 'HV.DamageMultiplier'}}:<input name="system.critical.multiple" type="text" value="{{data.critical.multiple}}"/></h3>
       </div>
       {{#if config.showEffects}}
         <div class="tab effects" data-group="primary" data-tab="effects">
