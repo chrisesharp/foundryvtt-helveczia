@@ -169,9 +169,9 @@
     "bonuses": "Bonuses",
     "additionalBonus": "Additional Bonus",
     "saves": {
-      "bravery": "Bravery",
-      "deftness": "Deftness",
-      "temptation": "Temptation"
+      "bravery.long": "Bravery",
+      "deftness.long": "Deftness",
+      "temptation.long": "Temptation"
     },
     "experience": "Experience",
     "virtue": "Virtue",

@@ -169,9 +169,9 @@
     "bonuses": "Bónuszok",
     "additionalBonus": "Egyéb bónuszok",
     "saves": {
-      "bravery": "Bátorság",
-      "deftness": "Fürgeség",
-      "temptation": "Kísértés"
+      "bravery.long": "Bátorság",
+      "deftness.long": "Fürgeség",
+      "temptation.long": "Kísértés"
     },
     "experience": "Tapasztalat",
     "virtue": "Virtus",
