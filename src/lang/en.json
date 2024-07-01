@@ -251,6 +251,7 @@
     },
     "needed": "Needed ",
     "Critical": "Critical",
+    "CriticalOn": "Critical on",
     "RollingCritical": "{actor} press their advantage",
     "SecondCritical": "A Second Success!",
     "InstantDeath": "Two Criticals in a Row! This is instant death!",
