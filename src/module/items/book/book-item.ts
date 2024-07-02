@@ -30,7 +30,7 @@ export class BookItem extends BaseItem {
       const updateData = {
         spells: item.system.spells.filter((i) => i.id !== itemID),
       };
-      item.update({ data: updateData });
+      item.update({ system: updateData });
       li.slideUp(200, () => item.render(false));
     });
   }
@@ -46,9 +46,13 @@ export class BookItem extends BaseItem {
   }
 
   /** @override */
-  static getSheetData(sheetData, item) {
+  static async getSheetData(sheetData, item) {
     sheetData.coins = CONFIG.HV.coins;
-    sheetData.spells = item.object.system?.spells;
+    // sheetData.spells = item.object.system?.spells;
+    sheetData.spells = [];
+    for (const spell of item.object.system?.spells) {
+      sheetData.spells.push({ id: spell.id, link: await TextEditor.enrichHTML(spell.id, { async: true }) });
+    }
     return sheetData;
   }
 

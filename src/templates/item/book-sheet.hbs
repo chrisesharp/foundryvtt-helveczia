@@ -37,7 +37,7 @@
               {{#each spells as |item|}}
               <li class="item-entry flexcol" data-item-id="{{item.id}}">
                 <div class="item flexrow"  data-item-id="{{item.id}}">
-                  <div> {{{ insertLink item }}} </div>
+                  <div> {{{ item.link }}} </div>
                   <div class="item-controls">
                         <a class="item-control item-delete" title="{{localize 'HV.Delete'}} {{localize 'HV.items.possessions'}}"><i class="fas fa-trash"></i></a>
                   </div>

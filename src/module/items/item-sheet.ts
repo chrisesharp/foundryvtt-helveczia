@@ -44,7 +44,7 @@ export class HVItemSheet extends ItemSheet {
     data.isGM = game.user?.isGM;
 
     // Let every item type manipulate its own sheet data
-    data = CONFIG.HV.itemClasses[this.item.type]?.getSheetData(data, this) || data;
+    data = (await CONFIG.HV.itemClasses[this.item.type]?.getSheetData(data, this)) || data;
 
     // Let every component manipulate an items' sheet data
     // for (const sheetComponent in CONFIG.HV.sheetComponents.item) {
@@ -56,8 +56,7 @@ export class HVItemSheet extends ItemSheet {
     data.config = CONFIG.HV;
     data.effects = prepareActiveEffectCategories(this.item.effects);
 
-    data.enrichedDescription = await TextEditor.enrichHTML(this.object.system.description, { async: true });
-
+    data.enrichedDescription = await TextEditor.enrichHTML(this.object.system.description);
     return data;
   }
 
@@ -141,7 +140,7 @@ export class HVItemSheet extends ItemSheet {
     if (name) {
       const spells = foundry.utils.duplicate((this.item.system as BookItemData).spells);
       spells.push({ id: link, name: name });
-      return this.item.update({ data: { spells: spells } });
+      return this.item.update({ system: { spells: spells } });
     }
     return;
   }
