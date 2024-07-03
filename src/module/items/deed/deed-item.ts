@@ -73,7 +73,7 @@ export class DeedItem extends BaseItem {
   ): Promise<void> {
     log.debug('DeedItem.onUpdate()|', item, changed, options, userId);
     if (game.user?.isGM && !item.isEmbedded) {
-      await DeedItem.addDeedEffects(item);
+      await DeedItem.updateDeedEffects(item);
     }
   }
 
@@ -100,20 +100,25 @@ export class DeedItem extends BaseItem {
     </ol>`;
   }
 
+  static calculateEffectChange(item: HVItem) {
+    const itemData = item.system as DeedItemData;
+    const magnitude = itemData.magnitude;
+    const subtype = itemData.subtype;
+    const value = subtype === 'virtue' ? magnitude : 0 - magnitude;
+    return { key: 'system.virtue', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: value };
+  }
+
   static async addDeedEffects(item: HVItem) {
     log.debug('DeedItem.addDeedEffect() | adding deed effects for ', item);
     await Utils.deleteEmbeddedArray(
       item.effects.filter((_e) => true),
       item,
     );
-    const itemData = item.system as DeedItemData;
-    const magnitude = itemData.magnitude;
-    const subtype = itemData.subtype;
-    const value = subtype === 'virtue' ? magnitude : 0 - magnitude;
-    const deedEffect = { key: 'system.virtue', mode: CONST.ACTIVE_EFFECT_MODES.ADD, value: value };
-    const effect = await ActiveEffect.create(
+    const deedEffect = DeedItem.calculateEffectChange(item);
+
+    await ActiveEffect.create(
       {
-        label: game.i18n.localize(`HV.deeds.${subtype}`),
+        label: game.i18n.localize(`HV.deeds.${item.system.subtype}`),
         img: 'icons/svg/aura.svg',
         origin: item.uuid,
         transfer: true,
@@ -121,9 +126,12 @@ export class DeedItem extends BaseItem {
       },
       { parent: item },
     );
-    if (effect) {
-      await item.updateEmbeddedDocuments('ActiveEffect', [{ _id: effect._id, effects: [effect] }]);
-    }
-    item.updateSource({ effects: [effect] });
+  }
+
+  static async updateDeedEffects(item: HVItem) {
+    log.debug('DeedItem.updateDeedEffecst() | updating deed effects for ', item);
+    const changes = DeedItem.calculateEffectChange(item);
+    const updates = item.effects.map((i) => ({ _id: i.id, changes: [changes] }));
+    await item.updateEmbeddedDocuments('ActiveEffect', updates);
   }
 }
