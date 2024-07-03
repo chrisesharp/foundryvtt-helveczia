@@ -55,7 +55,7 @@ export class PeopleItem extends BaseItem {
     const currenWealth = foundry.utils.duplicate((item.actor?.system as HVActorData).wealth);
     const fortune = Math.round(Math.random() * 5) + 1;
     currenWealth.th += fortune;
-    await item.actor?.update({ data: { wealth: currenWealth } });
+    await item.actor?.update({ system: { wealth: currenWealth } });
     await item.actor?.setFlag('helveczia', 'italian-fortune', fortune);
   }
 
@@ -68,7 +68,7 @@ export class PeopleItem extends BaseItem {
     if (fortune) {
       const currenWealth = foundry.utils.duplicate((actor?.system as HVActorData).wealth);
       currenWealth.th -= fortune;
-      await actor?.update({ data: { wealth: currenWealth } });
+      await actor?.update({ system: { wealth: currenWealth } });
     }
     await actor?.setFlag('helveczia', 'italian-fortune', false);
   }
@@ -90,7 +90,7 @@ export class PeopleItem extends BaseItem {
       const onions = {
         name: 'Onions',
         type: 'possession',
-        data: {
+        system: {
           description:
             'The Dutch begin their career with 1d3+1 onions. <p> Why this strange junk is so important to the Dutch, only the Lord knows.',
         },

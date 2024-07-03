@@ -90,7 +90,7 @@ export class Student {
             name: s,
             type: 'skill',
             img: 'icons/svg/book.svg',
-            data: {
+            system: {
               description: game.i18n.localize(studentSpecialisms[s].description),
               ability: '',
               subtype: 'magical',

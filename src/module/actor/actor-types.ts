@@ -104,7 +104,7 @@ export interface NPCActorData {
 
 export interface PartyActorData {
   type: 'party';
-  data: BaseData & {
+  system: BaseData & {
     members: HVActor[];
   };
 }

@@ -61,7 +61,7 @@ export class Vagabond {
           const legendsSkill = {
             name: 'Legends',
             type: 'skill',
-            data: {
+            system: {
               description: legendDescription,
               ability: 'wis',
               subtype: 'vagabond',
@@ -74,7 +74,7 @@ export class Vagabond {
           const sneakSkill = {
             name: 'Sneak Attack',
             type: 'skill',
-            data: {
+            system: {
               description: sneakDescription,
               ability: 'dex',
               subtype: 'vagabond',
@@ -87,7 +87,7 @@ export class Vagabond {
           const luckSkill = {
             name: item.name,
             type: 'skill',
-            data: {
+            system: {
               description: luckDescription,
               ability: 'dex',
               subtype: 'vagabond',

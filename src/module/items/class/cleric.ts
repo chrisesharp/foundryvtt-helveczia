@@ -87,7 +87,7 @@ export class Cleric {
             name: s,
             type: 'skill',
             img: 'icons/svg/mystery-man.svg',
-            data: {
+            system: {
               description: game.i18n.localize(clericSpecialisms[s].description),
               ability: '',
               subtype: 'magical',

@@ -368,12 +368,12 @@ export class HVActor extends Actor {
   /** @override */
   getRollData() {
     const data = super.getRollData();
-    this._getCharacterRollData(data as CharacterActorData['data']);
-    this._getNPCRollData(data as NPCActorData['data']);
+    this._getCharacterRollData(data as CharacterActorData['system']);
+    this._getNPCRollData(data as NPCActorData['system']);
     return data;
   }
 
-  _getCharacterRollData(data: CharacterActorData['data']): void {
+  _getCharacterRollData(data: CharacterActorData['system']): void {
     if (this.type !== 'character') return;
     // log.debug('Character RollData:', data);
     if (data?.scores) {
@@ -383,7 +383,7 @@ export class HVActor extends Actor {
     }
   }
 
-  _getNPCRollData(data: NPCActorData['data']): void {
+  _getNPCRollData(data: NPCActorData['system']): void {
     if (this.type !== 'npc') return;
     // log.debug('NPC RollData:', data);
     if (data?.scores) {
