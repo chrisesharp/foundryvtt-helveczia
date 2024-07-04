@@ -15,6 +15,7 @@ type EmbeddedObjectType = HVItem | ActiveEffect;
 
 const migrations = {
   '3.0.10': migrateTo3_1_0,
+  '4.0.5': migrateTo4_0_6,
 };
 
 export class Utils {
@@ -69,6 +70,16 @@ async function migrateTo3_1_0() {
   ui.notifications.info('Data migrated to version 3.1.0.', options);
 }
 
+async function migrateTo4_0_6() {
+  const options = { permanent: true };
+  ui.notifications.warn('Migrating your data to version 4.0.6 Please, wait until it finishes.', options);
+  for (const actor of game.actors?.contents) {
+    await migrateTo4_0_6_Actor(actor);
+  }
+  await game.settings.set('helveczia', 'systemMigrationVersion', game.system.version);
+  ui.notifications.info('Data migrated to version 4.0.6', options);
+}
+
 async function migrateTo3_1_Actor(actor: HVActor) {
   if (actor.type != 'character') return;
 
@@ -87,4 +98,12 @@ async function migrateTo3_1_Actor(actor: HVActor) {
   }
   log.debug(`utils.migrateTo3_1_Actor() | updating ${actor.name}`);
   return Utils.deleteEmbeddedArray(skills, actor);
+}
+
+async function migrateTo4_0_6_Actor(actor: HVActor) {
+  if (actor.type != 'character') return;
+
+  const effects = actor.effects.filter((i) => i.name === 'Sin' || i.name === 'Virtue');
+  log.debug(`utils.migrateTo4_0_6_Actor() | updating ${actor.name}`);
+  return Utils.deleteEmbeddedArray(effects, actor);
 }
