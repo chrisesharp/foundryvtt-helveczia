@@ -12,13 +12,15 @@ import { Utils } from '../../utils/utils';
 const log = new Logger();
 const DEFAULT_TOKEN = 'icons/svg/village.svg';
 
+type PeoplesEntry = {
+  onCreate?: (item: HVItem) => void;
+  skillBonus?: (actor: HVActor) => number;
+  onDelete?: (actor: HVActor) => void;
+};
+
 export class PeopleItem extends BaseItem {
   static races: {
-    [key: string]: {
-      onCreate?: (item: HVItem) => void;
-      skillBonus?: (actor: HVActor) => number;
-      onDelete?: (actor: HVActor) => void;
-    };
+    [key: string]: PeoplesEntry;
   } = {
     German: {
       onCreate: PeopleItem.onCreateGerman,
@@ -126,11 +128,11 @@ export class PeopleItem extends BaseItem {
   static augmentOwnedItem(actor, data) {
     if (data.type === 'skill') {
       if (actor.isDutch()) {
-        if (data.name === 'Sail' || data.name === 'Appraise') {
+        if (data.name === game.i18n.localize('Sail') || data.name === game.i18n.localize('Appraise')) {
           data.system.bonus = 2;
         }
       } else if (actor.isItalian()) {
-        if (data.name === 'Gambling') {
+        if (data.name === game.i18n.localize('Gambling')) {
           data.system.bonus = 2;
         }
       }
@@ -148,9 +150,21 @@ export class PeopleItem extends BaseItem {
     // html.find(".helveczia-possession").click((e) => this._onRollSkill.call(this, e, sheet));
   }
 
+  static findPeoples(itemData: ItemData): PeoplesEntry | undefined {
+    let peoplesName = itemData.name;
+    for (const r in PeopleItem.races) {
+      const name = game.i18n.localize(`HV.peoples.${r}`);
+      if (name == peoplesName) {
+        peoplesName = r;
+        break;
+      }
+    }
+    return PeopleItem.races[peoplesName];
+  }
+
   static async onCreate(
     item: HVItem,
-    data: PropertiesToSource<ItemDataBaseProperties>,
+    itemData: PropertiesToSource<ItemDataBaseProperties>,
     _options: DocumentModificationOptions,
     _userId: string,
   ) {
@@ -159,16 +173,17 @@ export class PeopleItem extends BaseItem {
     }
 
     foundry.utils.mergeObject(
-      data,
+      itemData,
       {
         img: DEFAULT_TOKEN,
       },
       { overwrite: true },
     );
-    item.updateSource(data);
+    item.updateSource(itemData);
 
     if (item.parent) {
-      const func = PeopleItem.races[data.name].onCreate;
+      const peoples = PeopleItem.findPeoples(itemData);
+      const func = peoples?.onCreate;
       if (func) func(item);
     }
   }
@@ -179,7 +194,8 @@ export class PeopleItem extends BaseItem {
 
   static getSkillsBonus(actor, itemData) {
     let bonus = 0;
-    const func = PeopleItem.races[itemData.name].skillBonus;
+    const peoples = PeopleItem.findPeoples(itemData);
+    const func = peoples?.skillBonus;
     if (func) {
       bonus += func(actor);
     }
@@ -188,7 +204,8 @@ export class PeopleItem extends BaseItem {
   }
 
   static onDelete(actor, itemData) {
-    const func = PeopleItem.races[itemData.name].onDelete;
+    const peoples = PeopleItem.findPeoples(itemData);
+    const func = peoples?.onDelete;
     if (func) {
       func(actor);
     }

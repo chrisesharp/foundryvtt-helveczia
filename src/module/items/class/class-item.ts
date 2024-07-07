@@ -70,7 +70,16 @@ export class ClassItem extends BaseItem {
   }
 
   static findProfession(itemData: ItemData): ProfEntry | undefined {
-    const prof = ClassItem.professions[itemData.name];
+    const archetypes = ['cleric', 'student', 'vagabond', 'fighter'];
+    let profName = itemData.name;
+    for (const a of archetypes) {
+      const name = game.i18n.localize(`HV.class.${a}`);
+      if (name == profName) {
+        profName = capitalize(a);
+        break;
+      }
+    }
+    const prof = ClassItem.professions[profName];
     if (prof) return prof;
     const parent = capitalize((itemData.system as ClassItemData).parent);
     return ClassItem.professions[parent];

@@ -317,6 +317,11 @@
       "legends": "Különösképpen a mesterdalnokok és a sokat próbált öregek tudják, hogy minden hegynek, forrásnak és romos postaállomásnak története van, s ki e történeteket ismeri, nem várt veszedelmeket kerülhet el, vagy gyümölcsöző kalandokba bonyolódhat. A karakter képzettségként használhatja a Mondák (Böl) ismeretét, és ha képzettségpróbája sikeres, megtudhat valamit a kiválasztott hely, család, szervezet s. a. t. hátteréről (Közepes próba esetén általános, Nehéz próba esetén speczifikus, Hősies próba esetén titkos ismeretek is).",
       "sneakAttack": "Az orvtámadás akkor használható, ha a karakter meglepi áldozatát, tehát pl. csöndesen a hátába kerül, vagy beszélgetés közben tőrt ránt és egyetlen mozdulattal gyomron szúrja.<p>Az orvtámadás minden páratlan szintért 1d6 bónusz sebzést okoz (maximuma +3d6).<p>Dobó- és lőfegyverrel is használható, és ha a karakter úgy dönt, illetve a használt fegyver lehetővé teszi, az ellenfél elkábítására is alkalmazható.",
       "travellersLuck": "Fortuna kiemelt figyelméből kalandonként 1d3 alkalommal +2 adható egy mentődobás vagy a kezdeményezés értékéhez. Ezt a szándékot a dobás előtt kell bejelenteni, és mindig az első alkalom után derül ki, hányszor részesül a karakter Fortuna segedelmében."
+    },
+    "specialSkills": {
+      "Sail": "Hajózás",
+      "Appraise": "Értékbecslés",
+      "Gambling": "Koczkavetés"
     }
   },
   "TYPES": {
