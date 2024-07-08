@@ -188,8 +188,11 @@ export class PeopleItem extends BaseItem {
     }
   }
 
-  static peoples(): string[] {
-    return Object.keys(PeopleItem.races);
+  static peoples() {
+    return Object.keys(PeopleItem.races).reduce((dict, p) => {
+      dict[p] = game.i18n.localize(`HV.peoples.${p}`);
+      return dict;
+    }, {});
   }
 
   static getSkillsBonus(actor, itemData) {

@@ -1,13 +1,9 @@
 <form autocomplete="off" onsubmit="event.preventDefault();">
   <h2>Choose your Origin</h2>
   <select id="orig" name="orig">
-    {{#each peoples as |people|}}
-      <option>{{people}}</option>
-    {{/each}}
+    {{selectOptions peoples localize=true}}
   </select>
   <select id="class" name="class">
-    {{#each classes as |class|}}
-      <option>{{class}}</option>
-    {{/each}}
+    {{selectOptions classes localize=true}}
   </select>
 </form>

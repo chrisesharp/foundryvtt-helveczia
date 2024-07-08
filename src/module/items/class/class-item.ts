@@ -65,8 +65,11 @@ export class ClassItem extends BaseItem {
     return 'class';
   }
 
-  static classes(): string[] {
-    return Object.keys(ClassItem.professions);
+  static classes() {
+    return Object.keys(ClassItem.professions).reduce((dict, p) => {
+      dict[p] = game.i18n.localize(`HV.class.${p.toLowerCase()}`);
+      return dict;
+    }, {});
   }
 
   static findProfession(itemData: ItemData): ProfEntry | undefined {
@@ -151,7 +154,7 @@ export class ClassItem extends BaseItem {
 
   static getSheetData(data, _sheet) {
     const classes = {};
-    ClassItem.classes().forEach((name) => {
+    Object.keys(ClassItem.professions).forEach((name) => {
       classes[name.toLowerCase()] = name;
     });
     data.classes = classes;

@@ -370,8 +370,8 @@ export class HVActorSheet extends ActorSheet {
             icon: '<i class="fas fa-check"></i>',
             label: game.i18n.localize('HV.Confirm'),
             callback: async () => {
-              const people = $('#orig').val() as string;
-              const profession = $('#class').val() as string;
+              const people = $('#orig option:selected').text() as string;
+              const profession = $('#class option:selected').text() as string;
               HVCharacterCreator.setOrigins(this.actor, people, profession);
             },
           },
