@@ -58,7 +58,7 @@ export class HVCharacterCreator extends FormApplication {
     const stats = ['str', 'int', 'dex', 'wis', 'con', 'cha'];
     return Promise.all(
       options.map(async (key) => {
-        Promise.all(
+        await Promise.all(
           stats.map(async (ability) => {
             this.scores[key][ability] = (await this.rollAbility()).result;
           }),

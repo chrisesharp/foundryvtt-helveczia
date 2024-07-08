@@ -406,7 +406,7 @@ export class HVActorSheet extends ActorSheet {
             icon: '<i class="fas fa-check"></i>',
             label: game.i18n.localize('HV.Confirm'),
             callback: async () => {
-              const specialism = $('#specialism').val() as string;
+              const specialism = $('#specialism option:selected').text() as string;
               HVCharacterCreator.setSpecialism(this.actor, specialism);
             },
           },

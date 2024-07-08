@@ -73,6 +73,33 @@
       "cleric": "Cleric",
       "student": "Student"
     },
+    "specialisms": {
+      "fighter": {
+        "soldier": "Soldier",
+        "weaponMaster": "Weapon Master",
+        "champion": "Champion",
+        "duellist": "Duellist",
+        "hussar": "Hussar",
+        "sharpshooter": "Sharpshooter"
+      },
+      "vagabond": {
+        "improvedInitiative": "Improved Initiative",
+        "legends": "Legends",
+        "sneak": "Sneak Attack",
+        "luck": "Traveller's Luck",
+        "vagabondSkills": "Vagabond Skills"
+      },
+      "cleric": {
+        "spells": "Spells",
+        "healing": "Healing",
+        "exorcism": "Exorcism",
+        "doctorate": "Doctorate"
+      },
+      "student": {
+        "spells": "Spells",
+        "doctorate": "Doctorate"
+      }
+    },
     "deeds": {
       "virtues": "Virtues",
       "virtue": "Virtue",
@@ -286,20 +313,20 @@
     "HungarianFate": "Hungarian Fate!",
     "HungarianFateText": "For this session, you will be at -2 on",
     "SavingRolls": "saving rolls",
-    "peoples": {
-      "German": "German",
-      "Italian": "Italian",
-      "French": "French",
-      "Polish": "Polish",
-      "Dutch": "Dutch",
-      "Czech": "Czech",
-      "English": "English",
-      "Spanish": "Spanish",
-      "Swedish": "Swedish",
-      "Hungarian": "Hungarian",
-      "Cossack": "Cossack",
-      "Gypsy": "Gypsy",
-      "Jewish": "Jewish"
+    "people": {
+      "german": "German",
+      "italian": "Italian",
+      "french": "French",
+      "polish": "Polish",
+      "dutch": "Dutch",
+      "czech": "Czech",
+      "english": "English",
+      "spanish": "Spanish",
+      "swedish": "Swedish",
+      "hungarian": "Hungarian",
+      "cossack": "Cossack",
+      "gypsy": "Gypsy",
+      "jewish": "Jewish"
     },
     "deed.hdr": "This deed is a",
     "deed.of": "of",

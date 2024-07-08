@@ -32,12 +32,17 @@ async function createSpecialismSkill(item: HVItem, skillData: any): Promise<void
 }
 
 export class Vagabond {
-  static specialisms(): string[] {
-    return ['Improved Initiative', 'Legends', 'Sneak Attack', "Traveller's Luck", 'Vagabond Skills'];
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  static specialisms(): {} {
+    const keys = ['improvedInitiative', 'legends', 'sneak', 'luck', 'vagabondSkills'];
+    return keys.reduce((dict, p) => {
+      dict[p] = game.i18n.localize(`HV.specialisms.vagabond.${p}`);
+      return dict;
+    }, {});
   }
 
   static specialistSkills(): string[] {
-    return ['Legends', 'Sneak Attack', "Traveller's Luck"];
+    return ['legends', 'sneak', 'luck'];
   }
 
   static async onCreate(item: HVItem): Promise<void> {
@@ -51,15 +56,20 @@ export class Vagabond {
         );
         return;
       }
-      switch (item.name) {
-        case 'Vagabond Skills':
+      const specialisms = Vagabond.specialisms();
+      let foundName: string | undefined;
+      for (const s in specialisms) {
+        if (specialisms[s] === item.name) foundName = s;
+      }
+      switch (foundName) {
+        case 'vagabondSkills':
           log.debug('Vagabond.onCreate() | vagabond-skills flag set to true');
           item.actor?.setFlag('helveczia', 'vagabond-skills', true);
           break;
-        case 'Legends':
-          const legendDescription = game.i18n.localize('HV.vagabond.legends');
+        case 'legends':
+          const legendDescription = game.i18n.localize('HV.specialisms.vagabond.legends');
           const legendsSkill = {
-            name: 'Legends',
+            name: game.i18n.localize(`HV.specialisms.vagabond.${foundName}`),
             type: 'skill',
             system: {
               description: legendDescription,
@@ -69,10 +79,10 @@ export class Vagabond {
           };
           createSpecialismSkill(item, legendsSkill);
           break;
-        case 'Sneak Attack':
-          const sneakDescription = game.i18n.localize('HV.vagabond.sneakAttack');
+        case 'sneak':
+          const sneakDescription = game.i18n.localize('HV.specialisms.vagabond.sneakAttack');
           const sneakSkill = {
-            name: 'Sneak Attack',
+            name: game.i18n.localize(`HV.specialisms.vagabond.${foundName}`),
             type: 'skill',
             system: {
               description: sneakDescription,
@@ -82,10 +92,10 @@ export class Vagabond {
           };
           createSpecialismSkill(item, sneakSkill);
           break;
-        case "Traveller's Luck":
-          const luckDescription = game.i18n.localize('HV.vagabond.travellersLuck');
+        case 'luck':
+          const luckDescription = game.i18n.localize('HV.specialisms.vagabond.travellersLuck');
           const luckSkill = {
-            name: item.name,
+            name: game.i18n.localize(`HV.specialisms.vagabond.${foundName}`),
             type: 'skill',
             system: {
               description: luckDescription,
@@ -111,7 +121,8 @@ export class Vagabond {
   }
 
   static hasSpecialistSkills(actor: HVActor): number {
-    const bonuses = actor.system.specialisms.filter((i) => Vagabond.specialistSkills().includes(i.name)).length;
+    const specialistSkills = Vagabond.specialistSkills().map((s) => game.i18n.localize(`HV.specialisms.vagabond.${s}`));
+    const bonuses = actor.system.specialisms.filter((i) => specialistSkills.includes(i.name)).length;
     return bonuses;
   }
 
@@ -122,20 +133,25 @@ export class Vagabond {
 
   static async cleanup(actor: HVActor, item: any): Promise<void> {
     log.debug(`Vagabond.cleanup() |  cleaning up ${item.name}`);
-    if (Vagabond.specialisms().includes(item.name)) {
+    const specialisms = Vagabond.specialisms();
+    let foundName;
+    for (const s in specialisms) {
+      if (specialisms[s] === item.name) foundName = s;
+    }
+    if (foundName) {
       log.debug(`Vagabond.cleanup() |  this is a specialism`);
-      switch (item.name) {
-        case 'Vagabond Skills':
+      switch (foundName) {
+        case 'vagabondSkills':
           actor.setFlag('helveczia', 'vagabond-skills', false);
           log.debug('Vagabond.cleanup() |  vagabond-skills flag set to false');
           break;
-        case 'Legends':
+        case 'legends':
           deleteSpecialism(actor, item.name);
           break;
-        case "Traveller's Luck":
+        case 'luck':
           deleteSpecialism(actor, item.name);
           break;
-        case 'Sneak Attack':
+        case 'sneak':
           deleteSpecialism(actor, item.name);
           break;
       }

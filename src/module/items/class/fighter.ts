@@ -6,8 +6,13 @@ import { ClassItemData } from '../item-types';
 const log = new Logger();
 
 export class Fighter {
-  static specialisms(): string[] {
-    return ['Soldier', 'Weapon Master', 'Champion', 'Duellist', 'Hussar', 'Sharpshooter'];
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  static specialisms(): {} {
+    const keys = ['soldier', 'weaponMaster', 'champion', 'duellist', 'hussar', 'sharpshooter'];
+    return keys.reduce((dict, p) => {
+      dict[p] = game.i18n.localize(`HV.specialisms.fighter.${p}`);
+      return dict;
+    }, {});
   }
 
   static async onCreate(item: HVItem): Promise<void> {

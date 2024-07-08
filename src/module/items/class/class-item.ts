@@ -22,7 +22,8 @@ type ProfEntry = {
   skillBonus: (actor: HVActor) => number;
   saveBase: (actor: HVActor) => { bravery: number; deftness: number; temptation: number };
   onDelete: (actor: HVActor, itemData: any) => void;
-  specialisms?: () => string[];
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  specialisms?: () => {};
 };
 
 function capitalize(word: string): string {
@@ -88,9 +89,10 @@ export class ClassItem extends BaseItem {
     return ClassItem.professions[parent];
   }
 
-  static specialisms(profession: string): string[] {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  static specialisms(profession: string): {} {
     const func = ClassItem.professions[capitalize(profession)]?.specialisms;
-    return func ? func() : [];
+    return func ? func() : {};
   }
 
   static getSkillsBonus(actor, itemData) {

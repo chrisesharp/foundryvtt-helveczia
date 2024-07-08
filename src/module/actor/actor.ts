@@ -433,39 +433,40 @@ export class HVActor extends Actor {
   }
 
   isFighter(): boolean {
-    return this.isNamedType('Fighter', 'class');
+    return this.isNamedType('fighter', 'class');
   }
 
   isVagabond(): boolean {
-    return this.isNamedType('Vagabond', 'class');
+    return this.isNamedType('vagabond', 'class');
   }
 
   isCleric(): boolean {
-    return this.isNamedType('Cleric', 'class');
+    return this.isNamedType('cleric', 'class');
   }
 
   isStudent(): boolean {
-    return this.isNamedType('Student', 'class');
+    return this.isNamedType('student', 'class');
   }
 
   isHungarian(): boolean {
-    return this.isNamedType('Hungarian', 'people');
+    return this.isNamedType('hungarian', 'people');
   }
 
   isCzech(): boolean {
-    return this.isNamedType('Czech', 'people');
+    return this.isNamedType('czech', 'people');
   }
 
   isDutch(): boolean {
-    return this.isNamedType('Dutch', 'people');
+    return this.isNamedType('dutch', 'people');
   }
 
   isItalian(): boolean {
-    return this.isNamedType('Italian', 'people');
+    return this.isNamedType('italian', 'people');
   }
 
   isNamedType(name: string, type: string): boolean {
-    const namedClass = this.itemTypes[type].find((i) => i.name === name);
+    const localName = game.i18n.localize(`HV.${type}.${name}`);
+    const namedClass = this.itemTypes[type].find((i) => i.name === localName);
     return namedClass !== undefined;
   }
 

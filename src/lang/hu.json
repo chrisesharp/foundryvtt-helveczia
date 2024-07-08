@@ -73,6 +73,33 @@
       "cleric": "Pap",
       "student": "Deák"
     },
+    "specialisms": {
+      "fighter": {
+        "soldier": "Katona",
+        "weaponMaster": "Fegyvermester",
+        "champion": "Bajnok",
+        "duellist": "Párbajhős",
+        "hussar": "Huszár",
+        "sharpshooter": "Lövész"
+      },
+      "vagabond": {
+        "improvedInitiative": "Jobb kezdeményezés",
+        "legends": "Mondák",
+        "sneak": "Orvtámadás",
+        "luck": "Úti szerencse",
+        "vagabondSkills": "Vagabundus képzettségek"
+      },
+      "cleric": {
+        "spells": "Varázslatok",
+        "healing": "Gyógyítás",
+        "exorcism": "Ördögűzés",
+        "doctorate": "Doktorátus"
+      },
+      "student": {
+        "spells": "Varázslatok",
+        "doctorate": "Doktorátus"
+      }
+    },
     "deeds": {
       "virtues": "Erények",
       "virtue": "erény",
@@ -285,20 +312,20 @@
     "HungarianFate": "Magyar sors!",
     "HungarianFateText": "Erre a játékalkalomra -2 lesz a",
     "SavingRolls": "mentődobásodra",
-    "peoples": {
-      "German": "Német",
-      "Italian": "Olasz",
-      "French": "Franczia",
-      "Polish": "Lengyel",
-      "Dutch": "Hollandus",
-      "Czech": "Cseh",
-      "English": "Angol",
-      "Spanish": "Hispán",
-      "Swedish": "Svéd",
-      "Hungarian": "Magyar",
-      "Cossack": "Kozák",
-      "Gypsy": "Czigány",
-      "Jewish": "Zsidó"
+    "people": {
+      "german": "Német",
+      "italian": "Olasz",
+      "french": "Franczia",
+      "polish": "Lengyel",
+      "dutch": "Hollandus",
+      "czech": "Cseh",
+      "english": "Angol",
+      "spanish": "Hispán",
+      "swedish": "Svéd",
+      "hungarian": "Magyar",
+      "cossack": "Kozák",
+      "gypsy": "Czigány",
+      "jewish": "Zsidó"
     },
     "deed.hdr": "Ez a cselekedet egy",
     "deed.of": ",",

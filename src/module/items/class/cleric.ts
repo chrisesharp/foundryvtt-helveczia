@@ -7,25 +7,25 @@ import { Utils } from '../../utils/utils';
 const log = new Logger();
 
 const clericSpecialisms = {
-  Spells: {
+  spells: {
     description: 'HV.cleric.spells',
     flag: 'cleric-spells',
   },
-  Exorcism: {
+  exorcism: {
     description: 'HV.cleric.exorcism',
     flag: 'cleric-exorcism',
   },
-  Healing: {
+  healing: {
     description: 'HV.cleric.healing',
     flag: 'cleric-healing',
   },
-  Doctorate: {
+  doctorate: {
     description: 'HV.cleric.doctorate',
     flag: 'cleric-doctorate',
   },
 };
 
-const specialistSkills = ['Spells', 'Exorcism', 'Healing'];
+const specialistSkills = ['spells', 'exorcism', 'healing'];
 
 async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void> {
   log.debug(`Cleric.deleteSpecialistSkill() | deleting ${name}`);
@@ -53,8 +53,13 @@ async function createSpecialistSkill(item: HVItem, skillData: any): Promise<void
 }
 
 export class Cleric {
-  static specialisms(): string[] {
-    return Object.keys(clericSpecialisms);
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  static specialisms(): {} {
+    const keys = ['spells', 'healing', 'exorcism', 'doctorate'];
+    return keys.reduce((dict, p) => {
+      dict[p] = game.i18n.localize(`HV.specialisms.cleric.${p}`);
+      return dict;
+    }, {});
   }
 
   static async onCreate(item: HVItem): Promise<void> {
@@ -70,8 +75,13 @@ export class Cleric {
         return;
       }
 
-      if (item.name === 'Doctorate') {
-        if (item.actor.system.level == 6) {
+      const specialisms = Cleric.specialisms();
+      let isDoctorate = false;
+      for (const s in specialisms) {
+        if (specialisms[s] === 'doctorate') isDoctorate = true;
+      }
+      if (isDoctorate) {
+        if (item.actor?.system.level == 6) {
           log.debug('Cleric.onCreate() | cleric-doctorate flag set to true');
           item.actor?.setFlag('helveczia', 'cleric-doctorate', true);
         } else {
@@ -84,7 +94,7 @@ export class Cleric {
       Promise.all(
         specialistSkills.map((s) => {
           const skill = {
-            name: s,
+            name: game.i18n.localize(`HV.specialisms.cleric.${s}`),
             type: 'skill',
             img: 'icons/svg/mystery-man.svg',
             system: {
@@ -131,7 +141,7 @@ export class Cleric {
     Promise.all(
       Object.keys(clericSpecialisms).map((s) => {
         actor?.setFlag('helveczia', clericSpecialisms[s].flag, false);
-        return deleteSpecialistSkill(actor, s);
+        return deleteSpecialistSkill(actor, game.i18n.localize(`HV.specialisms.cleric.${s}`));
       }),
     );
     log.debug('Cleric.cleanup() |  cleric-class flag set to false');

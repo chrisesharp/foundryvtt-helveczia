@@ -22,27 +22,27 @@ export class PeopleItem extends BaseItem {
   static races: {
     [key: string]: PeoplesEntry;
   } = {
-    German: {
+    german: {
       onCreate: PeopleItem.onCreateGerman,
       skillBonus: PeopleItem.getGermanSkill,
       onDelete: PeopleItem.cleanupGermanSkill,
     },
-    French: {},
-    Italian: { onCreate: PeopleItem.onCreateItalian, onDelete: PeopleItem.cleanupItalian },
-    Dutch: { onCreate: PeopleItem.onCreateDutch, onDelete: PeopleItem.cleanupDutch },
-    Czech: {
+    french: {},
+    italian: { onCreate: PeopleItem.onCreateItalian, onDelete: PeopleItem.cleanupItalian },
+    dutch: { onCreate: PeopleItem.onCreateDutch, onDelete: PeopleItem.cleanupDutch },
+    czech: {
       onCreate: PeopleItem.onCreateCzech,
       skillBonus: PeopleItem.getCzechSkill,
       onDelete: PeopleItem.cleanupCzechSkill,
     },
-    English: {},
-    Gypsy: {},
-    Hungarian: {},
-    Jewish: {},
-    Cossack: {},
-    Polish: {},
-    Spanish: {},
-    Swedish: {},
+    english: {},
+    gypsy: {},
+    hungarian: {},
+    jewish: {},
+    cossack: {},
+    polish: {},
+    spanish: {},
+    swedish: {},
   };
 
   static async onCreateGerman(item: HVItem): Promise<void> {
@@ -128,11 +128,14 @@ export class PeopleItem extends BaseItem {
   static augmentOwnedItem(actor, data) {
     if (data.type === 'skill') {
       if (actor.isDutch()) {
-        if (data.name === game.i18n.localize('Sail') || data.name === game.i18n.localize('Appraise')) {
+        if (
+          data.name === game.i18n.localize('HV.specialistSkills.Sail') ||
+          data.name === game.i18n.localize('HV.specialistSkills.Appraise')
+        ) {
           data.system.bonus = 2;
         }
       } else if (actor.isItalian()) {
-        if (data.name === game.i18n.localize('Gambling')) {
+        if (data.name === game.i18n.localize('HV.specialistSkills.Gambling')) {
           data.system.bonus = 2;
         }
       }
@@ -153,7 +156,7 @@ export class PeopleItem extends BaseItem {
   static findPeoples(itemData: ItemData): PeoplesEntry | undefined {
     let peoplesName = itemData.name;
     for (const r in PeopleItem.races) {
-      const name = game.i18n.localize(`HV.peoples.${r}`);
+      const name = game.i18n.localize(`HV.people.${r}`);
       if (name == peoplesName) {
         peoplesName = r;
         break;
@@ -190,7 +193,7 @@ export class PeopleItem extends BaseItem {
 
   static peoples() {
     return Object.keys(PeopleItem.races).reduce((dict, p) => {
-      dict[p] = game.i18n.localize(`HV.peoples.${p}`);
+      dict[p] = game.i18n.localize(`HV.people.${p}`);
       return dict;
     }, {});
   }

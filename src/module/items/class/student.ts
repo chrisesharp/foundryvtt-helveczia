@@ -7,17 +7,17 @@ import { Utils } from '../../utils/utils';
 const log = new Logger();
 
 const studentSpecialisms = {
-  Spells: {
+  spells: {
     description: 'HV.student.spells',
     flag: 'student-spells',
   },
-  Doctorate: {
+  doctorate: {
     description: 'HV.student.doctorate',
     flag: 'student-doctorate',
   },
 };
 
-const specialistSkills = ['Spells'];
+const specialistSkills = ['spells'];
 
 async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void> {
   log.debug(`Student.deleteSpecialistSkill() | deleting ${name}`);
@@ -45,8 +45,13 @@ async function createSpecialistSkill(item: HVItem, skillData: any): Promise<void
 }
 
 export class Student {
-  static specialisms(): string[] {
-    return Object.keys(studentSpecialisms);
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  static specialisms(): {} {
+    const keys = ['spells', 'doctorate'];
+    return keys.reduce((dict, p) => {
+      dict[p] = game.i18n.localize(`HV.specialisms.cleric.${p}`);
+      return dict;
+    }, {});
   }
 
   static async onCreate(item: HVItem): Promise<void> {
@@ -61,7 +66,12 @@ export class Student {
         return;
       }
 
-      if (item.name === 'Doctorate') {
+      const specialisms = Student.specialisms();
+      let isDoctorate = false;
+      for (const s in specialisms) {
+        if (specialisms[s] === 'doctorate') isDoctorate = true;
+      }
+      if (isDoctorate) {
         const reqLevel = item.actor.isCzech() ? 4 : 6;
         if (item.actor.system.level >= reqLevel) {
           log.debug('Student.onCreate() | student-doctorate flag set to true');
@@ -87,7 +97,7 @@ export class Student {
       Promise.all(
         specialistSkills.map((s) => {
           const skill = {
-            name: s,
+            name: game.i18n.localize(`HV.specialisms.student.${s}`),
             type: 'skill',
             img: 'icons/svg/book.svg',
             system: {
@@ -137,7 +147,7 @@ export class Student {
     Promise.all(
       Object.keys(studentSpecialisms).map((s) => {
         actor?.setFlag('helveczia', studentSpecialisms[s].flag, false);
-        return deleteSpecialistSkill(actor, s);
+        return deleteSpecialistSkill(actor, game.i18n.localize(`HV.specialisms.student.${s}`));
       }),
     );
     await actor.setFlag('helveczia', 'student-class', false);

@@ -20,6 +20,10 @@ export const registerHandlebarHelpers = async function () {
     return `${level}${suffix}`;
   });
 
+  Handlebars.registerHelper('localizedAttr', function (attr) {
+    return game.i18n.localize(`HV.scores.${attr}.short`);
+  });
+
   Handlebars.registerHelper('bonusSkills', function (num, skill, role, lvl) {
     const level = `${lvl}${getOrdinal(parseInt(lvl))}`;
     return game.i18n.format('HV.bonusSkills', { num: num, skill: skill, role: role, level: level });
@@ -92,11 +96,20 @@ export const registerHandlebarHelpers = async function () {
   });
 
   Handlebars.registerHelper('isStudentSpecialSkill', function (name) {
-    return Student.specialisms().includes(name);
+    const specialisms = Student.specialisms();
+    for (const s in specialisms) {
+      if (specialisms[s] === name) return true;
+    }
+    return false;
+    // return Student.specialisms().includes(name);
   });
 
   Handlebars.registerHelper('isClericSpecialSkill', function (name) {
-    return Cleric.specialisms().includes(name);
+    const specialisms = Cleric.specialisms();
+    for (const s in specialisms) {
+      if (specialisms[s] === name) return true;
+    }
+    return false;
   });
 
   Handlebars.registerHelper('concat', function (args) {
