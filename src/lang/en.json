@@ -18,7 +18,16 @@
     "bonusSkills": "Bonus skills: {num} {skill} as a {role}, at {level} level",
     "bonusGermanCraftSkill": "Due to their diligence, they learn an extra, randomly rolled Craft skill with a +2 bonus. In this trade, they are already considered journeymen by guild standards, and enjoy all attendant benefits.  Germans can become masters in their craft  at 4th level.",
     "bonusStudentScienceSkill": "Random science known from their Student studies.",
-    "Level": "LVL",
+    "Level": {
+      "short": "LVL",
+      "long": "Level"
+    },
+    "ordinal": {
+      "1": "st",
+      "2": "nd",
+      "3": "rd",
+      "4": "th"
+    },
     "randomCraft": "Roll for Random Craft",
     "randomScience": "Roll for Random Sciences",
     "rollCheck": "Rolling {type}",

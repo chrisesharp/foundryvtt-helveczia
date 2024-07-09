@@ -16,7 +16,7 @@
         </div>
         {{#unless no_origins }}
         <div class="actor-class" style="display: inline-flex;">
-            <h3>{{ordinal data.level }}  level {{data.people}}
+            <h3>{{ordinal data.level }}  {{localize 'HV.Level.long'}} {{data.people}}
                 {{#if fighter_class}}
                     {{#if fighter_specialism }}
                          {{ fighter_specialism }}

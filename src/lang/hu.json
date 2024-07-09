@@ -18,7 +18,16 @@
     "bonusSkills": "Bónusz képzettségek: {num} {skill} {role}ként, {level}. szinten",
     "bonusGermanCraftSkill": "Szorgalmuknak köszönhetően egy extra (véletlenszerű) Mesterség képzettséget tanulhatnak, és abban +2 bónuszt élveznek. A czéhek regulái szerint a játék kezdetétől mesterlegények, és már 4. szinten elnyerhetik a mester rangját.",
     "bonusStudentScienceSkill": "Deák tanulmányaikból ismert véletlenszerű Tudomány.",
-    "Level": "Szint",
+    "Level": {
+      "short": "Szint",
+      "long": "szintű"
+    },
+    "ordinal": {
+      "1": ".",
+      "2": ".",
+      "3": ".",
+      "4": "."
+    },
     "randomCraft": "Guríts véletlen Mesterséget!",
     "randomScience": "Guríts véletlen Tudományokatt!",
     "rollCheck": "{type} gurítás",

@@ -20,7 +20,7 @@
               &nbsp;<span style="font-style: italic;">({{player e.id}})</span>
               {{/if}}
               {{#unless no_origins}}
-              <br> {{ordinal e.system.level }} level {{e.system.people}} {{e.system.class}}
+              <br> {{ordinal e.system.level }} {{localize 'HV.Level.long'}} {{e.system.people}} {{e.system.class}}
               {{/unless}}
             </div>
             {{#if ../user.isGM }}

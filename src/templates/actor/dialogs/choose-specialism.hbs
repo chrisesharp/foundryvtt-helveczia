@@ -1,5 +1,5 @@
 <form autocomplete="off" onsubmit="event.preventDefault();">
-  <h2>{{ localize 'HV.dialog.chooseSpecialism' }}{{ profession }}</h2>
+  <h2>{{ localize 'HV.dialog.chooseSpecialism' }}{{ localizedRole profession }}</h2>
   <select id="specialism">
     {{selectOptions specialisms localize=true}}
   </select>

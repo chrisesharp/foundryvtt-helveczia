@@ -24,9 +24,14 @@ export const registerHandlebarHelpers = async function () {
     return game.i18n.localize(`HV.scores.${attr}.short`);
   });
 
+  Handlebars.registerHelper('localizedClass', function (role) {
+    return game.i18n.localize(`HV.class.${role}`);
+  });
+
   Handlebars.registerHelper('bonusSkills', function (num, skill, role, lvl) {
     const level = `${lvl}${getOrdinal(parseInt(lvl))}`;
-    return game.i18n.format('HV.bonusSkills', { num: num, skill: skill, role: role, level: level });
+    const localizedRole = game.i18n.localize(role.toLowerCase());
+    return game.i18n.format('HV.bonusSkills', { num: num, skill: skill, role: localizedRole, level: level });
   });
 
   Handlebars.registerHelper('cardsFilter', function (playTarget, cards) {
@@ -209,16 +214,16 @@ function getOrdinal(level: number): string {
   let suffix: string;
   switch (level) {
     case 1:
-      suffix = 'st';
+      suffix = game.i18n.localize('HV.ordinal.1');
       break;
     case 2:
-      suffix = 'nd';
+      suffix = game.i18n.localize('HV.ordinal.2');
       break;
     case 3:
-      suffix = 'rd';
+      suffix = game.i18n.localize('HV.ordinal.3');
       break;
     default:
-      suffix = 'th';
+      suffix = game.i18n.localize('HV.ordinal.4');
   }
   return suffix;
 }
