@@ -424,7 +424,7 @@ export class HVActorSheet extends ActorSheet {
     const actorId = $(button).data('actorId');
     const actor = game.actors?.get(actorId);
     const sex = (actor?.getFlag('helveczia', 'sex') as string) ?? 'male';
-    const people = actor?.system.people?.toLowerCase() ?? 'german';
+    const people = actor?.system.people ?? 'german';
     const helveczian = false;
     const name = HVNameGenerator.findName(sex, people, helveczian);
     if (name !== '') {

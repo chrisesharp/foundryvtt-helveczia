@@ -11,6 +11,7 @@ import { HungarianNames } from './names/hungarian';
 import { CossackNames } from './names/cossack';
 import { GypsyNames } from './names/gypsy';
 import { JewishNames } from './names/jewish';
+import { PeopleItem } from '../items/people/people-item';
 
 type NameType = {
   forename: { male: string; female: string };
@@ -82,6 +83,13 @@ export class HVNameGenerator {
   }
 
   static findName(sex: string, people: string, helveczian: boolean): string {
+    for (const r in PeopleItem.races) {
+      const name = game.i18n.localize(`HV.people.${r}`);
+      if (name == people) {
+        people = r;
+        break;
+      }
+    }
     const variant = helveczian ? 'helveczian' : 'native';
     const names: NameType[] = nameMap[people] ?? [];
     const forename = (names[Math.floor(Math.random() * names.length)] as NameType).forename[sex] ?? '';
