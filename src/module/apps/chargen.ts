@@ -1,6 +1,7 @@
 import { Evaluated } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/client/dice/roll';
 import { HVActor } from '../actor/actor';
 import { Logger } from '../logger';
+import { Utils } from '../utils/utils';
 
 const log = new Logger();
 
@@ -187,21 +188,21 @@ export class HVCharacterCreator extends FormApplication {
   }
 
   static async setPeoples(actor, peopleName, render = true) {
-    const peoples = game.packs.find((p) => p.metadata.name == 'peoples');
+    const peoples = Utils.findLocalizedPack('peoples');
     const p = await HVCharacterCreator.getDocument(peopleName, peoples);
     if (p) await actor.createEmbeddedDocuments('Item', [p.toObject()]);
     actor.sheet?.render(render);
   }
 
   static async setProfession(actor, className, render = true) {
-    const professions = game.packs.find((p) => p.metadata.name == 'classes');
+    const professions = Utils.findLocalizedPack('classes');
     const c = await HVCharacterCreator.getDocument(className, professions);
     if (c) await actor.createEmbeddedDocuments('Item', [c.toObject()]);
     actor.sheet?.render(render);
   }
 
   static async setSpecialism(actor, specialismName, render = true) {
-    const specialisms = game.packs.find((p) => p.metadata.name == 'specialisms');
+    const specialisms = Utils.findLocalizedPack('specialisms');
     const sp = await HVCharacterCreator.getDocument(specialismName, specialisms);
     if (sp) {
       await actor.createEmbeddedDocuments('Item', [sp.toObject()]);

@@ -109,6 +109,23 @@
         "doctorate": "Doctorate"
       }
     },
+    "packs": {
+      "armour": "Armour",
+      "books": "Books",
+      "classes": "Classes",
+      "crafts": "Crafts",
+      "deeds": "Deeds",
+      "equipment": "Equipment",
+      "peoples": "Peoples",
+      "sciences": "Sciences",
+      "skills": "Skills",
+      "specialisms": "Specialisms",
+      "spells": "Spells",
+      "weapons": "Weapons",
+      "rolltables": "Rolltables",
+      "npcs": "NPCs",
+      "cards": "Cards"
+    },
     "deeds": {
       "virtues": "Virtues",
       "virtue": "Virtue",

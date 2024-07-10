@@ -1,4 +1,5 @@
 import { HVActor } from '../actor/actor';
+import { Utils } from '../utils/utils';
 import { HVCharacterCreator } from './chargen';
 
 const levelBonusRegEx = /(?<class>[a-zA-Z\s]*)(?<lvl>\d)\+?(?<threat>[\d\*]*)/;
@@ -92,7 +93,7 @@ export class NPCGenerator extends FormApplication {
     const groups = formData['system.levelBonus'].match(levelBonusRegEx)?.groups;
     const cls = groups?.class?.trim();
     if (cls) {
-      const specialisms = game.packs.find((p) => p.metadata.name == 'specialisms');
+      const specialisms = Utils.findLocalizedPack('specialisms');
       const specialism = await HVCharacterCreator.getDocument(cls, specialisms);
       if (specialism && specialism.system.specialism) {
         const professionName = specialism.system.parent.capitalize();
@@ -105,7 +106,7 @@ export class NPCGenerator extends FormApplication {
           await HVCharacterCreator.setSpecialism(actor, specialism.name, false);
         }
       } else {
-        const professions = game.packs.find((p) => p.metadata.name == 'classes');
+        const professions = Utils.findLocalizedPack('classes');
         const profession = await HVCharacterCreator.getDocument(cls, professions);
         if (profession && actor.itemTypes['class'].filter((c) => c.name === profession.name).length == 0) {
           await HVCharacterCreator.setProfession(actor, profession.name, false);
@@ -118,10 +119,10 @@ export class NPCGenerator extends FormApplication {
     const lvlGroups = formData['system.levelBonus'].match(levelBonusRegEx)?.groups;
     const threat = parseInt(lvlGroups?.lvl) ?? 0;
     const skills: Record<string, unknown>[] = [];
-    const skillpack = game.packs.find((p) => p.metadata.name === 'skills');
-    const craftspack = game.packs.find((p) => p.metadata.name === 'crafts');
-    const sciencepack = game.packs.find((p) => p.metadata.name === 'sciences');
-    const specialismspack = game.packs.find((p) => p.metadata.name === 'specialisms');
+    const skillpack = Utils.findLocalizedPack('skills');
+    const craftspack = Utils.findLocalizedPack('crafts');
+    const sciencepack = Utils.findLocalizedPack('sciences');
+    const specialismspack = Utils.findLocalizedPack('specialisms');
 
     for (const skillText of formData['system.stats.skills']) {
       if (/^[A-Z]/.test(skillText)) {
@@ -148,7 +149,7 @@ export class NPCGenerator extends FormApplication {
 
   async addWeapons(actor: HVActor, formData: object): Promise<void> {
     const weapons: Record<string, unknown>[] = [];
-    const weaponpacks = game.packs.find((p) => p.metadata.name === 'weapons');
+    const weaponpacks = Utils.findLocalizedPack('weapons');
 
     for (const weaponData of formData['system.stats.atk']) {
       const weaponName = weaponData.name.capitalize();

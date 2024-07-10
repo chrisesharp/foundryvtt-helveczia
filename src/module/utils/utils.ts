@@ -58,6 +58,11 @@ export class Utils {
       if (!currentVersion || foundry.utils.isNewerVersion(key, currentVersion)) migrations[key]();
     });
   }
+
+  static findLocalizedPack(pack: string): CompendiumCollection<any> | undefined {
+    const label = game.i18n.localize(`HV.packs.${pack}`);
+    return game.packs.find((p) => p.metadata.name === pack && p.metadata.label === label);
+  }
 }
 
 async function migrateTo3_1_0() {
