@@ -59,10 +59,10 @@ export class HVActorSheet extends ActorSheet {
       return true;
     } else {
       const requiredProfession = itemData.parent?.toLowerCase();
-      const thisActorProfession = this.actor.system.class?.toLowerCase();
-      if (thisActorProfession === requiredProfession) {
+      // const thisActorProfession = this.actor.system.class?.toLowerCase();
+      if (this.actor.isNamedType(requiredProfession, 'class')) {
         if (requiredProfession === 'fighter') {
-          log.debug(`_removeClasses() | Removing specialisms for ${thisActorProfession} `);
+          log.debug(`_removeClasses() | Removing specialisms for ${requiredProfession} `);
           const classes = this.actor.itemTypes['class'].filter(
             (i) =>
               (i.system as ClassItemData).specialism &&
@@ -73,7 +73,9 @@ export class HVActorSheet extends ActorSheet {
         return true;
       }
       ui.notifications.error(
-        game.i18n.format('HV.errors.requiredProfession', { requiredProfession: requiredProfession }),
+        game.i18n.format('HV.errors.requiredProfession', {
+          requiredProfession: game.i18n.localize(`HV.class.${requiredProfession}`),
+        }),
       );
       return false;
     }

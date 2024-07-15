@@ -67,7 +67,7 @@ export class Vagabond {
           item.actor?.setFlag('helveczia', 'vagabond-skills', true);
           break;
         case 'legends':
-          const legendDescription = game.i18n.localize('HV.specialisms.vagabond.legends');
+          const legendDescription = game.i18n.localize('HV.vagabond.legends');
           const legendsSkill = {
             name: game.i18n.localize(`HV.specialisms.vagabond.${foundName}`),
             type: 'skill',
@@ -80,7 +80,7 @@ export class Vagabond {
           createSpecialismSkill(item, legendsSkill);
           break;
         case 'sneak':
-          const sneakDescription = game.i18n.localize('HV.specialisms.vagabond.sneakAttack');
+          const sneakDescription = game.i18n.localize('HV.vagabond.sneakAttack');
           const sneakSkill = {
             name: game.i18n.localize(`HV.specialisms.vagabond.${foundName}`),
             type: 'skill',
@@ -93,7 +93,7 @@ export class Vagabond {
           createSpecialismSkill(item, sneakSkill);
           break;
         case 'luck':
-          const luckDescription = game.i18n.localize('HV.specialisms.vagabond.travellersLuck');
+          const luckDescription = game.i18n.localize('HV.vagabond.travellersLuck');
           const luckSkill = {
             name: game.i18n.localize(`HV.specialisms.vagabond.${foundName}`),
             type: 'skill',
