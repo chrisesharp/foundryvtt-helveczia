@@ -180,9 +180,9 @@ export const HV: HelvecziaConfig = {
   },
 
   difficulties: {
-    Normal: 12,
-    Hard: 18,
-    Heroic: 24,
+    'HV.difficulties.normal': 12,
+    'HV.difficulties.hard': 18,
+    'HV.difficulties.heroic': 24,
   },
 
   skillTypes: {

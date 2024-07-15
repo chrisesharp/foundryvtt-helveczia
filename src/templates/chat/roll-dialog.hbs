@@ -8,9 +8,7 @@
         <input type="text" name="formula" value="{{formula}}" hidden />
         <label>{{ localize "HV.Difficulty" }}</label>
         <select name="difficulty">
-            {{#each diffs as | dc label|}}
-            <option value="{{dc}}">{{localize label}}</option>
-            {{/each}}
+             {{selectOptions diffs localize=true inverted=true}}
         </select>
     </div>
     <div class="form-group">

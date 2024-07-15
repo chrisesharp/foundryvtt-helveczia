@@ -23,14 +23,14 @@ export function actorTests(context) {
       const characters: Character[] = [
         // Aurel gets +2 AC for being Hungarian
         // eslint-disable-next-line prettier/prettier
-        { name: 'Aurel Vajthy', title: '2nd level Hungarian Hussar', init:'0', virtue: 7, balance: '-left', ac: 15, tabs: ['fighter'], saves: ['+4', '+1', '+2'], combat: ['+7', '+3', '+3'], skills: '5 / 5', pc: true },
+        { name: 'Aurel Vajthy', title: '2nd Level Hungarian Hussar', init:'0', virtue: 7, balance: '-left', ac: 15, tabs: ['fighter'], saves: ['+4', '+1', '+2'], combat: ['+7', '+3', '+3'], skills: '5 / 5', pc: true },
         // Gerhard gets +1 to saves for high virtue
         // eslint-disable-next-line prettier/prettier
-        { name: 'Gerhardt Maier', title: '2nd level German Cleric', init:'+2',virtue: 12, balance: '-right', ac: 14, tabs: ['cleric'], saves: ['+3', '+3', '+5'], combat: ['0', '+3', '+1'], skills: '8 / 8', pc: true },
+        { name: 'Gerhardt Maier', title: '2nd Level German Cleric', init:'+2',virtue: 12, balance: '-right', ac: 14, tabs: ['cleric'], saves: ['+3', '+3', '+5'], combat: ['0', '+3', '+1'], skills: '8 / 8', pc: true },
         // eslint-disable-next-line prettier/prettier
-        { name: 'Isolde Knecht', title: '4th level German Student', init:'0',virtue: 12, balance: '', ac: 12, tabs: ['student'], saves: ['+3', '+2', '+5'], combat: ['+4', '+2', '+2'], skills: '9 / 9', pc: true },
+        { name: 'Isolde Knecht', title: '4th Level German Student', init:'0',virtue: 12, balance: '', ac: 12, tabs: ['student'], saves: ['+3', '+2', '+5'], combat: ['+4', '+2', '+2'], skills: '9 / 9', pc: true },
         // eslint-disable-next-line prettier/prettier
-        { name: 'Jan Olbrecht', title: '2nd level Czech Vagabond', init:'+1', virtue: 7, balance: '-left', ac: 13, tabs: ['vagabond'], saves: ['+3', '+4', '+2'], combat: ['+3', '+3', '+2'], skills: '7 / 7', pc: true },
+        { name: 'Jan Olbrecht', title: '2nd Level Czech Vagabond', init:'+1', virtue: 7, balance: '-left', ac: 13, tabs: ['vagabond'], saves: ['+3', '+4', '+2'], combat: ['+3', '+3', '+2'], skills: '7 / 7', pc: true },
         // eslint-disable-next-line prettier/prettier
         { name: 'Krampus', title: '3+2*', init:'+2', virtue: 2, ac: 13, tabs: [], saves: ['+5', '+3', '+3'], combat: ['+6', '+6', '+6'], skills: ''}
       ];

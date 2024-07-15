@@ -45,6 +45,11 @@
     "Unavailable": "Unavailable",
     "Damage": "Damage dealt",
     "DamageMultiplier": "Damage multiplier",
+    "difficulties": {
+      "normal": "Normal",
+      "hard": "Hard",
+      "heroic": "Heroic"
+    },
     "success": {
       "normal": "Success",
       "hard": "Hard Success",

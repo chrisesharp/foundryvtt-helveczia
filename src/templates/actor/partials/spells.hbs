@@ -1,6 +1,6 @@
 {{#each spellGroups}}
     <li class="flexrow item-header">
-        <h3 class="centred">~  Level {{this}} {{ localize "HV.Spells"}} ( {{ length (lookup ../data.spells @index) }} / {{ lookup  ../spellslots @index }}) ~ Bonus Spells (  {{ lookup ../currentBonusSpells @index }} / {{ lookup ../spellBonus @index }}') ~</h3>
+        <h3 class="centred">~ {{ordinal this }} {{localize 'HV.Level.long'}} {{ localize "HV.Spells"}} ( {{ length (lookup ../data.spells @index) }} / {{ lookup  ../spellslots @index }}) ~ {{ localize 'HV.bonus'}} {{ localize 'HV.Spells'}} (  {{ lookup ../currentBonusSpells @index }} / {{ lookup ../spellBonus @index }}') ~</h3>
     </li>
     {{#each (lookup ../data.spells @index) as |item id|}}
     <li class="item-entry flexcol" data-item-id="{{item.id}}">

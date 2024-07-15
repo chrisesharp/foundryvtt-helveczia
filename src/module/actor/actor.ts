@@ -342,7 +342,7 @@ export class HVActor extends Actor {
       actor: this,
       roll: {
         type: 'check',
-        target: CONFIG.HV.difficulties['Normal'],
+        target: CONFIG.HV.difficulties['HV.difficulties.normal'],
         dmg: dmg,
       },
       opponent: opponent,
