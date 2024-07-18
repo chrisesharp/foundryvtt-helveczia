@@ -1,3 +1,5 @@
+import { Utils } from '../utils/utils';
+
 export class HVCardsControl {
   static addControl(_object, html): void {
     if (game.user?.isGM) {
@@ -110,9 +112,10 @@ export class HVCardsHand extends CardsHand {
   }
 
   static async createHandsFor(name: string): Promise<void> {
-    const packName = 'helveczia.cards';
+    // const packName = 'helveczia.cards';
     const userId = game.users?.find((u) => u.character?.name === name)?.id;
-    const pack = game.packs.get(packName);
+    // const pack = game.packs.get(packName);
+    const pack = Utils.findLocalizedPack('cards');
     if (pack) {
       const result = (await pack.importAll({ folderName: `${name}` }))[0];
       const deck = game.cards?.get(result.id);
@@ -123,7 +126,7 @@ export class HVCardsHand extends CardsHand {
         {
           name: game.i18n.format('HV.cards.devilsHand', { character: name }),
           type: 'hand',
-          _id: randomID(),
+          _id: foundry.utils.randomID(),
           folder: folderId,
           permission: perms,
           flags: {
@@ -136,7 +139,7 @@ export class HVCardsHand extends CardsHand {
         {
           name: game.i18n.format('HV.cards.returned', { character: name }),
           type: 'pile',
-          _id: randomID(),
+          _id: foundry.utils.randomID(),
           folder: folderId,
         },
       ]);
