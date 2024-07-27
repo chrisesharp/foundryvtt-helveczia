@@ -4,11 +4,11 @@ import { HVActorSheet } from './actor/actor-sheet';
 import { HVItem } from './items/item';
 
 const pages = [
-  '/systems/helveczia/assets/empty_frame.png',
-  '/systems/helveczia/assets/char-sheet/sheet-1.png',
-  '/systems/helveczia/assets/char-sheet/sheet-2.png',
-  '/systems/helveczia/assets/char-sheet/sheet-3.png',
-  '/systems/helveczia/assets/char-sheet/sheet-4.png',
+  'systems/helveczia/assets/empty_frame.png',
+  'systems/helveczia/assets/char-sheet/sheet-1.png',
+  'systems/helveczia/assets/char-sheet/sheet-2.png',
+  'systems/helveczia/assets/char-sheet/sheet-3.png',
+  'systems/helveczia/assets/char-sheet/sheet-4.png',
 ];
 
 type character = {
