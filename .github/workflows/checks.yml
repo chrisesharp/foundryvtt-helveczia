@@ -5,7 +5,7 @@ on:
   - pull_request
 
 env:
-  node_version: 18
+  node_version: 20
 
 jobs:
   lint:
