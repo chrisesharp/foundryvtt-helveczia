@@ -1,6 +1,9 @@
 import { books } from '../../assets/holy-bible/books';
 import { marked } from 'marked';
 import { HVActor } from '../actor/actor';
+import { EmptyObject } from '@league-of-foundry-developers/foundry-vtt-types/src/types/utils.mjs';
+
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 class Slugger {
   private seen = {};
@@ -64,7 +67,11 @@ const renderer = {
   },
 };
 
-export class KJVBible extends FormApplication {
+async function fetchHtmlAsText(url) {
+  return await (await fetch(url)).text();
+}
+
+export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
   private book = '';
   private chapter = '';
   private verse = 1;
@@ -95,21 +102,52 @@ export class KJVBible extends FormApplication {
   }
 
   get title() {
-    return game.i18n.localize('HV.apps.bible.name');
+    return game.i18n.localize(this.options.window.title);
   }
 
-  static get defaultOptions() {
-    const options = super.defaultOptions;
-    (options.classes = ['helveczia', 'dialog', 'creator']), (options.id = 'holy-bible');
-    options.template = 'systems/helveczia/templates/bible/bible.hbs';
-    options.width = 450;
-    options.height = 350;
-    options.resizable = false;
-    return options;
-  }
+  static DEFAULT_OPTIONS = {
+    id: 'holy-bible',
+    form: {
+      handler: KJVBible.onSubmit,
+      closeOnSubmit: true,
+    },
+    tag: 'form',
+    position: {
+      width: 450,
+      height: 350,
+    },
+    window: {
+      title: 'HV.apps.bible.name',
+      resizable: false,
+      contentClasses: ['helveczia', 'dialog', 'creator'],
+    },
+  };
 
-  async getData() {
-    const data: any = foundry.utils.deepClone(super.getData());
+  static PARTS = {
+    helveczia: {
+      template: 'systems/helveczia/templates/bible/bible.hbs',
+    },
+  };
+
+  protected async _prepareContext(options: {
+    force?: boolean | undefined;
+    position?:
+      | {
+          top?: number | undefined;
+          left?: number | undefined;
+          width?: number | 'auto' | undefined;
+          height?: number | 'auto' | undefined;
+          scale?: number | undefined;
+          zIndex?: number | undefined;
+        }
+      | undefined;
+    window?:
+      | { title?: string | undefined; icon?: string | false | undefined; controls?: boolean | undefined }
+      | undefined;
+    parts?: string[] | undefined;
+    isFirstRender?: boolean | undefined;
+  }): Promise<EmptyObject> {
+    const data: any = foundry.utils.deepClone(super._prepareContext(options));
     data.user = game.user;
     data.config = CONFIG.HV;
     data.chapter = this.current;
@@ -169,43 +207,50 @@ export class KJVBible extends FormApplication {
     this.verse = 1;
   }
 
-  activateListeners(html) {
-    super.activateListeners(html);
+  async _onRender(_context, _options) {
     const verseId = `li#verse-${this.verse}`;
-
     marked.use({ renderer });
 
-    html.find('.prev-verse').click((ev) => {
+    this.element.querySelector('.prev-verse')?.addEventListener('click', (ev) => {
       ev.preventDefault();
       this.previousVerse();
       this.render(true);
     });
 
-    html.find('.next-verse').click((ev) => {
+    this.element.querySelector('.next-verse')?.addEventListener('click', (ev) => {
       ev.preventDefault();
       this.nextVerse();
       this.render(true);
     });
 
-    html.find('.rnd').click((ev) => {
+    this.element.querySelector('.rnd')?.addEventListener('click', (ev) => {
       ev.preventDefault();
       this.seekGuidance();
     });
 
-    html.find('.send').click((ev) => {
+    this.element.querySelector('.send')?.addEventListener('click', (ev) => {
       ev.preventDefault();
       this.sendVerse();
     });
 
-    html.find('.chapter').load(this.current, (response) => {
-      this.content = marked.parse(response);
-      const chapter = $('#chapter');
-      this.occurrences = slugger.occurrences;
-      chapter.html(this.content).find(verseId).addClass('highlighted');
-      const chapterTop = (chapter.offset() as JQueryCoordinates).top;
-      const verseTop = ($(verseId).offset() as JQueryCoordinates).top;
-      chapter.scrollTop(verseTop - chapterTop - 70);
-      this.chapter = chapter.children('h1').eq(0).text();
-    });
+    this.content = marked.parse(await fetchHtmlAsText(this.current));
+    this.occurrences = slugger.occurrences;
+    const chapter = this.element.querySelector('#chapter');
+    if (chapter) {
+      chapter.innerHTML = this.content;
+      const verse = chapter.querySelector(verseId);
+      if (verse) {
+        verse.classList.add('highlighted');
+        chapter.scrollTo({
+          top: verse.offsetTop - chapter.offsetTop - 70,
+        });
+        this.chapter = chapter.querySelector('h1')?.innerHTML ?? '';
+      }
+    }
+  }
+
+  async onSubmit(event, form, formData) {
+    const settings = foundry.utils.expandObject(formData.object);
+    await Promise.all(Object.entries(settings).map(([key, value]) => game.settings.set('foo', key, value)));
   }
 }

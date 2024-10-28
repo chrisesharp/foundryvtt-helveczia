@@ -1,4 +1,4 @@
-.app,
+.application,
 .window-app {
   font-family: $font-primary;
 
@@ -115,6 +115,9 @@ div.chapter {
   overflow-y: scroll;
   overflow: hidden;
   height: 200px;
+  h1 {
+    font-family: $font-secondary;
+  }
 }
 
 div.verse-msg {
