@@ -107,6 +107,7 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static DEFAULT_OPTIONS = {
     id: 'holy-bible',
+    classes: ['helveczia'],
     form: {
       handler: KJVBible.onSubmit,
       closeOnSubmit: true,
@@ -251,6 +252,6 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
 
   async onSubmit(event, form, formData) {
     const settings = foundry.utils.expandObject(formData.object);
-    await Promise.all(Object.entries(settings).map(([key, value]) => game.settings.set('foo', key, value)));
+    // await Promise.all(Object.entries(settings).map(([key, value]) => game.settings.set('helveczia', key, value)));
   }
 }

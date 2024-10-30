@@ -55,6 +55,11 @@
   }
 }
 
+.creator h2 {
+  color: black;
+  text-shadow: none;
+}
+
 .rollable {
   &:hover,
   &:focus {
@@ -117,6 +122,8 @@ div.chapter {
   height: 200px;
   h1 {
     font-family: $font-secondary;
+    color: black;
+    text-shadow: none;
   }
 }
 
