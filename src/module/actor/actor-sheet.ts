@@ -348,7 +348,8 @@ export class HVActorSheet extends ActorSheet {
 
   _generateAbilities(event) {
     event.preventDefault();
-    new HVCharacterCreator(this.actor, {
+    new HVCharacterCreator({
+      actor: this.actor,
       top: (this.position.top ?? 0) + 40,
       left: (this.position.left ?? 0) + ((this.position.width ?? 0) - 400) / 2,
     }).render(true);

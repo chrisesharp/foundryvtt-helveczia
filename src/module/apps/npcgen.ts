@@ -207,14 +207,6 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     }
     await actor.createEmbeddedDocuments('Item', weapons);
   }
-
-  /** @override */
-  async _onRender(_context, _options) {
-    // this.element.querySelector('button.choice')?.addEventListener('click', (ev) => {
-    //   ev.preventDefault();
-    //   this.submit(ev);
-    // });
-  }
 }
 
 type Weapon = {
