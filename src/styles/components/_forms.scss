@@ -372,6 +372,10 @@ nav.sheet-tabs.side {
   }
 }
 
+&.helveczia.generated-name {
+  font-family: $font-primary;
+}
+
 .dice-roll .dice-total {
   &.success {
     color: inherit;

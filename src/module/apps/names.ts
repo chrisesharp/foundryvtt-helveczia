@@ -12,7 +12,7 @@ import { CossackNames } from './names/cossack';
 import { GypsyNames } from './names/gypsy';
 import { JewishNames } from './names/jewish';
 import { PeopleItem } from '../items/people/people-item';
-const { DialogV2 } = foundry.applications.api;
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 type NameType = {
   forename: { male: string; female: string };
@@ -35,7 +35,12 @@ const nameMap = {
   jewish: JewishNames,
 };
 
-export class HVNameGenerator {
+export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
+  private generatedName = '';
+  private sex = 'male';
+  private people = 'german';
+  private helveczian = false;
+
   static addControl(_object, html): void {
     const control = `<div flexrow>
         <button class='hv-name-gen' type="button" title='${game.i18n.localize(
@@ -43,7 +48,6 @@ export class HVNameGenerator {
         )}'> ${game.i18n.localize('HV.dialog.namegenerator')}
         </button>
         </div>`;
-    // html.find('.fas.fa-search').replaceWith($(control));
     html.find('.header-search').before($(control));
     html.find('.hv-name-gen').click((ev) => {
       ev.preventDefault();
@@ -51,50 +55,79 @@ export class HVNameGenerator {
     });
   }
 
-  static async showDialog(options = {}): Promise<Dialog | unknown> {
-    const buttons = [
-      {
-        label: 'HV.dialog.findname',
-        icon: 'fas fa-dice-d20',
-        action: 'ok',
-        callback: (html) => {
-          const sex = html?.currentTarget?.querySelector('#sex').value;
-          const people = html?.currentTarget?.querySelector('#people').value;
-          const helveczian = html?.currentTarget?.querySelector('[type=checkbox]').checked;
-          const name = HVNameGenerator.findName(sex, people, helveczian);
-          const content = `<h2 class='generated-name'>${name}</h2>`;
-          DialogV2.wait({
-            window: {
-              title: 'HV.dialog.sendname',
-            },
-            buttons: [
-              {
-                label: 'HV.dialog.sendname',
-                action: 'submit',
-                icon: 'fas fa-share',
-                callback: () => {
-                  ChatMessage.create({ content: content });
-                },
-              },
-            ],
-            content: content,
-          });
-        },
-      },
-    ];
-    const html = await renderTemplate('systems/helveczia/templates/names/dialog-name.hbs', {});
-    options['width'] = 425;
-    return DialogV2.wait({
-      window: {
-        title: 'HV.dialog.namegenerator',
-      },
-      content: html,
-      buttons: buttons,
-      default: 'ok',
-      close: () => {},
-    });
+  get title() {
+    return game.i18n.localize(this.options.window.title);
   }
 
+  static DEFAULT_OPTIONS = {
+    id: 'name-generator',
+    classes: ['helveczia'],
+    actions: {
+      generate: HVNameGenerator.randomName,
+      share: HVNameGenerator.shareName,
+    },
+    tag: 'form',
+    position: {
+      width: 550,
+      height: 300,
+    },
+    window: {
+      title: 'HV.dialog.findname',
+      resizable: false,
+      contentClasses: ['standard-form', 'helveczia', 'dialog', 'creator'],
+    },
+    generatedName: null,
+    sex: 'male',
+    people: 'german',
+    helveczian: false,
+  };
+
+  static PARTS = {
+    helveczia: {
+      template: 'systems/helveczia/templates/names/dialog-name.hbs',
+    },
+    footer: {
+      template: 'templates/generic/form-footer.hbs',
+    },
+  };
+
+  protected async _prepareContext(_options): Promise<EmptyObject> {
+    return {
+      sexes: {
+        male: 'HV.Male',
+        female: 'HV.Female',
+      },
+      all_peoples: PeopleItem.peoples(),
+      generatedName: this.generatedName,
+      sex: this.sex,
+      people: this.people,
+      helveczia: this.helveczian,
+      buttons: [
+        {
+          icon: 'fas fa-dice-d20',
+          label: 'HV.dialog.findname',
+          action: 'generate',
+        },
+        {
+          icon: 'fas fa-share',
+          label: 'HV.dialog.sendname',
+          action: 'share',
+        },
+      ],
+    };
+  }
+
+  static async showDialog(options = {}): Promise<Dialog | unknown> {
+    new HVNameGenerator(options).render(true);
+  }
+
+  static randomName(event, _target) {
+    this.sex = event.currentTarget?.querySelector('#sex').value;
+    this.people = event.currentTarget?.querySelector('#people').value;
+    this.helveczian = event.currentTarget?.querySelector('[type=checkbox]').checked;
+    this.generatedName = HVNameGenerator.findName(this.sex, this.people, this.helveczian);
+    this.render(true);
+  }
   static findName(sex: string, people: string, helveczian: boolean): string {
     for (const r in PeopleItem.races) {
       const name = game.i18n.localize(`HV.people.${r}`);
@@ -114,5 +147,10 @@ export class HVNameGenerator {
       surname = (names[Math.floor(Math.random() * names.length)] as NameType).surname[variant] ?? '';
     }
     return `${forename} ${surname}`;
+  }
+
+  static shareName(_event, _target) {
+    const content = `<h2 class='helveczia generated-name'>${this.generatedName}</h2>`;
+    ChatMessage.create({ content: content });
   }
 }
