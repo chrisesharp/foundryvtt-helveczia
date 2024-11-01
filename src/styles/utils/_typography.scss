@@ -5,9 +5,12 @@ $font-primary: 'IM Fell English', serif;
 // $font-secondary: 'Germania One', cursive;
 $font-secondary: 'MedievalSharp', cursive;
 
-h2,
-h3 {
+.application h2,
+.application h3 {
+  font-family: $font-primary;
   font-style: italic;
+  color: $colorDark;
+  text-shadow: none;
 }
 
 .centred {

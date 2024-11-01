@@ -1,4 +1,5 @@
 import { Utils } from '../utils/utils';
+const { DialogV2 } = foundry.applications.api;
 
 export class HVCardsControl {
   static addControl(_object, html): void {
@@ -17,26 +18,29 @@ export class HVCardsControl {
     }
   }
 
-  static async showDialog(options = {}): Promise<void> {
-    const buttons = {
-      ok: {
-        label: game.i18n.localize('HV.dialog.createDeckForActor'),
-        icon: '<i class="fas fa-dice-d20"></i>',
+  static async showDialog(_options = {}): Promise<void> {
+    const buttons = [
+      {
+        label: 'HV.dialog.createDeckForActor',
+        icon: 'fas fa-dice-d20',
+        action: 'ok',
         callback: (html) => {
-          const actor = html.find('#actor').val();
+          const actor = html?.currentTarget?.querySelector('#actor').value;
           HVCardsHand.createHandsFor(actor);
         },
       },
-    };
+    ];
     const actors = game.actors?.filter((a) => a.hasPlayerOwner);
     const html = await renderTemplate('systems/helveczia/templates/cards/dialog-generate.hbs', { actors: actors });
-    new Dialog({
-      title: game.i18n.localize('HV.dialog.cardgenerator'),
+    DialogV2.wait({
+      window: {
+        title: 'HV.dialog.cardgenerator',
+      },
       content: html,
       buttons: buttons,
       default: 'ok',
       close: () => {},
-    }).render(true, { focus: true, ...options });
+    });
   }
 }
 

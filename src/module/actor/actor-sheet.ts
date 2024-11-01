@@ -11,6 +11,7 @@ import { HVDice } from '../dice';
 import { HVNameGenerator } from '../apps/names';
 import { HVPDF } from '../pdf';
 import { NPCGenerator } from '../apps/npcgen';
+const { DialogV2 } = foundry.applications.api;
 
 const log = new Logger();
 
@@ -363,33 +364,34 @@ export class HVActorSheet extends ActorSheet {
     };
 
     const content = await renderTemplate('systems/helveczia/templates/actor/dialogs/choose-origin.hbs', templateData);
-    new Dialog(
-      {
-        title: `${game.i18n.localize('HV.ChooseOriginClass')}`,
-        content: content,
-        default: 'submit',
-        buttons: {
-          submit: {
-            icon: '<i class="fas fa-check"></i>',
-            label: game.i18n.localize('HV.Confirm'),
-            callback: async () => {
-              const people = $('#orig option:selected').text() as string;
-              const profession = $('#class option:selected').text() as string;
-              HVCharacterCreator.setOrigins(this.actor, people, profession);
-            },
-          },
-        },
-      },
-      {
+    DialogV2.wait({
+      window: {
+        title: 'HV.ChooseOriginClass',
         classes: ['helveczia', 'helveczia-dialog'],
       },
-    ).render(true);
+      modal: true,
+      content: content,
+      default: 'submit',
+      buttons: [
+        {
+          icon: 'fas fa-check',
+          label: 'HV.Confirm',
+          action: 'submit',
+          callback: async (html) => {
+            const people = html?.currentTarget?.querySelector('#orig option:checked').text;
+            const profession = html?.currentTarget?.querySelector('#class option:checked').text;
+            HVCharacterCreator.setOrigins(this.actor, people, profession);
+          },
+        },
+      ],
+      rejectClose: false,
+    });
   }
 
   async _chooseSpecialism(event) {
     event.preventDefault();
-    const button = $(event.currentTarget);
-    const profession = $(button).data('class');
+    const button = event.currentTarget;
+    const profession = button?.dataset?.class;
     const templateData = {
       profession: profession,
       specialisms: ClassItem.specialisms(profession),
@@ -399,32 +401,33 @@ export class HVActorSheet extends ActorSheet {
       'systems/helveczia/templates/actor/dialogs/choose-specialism.hbs',
       templateData,
     );
-    new Dialog(
-      {
+    DialogV2.wait({
+      window: {
         title: `${game.i18n.localize('HV.Choose')} ${game.i18n.localize('HV.Specialism')}`,
-        content: content,
-        default: 'submit',
-        buttons: {
-          submit: {
-            icon: '<i class="fas fa-check"></i>',
-            label: game.i18n.localize('HV.Confirm'),
-            callback: async () => {
-              const specialism = $('#specialism option:selected').text() as string;
-              HVCharacterCreator.setSpecialism(this.actor, specialism);
-            },
-          },
-        },
-      },
-      {
         classes: ['helveczia', 'helveczia-dialog'],
       },
-    ).render(true);
+      modal: true,
+      content: content,
+      default: 'submit',
+      buttons: [
+        {
+          icon: 'fas fa-check',
+          label: 'HV.Confirm',
+          action: 'submit',
+          callback: async (html) => {
+            const specialism = html?.currentTarget?.querySelector('#specialism option:checked').text;
+            HVCharacterCreator.setSpecialism(this.actor, specialism);
+          },
+        },
+      ],
+      rejectClose: false,
+    });
   }
 
   async rollName(event) {
     event.preventDefault();
-    const button = $(event.currentTarget);
-    const actorId = $(button).data('actorId');
+    const button = event.currentTarget;
+    const actorId = button?.dataset?.actorId;
     const actor = game.actors?.get(actorId);
     const sex = (actor?.getFlag('helveczia', 'sex') as string) ?? 'male';
     const people = actor?.system.people ?? 'german';
@@ -439,8 +442,8 @@ export class HVActorSheet extends ActorSheet {
 
   async rollVirtue(event) {
     event.preventDefault();
-    const button = $(event.currentTarget);
-    const actorId = $(button).data('actorId');
+    const button = event.currentTarget;
+    const actorId = button?.dataset?.actorId;
     const title = `${game.i18n.localize('HV.RollVirtue')}`;
     const formula = `${this.actor.system.origVirtue}`.match(/(\dd\d[\+\-]?\d*)/g)
       ? this.actor.system.origVirtue
@@ -448,42 +451,42 @@ export class HVActorSheet extends ActorSheet {
     const content = await renderTemplate('systems/helveczia/templates/actor/dialogs/roll-virtue.hbs', {
       formula: formula,
     });
-    new Dialog(
-      {
+    DialogV2.wait({
+      window: {
         title: title,
-        content: content,
-        default: 'submit',
-        buttons: {
-          submit: {
-            icon: '<i class="fas fa-check"></i>',
-            label: game.i18n.localize('HV.Roll'),
-            callback: async () => {
-              const actor = game.actors?.get(actorId);
-              const rollFormula = $('#formula').val() as string;
-              const rollData = {
-                actor: actor,
-                roll: {
-                  blindroll: true,
-                },
-              };
-              const roll = await HVDice.Roll({
-                parts: [rollFormula],
-                data: rollData,
-                skipDialog: true,
-                speaker: ChatMessage.getSpeaker({ actor: actor }),
-                flavour: title,
-                title: title,
-                chatMessage: true,
-              });
-              await actor?.update({ system: { virtue: roll.total, origVirtue: roll.total } });
-            },
-          },
-        },
-      },
-      {
         classes: ['helveczia', 'helveczia-dialog'],
       },
-    ).render(true);
+      content: content,
+      default: 'submit',
+      buttons: [
+        {
+          icon: 'fas fa-check',
+          label: 'HV.Roll',
+          action: 'submit',
+          callback: async (html) => {
+            const actor = game.actors?.get(actorId);
+            const rollFormula = html?.currentTarget?.querySelector('#formula').value;
+            const rollData = {
+              actor: actor,
+              roll: {
+                blindroll: true,
+              },
+            };
+            const roll = await HVDice.Roll({
+              parts: [rollFormula],
+              data: rollData,
+              skipDialog: true,
+              speaker: ChatMessage.getSpeaker({ actor: actor }),
+              flavour: title,
+              title: title,
+              chatMessage: true,
+            });
+            await actor?.update({ system: { virtue: roll.total, origVirtue: roll.total } });
+          },
+        },
+      ],
+      rejectClose: false,
+    });
   }
 
   async getRandomCraft(existingSkills: string[]): Promise<StoredDocument<HVItem> | null> {

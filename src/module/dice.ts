@@ -224,24 +224,6 @@ export class HVDice {
       return HVDice.sendRoll(rollData);
     }
 
-    // const buttons = {
-    //   ok: {
-    //     label: game.i18n.localize('HV.Roll'),
-    //     icon: '<i class="fas fa-dice-d20"></i>',
-    //     callback: (html) => {
-    //       rolled = true;
-    //       rollData.form = html[0].querySelector('form');
-    //       roll = HVDice.sendRoll(rollData);
-    //     },
-    //   },
-    //   cancel: {
-    //     icon: '<i class="fas fa-times"></i>',
-    //     label: game.i18n.localize('HV.Cancel'),
-    //     callback: () => {
-    //       /*noop */
-    //     },
-    //   },
-    // };
     const buttons = [
       {
         label: 'HV.Roll',
@@ -268,8 +250,11 @@ export class HVDice {
 
     return new Promise((resolve) => {
       DialogV2.wait({
-        window: { title: title ?? '' },
-        modal: true,
+        window: {
+          title: title ?? '',
+          classes: ['helveczia', 'helveczia-dialog'],
+        },
+        modal: false,
         content: html,
         buttons: buttons,
         rejectClose: false,

@@ -12,6 +12,7 @@ import { CossackNames } from './names/cossack';
 import { GypsyNames } from './names/gypsy';
 import { JewishNames } from './names/jewish';
 import { PeopleItem } from '../items/people/people-item';
+const { DialogV2 } = foundry.applications.api;
 
 type NameType = {
   forename: { male: string; female: string };
@@ -51,35 +52,47 @@ export class HVNameGenerator {
   }
 
   static async showDialog(options = {}): Promise<Dialog | unknown> {
-    const buttons = {
-      ok: {
-        label: game.i18n.localize('HV.dialog.findname'),
-        icon: '<i class="fas fa-dice-d20"></i>',
+    const buttons = [
+      {
+        label: 'HV.dialog.findname',
+        icon: 'fas fa-dice-d20',
+        action: 'ok',
         callback: (html) => {
-          const sex = html.find('#sex').val();
-          const people = html.find('#people').val();
-          const helveczian = html.find('[type=checkbox]').is(':checked');
+          const sex = html?.currentTarget?.querySelector('#sex').value;
+          const people = html?.currentTarget?.querySelector('#people').value;
+          const helveczian = html?.currentTarget?.querySelector('[type=checkbox]').checked;
           const name = HVNameGenerator.findName(sex, people, helveczian);
-          const content = `<h1 class='generated-name'>${name}</h1>`;
-          Dialog.prompt({
-            title: game.i18n.localize('HV.dialog.sendname'),
-            callback: () => {
-              ChatMessage.create({ content: content });
+          const content = `<h2 class='generated-name'>${name}</h2>`;
+          DialogV2.wait({
+            window: {
+              title: 'HV.dialog.sendname',
             },
+            buttons: [
+              {
+                label: 'HV.dialog.sendname',
+                action: 'submit',
+                icon: 'fas fa-share',
+                callback: () => {
+                  ChatMessage.create({ content: content });
+                },
+              },
+            ],
             content: content,
           });
         },
       },
-    };
+    ];
     const html = await renderTemplate('systems/helveczia/templates/names/dialog-name.hbs', {});
     options['width'] = 425;
-    return new Dialog({
-      title: game.i18n.localize('HV.dialog.namegenerator'),
+    return DialogV2.wait({
+      window: {
+        title: 'HV.dialog.namegenerator',
+      },
       content: html,
       buttons: buttons,
       default: 'ok',
       close: () => {},
-    }).render(true, { focus: true, ...options });
+    });
   }
 
   static findName(sex: string, people: string, helveczian: boolean): string {
