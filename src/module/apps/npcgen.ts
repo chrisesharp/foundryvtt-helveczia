@@ -4,16 +4,51 @@ import { HVCharacterCreator } from './chargen';
 
 const levelBonusRegEx = /(?<class>[a-zA-Z\s]*)(?<lvl>\d)\+?(?<threat>[\d\*]*)/;
 const skillRegEx = /(?<skillName>[\w’\/\s]+)(?<bonus>[\-\+]\d)*/;
-const weaponRegEx = /(?<bonus>\+\d)+(?<weaponName>[a-zA-Z\s]*)+(?<dmg>\dd\d[\+]*[\d]*)*(?<notes>.*)/;
 
-export class NPCGenerator extends FormApplication {
-  static get defaultOptions() {
-    const options = super.defaultOptions;
-    (options.classes = ['helveczia', 'dialog', 'creator']), (options.id = 'npc-creator');
-    options.template = 'systems/helveczia/templates/actor/dialogs/npc-creation.hbs';
-    options.width = 435;
-    options.height = 435;
-    return options;
+const weaponRegEx = /(?<bonus>\+\d)+(?<weaponName>[a-zA-Z\s]*)+(?<dmg>\dd\d+([\+][\d]+)*)*(?<notes>.*)/;
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+
+export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
+  private actor: HVActor;
+
+  constructor({ actor, ...options }) {
+    super(options);
+    this.actor = actor;
+  }
+
+  static DEFAULT_OPTIONS = {
+    id: 'npc-creator',
+    classes: ['helveczia'],
+    form: {
+      handler: NPCGenerator._onSubmit,
+      closeOnSubmit: true,
+    },
+
+    tag: 'form',
+    position: {
+      width: 435,
+      height: 450,
+    },
+    window: {
+      resizable: false,
+      contentClasses: ['standard-form', 'helveczia', 'dialog', 'creator'],
+    },
+    actor: null,
+  };
+
+  static PARTS = {
+    helveczia: {
+      template: 'systems/helveczia/templates/actor/dialogs/npc-creation.hbs',
+    },
+    footer: {
+      template: 'templates/generic/form-footer.hbs',
+    },
+  };
+
+  protected async _prepareContext(_options): Promise<EmptyObject> {
+    return {
+      buttons: [{ type: 'submit', icon: 'fa-solid fa-save', label: 'HV.Create' }],
+    };
   }
 
   static getButton(sheet): Application.HeaderButton {
@@ -22,7 +57,8 @@ export class NPCGenerator extends FormApplication {
       class: 'configure-npc',
       icon: 'fa-solid fa-file-import',
       onclick: async () => {
-        new NPCGenerator(sheet.actor, {
+        new NPCGenerator({
+          actor: sheet.actor,
           top: (sheet.position.top ?? 0) + 40,
           left: (sheet.position.left ?? 0) + ((sheet.position.width ?? 0) - 400) / 2,
         }).render(true);
@@ -31,9 +67,9 @@ export class NPCGenerator extends FormApplication {
     return button;
   }
 
-  async _onSubmit(event: Event): Promise<any> {
+  static async _onSubmit(event: Event, form: object, formData: object) {
     event.preventDefault();
-    const statblock = $('textarea#statblock').val() as string;
+    const statblock = this.element.querySelector('textarea#statblock').value;
     let updateData = {};
     try {
       const npc = new Parser(statblock).npc;
@@ -66,11 +102,7 @@ export class NPCGenerator extends FormApplication {
         },
       };
     } catch (err) {}
-    super._onSubmit(event, {
-      updateData: updateData,
-      preventClose: false,
-      preventRender: false,
-    });
+    await this.createNPC(event, updateData);
   }
 
   /**
@@ -79,18 +111,17 @@ export class NPCGenerator extends FormApplication {
    * @param formData {Object}   The object of validated form data with which to update the object
    * @private
    */
-  async _updateObject(event: Event, formData: object) {
+  async createNPC(event: Event, formData: object) {
     event.preventDefault();
-    const actor = this.object as HVActor;
-    await this.setProfession(actor, formData);
-    await this.addSkills(actor, formData);
-    await this.addWeapons(actor, formData);
-    await actor.update(formData);
-    actor?.sheet?.render(true);
+    await this.setProfession(this.actor, formData);
+    await this.addSkills(this.actor, formData);
+    await this.addWeapons(this.actor, formData);
+    await this.actor.update(formData);
+    this.actor?.sheet?.render(true);
   }
 
   async setProfession(actor: HVActor, formData: object): Promise<void> {
-    const groups = formData['system.levelBonus'].match(levelBonusRegEx)?.groups;
+    const groups = formData?.system?.levelBonus.match(levelBonusRegEx)?.groups;
     const cls = groups?.class?.trim();
     if (cls) {
       const specialisms = Utils.findLocalizedPack('specialisms');
@@ -116,7 +147,7 @@ export class NPCGenerator extends FormApplication {
   }
 
   async addSkills(actor: HVActor, formData: object): Promise<void> {
-    const lvlGroups = formData['system.levelBonus'].match(levelBonusRegEx)?.groups;
+    const lvlGroups = formData?.system?.levelBonus.match(levelBonusRegEx)?.groups;
     const threat = parseInt(lvlGroups?.lvl) ?? 0;
     const skills: Record<string, unknown>[] = [];
     const skillpack = Utils.findLocalizedPack('skills');
@@ -124,7 +155,7 @@ export class NPCGenerator extends FormApplication {
     const sciencepack = Utils.findLocalizedPack('sciences');
     const specialismspack = Utils.findLocalizedPack('specialisms');
 
-    for (const skillText of formData['system.stats.skills']) {
+    for (const skillText of formData.system?.stats?.skills) {
       if (/^[A-Z]/.test(skillText)) {
         const groups = skillText.match(skillRegEx)?.groups;
         const skillName = groups?.skillName?.trim();
@@ -140,41 +171,41 @@ export class NPCGenerator extends FormApplication {
           const obj = skill.toObject();
           obj.system.bonus = bonus;
           skills.push(obj);
-          formData['system.description'] = formData['system.description'].replace(`<p>${skillText}</p>`, '');
+          formData['system'].description = formData?.system?.description.replace(`<p>${skillText}</p>`, '');
         }
       }
     }
-    await actor.createEmbeddedDocuments('Item', skills);
+    if (skills.length > 0) {
+      await actor.createEmbeddedDocuments('Item', skills);
+    }
   }
 
   async addWeapons(actor: HVActor, formData: object): Promise<void> {
     const weapons: Record<string, unknown>[] = [];
     const weaponpacks = Utils.findLocalizedPack('weapons');
 
-    for (const weaponData of formData['system.stats.atk']) {
+    for (const weaponData of formData.system.stats.atk) {
       const weaponName = weaponData.name.capitalize();
       const description = weaponData.details;
-      const weapon = await HVCharacterCreator.getDocument(weaponName, weaponpacks);
-      if (weapon) {
-        const obj = weapon.toObject();
-        obj.system.description += `<p>${description}</p>`;
-        weapons.push(obj);
-        formData['system.description'] = formData['system.description'].replace(
-          `<p>${weaponData.attack_bonus} ${weaponData.name} ${weaponData.dmg} ${weaponData.details ?? ''}</p>`,
-          '',
-        );
+      let weapon = await HVCharacterCreator.getDocument(weaponName, weaponpacks);
+      if (!weapon) {
+        weapon = {
+          name: weaponName,
+          type: 'weapon',
+          description: description,
+          system: {
+            attack: 'melee',
+            damage: weaponData.dmg,
+          },
+        };
       }
+      weapons.push(weapon);
+      formData['system'].description = formData?.system?.description.replace(
+        `<p>${weaponData.attack_bonus} ${weaponData.name} ${weaponData.dmg} ${weaponData.details ?? ''}</p>`,
+        '',
+      );
     }
     await actor.createEmbeddedDocuments('Item', weapons);
-  }
-
-  /** @override */
-  activateListeners(html) {
-    super.activateListeners(html);
-
-    html.find('button.choice').click((ev) => {
-      this.submit(ev);
-    });
   }
 }
 
@@ -217,6 +248,8 @@ export class Parser {
     skills: [],
   };
 
+  private AttackReg = /[ ]*(Atk|Attack)[ :]/;
+
   constructor(input: string) {
     this.input = input.replace(/-\n/g, '');
     this.input = this.input.replace(/\n/g, ' ');
@@ -243,10 +276,10 @@ export class Parser {
         case section.match(/^V[\s0-9]/)?.input:
           this.parseVirtue(section);
           break;
-        case section.match(/[+-]\d\/[+-]\d\/[+-]\d/)?.input:
+        case section.match(/[\w\s]*[+-]\d\/[\w\s]*[+-]\d\/[\w\s]*[+-]\d/)?.input:
           this.parseSaves(section);
           break;
-        case section.match(/^Atk/)?.input:
+        case section.match(this.AttackReg)?.input:
           this.parseAttacks(section);
           break;
         case section.match(/^Spec/)?.input:
@@ -274,19 +307,21 @@ export class Parser {
   }
 
   parseSaves(section: string) {
-    const tokens = section.split('/');
+    const tokens = section.replace(/[a-zA-Z\s]*/g, '').split('/');
     this.npc.saves.bravery = tokens[0].trim();
     this.npc.saves.deftness = tokens[1].trim();
     this.npc.saves.temptation = tokens[2].trim();
   }
 
   parseAttacks(section: string) {
-    const options = section.replace(/[ ]*Atk /, '').split(' or ');
+    const options = section.replace(this.AttackReg, '').split(' or ');
     for (const option of options) {
       const groups = option.match(weaponRegEx)?.groups;
       if (groups) {
+        let weaponName = groups?.weaponName?.trim();
+        if (weaponName.length == 0) weaponName = 'Unarmed';
         const weapon: Weapon = {
-          name: groups?.weaponName?.trim(),
+          name: weaponName,
           attack_bonus: groups?.bonus?.trim(),
           dmg: groups?.dmg?.trim(),
           details: groups?.notes?.trim() ?? '',

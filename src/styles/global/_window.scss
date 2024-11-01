@@ -1,4 +1,34 @@
-.app,
+.helveczia.sheet {
+  background: none;
+  box-shadow: none;
+  border: 0;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+
+  header.window-header {
+    background: var(--color-header-background);
+  }
+}
+
+dialog.application.dialog {
+  box-shadow: none;
+  border: 0;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+}
+
+.application {
+  background: none;
+
+  &.helveczia {
+    box-shadow: none;
+    border: 0;
+    -webkit-filter: drop-shadow(5px 5px 5px #222);
+    filter: drop-shadow(5px 5px 5px #222);
+  }
+}
+
+.application,
 .window-app {
   font-family: $font-primary;
 
@@ -9,8 +39,11 @@
     background-repeat: no-repeat;
     padding: 20px;
   }
+
+  .dialog,
   .window-content {
     font-family: $font-primary;
+    background: none;
     background-image: url('../assets/papers2.png');
     background-color: transparent;
     background-size: cover;
@@ -53,6 +86,11 @@
       overflow: auto;
     }
   }
+}
+
+.creator h2 {
+  color: black;
+  text-shadow: none;
 }
 
 .rollable {
@@ -115,6 +153,11 @@ div.chapter {
   overflow-y: scroll;
   overflow: hidden;
   height: 200px;
+  h1 {
+    font-family: $font-secondary;
+    color: black;
+    text-shadow: none;
+  }
 }
 
 div.verse-msg {

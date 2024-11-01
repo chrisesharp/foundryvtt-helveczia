@@ -2,28 +2,19 @@
     <div class="form-group">
         <div class="form-fields">
             <label>{{ localize 'HV.Sex' }}</label>
-            <select id="sex">
-                <option value="male">{{ localize 'HV.Male' }}</option>
-                <option value="female">{{ localize 'HV.Female' }}</option>
+            <select id="sex" name="sex" value="sex">
+                {{selectOptions sexes localize=true selected=sex}}
             </select>
             <label>{{ localize 'HV.Peoples' }}</label>
-            <select id="people">
-                <option value="german">{{ localize 'HV.people.german' }}</option>
-                <option value="italian">{{ localize 'HV.people.italian' }}</option>
-                <option value="french">{{ localize 'HV.people.french' }}</option>
-                <option value="polish">{{ localize 'HV.people.polish' }}</option>
-                <option value="dutch">{{ localize 'HV.people.dutch' }}</option>
-                <option value="czech">{{ localize 'HV.people.czech' }}</option>
-                <option value="english">{{ localize 'HV.people.english' }}</option>
-                <option value="spanish">{{ localize 'HV.people.spanish' }}</option>
-                <option value="swedish">{{ localize 'HV.people.swedish' }}</option>
-                <option value="hungarian">{{ localize 'HV.people.hungarian' }}</option>
-                <option value="cossack">{{ localize 'HV.people.cossack' }}</option>
-                <option value="gypsy">{{ localize 'HV.people.gypsy' }}</option>
-                <option value="jewish">{{ localize 'HV.people.jewish' }}</option>
+            <select id="people" name="people">
+                {{selectOptions all_peoples localize=true selected=people}}
             </select>
             <label>Helvéczian?</label>
-            <input id="helveczian" type="checkbox">
+            <input id="helveczian" name="helveczian" type="checkbox">
         </div>
+    </div>
+    <hr>
+    <div>
+        <h2 id="generated-name">{{ generatedName }}</h2>
     </div>
 </form>

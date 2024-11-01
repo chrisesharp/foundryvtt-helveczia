@@ -1,5 +1,6 @@
 import { Evaluated } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/client/dice/roll';
 import { HVActor } from './actor/actor';
+const { DialogV2 } = foundry.applications.api;
 
 const templatePath = 'systems/helveczia/templates/chat/';
 
@@ -223,42 +224,48 @@ export class HVDice {
       return HVDice.sendRoll(rollData);
     }
 
-    const buttons = {
-      ok: {
-        label: game.i18n.localize('HV.Roll'),
-        icon: '<i class="fas fa-dice-d20"></i>',
+    const buttons = [
+      {
+        label: 'HV.Roll',
+        action: 'ok',
+        icon: 'fas fa-dice-d20',
         callback: (html) => {
           rolled = true;
-          rollData.form = html[0].querySelector('form');
+          rollData.form = html.currentTarget.querySelector('form');
           roll = HVDice.sendRoll(rollData);
         },
       },
-      cancel: {
-        icon: '<i class="fas fa-times"></i>',
-        label: game.i18n.localize('HV.Cancel'),
+      {
+        action: 'cancel',
+        icon: 'fas fa-times',
+        label: 'HV.Cancel',
         callback: () => {
           /*noop */
         },
       },
-    };
+    ];
 
     const html = await renderTemplate(template, dialogData);
     let roll: Promise<Evaluated<Roll<any>>>;
 
     return new Promise((resolve) => {
-      new Dialog({
-        title: title ?? '',
+      DialogV2.wait({
+        window: {
+          title: title ?? '',
+          classes: ['helveczia', 'helveczia-dialog'],
+        },
+        modal: false,
         content: html,
         buttons: buttons,
-        default: 'ok',
-        close: () => {
+        rejectClose: false,
+        submit: () => {
           if (rolled) {
             resolve(roll);
           } else {
             PromiseRejectionEvent;
           }
         },
-      }).render(true);
+      });
     });
   }
 }

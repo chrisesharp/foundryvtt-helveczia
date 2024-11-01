@@ -2,10 +2,11 @@ import { Evaluated } from '@league-of-foundry-developers/foundry-vtt-types/src/f
 import { HVActor } from '../actor/actor';
 import { Logger } from '../logger';
 import { Utils } from '../utils/utils';
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 const log = new Logger();
 
-export class HVCharacterCreator extends FormApplication {
+export class HVCharacterCreator extends HandlebarsApplicationMixin(ApplicationV2) {
   A = {
     str: 0,
     wis: 0,
@@ -24,14 +25,41 @@ export class HVCharacterCreator extends FormApplication {
     con: 0,
   };
 
-  scores = { A: this.A, B: this.B };
+  private scores = { A: this.A, B: this.B };
+  private actor: HVActor;
 
-  static get defaultOptions() {
-    const options = super.defaultOptions;
-    (options.classes = ['helveczia', 'dialog', 'creator']), (options.id = 'character-creator');
-    options.template = 'systems/helveczia/templates/actor/dialogs/character-creation.hbs';
-    options.width = 235;
-    return options;
+  static DEFAULT_OPTIONS = {
+    id: 'character-creator',
+    classes: ['helveczia'],
+    form: {
+      handler: HVCharacterCreator._onSubmit,
+      closeOnSubmit: true,
+    },
+
+    tag: 'form',
+    position: {
+      width: 235,
+    },
+    window: {
+      resizable: false,
+      title: 'HV.apps.chargen',
+      contentClasses: ['standard-form', 'helveczia', 'dialog', 'creator'],
+    },
+    actor: null,
+  };
+
+  static PARTS = {
+    helveczia: {
+      template: 'systems/helveczia/templates/actor/dialogs/character-creation.hbs',
+    },
+    footer: {
+      template: 'templates/generic/form-footer.hbs',
+    },
+  };
+
+  constructor({ actor, ...options }) {
+    super(options);
+    this.actor = actor;
   }
 
   /**
@@ -39,19 +67,21 @@ export class HVCharacterCreator extends FormApplication {
    * @type {String}
    */
   get title() {
-    return game.i18n.localize('HV.apps.chargen');
+    return game.i18n.localize(this.options.window.title);
   }
   /**
    * Construct and return the data object used to render the HTML template for this form application.
    * @return {Object}
-   */
-  async getData() {
-    const data: any = foundry.utils.deepClone(super.getData());
-    data.user = game.user;
-    data.config = CONFIG.HV;
+  //  */
+  protected async _prepareContext(_options): Promise<EmptyObject> {
     await this.generateOptions();
-    data.scores = { A: this.A, B: this.B };
-    return data;
+    const scores = { A: this.A, B: this.B };
+    return {
+      buttons: [{ type: 'submit', icon: 'fa-solid fa-save', label: 'HV.Choose' }],
+      user: game.user,
+      config: CONFIG.HV,
+      scores: scores,
+    };
   }
 
   generateOptions() {
@@ -66,15 +96,6 @@ export class HVCharacterCreator extends FormApplication {
         );
       }),
     );
-  }
-
-  /** @override */
-  activateListeners(html) {
-    super.activateListeners(html);
-
-    html.find('button.choice').click((_ev) => {
-      this.submit();
-    });
   }
 
   rollAbility(): Promise<Evaluated<Roll<any>>> {
@@ -117,10 +138,9 @@ export class HVCharacterCreator extends FormApplication {
     return new Roll(rollParts.join('+'), data).evaluate();
   }
 
-  async _onSubmit(event: Event): Promise<any> {
+  static async _onSubmit(event: Event): Promise<any> {
     event.preventDefault();
-    const actor = this.object as HVActor;
-    const choice = $('#A').prop('checked') ? this.scores.A : this.scores.B;
+    const choice = this.element.querySelector('#A').checked ? this.scores.A : this.scores.B;
     const wealth = (await this.rollWealth()).total;
     const virtue = (await this.rollVirtue()).total;
     const updateData = {
@@ -139,21 +159,17 @@ export class HVCharacterCreator extends FormApplication {
         base: choice[key],
       };
     });
-    super._onSubmit(event, {
-      updateData: updateData,
-      preventClose: false,
-      preventRender: false,
-    });
+    this._updateActor(event, updateData);
 
-    const speaker = ChatMessage.getSpeaker({ actor: actor });
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
     const msg = wealth < 12 ? 'HV.apps.summaryWealth' : 'HV.apps.summaryNoble';
     const summary = game.i18n.format(msg, { virtue: virtue, wealth: wealth });
     const templateData = {
       config: CONFIG.HV,
       scores: choice,
       summary: summary,
-      actor: actor,
-      title: game.i18n.format('HV.apps.scores', { actor: actor?.name }),
+      actor: this.actor,
+      title: game.i18n.format('HV.apps.scores', { actor: this.actor?.name }),
     };
     const content = await renderTemplate('systems/helveczia/templates/chat/roll-creation.hbs', templateData);
     ChatMessage.create({
@@ -169,15 +185,13 @@ export class HVCharacterCreator extends FormApplication {
    * @param formData {Object}   The object of validated form data with which to update the object
    * @private
    */
-  async _updateObject(event: Event, formData: object) {
+  async _updateActor(event: Event, formData: object) {
     event.preventDefault();
-    const actor = this.object as HVActor;
-    // // Update the actor
-    await actor.update({ system: formData });
-    await actor.setFlag('helveczia', 'abilities-initialized', true);
+    await this.actor.update({ system: formData });
+    await this.actor.setFlag('helveczia', 'abilities-initialized', true);
 
     // // Re-draw the updated sheet
-    actor?.sheet?.render(true);
+    this.actor?.sheet?.render(true);
   }
 
   static async setOrigins(actor, peopleName, className) {
