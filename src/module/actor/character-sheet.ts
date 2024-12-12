@@ -66,7 +66,7 @@ export class HVCharacterSheet extends HVActorSheet {
     data.items = this.actor.items.map((i) => i);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.hasBible = data.items.filter((i) => i.name.includes('Bible')).length > 0;
-    data.effects = prepareActiveEffectCategories(this.actor.effects);
+    data.effects = prepareActiveEffectCategories(this.actor.allApplicableEffects());
     data.maxspecialisms = this.actor.isVagabond() ? ((actorData.system as CharacterActorData).level >= 5 ? 3 : 2) : 1;
     data.spellslots = (this.actor as HVActor).getSpellSlots();
     data.spellBonus = (this.actor as HVActor).getSpellBonus();

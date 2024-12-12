@@ -1,5 +1,5 @@
 import { HVCharacterCreator } from '../apps/chargen';
-import { onManageActiveEffect } from '../effects';
+import { getActorEffect, onManageActiveEffect } from '../effects';
 import { ClassItem } from '../items/class/class-item';
 import { PeopleItem } from '../items/people/people-item';
 import { ClassItemData, DeedItemData, SkillItemData, SpellItemData } from '../items/item-types';
@@ -90,6 +90,8 @@ export class HVActorSheet extends ActorSheet {
     html.find('.toggle-gender').click(this._toggleGender.bind(this));
     // Item summaries
     html.find('.item .item-name').click((event) => this._onItemSummary(event));
+    // Effect summaries
+    html.find('.effect-name').click((event) => this._onEffectSummary(event));
 
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
@@ -323,7 +325,6 @@ export class HVActorSheet extends ActorSheet {
     const item = this.actor.items.get(li.data('item-id'));
     if (!item) return;
     const description = await TextEditor.enrichHTML(item.system.description, { async: true });
-    const options = '';
 
     // Toggle summary
     if (li.hasClass('expanded')) {
@@ -338,7 +339,34 @@ export class HVActorSheet extends ActorSheet {
           <div>
               ${description}
           </div>
-          ${options}
+      </div>`;
+      const div = $(tags);
+      li.append(div.hide());
+      div.slideDown(200);
+    }
+    li.toggleClass('expanded');
+  }
+
+  async _onEffectSummary(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).parents('.item-entry');
+    const effect = getActorEffect(this.actor, li.data('effect-id'));
+    if (!effect) return;
+
+    // Toggle summary
+    if (li.hasClass('expanded')) {
+      const summary = li.children('.item-summary');
+      summary.slideUp(200, () => summary.remove());
+    } else {
+      const keys = effect.changes.map((e) => e.key.replace(/^system\./, '')).join(', ');
+      const targets = await TextEditor.enrichHTML(keys, { async: true });
+      // Add item tags
+      let tags = `
+      <div class="item-summary">`;
+      tags += `
+          <div>
+              Affects ${targets}
+          </div>
       </div>`;
       const div = $(tags);
       li.append(div.hide());

@@ -1,3 +1,15 @@
+import { HVActor } from './actor/actor';
+
+export function getActorEffect(owner: HVActor, effectId: string) {
+  let effect: ActiveEffectData | null = null;
+  for (const e of owner.allApplicableEffects()) {
+    if (e.id === effectId) {
+      effect = e;
+      break;
+    }
+  }
+  return effect;
+}
 /**
  * Manage Active Effect instances through the Actor Sheet via effect control buttons.
  * @param {MouseEvent} event      The left-click event on the effect control
@@ -7,7 +19,12 @@ export function onManageActiveEffect(event, owner) {
   event.preventDefault();
   const a = event.currentTarget;
   const li = a.closest('li');
-  const effect = li.dataset.effectId ? owner.effects?.get(li.dataset.effectId) : null;
+  let effect: ActiveEffectData | null = null;
+  if (owner instanceof HVActor) {
+    effect = getActorEffect(owner, li.dataset.effectId);
+  } else {
+    effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId)[0] : null;
+  }
   switch (a.dataset.action) {
     case 'create':
       return ActiveEffect.create(
@@ -21,11 +38,11 @@ export function onManageActiveEffect(event, owner) {
         { parent: owner },
       );
     case 'edit':
-      return effect.sheet.render(true);
+      return effect?.sheet.render(true);
     case 'delete':
-      return effect.delete();
+      return effect?.delete();
     case 'toggle':
-      return effect.update({ disabled: !effect.disabled });
+      return effect?.update({ disabled: !effect.disabled });
   }
 }
 

@@ -14,12 +14,6 @@
           "priority": null
         },
         {
-          "key": "system.hp.value",
-          "mode": 2,
-          "value": "1",
-          "priority": null
-        },
-        {
           "key": "system.hp.max",
           "mode": 2,
           "value": "1",
