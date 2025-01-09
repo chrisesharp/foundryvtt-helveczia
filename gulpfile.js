@@ -69,7 +69,10 @@ async function copyFiles() {
  * Build packs
  */
 async function buildPacks() {
-  const dirs = fs.readdirSync(packsDirectory);
+  const dirs = fs
+    .readdirSync(packsDirectory, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name);
   if (dirs.length) {
     await Promise.all(
       dirs.map(async (dir) => await compilePack(`${packsDirectory}/${dir}`, `${distDirectory}/packs/${dir}`)),
