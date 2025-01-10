@@ -15,7 +15,7 @@
             <a><i class="fa fa-dice roll-name" data-actor-id="{{ actor._id}}"></i></a>
         </div>
         <div class="actor-level" style="display: inline-flex;">
-           <h3 style="display: contents;">{{ localize 'HV.Level.short' }}<input name="system.levelBonus" type="text" value="{{data.levelBonus}}" placeholder="1"/>,</h3>
+           <h3 style="display: contents;">{{ localize 'HV.Level.abbr' }}<input name="system.levelBonus" type="text" value="{{data.levelBonus}}" placeholder="1"/>,</h3>
         </div>
          <div class="actor-class" style="display: inline-flex;">
             <h3>{{ordinal data.level }}  {{localize 'HV.Level.long'}} {{data.people}}
@@ -70,7 +70,7 @@
                 <ol class="attributes">
                     <li class="attribute ability-score actor-hp">
                         <h4 class="attribute-name box-title" title="{{ localize 'HV.HP.long' }}" >
-                            {{ localize 'HV.HP.short' }}:
+                            {{ localize 'HV.HP.abbr' }}:
                         </h4>
                         <div class="attribute-value">
                             <input name="system.hp.value" type="text" data-dtype="Number" value="{{data.hp.value}}" title="{{ localize 'HV.HP.current' }}">

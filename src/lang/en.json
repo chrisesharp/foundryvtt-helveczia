@@ -1,7 +1,5 @@
 {
   "HV": {
-    "Source": "Source",
-    "Duration": "Duration",
     "Details": "Details",
     "Import": "Import",
     "Create": "Create",
@@ -19,7 +17,7 @@
     "bonusGermanCraftSkill": "Due to their diligence, they learn an extra, randomly rolled Craft skill with a +2 bonus. In this trade, they are already considered journeymen by guild standards, and enjoy all attendant benefits.  Germans can become masters in their craft  at 4th level.",
     "bonusStudentScienceSkill": "Random science known from their Student studies.",
     "Level": {
-      "short": "LVL",
+      "abbr": "LVL",
       "long": "Level"
     },
     "ordinal": {
@@ -28,6 +26,7 @@
       "3": "rd",
       "4": "th"
     },
+    "modifier": "modifier",
     "randomCraft": "Roll for Random Craft",
     "randomScience": "Roll for Random Sciences",
     "rollCheck": "Rolling {type}",
@@ -216,12 +215,18 @@
       "worn": "Worn",
       "mount": "Mount"
     },
-    "Thalers.long": "Thalers",
-    "Thalers.short": "Th",
-    "Pfennig.long": "Pfennig",
-    "Pfennig.short": "Pfg",
-    "Groschen.long": "Groschen",
-    "Groschen.short": "Gr",
+    "Thalers": {
+      "long": "Thalers",
+      "abbr": "Th"
+    },
+    "Pfennig": {
+      "long": "Pfennig",
+      "abbr": "Pfg"
+    },
+    "Groschen": {
+      "long": "Groschen",
+      "abbr": "Gr"
+    },
     "Encumbrance": "Encumbrance",
     "base": "Base",
     "bonus": "Bonus",
@@ -240,39 +245,58 @@
     "AC": "AC",
     "Shield": "Shield equivalent",
     "HP": {
-      "short": "HP",
+      "abbr": "HP",
       "long": "Hit Points",
       "current": "Current HP",
       "max": "Max HP"
     },
     "scores": {
-      "modifier": "modifier",
-      "str.short": "STR",
-      "str.long": "Strength",
-      "dex.short": "DEX",
-      "dex.long": "Dexterity",
-      "con.short": "CON",
-      "con.long": "Constitution",
-      "int.short": "INT",
-      "int.long": "Intelligence",
-      "wis.short": "WIS",
-      "wis.long": "Wisdom",
-      "cha.short": "CHA",
-      "cha.long": "Charisma"
+      "str": {
+        "abbr": "STR",
+        "long": "Strength"
+      },
+      "dex": {
+        "abbr": "DEX",
+        "long": "Dexterity"
+      },
+      "con": {
+        "abbr": "CON",
+        "long": "Constitution"
+      },
+      "int": {
+        "abbr": "INT",
+        "long": "Intelligence"
+      },
+      "wis": {
+        "abbr": "WIS",
+        "long": "Wisdom"
+      },
+      "cha": {
+        "abbr": "CHA",
+        "long": "Charisma"
+      }
     },
     "attack": {
-      "melee.long": "Mêlée attack",
-      "ranged.long": "Ranged attack",
-      "melee.short": "Mêlée",
-      "ranged.short": "Ranged",
-      "cc.short": "CC",
-      "cc.long": "Combat Check"
+      "melee": {
+        "long": "Mêlée attack",
+        "abbr": "Mêlée"
+      },
+      "ranged": {
+        "long": "Ranged attack",
+        "abbr": "Ranged"
+      },
+      "cc": {
+        "abbr": "CC",
+        "long": "Combat Check"
+      }
     },
     "effect": {
       "Create": "Create effect",
       "Delete": "Delete effect",
       "Edit": "Edit effect",
-      "Toggle": "Toggle effect"
+      "Toggle": "Toggle effect",
+      "Source": "Source",
+      "Duration": "Duration"
     },
     "messages": {
       "AttackFailure": "failed in their attack {wp} {vs}",
@@ -287,8 +311,10 @@
     "SpellCast": "A spell is cast!",
     "SpellRememorize": "A spell is rememorized.",
     "SpellMemorize": "A spell is memorized.",
-    "SpellLost.short": "A spell is lost.",
-    "SpellLost.long": "A distraction caused the spell to be lost!",
+    "SpellLost": {
+      "abbr": "A spell is lost.",
+      "long": "A distraction caused the spell to be lost!"
+    },
     "CastsSpell": "{caster} casts a spell of {spell}",
     "MemorizeSpell": "{caster} memorizes the spell of {spell}",
     "errors": {
@@ -359,9 +385,11 @@
       "gypsy": "Gypsy",
       "jewish": "Jewish"
     },
-    "deed.hdr": "This deed is a",
-    "deed.of": "of",
-    "deed.magnitude": "magnitude",
+    "deed": {
+      "hdr": "This deed is a",
+      "of": "of",
+      "magnitude": "magnitude"
+    },
     "cleric": {
       "spells": "All Clerics who follow the rules and remains remain obedient lambs of the faith may learn spells at places held holy by the Mother Church. The maximal number of spells someone can learn depends on the Cleric's level, while specific spells are tied to their places of origin: a humble chapel might only have one or two, while a cloister or cathedral could have many powerful ones. Once used, spells are lost, and need to be relearned. Only the rare relics of the saints allow someone to replenish a spell freely. Beginning characters start with a random spell selection.",
       "exorcism": "With the word of God, Clerics can command infernal creatures, e.g. devils, evil spirits, vampires, etc. to stop their hauntings and flee. This ability can be used one time per adventure (twice from the fifth level). The targets must roll a Temptation saving throw or flee in panic.",
@@ -382,6 +410,112 @@
       "Sail": "Sail",
       "Appraise": "Appraise",
       "Gambling": "Gambling"
+    }
+  },
+  "SheetLabels": {
+    "Actor": "Helveczia Actor Sheet",
+    "Item": "Helveczia Item Sheet"
+  },
+  "Actor": {
+    "tabs": {
+      "abilities": "Abilities",
+      "skills": "Skills",
+      "combat": "Combat",
+      "possessions": "Possessions",
+      "saves": "Saves",
+      "deeds": "Deeds",
+      "notes": "Notes",
+      "effects": "Effects"
+    },
+    "base": {
+      "FIELDS": {
+        "description": { "label": "Description" },
+        "hp": {
+          "value": { "label": "Hit Points" },
+          "max": { "label": "Maximum Hit Points" }
+        },
+        "level": { "label": "LVL", "hint": "Level" },
+        "people": { "label": "People" },
+        "class": { "label": "Class" },
+        "virtue": { "label": "Virtue" },
+        "initiative": { "label": "Initiative" },
+        "saves": {
+          "bravery": {
+            "base": { "label": "base" },
+            "bonus": { "label": "bonus" },
+            "value": { "label": "Bravery" }
+          },
+          "deftness": {
+            "base": { "label": "base" },
+            "bonus": { "label": "bonus" },
+            "value": { "label": "Deftness" }
+          },
+          "temptation": {
+            "base": { "label": "base" },
+            "bonus": { "label": "bonus" },
+            "value": { "label": "Temptation" }
+          }
+        },
+        "attack": {
+          "melee": {
+            "base": { "label": "base" },
+            "bonus": { "label": "bonus" },
+            "value": { "label": "Mêlée" }
+          },
+          "ranged": {
+            "base": { "label": "base" },
+            "bonus": { "label": "bonus" },
+            "value": { "label": "Ranged" }
+          },
+          "cc": {
+            "base": { "label": "base" },
+            "bonus": { "label": "bonus" },
+            "value": { "label": "Combat Check" }
+          }
+        },
+        "scores": {
+          "str": {
+            "abbr": "STR",
+            "long": "Strength"
+          },
+          "dex": {
+            "abbr": "DEX",
+            "long": "Dexterity"
+          },
+          "con": {
+            "abbr": "CON",
+            "long": "Constitution"
+          },
+          "int": {
+            "abbr": "INT",
+            "long": "Intelligence"
+          },
+          "wis": {
+            "abbr": "WIS",
+            "long": "Wisdom"
+          },
+          "cha": {
+            "abbr": "CHA",
+            "long": "Charisma"
+          }
+        }
+      }
+    },
+    "Character": {
+      "FIELDS": {
+        "attributes.level.value": { "label": "Level" },
+        "experience": { "label": "Experience" }
+      }
+    },
+    "NPC": {
+      "FIELDS": {
+        "cr": { "label": "CR" }
+      }
+    }
+  },
+  "Item": {
+    "tabs": {
+      "damage": "Damage"
     }
   },
   "TYPES": {

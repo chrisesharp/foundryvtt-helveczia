@@ -49,7 +49,7 @@ export class WeaponItem extends BaseItem {
     if (itemData.attack) {
       return `
     <ol class="tag-list">
-      <li class="tag">${game.i18n.localize(`HV.attack.${itemData.attack}.short`)}</li>
+      <li class="tag">${game.i18n.localize(`HV.attack.${itemData.attack}.abbr`)}</li>
       <li class="tag" title="${game.i18n.localize('HV.bonuses')}">${await actor.getItemRollMod(item.id ?? '')}</li>
       <li class="tag" title="${game.i18n.localize('HV.Damage')}">${itemData.damage}</li>
       ${reload}
