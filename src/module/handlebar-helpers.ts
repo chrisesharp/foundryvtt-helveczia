@@ -21,7 +21,7 @@ export const registerHandlebarHelpers = async function () {
   });
 
   Handlebars.registerHelper('localizedAttr', function (attr) {
-    return game.i18n.localize(`HV.scores.${attr}.short`);
+    return game.i18n.localize(`HV.scores.${attr}.abbr`);
   });
 
   Handlebars.registerHelper('localizedClass', function (role) {

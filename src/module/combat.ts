@@ -1,7 +1,7 @@
 import { Logger } from './logger';
 
 const log = new Logger();
-const colours = ['', 'orange', 'red'];
+const colours = ['yellow', 'orange', 'red'];
 
 export class HVCombat extends Combat {
   static format(combatTracker, html, data) {
@@ -30,7 +30,7 @@ export class HVCombat extends Combat {
             );
           }
           const reloadTrigger = actor.getFlag('helveczia', 'reload-trigger') as number;
-          if (reloadTrigger > 0) {
+          if (reloadTrigger > 0 && game.user?.isGM) {
             log.debug(`HVCombat.format() | id:${id} reloadTrigger = ${reloadTrigger}`);
             await actor.unsetFlag('helveczia', 'reload-trigger');
             await cmbtant.setFlag('helveczia', 'reloaded', currentTurn + parseFloat(`${reloadTrigger}`));
@@ -43,12 +43,11 @@ export class HVCombat extends Combat {
           }
         }
         let reload = cmbtant.getFlag('helveczia', 'reloaded') as number;
-
         if (!isNaN(reload)) {
-          reload = Math.max(0, reload - currentTurn);
+          reload = reload - currentTurn;
           log.debug(`HVCombat.format() |id:${id} reload = ${reload}`);
           // Append colored flag
-          if (Math.round(reload) > 0) {
+          if (reload >= 0) {
             const index = Math.min(2, Math.round(reload));
             const colour = colours[index];
             const controls = $(ct).find('.combatant-controls');

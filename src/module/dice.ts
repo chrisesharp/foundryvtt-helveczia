@@ -64,8 +64,10 @@ export class HVDice {
       withWeapon = game.i18n.format('HV.withTheir', { item: data.item.name });
       if (data.item.system.reload > 0) {
         const attacker = data.item.actor as HVActor;
-        await attacker.setFlag('helveczia', 'reload-trigger', data.item.system.reload);
-        console.log('fired and set reload-trigger to ', attacker.getFlag('helveczia', 'reload-trigger'));
+        if (attacker.isOwner) {
+          await attacker.setFlag('helveczia', 'reload-trigger', data.item.system.reload);
+          console.log('fired and set reload-trigger to ', attacker.getFlag('helveczia', 'reload-trigger'));
+        }
       }
     }
 
