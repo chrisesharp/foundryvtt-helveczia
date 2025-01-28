@@ -11,6 +11,7 @@ import { HVDice } from '../dice';
 import { HVNameGenerator } from '../apps/names';
 import { HVPDF } from '../pdf';
 import { NPCGenerator } from '../apps/npcgen';
+import { EditorView } from 'fvtt-types/src/foundry/common/prosemirror/_module.mjs';
 const { DialogV2 } = foundry.applications.api;
 
 const log = new Logger();
@@ -22,7 +23,11 @@ export class HVActorSheet extends ActorSheet {
   }
 
   /** @override */
-  activateEditor(target, editorOptions, initialContent) {
+  activateEditor(
+    target: string,
+    editorOptions?: Options | undefined,
+    initialContent?: string | undefined,
+  ): Promise<Editor | EditorView> {
     // remove some controls to the editor as the space is lacking
     if (target == 'system.description') {
       // 'styles bullist numlist image table hr link removeformat code save'
@@ -30,7 +35,7 @@ export class HVActorSheet extends ActorSheet {
       editorOptions.fitToSize = true;
       editorOptions.height = 175;
     }
-    super.activateEditor(target, editorOptions, initialContent);
+    return super.activateEditor(target, editorOptions, initialContent);
   }
 
   onDropAllow(_actor, data): boolean {
@@ -191,7 +196,7 @@ export class HVActorSheet extends ActorSheet {
             item.setFlag('helveczia', 'castSpell', false);
           }
         } else {
-          await item.createChatMessage(this.actor, 'HV.SpellLost.short');
+          await item.createChatMessage(this.actor, 'HV.SpellLost.abbr');
         }
       }
     });

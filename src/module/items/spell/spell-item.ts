@@ -34,7 +34,7 @@ export class SpellItem extends BaseItem {
       case 'HV.SpellCast':
         summary = game.i18n.format('HV.CastsSpell', { spell: data.name, caster: speaker.alias });
         break;
-      case 'HV.SpellLost.short':
+      case 'HV.SpellLost.abbr':
         summary = game.i18n.localize('HV.SpellLost.long');
         break;
       default:
