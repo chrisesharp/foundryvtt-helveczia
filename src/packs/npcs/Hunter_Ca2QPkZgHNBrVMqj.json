@@ -35,10 +35,12 @@
       "_stats": {
         "systemId": null,
         "systemVersion": null,
-        "coreVersion": null,
+        "coreVersion": "12.331",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "_key": "!actors.items!Ca2QPkZgHNBrVMqj.S7F8w3llVoRnNNSq"
     },
@@ -74,10 +76,12 @@
       "_stats": {
         "systemId": null,
         "systemVersion": null,
-        "coreVersion": null,
+        "coreVersion": "12.331",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "_key": "!actors.items!Ca2QPkZgHNBrVMqj.G6ioBG2bNRGxfMcr"
     },
@@ -107,10 +111,12 @@
       "_stats": {
         "systemId": null,
         "systemVersion": null,
-        "coreVersion": null,
+        "coreVersion": "12.331",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": "Compendium.helveczia.skills.zCKTaUJBH7P2QpUw",
+        "duplicateSource": null
       },
       "_key": "!actors.items!Ca2QPkZgHNBrVMqj.egPUt2MsPC9vdd7p"
     },
@@ -140,10 +146,12 @@
       "_stats": {
         "systemId": null,
         "systemVersion": null,
-        "coreVersion": null,
+        "coreVersion": "12.331",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": "Compendium.helveczia.skills.P1S3Le1d7B7CFkaC",
+        "duplicateSource": null
       },
       "_key": "!actors.items!Ca2QPkZgHNBrVMqj.o9A9egSjdTBqqN5f"
     }
@@ -269,7 +277,9 @@
         "max": 1
       },
       "color": null,
-      "attenuation": 0.5
+      "attenuation": 0.5,
+      "negative": false,
+      "priority": 0
     },
     "disposition": -1,
     "displayBars": 0,
@@ -283,12 +293,16 @@
     "randomImg": false,
     "texture": {
       "src": "systems/helveczia/assets/people/male/man_32.png",
-      "tint": null,
+      "tint": "#ffffff",
       "scaleX": 1,
       "scaleY": 1,
       "offsetX": 0,
       "offsetY": 0,
-      "rotation": 0
+      "rotation": 0,
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "fit": "contain",
+      "alphaThreshold": 0.75
     },
     "sight": {
       "angle": 360,
@@ -298,19 +312,38 @@
       "visionMode": "basic",
       "attenuation": 0.1,
       "saturation": 0,
-      "contrast": 0
+      "contrast": 0,
+      "color": null
     },
     "appendNumber": false,
     "prependAdjective": false,
-    "detectionModes": []
+    "detectionModes": [],
+    "hexagonalShape": 0,
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": false,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 1,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    }
   },
   "_stats": {
     "systemId": "helveczia",
     "systemVersion": "3.1.2",
-    "coreVersion": "11.315",
+    "coreVersion": "12.331",
     "createdTime": 1708210088880,
     "modifiedTime": 1708210105028,
-    "lastModifiedBy": "G5iize41GRbYKQLE"
+    "lastModifiedBy": "G5iize41GRbYKQLE",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "Ca2QPkZgHNBrVMqj",
   "sort": 600000,

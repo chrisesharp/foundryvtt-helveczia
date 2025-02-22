@@ -29,14 +29,27 @@
             "startRound": null,
             "startTurn": null
           },
-          "icon": "icons/svg/aura.svg",
           "origin": "Item.aPsOFzXLQ69oRIo4",
           "transfer": true,
           "flags": {},
-          "tint": null,
+          "tint": "#ffffff",
           "name": "Fighter Attack",
           "description": "",
           "statuses": [],
+          "_stats": {
+            "coreVersion": "12.331",
+            "systemId": null,
+            "systemVersion": null,
+            "createdTime": null,
+            "modifiedTime": null,
+            "lastModifiedBy": null,
+            "compendiumSource": null,
+            "duplicateSource": null
+          },
+          "img": "icons/svg/aura.svg",
+          "type": "base",
+          "system": {},
+          "sort": 0,
           "_key": "!actors.items.effects!moTtTQA6XMrzOvnm.iQTj4MrorCXIcZew.xm5qP3qbOo8FTONX"
         },
         {
@@ -59,14 +72,27 @@
             "startRound": null,
             "startTurn": null
           },
-          "icon": "icons/svg/aura.svg",
           "origin": "Item.aPsOFzXLQ69oRIo4",
           "transfer": true,
           "flags": {},
-          "tint": null,
+          "tint": "#ffffff",
           "name": "Hit Dice",
           "description": "",
           "statuses": [],
+          "_stats": {
+            "coreVersion": "12.331",
+            "systemId": null,
+            "systemVersion": null,
+            "createdTime": null,
+            "modifiedTime": null,
+            "lastModifiedBy": null,
+            "compendiumSource": null,
+            "duplicateSource": null
+          },
+          "img": "icons/svg/aura.svg",
+          "type": "base",
+          "system": {},
+          "sort": 0,
           "_key": "!actors.items.effects!moTtTQA6XMrzOvnm.iQTj4MrorCXIcZew.r6yU45Zgfr611V8I"
         }
       ],
@@ -91,10 +117,12 @@
       "_stats": {
         "systemId": null,
         "systemVersion": null,
-        "coreVersion": null,
+        "coreVersion": "12.331",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": "Compendium.helveczia.classes.lIfowB5cnnUWGChF",
+        "duplicateSource": null
       },
       "_key": "!actors.items!moTtTQA6XMrzOvnm.iQTj4MrorCXIcZew"
     },
@@ -119,10 +147,12 @@
       "_stats": {
         "systemId": null,
         "systemVersion": null,
-        "coreVersion": null,
+        "coreVersion": "12.331",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "_key": "!actors.items!moTtTQA6XMrzOvnm.xXM718VmmA41T7Jz"
     },
@@ -158,10 +188,12 @@
       "_stats": {
         "systemId": null,
         "systemVersion": null,
-        "coreVersion": null,
+        "coreVersion": "12.331",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "_key": "!actors.items!moTtTQA6XMrzOvnm.pLKPczOIyzkxOGQs"
     },
@@ -201,10 +233,12 @@
       "_stats": {
         "systemId": null,
         "systemVersion": null,
-        "coreVersion": null,
+        "coreVersion": "12.331",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": "Compendium.helveczia.weapons.JWdU53mVrHd4HfdT",
+        "duplicateSource": null
       },
       "_key": "!actors.items!moTtTQA6XMrzOvnm.QtTQYXxlWNn3k8aW"
     },
@@ -230,10 +264,12 @@
       "_stats": {
         "systemId": null,
         "systemVersion": null,
-        "coreVersion": null,
+        "coreVersion": "12.331",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "_key": "!actors.items!moTtTQA6XMrzOvnm.Mu8Fg9wDfMkkRESr"
     }
@@ -259,14 +295,27 @@
         "rounds": null,
         "turns": null
       },
-      "icon": "icons/svg/aura.svg",
       "origin": "Actor.Mk7cMsjUitZJctFG.Item.iQTj4MrorCXIcZew",
-      "tint": null,
+      "tint": "#ffffff",
       "transfer": false,
       "flags": {},
       "name": "Fighter Attack",
       "description": "",
       "statuses": [],
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "icons/svg/aura.svg",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!actors.effects!moTtTQA6XMrzOvnm.RMxdvoCtXjkTzDqw"
     },
     {
@@ -289,14 +338,27 @@
         "rounds": null,
         "turns": null
       },
-      "icon": "icons/svg/aura.svg",
       "origin": "Actor.Mk7cMsjUitZJctFG.Item.iQTj4MrorCXIcZew",
-      "tint": null,
+      "tint": "#ffffff",
       "transfer": false,
       "flags": {},
       "name": "Hit Dice",
       "description": "",
       "statuses": [],
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "icons/svg/aura.svg",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!actors.effects!moTtTQA6XMrzOvnm.chmgad3HbzwXenPi"
     }
   ],
@@ -497,7 +559,9 @@
         "max": 1
       },
       "color": null,
-      "attenuation": 0.5
+      "attenuation": 0.5,
+      "negative": false,
+      "priority": 0
     },
     "disposition": -1,
     "displayBars": 0,
@@ -511,12 +575,16 @@
     "randomImg": false,
     "texture": {
       "src": "systems/helveczia/assets/people/male/man_46.png",
-      "tint": null,
+      "tint": "#ffffff",
       "scaleX": 1,
       "scaleY": 1,
       "offsetX": 0,
       "offsetY": 0,
-      "rotation": 0
+      "rotation": 0,
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "fit": "contain",
+      "alphaThreshold": 0.75
     },
     "sight": {
       "angle": 360,
@@ -526,19 +594,38 @@
       "visionMode": "basic",
       "attenuation": 0.1,
       "saturation": 0,
-      "contrast": 0
+      "contrast": 0,
+      "color": null
     },
     "appendNumber": false,
     "prependAdjective": false,
-    "detectionModes": []
+    "detectionModes": [],
+    "hexagonalShape": 0,
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": false,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 1,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    }
   },
   "_stats": {
     "systemId": "helveczia",
     "systemVersion": "3.1.2",
-    "coreVersion": "11.315",
+    "coreVersion": "12.331",
     "createdTime": 1708210094052,
     "modifiedTime": 1708210105028,
-    "lastModifiedBy": "G5iize41GRbYKQLE"
+    "lastModifiedBy": "G5iize41GRbYKQLE",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "moTtTQA6XMrzOvnm",
   "sort": 200000,

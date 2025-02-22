@@ -39,10 +39,12 @@
       "_stats": {
         "systemId": null,
         "systemVersion": null,
-        "coreVersion": null,
+        "coreVersion": "12.331",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": "Compendium.helveczia.weapons.1Yd2183kF2GyViwN",
+        "duplicateSource": null
       },
       "_key": "!actors.items!ny2kgQxQ4k5237ql.39TZQjXxDHyHA3lr"
     },
@@ -72,45 +74,28 @@
             "startRound": null,
             "startTurn": null
           },
-          "icon": "icons/svg/aura.svg",
           "origin": "Item.aPsOFzXLQ69oRIo4",
           "transfer": true,
           "flags": {},
-          "tint": null,
+          "tint": "#ffffff",
           "name": "Fighter Attack",
           "description": "",
           "statuses": [],
-          "_key": "!actors.items.effects!ny2kgQxQ4k5237ql.CuIG8okpowZZEMVF.xm5qP3qbOo8FTONX"
-        },
-        {
-          "_id": "r6yU45Zgfr611V8I",
-          "changes": [
-            {
-              "key": "system.hp.hd",
-              "mode": 2,
-              "value": "2",
-              "priority": null
-            }
-          ],
-          "disabled": false,
-          "duration": {
-            "startTime": null,
-            "seconds": null,
-            "combat": null,
-            "rounds": null,
-            "turns": null,
-            "startRound": null,
-            "startTurn": null
+          "_stats": {
+            "coreVersion": "12.331",
+            "systemId": null,
+            "systemVersion": null,
+            "createdTime": null,
+            "modifiedTime": null,
+            "lastModifiedBy": null,
+            "compendiumSource": null,
+            "duplicateSource": null
           },
-          "icon": "icons/svg/aura.svg",
-          "origin": "Item.aPsOFzXLQ69oRIo4",
-          "transfer": true,
-          "flags": {},
-          "tint": null,
-          "name": "Hit Dice",
-          "description": "",
-          "statuses": [],
-          "_key": "!actors.items.effects!ny2kgQxQ4k5237ql.CuIG8okpowZZEMVF.r6yU45Zgfr611V8I"
+          "img": "icons/svg/aura.svg",
+          "type": "base",
+          "system": {},
+          "sort": 0,
+          "_key": "!actors.items.effects!ny2kgQxQ4k5237ql.CuIG8okpowZZEMVF.xm5qP3qbOo8FTONX"
         }
       ],
       "folder": null,
@@ -134,10 +119,12 @@
       "_stats": {
         "systemId": null,
         "systemVersion": null,
-        "coreVersion": null,
+        "coreVersion": "12.331",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": "Compendium.helveczia.classes.lIfowB5cnnUWGChF",
+        "duplicateSource": null
       },
       "_key": "!actors.items!ny2kgQxQ4k5237ql.CuIG8okpowZZEMVF"
     },
@@ -146,56 +133,7 @@
       "name": "Champion",
       "type": "class",
       "img": "icons/svg/combat.svg",
-      "effects": [
-        {
-          "_id": "8a9i75IKy1YWUTrO",
-          "changes": [
-            {
-              "key": "system.saves.bravery.bonus",
-              "mode": 2,
-              "value": "1",
-              "priority": null
-            },
-            {
-              "key": "system.saves.deftness.bonus",
-              "mode": 2,
-              "value": "1",
-              "priority": null
-            },
-            {
-              "key": "system.saves.temptation.bonus",
-              "mode": 2,
-              "value": "1",
-              "priority": null
-            },
-            {
-              "key": "system.hp.hd",
-              "mode": 2,
-              "value": "2",
-              "priority": null
-            }
-          ],
-          "disabled": false,
-          "duration": {
-            "startTime": null,
-            "seconds": null,
-            "combat": null,
-            "rounds": null,
-            "turns": null,
-            "startRound": null,
-            "startTurn": null
-          },
-          "icon": "icons/svg/aura.svg",
-          "origin": "Item.HnFICIz5UiS73zW0",
-          "transfer": true,
-          "flags": {},
-          "tint": null,
-          "name": "Champion",
-          "description": "",
-          "statuses": [],
-          "_key": "!actors.items.effects!ny2kgQxQ4k5237ql.kavnLryu8QiogiB8.8a9i75IKy1YWUTrO"
-        }
-      ],
+      "effects": [],
       "folder": null,
       "sort": 0,
       "flags": {},
@@ -211,10 +149,12 @@
       "_stats": {
         "systemId": null,
         "systemVersion": null,
-        "coreVersion": null,
+        "coreVersion": "12.331",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "_key": "!actors.items!ny2kgQxQ4k5237ql.kavnLryu8QiogiB8"
     }
@@ -240,14 +180,27 @@
         "rounds": null,
         "turns": null
       },
-      "icon": "icons/svg/aura.svg",
       "origin": "Actor.2NLoH270CFYs3y10.Item.CuIG8okpowZZEMVF",
-      "tint": null,
+      "tint": "#ffffff",
       "transfer": false,
       "flags": {},
       "name": "Fighter Attack",
       "description": "",
       "statuses": [],
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "icons/svg/aura.svg",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!actors.effects!ny2kgQxQ4k5237ql.vrLoGkE2XdKpmssb"
     },
     {
@@ -270,14 +223,27 @@
         "rounds": null,
         "turns": null
       },
-      "icon": "icons/svg/aura.svg",
       "origin": "Actor.2NLoH270CFYs3y10.Item.CuIG8okpowZZEMVF",
-      "tint": null,
+      "tint": "#ffffff",
       "transfer": false,
       "flags": {},
       "name": "Hit Dice",
       "description": "",
       "statuses": [],
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "icons/svg/aura.svg",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!actors.effects!ny2kgQxQ4k5237ql.jsq0grRBmwffOn2z"
     },
     {
@@ -318,14 +284,27 @@
         "rounds": null,
         "turns": null
       },
-      "icon": "icons/svg/aura.svg",
       "origin": "Actor.2NLoH270CFYs3y10.Item.kavnLryu8QiogiB8",
-      "tint": null,
+      "tint": "#ffffff",
       "transfer": false,
       "flags": {},
       "name": "Champion",
       "description": "",
       "statuses": [],
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "icons/svg/aura.svg",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!actors.effects!ny2kgQxQ4k5237ql.5GuizaQqWeOaceum"
     }
   ],
@@ -531,7 +510,9 @@
         "max": 1
       },
       "color": null,
-      "attenuation": 0.5
+      "attenuation": 0.5,
+      "negative": false,
+      "priority": 0
     },
     "disposition": -1,
     "displayBars": 0,
@@ -545,12 +526,16 @@
     "randomImg": false,
     "texture": {
       "src": "systems/helveczia/assets/people/male/man_44.png",
-      "tint": null,
+      "tint": "#ffffff",
       "scaleX": 1,
       "scaleY": 1,
       "offsetX": 0,
       "offsetY": 0,
-      "rotation": 0
+      "rotation": 0,
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "fit": "contain",
+      "alphaThreshold": 0.75
     },
     "sight": {
       "angle": 360,
@@ -560,19 +545,38 @@
       "visionMode": "basic",
       "attenuation": 0.1,
       "saturation": 0,
-      "contrast": 0
+      "contrast": 0,
+      "color": null
     },
     "appendNumber": false,
     "prependAdjective": false,
-    "detectionModes": []
+    "detectionModes": [],
+    "hexagonalShape": 0,
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": false,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 1,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    }
   },
   "_stats": {
     "systemId": "helveczia",
     "systemVersion": "3.1.2",
-    "coreVersion": "11.315",
+    "coreVersion": "12.331",
     "createdTime": 1708210079468,
     "modifiedTime": 1708210105028,
-    "lastModifiedBy": "G5iize41GRbYKQLE"
+    "lastModifiedBy": "G5iize41GRbYKQLE",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "ny2kgQxQ4k5237ql",
   "sort": 800000,

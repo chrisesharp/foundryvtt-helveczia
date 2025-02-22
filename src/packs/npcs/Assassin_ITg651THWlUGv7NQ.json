@@ -41,14 +41,27 @@
             "startRound": null,
             "startTurn": null
           },
-          "icon": "icons/svg/aura.svg",
           "origin": "Item.JZr56IoZquOrwlPL",
           "transfer": true,
           "flags": {},
-          "tint": null,
+          "tint": "#ffffff",
           "name": "Saves",
           "description": "",
           "statuses": [],
+          "_stats": {
+            "coreVersion": "12.331",
+            "systemId": null,
+            "systemVersion": null,
+            "createdTime": null,
+            "modifiedTime": null,
+            "lastModifiedBy": null,
+            "compendiumSource": null,
+            "duplicateSource": null
+          },
+          "img": "icons/svg/aura.svg",
+          "type": "base",
+          "system": {},
+          "sort": 0,
           "_key": "!actors.items.effects!ITg651THWlUGv7NQ.Uc2N6veXceJvNJ89.JJZAEtiB0B7DOteB"
         },
         {
@@ -71,14 +84,27 @@
             "startRound": null,
             "startTurn": null
           },
-          "icon": "icons/svg/aura.svg",
           "origin": "Item.JZr56IoZquOrwlPL",
           "transfer": true,
           "flags": {},
-          "tint": null,
+          "tint": "#ffffff",
           "name": "Attack",
           "description": "",
           "statuses": [],
+          "_stats": {
+            "coreVersion": "12.331",
+            "systemId": null,
+            "systemVersion": null,
+            "createdTime": null,
+            "modifiedTime": null,
+            "lastModifiedBy": null,
+            "compendiumSource": null,
+            "duplicateSource": null
+          },
+          "img": "icons/svg/aura.svg",
+          "type": "base",
+          "system": {},
+          "sort": 0,
           "_key": "!actors.items.effects!ITg651THWlUGv7NQ.Uc2N6veXceJvNJ89.KCH70gHQpjKjHgre"
         }
       ],
@@ -103,10 +129,12 @@
       "_stats": {
         "systemId": null,
         "systemVersion": null,
-        "coreVersion": null,
+        "coreVersion": "12.331",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": "Compendium.helveczia.classes.mhgRslDU1daFv38i",
+        "duplicateSource": null
       },
       "_key": "!actors.items!ITg651THWlUGv7NQ.Uc2N6veXceJvNJ89"
     },
@@ -146,10 +174,12 @@
       "_stats": {
         "systemId": null,
         "systemVersion": null,
-        "coreVersion": null,
+        "coreVersion": "12.331",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": "Compendium.helveczia.weapons.kWdb2aHswlCICNGK",
+        "duplicateSource": null
       },
       "_key": "!actors.items!ITg651THWlUGv7NQ.M17fOnXfKjtv1OOs"
     },
@@ -185,10 +215,12 @@
       "_stats": {
         "systemId": null,
         "systemVersion": null,
-        "coreVersion": null,
+        "coreVersion": "12.331",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "_key": "!actors.items!ITg651THWlUGv7NQ.vYUXTocf4NjMobTE"
     }
@@ -226,14 +258,27 @@
         "rounds": null,
         "turns": null
       },
-      "icon": "icons/svg/aura.svg",
       "origin": "Actor.uq9XrNqE5PRwNKUU.Item.Uc2N6veXceJvNJ89",
-      "tint": null,
+      "tint": "#ffffff",
       "transfer": false,
       "flags": {},
       "name": "Saves",
       "description": "",
       "statuses": [],
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "icons/svg/aura.svg",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!actors.effects!ITg651THWlUGv7NQ.Yp9t957Lhu3nQESL"
     },
     {
@@ -256,14 +301,27 @@
         "rounds": null,
         "turns": null
       },
-      "icon": "icons/svg/aura.svg",
       "origin": "Actor.uq9XrNqE5PRwNKUU.Item.Uc2N6veXceJvNJ89",
-      "tint": null,
+      "tint": "#ffffff",
       "transfer": false,
       "flags": {},
       "name": "Attack",
       "description": "",
       "statuses": [],
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "icons/svg/aura.svg",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!actors.effects!ITg651THWlUGv7NQ.OpfpcMlbBGCL6Moz"
     }
   ],
@@ -388,7 +446,9 @@
         "max": 1
       },
       "color": null,
-      "attenuation": 0.5
+      "attenuation": 0.5,
+      "negative": false,
+      "priority": 0
     },
     "disposition": -1,
     "displayBars": 0,
@@ -402,12 +462,16 @@
     "randomImg": false,
     "texture": {
       "src": "systems/helveczia/assets/people/female/woman_22.png",
-      "tint": null,
+      "tint": "#ffffff",
       "scaleX": 1,
       "scaleY": 1,
       "offsetX": 0,
       "offsetY": 0,
-      "rotation": 0
+      "rotation": 0,
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "fit": "contain",
+      "alphaThreshold": 0.75
     },
     "sight": {
       "angle": 360,
@@ -417,19 +481,38 @@
       "visionMode": "basic",
       "attenuation": 0.1,
       "saturation": 0,
-      "contrast": 0
+      "contrast": 0,
+      "color": null
     },
     "appendNumber": false,
     "prependAdjective": false,
-    "detectionModes": []
+    "detectionModes": [],
+    "hexagonalShape": 0,
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": false,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 1,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    }
   },
   "_stats": {
     "systemId": "helveczia",
     "systemVersion": "3.1.2",
-    "coreVersion": "11.315",
+    "coreVersion": "12.331",
     "createdTime": 1708210073920,
     "modifiedTime": 1708210105028,
-    "lastModifiedBy": "G5iize41GRbYKQLE"
+    "lastModifiedBy": "G5iize41GRbYKQLE",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "ITg651THWlUGv7NQ",
   "sort": 1100000,
