@@ -133,7 +133,8 @@ export const registerHandlebarHelpers = async function () {
 
   Handlebars.registerHelper('die', function (die) {
     die = Math.min(20, Math.max(4, die));
-    return CONFIG.HV.icons[`d${die}`];
+    const key = `d${die}`;
+    return key in CONFIG.HV.icons ? CONFIG.HV.icons[key] : CONFIG.HV.icons['d20'];
   });
 
   Handlebars.registerHelper('isChecked', function (isChecked) {
