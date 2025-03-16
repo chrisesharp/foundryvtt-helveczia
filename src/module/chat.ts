@@ -26,7 +26,7 @@ export function updateChatMessage(actor, msgId, crit) {
 
 export class HVChat {
   static async addChatCriticalButton(msg, html, _data) {
-    const chatCard = html.find('.helveczia.chat-card');
+    const chatCard = html.querySelector('.helveczia.chat-card');
     if (!chatCard) return;
     try {
       const actor = await Utils.getActorFromUUID(chatCard.attr('data-actor-id'));
@@ -39,32 +39,32 @@ export class HVChat {
   }
 
   static async _addCritButton(msg, actor, msgContent): Promise<void> {
-    const cb = $(msgContent).find('.critical-roll');
+    const cb = msgContent.querySelector('.critical-roll');
     const msgId = msg.id;
     const dmgResult = cb.data('dmgResult');
     const target = cb.data('target');
     const multiplier = cb.data('multiplier');
     const formula = cb.data('formula');
-    cb.find('#hidden-damage').hide();
+    cb.getElementById('#hidden-damage').style.display = 'hidden';
     const button = `<div class="critical-button"><button class="critical" type="button" data-msg-id="${msgId}" data-action="critroll" data-formula="${formula}" data-dmg-result="${dmgResult}" data-multiplier="${multiplier}" data-target="${target}"><i class="fas fa-dice-d20"></i>${game.i18n.localize(
       'HV.RollAgain',
     )}</button></div>`;
-    cb.append($(button));
-    cb.find('button[data-action="critroll"]').on('click', (ev) => {
+    cb.innerHTML += button;
+    cb.querySelector('button[data-action="critroll"]').onclick = (ev) => {
       HVChat._onCritClick(ev, actor, msgContent);
-    });
+    };
     return;
   }
 
   static async _onCritClick(ev, actor, msgContent) {
     ev.preventDefault();
-    const cb = $(msgContent).find('.critical-roll').clone();
+    const cb = msgContent.querySelector('.critical-roll').clone();
     const msgId = ev.currentTarget.dataset.msgId;
     const target = ev.currentTarget.dataset.target;
     const formula = ev.currentTarget.dataset.formula;
     const dmgResult = ev.currentTarget.dataset.dmgResult;
     const multiplier = ev.currentTarget.dataset.multiplier;
-    $(ev.currentTarget).remove();
+    ev.currentTarget.remove();
     await HVChat._applyChatCritRoll({
       actor: actor,
       cb: cb,
@@ -77,7 +77,7 @@ export class HVChat {
   }
 
   static async _applyChatCritRoll({ actor, cb, target, formula, dmgResult, multiplier }): Promise<void> {
-    $(cb).find('.critical-button').remove();
+    cb.querySelector('.critical-button').remove();
     const roll = await new Roll(formula).evaluate();
     const rolledDie = roll.terms[0] as Die;
     const rolledResult = rolledDie.results[0]?.result;
@@ -101,13 +101,13 @@ export class HVChat {
       rollHV: await roll.render(),
     };
     const html = await renderTemplate(`${templatePath}/roll-crit.hbs`, templateData);
-    cb.append($(html));
-    const actualDmgResult = cb.find('#dmg-result').remove();
-    const hiddenDmg = cb.find('#hidden-damage').remove();
+    cb.innerHTML += html;
+    const actualDmgResult = cb.getElementById('#dmg-result').remove();
+    const hiddenDmg = cb.getElementById('#hidden-damage').remove();
     if (rolledResult !== 20) {
-      $(hiddenDmg).find('.dice-total').replaceWith($(actualDmgResult));
-      cb.append($(hiddenDmg));
-      cb.find('#hidden-damage').show();
+      hiddenDmg.querySelector('.dice-total').replaceWith(actualDmgResult);
+      cb.innerHTML += hiddenDmg;
+      cb.getElementById('#hidden-damage').style.display = 'block';
     }
   }
 }

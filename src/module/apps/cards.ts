@@ -1,5 +1,6 @@
 import { Utils } from '../utils/utils';
 const { DialogV2 } = foundry.applications.api;
+const { CardDeckConfig, CardHandConfig } = foundry.applications.sheets;
 
 export class HVCardsControl {
   static addControl(_object, html): void {
@@ -44,7 +45,7 @@ export class HVCardsControl {
   }
 }
 
-export class HVCardsPile extends CardsConfig {
+export class HVCardsPile extends CardDeckConfig {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       template: 'systems/helveczia/templates/cards/cards-pile.hbs',
@@ -52,7 +53,7 @@ export class HVCardsPile extends CardsConfig {
   }
 }
 
-export class HVCardsHand extends CardsHand {
+export class HVCardsHand extends CardHandConfig {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       template: 'systems/helveczia/templates/cards/cards-hand.hbs',

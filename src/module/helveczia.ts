@@ -40,6 +40,9 @@ import { registerKeyBindings } from './keys';
 import { HVToken } from './token';
 import { HVSceneConfig } from './scene';
 
+const { DocumentSheetConfig } = foundry.applications.apps;
+const { CardHandConfig, CardPileConfig, SceneConfig } = foundry.applications.sheets;
+
 const log = new Logger();
 
 // Initialize system
@@ -82,13 +85,13 @@ Hooks.once('init', async () => {
   // Register custom sheets (if any)
   // Register sheet application classes
 
-  DocumentSheetConfig.unregisterSheet(Cards, 'core', CardsHand);
+  DocumentSheetConfig.unregisterSheet(Cards, 'core', CardHandConfig);
   DocumentSheetConfig.registerSheet(Cards, 'core', HVCardsHand, {
     label: 'CARDS.CardsHand',
     types: ['hand'],
     makeDefault: true,
   });
-  DocumentSheetConfig.unregisterSheet(Cards, 'core', CardsPile);
+  DocumentSheetConfig.unregisterSheet(Cards, 'core', CardPileConfig);
   DocumentSheetConfig.registerSheet(Cards, 'core', HVCardsPile, {
     label: 'CARDS.CardsPile',
     types: ['pile'],
@@ -173,7 +176,7 @@ Hooks.on('dropItemSheetData', (actor: HVActor, sheet: HVActorSheet, data) => {
   return sheet.onDropAllow(actor, data);
 });
 
-Hooks.on('renderChatMessage', HVChat.addChatCriticalButton);
+Hooks.on('renderChatMessageHTML', HVChat.addChatCriticalButton);
 Hooks.on('renderCombatTracker', HVCombat.format);
 
 Hooks.on('preCreateCombatant', (combatant, _data, _options, _userId) => {
@@ -230,20 +233,19 @@ Hooks.on('renderSidebarTab', async (object, html) => {
   }
 
   if (object instanceof Settings) {
-    const gamesystem = html.find('#game-details');
+    const gamesystem = html.getElementById('#game-details');
     // License text
     const template = 'systems/helveczia/templates/chat/license.html';
     const rendered = await renderTemplate(template, {});
-    gamesystem.find('.system').append(rendered);
+    gamesystem.querySelector('.system').innerHTML += rendered;
 
     // User guide
-    const docs = html.find("button[data-action='docs']");
+    const docs = html.querySelector("button[data-action='docs']");
     const site = 'https://chrisesharp.github.io/foundryvtt-helveczia';
     const styling = 'border:none;margin-right:2px;vertical-align:middle;margin-bottom:5px';
-    $(
-      `<button data-action="userguide"><img src='systems/helveczia/assets/icons/shilling.png' width='16' height='16' style='${styling}'/>Helvéczia Guide</button>`,
-    ).insertAfter(docs);
-    html.find('button[data-action="userguide"]').click(() => {
+    const button = `<button data-action="userguide"><img src='systems/helveczia/assets/icons/shilling.png' width='16' height='16' style='${styling}'/>Helvéczia Guide</button>`;
+    docs.parentNode.insertBefore(button, docs.nextSibling);
+    html.querySelector('button[data-action="userguide"]').click(() => {
       const fv = new FrameViewer();
       fv.url = site;
       fv.render(true);

@@ -148,9 +148,6 @@ export class PeopleItem extends BaseItem {
    */
   static activateActorSheetListeners(html, sheet) {
     super.activateActorSheetListeners(html, sheet);
-
-    // Check or uncheck a single box
-    // html.find(".helveczia-possession").click((e) => this._onRollSkill.call(this, e, sheet));
   }
 
   static findPeoples(itemData: ItemData): PeoplesEntry | undefined {

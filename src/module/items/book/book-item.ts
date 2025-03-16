@@ -17,21 +17,21 @@ export class BookItem extends BaseItem {
    */
   static activateActorSheetListeners(html, sheet) {
     super.activateActorSheetListeners(html, sheet);
-
-    // Check or uncheck a single box
-    // html.find(".helveczia-possession").click((e) => this._onRollSkill.call(this, e, sheet));
   }
 
   static activateListeners(html, item) {
     // Delete Inventory Item
-    html.find('.item-delete').click((ev) => {
-      const li = $(ev.currentTarget).parents('.item-entry');
-      const itemID = li.data('item-id');
-      const updateData = {
-        spells: item.system.spells.filter((i) => i.id !== itemID),
-      };
-      item.update({ system: updateData });
-      li.slideUp(200, () => item.render(false));
+    // WHY [0]?
+    html[0].querySelectorAll('.item-delete').forEach((el) => {
+      el.addEventListener('click', (ev) => {
+        const li = $(ev.currentTarget).parents('.item-entry');
+        const itemID = li.data('item-id');
+        const updateData = {
+          spells: item.system.spells.filter((i) => i.id !== itemID),
+        };
+        item.update({ system: updateData });
+        li.slideUp(200, () => item.render(false));
+      });
     });
   }
 

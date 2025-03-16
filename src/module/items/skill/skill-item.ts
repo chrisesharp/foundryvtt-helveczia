@@ -13,9 +13,6 @@ export class SkillItem extends BaseItem {
    */
   static activateActorSheetListeners(html, sheet) {
     super.activateActorSheetListeners(html, sheet);
-
-    // Check or uncheck a single box
-    html.find('.helveczia-skill').click((e) => this._onRollSkill.call(this, e, sheet));
   }
 
   static prepareItemData(itemDocument) {

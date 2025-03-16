@@ -20,9 +20,6 @@ export class SpellItem extends BaseItem {
    */
   static activateActorSheetListeners(html, sheet) {
     super.activateActorSheetListeners(html, sheet);
-
-    // Check or uncheck a single box
-    // html.find(".helveczia-possession").click((e) => this._onRollSkill.call(this, e, sheet));
   }
 
   static async createChatMessage(actor: HVActor, message: string, data: ItemData): Promise<void> {

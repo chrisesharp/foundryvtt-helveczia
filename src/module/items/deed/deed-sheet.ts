@@ -23,8 +23,5 @@ export class DeedSheet extends HVItemSheet {
 
     // Active Effect management
     html.find('.effect-control').click((ev) => onManageActiveEffect(ev, this.item));
-
-    // Check or uncheck a single box
-    // html.find(".helveczia-possession").click((e) => this._onRollSkill.call(this, e, sheet));
   }
 }

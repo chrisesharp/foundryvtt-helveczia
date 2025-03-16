@@ -48,7 +48,7 @@ export function nameTests(context) {
 
           // Hook to capture when new Chat Message has been rendered
           const messageCreated = $.Deferred();
-          Hooks.once('renderChatMessage', (...args) => messageCreated.resolve(args));
+          Hooks.once('renderChatMessageHTML', (...args) => messageCreated.resolve(args));
           const [message] = await messageCreated.promise();
           expect(message.content).to.have.string(needle);
           expect(message.content).to.have.string(generatedName);
