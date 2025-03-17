@@ -29,7 +29,8 @@ dialog.application.dialog {
 }
 
 .application,
-.window-app {
+.window-app,
+.active-chat {
   font-family: $font-primary;
 
   .chat-message {
@@ -160,7 +161,8 @@ div.chapter {
   }
 }
 
-div.verse-msg {
+div.verse-msg,
+div.verse-msg h2 {
   font-family: $font-secondary;
 }
 

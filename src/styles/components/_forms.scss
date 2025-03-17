@@ -250,6 +250,10 @@ nav.sheet-tabs.side {
 
 .helveczia.chat-block {
   margin: 0;
+  div h3 {
+    padding: 4px;
+    font-size: 14px;
+  }
   .chat-header {
     height: 46px;
     margin: 4px 0;
@@ -260,21 +264,25 @@ nav.sheet-tabs.side {
     padding: 2px;
     box-shadow: 0 0 2px #fff inset;
     .chat-title {
+      font-family: $font-primary;
       margin: 4px 0;
       height: 30px;
       overflow: hidden;
       h2 {
+        font-family: $font-primary;
         border: none;
         line-height: 34px;
         margin: 0;
         text-indent: 10px;
         font-size: 16px;
         word-break: break-all;
+        color: $c-white;
       }
     }
     .chat-img {
       flex: 0 0 42px;
       background-size: cover;
+      height: 42px;
     }
   }
   .chat-target {
@@ -282,7 +290,9 @@ nav.sheet-tabs.side {
     font-style: italic;
     padding: 2px;
   }
-  .chat-details {
+  .chat-details,
+  h3 {
+    font-family: $font-primary;
     padding: 4px;
     font-size: 13px;
   }
