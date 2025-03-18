@@ -18,8 +18,6 @@ dialog.application.dialog {
 }
 
 .application {
-  background: none;
-
   &.helveczia {
     box-shadow: none;
     border: 0;
@@ -28,11 +26,9 @@ dialog.application.dialog {
   }
 }
 
-.application,
-.window-app,
+.app.window-app.helveczia,
 .active-chat {
   font-family: $font-primary;
-
   .chat-message {
     background-image: url('../assets/papers2.png');
     background-color: transparent;
