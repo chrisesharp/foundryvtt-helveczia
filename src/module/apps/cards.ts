@@ -11,8 +11,8 @@ export class HVCardsControl {
       )}'> ${game.i18n.localize('HV.dialog.cardgenerator')}
       </button>
       </div>`;
-      html.find('.header-search').before($(control));
-      html.find('.hv-card-gen').click((ev) => {
+      html.querySelector('.directory-header').innerHTML += control;
+      html.querySelector('.hv-card-gen').addEventListener('click', (ev) => {
         ev.preventDefault();
         Hooks.call('HV.Cards.genCards');
       });

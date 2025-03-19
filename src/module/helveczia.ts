@@ -42,6 +42,8 @@ import { HVSceneConfig } from './scene';
 
 const { DocumentSheetConfig } = foundry.applications.apps;
 const { CardHandConfig, CardPileConfig, SceneConfig } = foundry.applications.sheets;
+const { ActorDirectory, CardsDirectory, Settings } = foundry.applications.sidebar.tabs;
+const { FrameViewer } = foundry.applications.sidebar.apps;
 
 const log = new Logger();
 
@@ -223,32 +225,30 @@ Hooks.on('removePartyFromCombat', async (members: Actor[], combatant: Combatant)
 });
 
 // License and KOFI infos
-Hooks.on('renderSidebarTab', async (object, html) => {
-  if (object instanceof ActorDirectory) {
-    HVNameGenerator.addControl(object, html);
-  }
+Hooks.on('renderActorDirectory', async (object, html) => {
+  HVNameGenerator.addControl(object, html);
+});
 
-  if (object instanceof CardsDirectory) {
-    HVCardsControl.addControl(object, html);
-  }
+Hooks.on('renderCardsDirectory', async (object, html) => {
+  HVCardsControl.addControl(object, html);
+});
 
-  if (object instanceof Settings) {
-    const gamesystem = html.getElementById('#game-details');
-    // License text
-    const template = 'systems/helveczia/templates/chat/license.html';
-    const rendered = await renderTemplate(template, {});
-    gamesystem.querySelector('.system').innerHTML += rendered;
+Hooks.on('renderSettings', async (object, html) => {
+  const gamesystem = html.querySelector('.info');
+  // License text
+  const template = 'systems/helveczia/templates/chat/license.html';
+  const rendered = await renderTemplate(template, {});
+  gamesystem.querySelector('.system').innerHTML += rendered;
 
-    // User guide
-    const docs = html.querySelector("button[data-action='docs']");
-    const site = 'https://chrisesharp.github.io/foundryvtt-helveczia';
-    const styling = 'border:none;margin-right:2px;vertical-align:middle;margin-bottom:5px';
-    const button = `<button data-action="userguide"><img src='systems/helveczia/assets/icons/shilling.png' width='16' height='16' style='${styling}'/>Helvéczia Guide</button>`;
-    docs.parentNode.insertBefore(button, docs.nextSibling);
-    html.querySelector('button[data-action="userguide"]').click(() => {
-      const fv = new FrameViewer();
-      fv.url = site;
-      fv.render(true);
-    });
-  }
+  // User guide
+  const docs = html.querySelector("button[data-app='docs']");
+  const site = 'https://chrisesharp.github.io/foundryvtt-helveczia';
+  const styling = 'border:none;margin-right:2px;vertical-align:middle;margin-bottom:5px';
+  const button = `<button data-action="userguide"><img src='systems/helveczia/assets/icons/shilling.png' width='16' height='16' style='${styling}'/>Helvéczia Guide</button>`;
+  docs.parentNode.innerHTML += button;
+  html.querySelector('button[data-action="userguide"]').addEventListener('click', () => {
+    const fv = new FrameViewer({ url: site });
+    fv.url = site;
+    fv.render(true);
+  });
 });
