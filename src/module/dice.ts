@@ -252,9 +252,9 @@ export class HVDice {
 
     return new Promise((resolve) => {
       DialogV2.wait({
+        classes: ['helveczia'],
         window: {
           title: title ?? '',
-          classes: ['helveczia', 'helveczia-dialog'],
         },
         modal: false,
         content: html,

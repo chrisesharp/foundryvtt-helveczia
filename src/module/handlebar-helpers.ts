@@ -209,6 +209,10 @@ export const registerHandlebarHelpers = async function () {
     const player = game.users?.players.find((p) => p.character?.id === id);
     return player ? player.name : '';
   });
+
+  Handlebars.registerHelper('cardsTotal', function (cards) {
+    return cards.reduce((acc, card) => acc + card.value, 0);
+  });
 };
 
 function getOrdinal(level: number): string {

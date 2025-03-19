@@ -1,3 +1,4 @@
+form.application.helveczia,
 .helveczia.sheet {
   background: none;
   box-shadow: none;
@@ -11,10 +12,17 @@
 }
 
 dialog.application.dialog {
-  box-shadow: none;
-  border: 0;
-  -webkit-filter: drop-shadow(5px 5px 5px #222);
-  filter: drop-shadow(5px 5px 5px #222);
+  &.helveczia {
+    box-shadow: none;
+    border: 0;
+    -webkit-filter: drop-shadow(5px 5px 5px #222);
+    filter: drop-shadow(5px 5px 5px #222);
+    background-image: url('../assets/papers2.png');
+    background-color: transparent;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 20px;
+  }
 }
 
 .application {
@@ -26,9 +34,11 @@ dialog.application.dialog {
   }
 }
 
+form.application.helveczia,
 .app.window-app.helveczia,
 .active-chat {
   font-family: $font-primary;
+
   .chat-message {
     background-image: url('../assets/papers2.png');
     background-color: transparent;

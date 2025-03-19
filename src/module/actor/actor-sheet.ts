@@ -398,9 +398,9 @@ export class HVActorSheet extends ActorSheet {
 
     const content = await renderTemplate('systems/helveczia/templates/actor/dialogs/choose-origin.hbs', templateData);
     DialogV2.wait({
+      classes: ['helveczia'],
       window: {
         title: 'HV.ChooseOriginClass',
-        classes: ['helveczia', 'helveczia-dialog'],
       },
       modal: true,
       content: content,
@@ -435,9 +435,9 @@ export class HVActorSheet extends ActorSheet {
       templateData,
     );
     DialogV2.wait({
+      classes: ['helveczia'],
       window: {
         title: `${game.i18n.localize('HV.Choose')} ${game.i18n.localize('HV.Specialism')}`,
-        classes: ['helveczia', 'helveczia-dialog'],
       },
       modal: true,
       content: content,
@@ -485,9 +485,9 @@ export class HVActorSheet extends ActorSheet {
       formula: formula,
     });
     DialogV2.wait({
+      classes: ['helveczia'],
       window: {
         title: title,
-        classes: ['helveczia', 'helveczia-dialog'],
       },
       content: content,
       default: 'submit',

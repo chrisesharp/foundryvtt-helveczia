@@ -1,34 +1,40 @@
 <form class="{{cssClass}}" autocomplete="off">
     <header class="sheet-header flexrow">
         <h1 class="name">
-            <input type="text" name="name" value="{{data.name}}" placeholder="{{localize 'Name'}}"/>
+            <input type="text" name="name" value="{{source.name}}" placeholder={{fields.name.label}}/>
         </h1>
     </header>
 
     <div>
         <header class="cards-header flexrow">
             <span class="sort-mode"></span>
-            <h4 class="card-name">{{localize "CARD.Name"}}</h4>
-            <span class="card-suit">{{localize "Notes"}}</span>
-            <span class="card-suit">{{localize "CARD.Suit"}}</span>
-            <span class="card-value">{{localize "CARD.Value"}}</span>
-            <span class="card-faces">{{localize "CARD.Face"}}</span>
+            <strong class="name">{{localize "DOCUMENT.FIELDS.name.label"}}</strong>
+            <span class="suit">{{localize "Notes"}}</span>
+            <span class="suit">{{localize "CARD.FIELDS.suit.label"}}</span>
+            <span class="value">{{localize "CARD.FIELDS.value.label"}}</span>
+            <span class="faces">{{localize "CARD.FIELDS.face.label"}}</span>
         </header>
-        <ol class="cards">
+        <ol class="cards" data-cards>
         {{#each cards as |card|}}
-            <li class="card flexrow" data-card-id="{{card.id}}">
-                <img class="card-face" data-src="{{card.img}}"  height="48">
+            <li class="flexrow" data-card-id="{{card.id}}">
+                <img class="face" src="{{card.img}}"  height="48" loading="lazy">
                 {{#if card.showFace}}
-                 <span class="card-suit">{{card.name}}</span>
-                <span class="card-suit">{{card.description}}</span>
-                <span class="card-suit">{{card.suit}}</span>
-                <span class="card-value">{{card.value}}</span>
+                <span class="name">{{card.name}}</span>
+                <span class="suit">{{card.description}}</span>
+                <span class="suit">{{card.suit}}</span>
+                <span class="value">{{card.value}}</span>
                 {{else}}
-                <span class="card-name">?</span>
+                <span class="name">?</span>
                 {{/if}}
-                <div class="card-faces flexcol">
-                    <a class="card-control" title="{{localize 'CARD.FaceNext'}}" data-action="nextFace" {{#unless card.hasNextFace}}disabled{{/unless}}><i class="fas fa-caret-up"></i></a>
-                    <a class="card-control" title="{{localize 'CARD.FacePrevious'}}" data-action="prevFace" {{#unless card.hasPreviousFace}}disabled{{/unless}}><i class="fas fa-caret-down"></i></a>
+                <div class="faces flexcol">
+                    <a data-action="controlCard" data-control="nextFace" data-tooltip="CARDS.ACTIONS.NextFace"
+                    {{disabled (not card.hasNextFace)}}>
+                    <i class="fa-solid fa-caret-up"></i>
+                    </a>
+                    <a data-action="controlCard" data-control="prevFace" data-tooltip="CARDS.ACTIONS.PreviousFace"
+                    {{disabled (not card.hasPreviousFace)}}>
+                    <i class="fa-solid fa-caret-down"></i>
+                    </a>
                 </div>
             </li>
         {{else}}
