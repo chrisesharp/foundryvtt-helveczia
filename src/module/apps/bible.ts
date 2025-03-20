@@ -4,6 +4,7 @@ import { HVActor } from '../actor/actor';
 import { EmptyObject } from '@league-of-foundry-developers/foundry-vtt-types/src/types/utils.mjs';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+const { renderTemplate } = foundry.applications.handlebars;
 
 class Slugger {
   private seen = {};

@@ -8,6 +8,7 @@ import { SkillItemData } from '../item-types';
 import { Logger } from '../../logger';
 import { HVActorData } from '../../actor/actor-types';
 import { Utils } from '../../utils/utils';
+const { renderTemplate } = foundry.applications.handlebars;
 
 const log = new Logger();
 const DEFAULT_TOKEN = 'icons/svg/village.svg';

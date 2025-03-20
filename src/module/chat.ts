@@ -11,6 +11,7 @@
 
 import { Logger } from './logger';
 import { Utils } from './utils/utils';
+const { renderTemplate } = foundry.applications.handlebars;
 
 const log = new Logger();
 

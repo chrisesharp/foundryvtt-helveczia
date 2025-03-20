@@ -8,6 +8,7 @@ import { HVActor } from '../../actor/actor';
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 import { SpellItemData } from '../item-types';
+const { renderTemplate } = foundry.applications.handlebars;
 
 export class SpellItem extends BaseItem {
   static DEFAULT_TOKEN = 'icons/svg/daze.svg';

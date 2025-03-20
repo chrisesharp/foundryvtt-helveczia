@@ -3,6 +3,7 @@ import { HVActor } from '../actor/actor';
 import { Logger } from '../logger';
 import { Utils } from '../utils/utils';
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+const { renderTemplate } = foundry.applications.handlebars;
 
 const log = new Logger();
 

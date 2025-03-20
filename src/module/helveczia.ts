@@ -44,6 +44,9 @@ const { DocumentSheetConfig } = foundry.applications.apps;
 const { CardHandConfig, CardPileConfig, SceneConfig } = foundry.applications.sheets;
 const { ActorDirectory, CardsDirectory, Settings } = foundry.applications.sidebar.tabs;
 const { FrameViewer } = foundry.applications.sidebar.apps;
+const { ActorSheet, ItemSheet } = foundry.appv1.sheets;
+const { Actors, Items } = foundry.documents.collections;
+const { renderTemplate } = foundry.applications.handlebars;
 
 const log = new Logger();
 
@@ -241,7 +244,7 @@ Hooks.on('renderSettings', async (object, html) => {
   gamesystem.querySelector('.system').innerHTML += rendered;
 
   // User guide
-  const docs = html.querySelector("button[data-app='docs']");
+  const docs = html.querySelector("button[data-app='support']");
   const site = 'https://chrisesharp.github.io/foundryvtt-helveczia';
   const styling = 'border:none;margin-right:2px;vertical-align:middle;margin-bottom:5px';
   const button = `<button data-action="userguide"><img src='systems/helveczia/assets/icons/shilling.png' width='16' height='16' style='${styling}'/>Helvéczia Guide</button>`;

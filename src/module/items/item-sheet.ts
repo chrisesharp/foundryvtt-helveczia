@@ -1,6 +1,7 @@
 import { prepareActiveEffectCategories } from '../effects';
 import { HVItem } from './item';
 import { BookItemData } from './item-types';
+const { ItemSheet } = foundry.appv1.sheets;
 
 export class HVItemSheet extends ItemSheet {
   static get defaultOptions() {

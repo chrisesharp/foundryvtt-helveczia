@@ -13,6 +13,8 @@ import { HVPDF } from '../pdf';
 import { NPCGenerator } from '../apps/npcgen';
 import { EditorView } from 'fvtt-types/src/foundry/common/prosemirror/_module.mjs';
 const { DialogV2 } = foundry.applications.api;
+const { ActorSheet } = foundry.appv1.sheets;
+const { renderTemplate } = foundry.applications.handlebars;
 
 const log = new Logger();
 
