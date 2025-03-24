@@ -5,17 +5,24 @@ $font-primary: 'IM Fell English', serif;
 // $font-secondary: 'Germania One', cursive;
 $font-secondary: 'MedievalSharp', cursive;
 
-.application .window-content,
+.application.helveczia .window-content,
 .app.helveczia .window-content,
 .window-app.helveczia .window-content {
   &,
   & h1,
   & h2,
-  & h3 {
+  & h3,
+  & h4 {
     font-family: $font-primary;
     font-style: italic;
+    font-size: revert;
     color: $colorDark;
     text-shadow: none;
+    margin: 0px;
+  }
+
+  & h2 {
+    padding-top: 2%;
   }
 }
 
@@ -38,4 +45,11 @@ $font-secondary: 'MedievalSharp', cursive;
 .centred {
   display: grid;
   justify-content: center;
+  text-align: center;
+}
+
+.underline {
+  border-bottom: 1px solid $c-olive;
+  width: 100%;
+  display: block;
 }

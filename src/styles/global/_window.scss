@@ -9,6 +9,10 @@ form.application.helveczia,
   header.window-header {
     background: var(--color-header-background);
   }
+
+  .window-content .sheet-body {
+    overflow: auto;
+  }
 }
 
 dialog.application.dialog {
@@ -100,7 +104,7 @@ form.application.helveczia,
   text-shadow: none;
 }
 
-.rollable {
+.helveczia.sheet .rollable {
   &:hover,
   &:focus {
     color: #000;
@@ -200,4 +204,14 @@ section.helveczia.game-license {
   height: 28px;
   line-height: 26px;
   margin: 2px 4px;
+}
+
+.attribute {
+  list-style: none;
+}
+
+.helveczia.sheet {
+  & * {
+    margin: 1px;
+  }
 }

@@ -9,6 +9,7 @@ export async function preloadTemplates(): Promise<Handlebars.TemplateDelegate[]>
     'systems/helveczia/templates/actor/party-sheet.hbs',
     // Actor Partials
     'systems/helveczia/templates/actor/partials/actor-header.hbs',
+    'systems/helveczia/templates/actor/partials/character-nav.hbs',
     'systems/helveczia/templates/actor/partials/actor-abilities.hbs',
     'systems/helveczia/templates/actor/partials/actor-skills.hbs',
     'systems/helveczia/templates/actor/partials/actor-combat.hbs',

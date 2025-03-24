@@ -15,16 +15,17 @@ export function getActorEffect(owner: HVActor, effectId: string) {
  * @param {MouseEvent} event      The left-click event on the effect control
  * @param {Actor|Item} owner      The owning entity which manages this effect
  */
-export function onManageActiveEffect(event, owner) {
+export function onManageActiveEffect(event, target, owner) {
   event.preventDefault();
-  const a = event.currentTarget;
+  const a = target;
   const li = a.closest('li');
-  let effect: ActiveEffectData | null = null;
-  if (owner instanceof HVActor) {
-    effect = getActorEffect(owner, li.dataset.effectId);
-  } else {
-    effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId)[0] : null;
-  }
+  // let effect: ActiveEffectData | null = null;
+  // if (owner instanceof HVActor) {
+  //   effect = getActorEffect(owner, li.dataset.effectId);
+  // } else {
+  //   effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId)[0] : null;
+  // }
+  const effect = this._getEmbeddedDocument(target);
   switch (a.dataset.action) {
     case 'create':
       return ActiveEffect.create(

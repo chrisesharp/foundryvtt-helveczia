@@ -1,0 +1,29 @@
+<nav class="sheet-tabs tabs character" data-group="primary">
+        <a class="item {{tabs.abilities.cssClass}}" data-action="tab" data-group="primary" data-tab="abilities">
+            <label>{{localize tabs.abilities.label}}</label>
+        </a>
+        {{#if initialized }}
+            <a class="item {{tabs.combat.cssClass}}" data-action="tab" data-group="primary" data-tab="combat">{{ localize 'HV.tabs.combat'}}</a>
+            <a class="item {{tabs.skills.cssClass}}" data-action="tab" data-group="primary" data-tab="skills">{{ localize 'HV.tabs.skills'}}</a>
+            <a class="item {{tabs.possessions.cssClass}}" data-action="tab" data-group="primary" data-tab="possessions">{{ localize 'HV.tabs.possessions'}}</a>
+            <a class="item {{tabs.deeds.cssClass}}" data-action="tab" data-group="primary" data-tab="deeds">{{ localize 'HV.tabs.deeds'}}</a>
+            {{#if config.showEffects }}
+                {{#if user.isGM }}
+                <a class="item {{tabs.effects.cssClass}}" data-action="tab" data-group="primary" data-tab="effects">{{ localize 'HV.tabs.effects'}}</a>
+                {{/if}}
+            {{/if}}
+            {{#if vagabond_class }}
+            <a class="item {{tabs.vagabond.cssClass}}" data-action="tab" data-group="primary" data-tab="vagabond">{{ localize 'HV.class.vagabond'}}</a>
+            {{/if}}
+            {{#if fighter_class }}
+            <a class="item {{tabs.fighter.cssClass}}" data-action="tab" data-group="primary" data-tab="fighter">{{ localize 'HV.class.fighter'}}</a>
+            {{/if}}
+            {{#if cleric_class }}
+            <a class="item {{tabs.cleric.cssClass}}" data-action="tab" data-group="primary" data-tab="cleric">{{ localize 'HV.class.cleric'}}</a>
+            {{/if}}
+            {{#if student_class }}
+            <a class="item {{tabs.student.cssClass}}" data-action="tab" data-group="primary" data-tab="student">{{ localize 'HV.class.student'}}</a>
+            {{/if}}
+        {{/if}}
+        <a class="item" data-action="tab" data-group="primary" data-tab="notes">{{ localize 'HV.tabs.notes'}}</a>
+</nav>

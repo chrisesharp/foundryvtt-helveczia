@@ -1,26 +1,31 @@
 {{!-- Deeds --}}
+<section
+  class='sheet-body tab deeds flexcol {{tab.cssClass}}'
+  data-group='primary'
+  data-tab='deeds'
+>
 <div class="deeds">
     <ol class="item-list">
         <li class="flexrow item-header">
             <div class="flex1"></div>
             <h2 class="flex3 centred">~ {{ localize 'HV.tabs.deeds'}} ~</h2>
-            <a class="flex1 item-control absolution" title="{{localize 'HV.deeds.absolution'}}"><i class="atone-rollable fa fa-dice"></i></a>
+            <a class="flex1 item-control absolution" title="{{localize 'HV.deeds.absolution'}}"><i class="atone-rollable fa fa-dice" data-action="absolution"></i></a>
         </li>
     </ol>
 </div>
-<div class="flexrow">
+<div class="deeds flexrow">
     <div>
         <h3 class="centred">{{ localize 'HV.deeds.sins' }}</h3>
         <ol class="item-list centred">
         {{#each data.sins as |item id|}}
             <li class="item-entry flexcol" data-item-id="{{item.id}}">
-                <div class="item flexrow">
+                <div class="item flexrow"  data-action="itemSummary" data-item-id="{{item.id}}">
                     <h4 class="item-name">
                         {{ deedLocalize  (lookup ../config.cardinalSins item.system.cardinality) }} ~ {{item.name}}
                     </h4>
                     <div class="item-controls">
                         {{#if ../user.isGM }}
-                        <a class="item-control item-delete" title="{{localize 'HV.Delete'}} {{localize 'HV.tabs.deeds'}}"><i class="fas fa-trash"></i></a>
+                        <a class="item-control item-delete" data-action="itemDelete" title="{{localize 'HV.Delete'}} {{localize 'HV.tabs.deeds'}}"><i class="fas fa-trash"></i></a>
                         {{/if}}
                     </div>
                 </div>
@@ -33,13 +38,13 @@
         <ol class="item-list centred">
         {{#each data.virtues as |item id|}}
         <li class="item-entry flexcol" data-item-id="{{item.id}}">
-            <div class="item flexrow">
+            <div class="item flexrow"  data-action="itemSummary" data-item-id="{{item.id}}">
                 <h4 class="item-name">
                     {{ deedLocalize  (lookup ../config.cardinalVirtues item.system.cardinality) }} ~ {{item.name}}
                 </h4>
                 <div class="item-controls">
                     {{#if ../user.isGM }}
-                    <a class="item-control item-delete" title="{{localize 'HV.Delete'}} {{localize 'HV.tabs.deeds'}}"><i class="fas fa-trash"></i></a>
+                    <a class="item-control item-delete" data-action="itemDelete" title="{{localize 'HV.Delete'}} {{localize 'HV.tabs.deeds'}}"><i class="fas fa-trash"></i></a>
                     {{/if}}
                 </div>
             </div>
@@ -48,3 +53,4 @@
         </ol>
     </div>
 </div>
+</section>

@@ -4,15 +4,15 @@
             <h2>~ Helvéczia ~</h2>
         </div>
         <div class="actor-portrait">
-            <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
-            <div class="token-sync" title="Match token with portrait">
+            <img class="profile-img" data-edit="img" data-action="onEditImage" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+            <div class="token-sync" data-action="tokenSync" title="Match token with portrait">
                 <a><i class="fas fa-sync"></i></a>
             </div>
         </div>
         <div class="actor-name" style="display: inline-flex;">
-            <a><i class="fas {{#if (eq sex 'male') }}fa-mars{{else}}fa-venus{{/if}} toggle-gender" data-actor-id="{{ actor._id}}" title="sex"></i></a>
+            <a><i class="fas {{#if (eq sex 'male') }}fa-mars{{else}}fa-venus{{/if}} toggle-gender" data-action="toggleGender" data-actor-id="{{ actor._id}}" title="sex"></i></a>
             <h3 style="display: contents;"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>,</h3>
-            <a><i class="fa fa-dice roll-name" data-actor-id="{{ actor._id}}"></i></a>
+            <a><i class="fa fa-dice roll-name" data-action="rollName" data-actor-id="{{ actor._id}}"></i></a>
         </div>
         {{#unless no_origins }}
         <div class="actor-class" style="display: inline-flex;">
@@ -21,7 +21,7 @@
                     {{#if fighter_specialism }}
                          {{ fighter_specialism }}
                     {{else}}
-                     <button style="width: auto;" data-class="fighter" class="choose-specialism">{{ localize 'HV.Specialism' }}</button>
+                     <button style="width: auto;" data-action="chooseSpecialism" data-class="fighter" class="choose-specialism">{{ localize 'HV.Specialism' }}</button>
                     {{/if}}
                 {{else}}
                 {{data.class}}
@@ -102,13 +102,13 @@
                 </ol>
                 <ol class="attributes">
                     <li class="attribute ability-score actor-hp">
-                        <h4 class="attribute-name box-title" title="{{ localize 'HV.HP.long' }}" >
+                        <h4 class="attribute-name box-title">
                             {{ localize 'HV.HP.abbr' }}:
                         </h4>
-                        <div class="attribute-value">
+                        <div class="attribute-value" style="min-width:fit-content;">
                             <input name="system.hp.value" type="text" data-dtype="Number" value="{{data.hp.value}}" title="{{ localize 'HV.HP.current' }}">
                             <div>(</div><input name="system.hp.max" type="text" data-dtype="Number" value="{{data.hp.max}}" title="{{ localize 'HV.HP.max' }}" {{#unless user.isGM}}disabled{{/unless}}><div>)</div>
-                            <img src="{{die data.hp.hd}}" class="hitdie {{#if needToRoll}}blinking{{/if}}" data-roll="{{data.hp.hd}}" data-label="HD">
+                            <img src="{{die data.hp.hd}}" class="hitdie {{#if needToRoll}}blinking{{/if}}" data-action="rollHitDie" data-roll="{{data.hp.hd}}" data-label="HD">
                         </div>
                         
                     </li>
@@ -119,7 +119,7 @@
         <section class="chargen">
             {{#unless no_abilities }}
                 {{#if no_origins }}
-                <button class="choose-race-class"><i class="fa fa-dice"></i>{{ localize 'HV.ChooseOriginClass' }}</button>
+                <button class="choose-race-class" data-action="chooseRaceClass"><i class="fa fa-dice"></i>{{ localize 'HV.ChooseOriginClass' }}</button>
                 {{/if}}
             {{/unless}}
         </section>

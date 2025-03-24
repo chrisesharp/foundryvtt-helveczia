@@ -10,9 +10,9 @@
             </div>
         </div>
         <div class="actor-name" style="display: inline-flex;">
-            <a><i class="fas {{#if (eq sex 'male') }}fa-mars{{else}}fa-venus{{/if}} toggle-gender" data-actor-id="{{ actor._id}}" title="sex"></i></a>
+            <a><i class="fas {{#if (eq sex 'male') }}fa-mars{{else}}fa-venus{{/if}} toggle-gender" data-action="toggleGender"  data-actor-id="{{ actor._id}}" title="sex"></i></a>
             <h3 style="display: contents;"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>,</h3>
-            <a><i class="fa fa-dice roll-name" data-actor-id="{{ actor._id}}"></i></a>
+            <a><i class="fa fa-dice roll-name" data-action="rollName" data-actor-id="{{ actor._id}}"></i></a>
         </div>
         <div class="actor-level" style="display: inline-flex;">
            <h3 style="display: contents;">{{ localize 'HV.Level.abbr' }}<input name="system.levelBonus" type="text" value="{{data.levelBonus}}" placeholder="1"/>,</h3>
@@ -23,7 +23,7 @@
                     {{#if fighter_specialism }}
                          {{ fighter_specialism }}
                     {{else}}
-                     <button style="width: 85px;" data-class="fighter" class="choose-specialism">{{ localize 'HV.Specialism' }}</button>
+                     <button style="width: 85px;" data-action="chooseSpecialism" data-class="fighter" class="choose-specialism">{{ localize 'HV.Specialism' }}</button>
                     {{/if}}
                 {{else}}
                 {{data.class}}
@@ -63,7 +63,7 @@
                         </h4>
                         <div class="attribute-value">
                             <input name="system.virtue" type="text" data-dtype="Number" value="{{data.virtue}}">
-                             <a><i class="fas fa-dice roll-virtue" data-actor-id="{{ actor._id}}"></i></a>
+                             <a><i class="fas fa-dice roll-virtue" data-action="rollVirtue" data-actor-id="{{ actor._id}}"></i></a>
                         </div>
                     </li>
                 </ol>
@@ -75,7 +75,7 @@
                         <div class="attribute-value">
                             <input name="system.hp.value" type="text" data-dtype="Number" value="{{data.hp.value}}" title="{{ localize 'HV.HP.current' }}">
                             <div>(</div><input name="system.hp.max" type="text" data-dtype="Number" value="{{data.hp.max}}" title="{{ localize 'HV.HP.max' }}" {{#unless user.isGM}}disabled{{/unless}}><div>)</div>
-                            <img src="{{die data.hp.hd}}" class="hitdie {{#if needToRoll}}blinking{{/if}}" data-roll="{{data.hp.hd}}" data-label="HD">
+                            <img src="{{die data.hp.hd}}" class="hitdie {{#if needToRoll}}blinking{{/if}}"  data-action="rollHitDie" data-roll="{{data.hp.hd}}" data-label="HD">
                         </div>
                         
                     </li>

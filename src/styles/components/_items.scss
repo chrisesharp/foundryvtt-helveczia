@@ -6,8 +6,9 @@
   padding: 0;
   // overflow-y: auto;
 
-  .item-header {
+  .items-header {
     font-weight: bold;
+    text-align: center;
   }
 
   .item-summary {
@@ -35,7 +36,9 @@
   }
 
   .item {
-    height: 30px;
+    // height: 30px;
+    min-height: 30px;
+    height: auto;
     line-height: 24px;
     padding: 3px 0;
     border-bottom: 1px solid #bbb;

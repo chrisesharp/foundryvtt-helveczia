@@ -2,6 +2,7 @@ import { prepareActiveEffectCategories } from '../effects';
 import { HVItem } from './item';
 import { BookItemData } from './item-types';
 const { ItemSheet } = foundry.appv1.sheets;
+const { DragDrop } = foundry.applications.ux;
 
 export class HVItemSheet extends ItemSheet {
   static get defaultOptions() {
