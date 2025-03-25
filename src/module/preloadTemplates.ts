@@ -8,7 +8,7 @@ export async function preloadTemplates(): Promise<Handlebars.TemplateDelegate[]>
     'systems/helveczia/templates/actor/npc-sheet.hbs',
     'systems/helveczia/templates/actor/party-sheet.hbs',
     // Actor Partials
-    'systems/helveczia/templates/actor/partials/actor-header.hbs',
+    'systems/helveczia/templates/actor/partials/character-header.hbs',
     'systems/helveczia/templates/actor/partials/character-nav.hbs',
     'systems/helveczia/templates/actor/partials/actor-abilities.hbs',
     'systems/helveczia/templates/actor/partials/actor-skills.hbs',
@@ -23,7 +23,6 @@ export async function preloadTemplates(): Promise<Handlebars.TemplateDelegate[]>
     'systems/helveczia/templates/actor/partials/spells.hbs',
     'systems/helveczia/templates/actor/partials/npc-header.hbs',
     'systems/helveczia/templates/actor/partials/npc-saves.hbs',
-    'systems/helveczia/templates/actor/partials/npc-combat.hbs',
     'systems/helveczia/templates/actor/partials/npc-equipment.hbs',
     'systems/helveczia/templates/actor/partials/npc-skills.hbs',
     // Item Sheets

@@ -4,6 +4,7 @@ import { Logger } from '../logger';
 import { HVActor } from './actor';
 import { HVActorSheet } from './actor-sheet';
 import { CharacterActorData } from './actor-types';
+import { HVPDF } from '../pdf';
 
 const log = new Logger();
 
@@ -14,11 +15,12 @@ export class HVCharacterSheet extends HVActorSheet {
       width: 580,
       height: 730,
     },
-    window: {
-      resizable: true,
-    },
     actions: {
       onEditImage: this._onEditImage,
+    },
+    window: {
+      resizable: true,
+      controls: [HVPDF.getPDFButton()],
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -30,7 +32,7 @@ export class HVCharacterSheet extends HVActorSheet {
   /** @override */
   static PARTS = {
     header: {
-      template: 'systems/helveczia/templates/actor/partials/actor-header.hbs',
+      template: 'systems/helveczia/templates/actor/partials/character-header.hbs',
     },
     tabs: {
       template: 'systems/helveczia/templates/actor/partials/character-nav.hbs',

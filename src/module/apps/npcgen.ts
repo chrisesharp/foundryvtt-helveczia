@@ -51,20 +51,21 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     };
   }
 
-  static getButton(sheet): Application.HeaderButton {
-    const button: Application.HeaderButton = {
-      label: game.i18n.localize('HV.Import'),
+  static getButton() {
+    return {
+      label: 'HV.Import',
       class: 'configure-npc',
       icon: 'fa-solid fa-file-import',
-      onclick: async () => {
-        new NPCGenerator({
-          actor: sheet.actor,
-          top: (sheet.position.top ?? 0) + 40,
-          left: (sheet.position.left ?? 0) + ((sheet.position.width ?? 0) - 400) / 2,
-        }).render(true);
-      },
+      action: 'importNPC',
     };
-    return button;
+  }
+
+  static async importNPC() {
+    new NPCGenerator({
+      actor: this.actor,
+      top: (this.position.top ?? 0) + 40,
+      left: (this.position.left ?? 0) + ((this.position.width ?? 0) - 400) / 2,
+    }).render(true);
   }
 
   static async _onSubmit(event: Event, form: object, formData: object) {

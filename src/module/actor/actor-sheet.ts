@@ -54,9 +54,12 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       spellBonus: this._spellBonus,
       spellCast: this._spellCast,
       spellEmpty: this._rememorizeSpell,
+      printPDF: HVPDF.printSheet,
+      importNPC: NPCGenerator.importNPC,
     },
     window: {
       resizable: true,
+      // controls: [HVPDF.getPDFButton()],
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -662,17 +665,17 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     await roll.toMessage({ speaker: speaker, flavor: content });
   }
 
-  /**
-   * Extend and override the sheet header buttons
-   * @override
-   */
-  _getHeaderButtons() {
-    const buttons = super._getHeaderButtons().filter((b) => b.class != 'configure-sheet');
-    const extras: Application.HeaderButton[] = [];
-    if (game.user?.isGM && this.actor.type != 'party') extras.push(HVPDF.getPDFButton(this));
-    if (game.user?.isGM && this.actor.type === 'npc') extras.push(NPCGenerator.getButton(this));
-    return extras.concat(buttons);
-  }
+  // /**
+  //  * Extend and override the sheet header buttons
+  //  * @override
+  //  */
+  // _getHeaderButtons() {
+  //   const buttons = super._getHeaderButtons().filter((b) => b.class != 'configure-sheet');
+  //   const extras: Application.HeaderButton[] = [];
+  //   if (game.user?.isGM && this.actor.type != 'party') extras.push(HVPDF.getPDFButton(this));
+  //   if (game.user?.isGM && this.actor.type === 'npc') extras.push(NPCGenerator.getButton(this));
+  //   return extras.concat(buttons);
+  // }
 
   /** The following pieces set up drag handling and are unlikely to need modification  */
 

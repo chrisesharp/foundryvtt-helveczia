@@ -159,10 +159,6 @@ Hooks.on('preUpdateToken', async (tokenDocument, change, options, _userid) => {
 });
 
 Hooks.on('refreshToken', async (token, _options) => {
-  // if (options.refreshElevation) {
-  //   options.refreshElevation = !CONFIG.HV.depthTokens;
-  //   token.renderFlags.set(options);
-  // }
   if (CONFIG.HV.depthTokens) token.tooltip.text = '';
 });
 
@@ -234,6 +230,10 @@ Hooks.on('renderActorDirectory', async (object, html) => {
 
 Hooks.on('renderCardsDirectory', async (object, html) => {
   HVCardsControl.addControl(object, html);
+});
+
+Hooks.on('getApplicationHeaderButtons', async (object, html) => {
+  console.log(object, html);
 });
 
 Hooks.on('renderSettings', async (object, html) => {
