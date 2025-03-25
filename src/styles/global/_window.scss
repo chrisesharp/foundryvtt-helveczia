@@ -43,14 +43,6 @@ form.application.helveczia,
 .active-chat {
   font-family: $font-primary;
 
-  .chat-message {
-    background-image: url('../assets/papers2.png');
-    background-color: transparent;
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding: 20px;
-  }
-
   .dialog,
   .window-content {
     font-family: $font-primary;
@@ -214,4 +206,13 @@ section.helveczia.game-license {
   & * {
     margin: 1px;
   }
+}
+
+.chat-message {
+  font-family: $font-primary;
+  background-image: url('../assets/papers2.png');
+  background-color: transparent;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 20px;
 }
