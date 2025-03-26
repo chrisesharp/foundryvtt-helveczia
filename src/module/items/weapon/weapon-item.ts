@@ -12,13 +12,6 @@ export class WeaponItem extends BaseItem {
     return 'weapon';
   }
 
-  /**
-   * Adds skill specifig actorsheet listeners.
-   */
-  static activateActorSheetListeners(html, sheet) {
-    super.activateActorSheetListeners(html, sheet);
-  }
-
   static async preCreate(data: ItemDataConstructorData, _options: DocumentModificationOptions, _user: BaseUser) {
     foundry.utils.mergeObject(
       data,

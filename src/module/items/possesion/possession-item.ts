@@ -8,13 +8,6 @@ export class PossessionItem extends BaseItem {
     return 'possession';
   }
 
-  /**
-   * Adds skill specifig actorsheet listeners.
-   */
-  static activateActorSheetListeners(html, sheet) {
-    super.activateActorSheetListeners(html, sheet);
-  }
-
   /** @override */
   static getSheetData(sheetData, _item) {
     sheetData.coins = CONFIG.HV.coins;

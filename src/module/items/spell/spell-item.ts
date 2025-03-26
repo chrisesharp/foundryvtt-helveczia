@@ -16,13 +16,6 @@ export class SpellItem extends BaseItem {
     return 'possession';
   }
 
-  /**
-   * Adds skill specifig actorsheet listeners.
-   */
-  static activateActorSheetListeners(html, sheet) {
-    super.activateActorSheetListeners(html, sheet);
-  }
-
   static async createChatMessage(actor: HVActor, message: string, data: ItemData): Promise<void> {
     const speaker = ChatMessage.getSpeaker({ actor: actor });
     const title = game.i18n.localize(message);

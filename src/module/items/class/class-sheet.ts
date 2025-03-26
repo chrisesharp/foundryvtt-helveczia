@@ -28,24 +28,4 @@ export class ClassSheet extends HVItemSheet {
       template: 'systems/helveczia/templates/item/partials/item-effects.hbs',
     },
   };
-
-  /**
-   * Adds skill specific actorsheet listeners.
-   */
-
-  /** @override */
-  activateListeners(html) {
-    super.activateListeners(html);
-    // Everything below here is only needed if the sheet is editable
-    if (!this.options.editable) return;
-    html.find('#specialism').click((ev) => {
-      const specialism: boolean = $(ev.currentTarget).is(':checked');
-      const parentField = html.find('#parent');
-      if (specialism) {
-        $(parentField).show();
-      } else {
-        $(parentField).hide();
-      }
-    });
-  }
 }
