@@ -18,13 +18,12 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
       height: 500,
     },
     actions: {
-      // remove: HVPartySheet.remove,
       // actor: HVPartySheet.getActorSheet,
     },
     window: {
       resizable: true,
     },
-    dragDrop: [{ dragSelector: '.item', dropSelector: null }],
+    dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
     form: {
       submitOnChange: true,
     },
@@ -103,6 +102,13 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
         break;
     }
     return context;
+  }
+
+  _onRender(_context, _options) {
+    this.#dragDrop.forEach((d) => d.bind(this.element));
+    // You may want to add other special handling here
+    // Foundry comes with a large number of utility classes, e.g. SearchFilter
+    // That you may want to implement yourself.
   }
 
   /** @override */

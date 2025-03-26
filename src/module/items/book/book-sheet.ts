@@ -9,6 +9,7 @@ export class BookSheet extends HVItemSheet {
     },
     actions: {
       toggleEffect: this._effectToggle,
+      itemDelete: this._removeSpell,
     },
     window: {
       resizable: true,
@@ -31,4 +32,13 @@ export class BookSheet extends HVItemSheet {
       template: 'systems/helveczia/templates/item/partials/item-effects.hbs',
     },
   };
+
+  static async _removeSpell(_event, target) {
+    const li = target.closest('.item-entry');
+    const itemID = li.dataset.itemId;
+    const updateData = {
+      spells: this.item.system.spells.filter((i) => i.id !== itemID),
+    };
+    this.item.update({ system: updateData });
+  }
 }
