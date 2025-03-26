@@ -213,6 +213,14 @@ export const registerHandlebarHelpers = async function () {
   Handlebars.registerHelper('cardsTotal', function (cards) {
     return cards.reduce((acc, card) => acc + card.value, 0);
   });
+
+  Handlebars.registerHelper('ifIn', function (elem, props, options) {
+    if (Object.keys(props).includes(elem)) {
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  });
 };
 
 function getOrdinal(level: number): string {

@@ -6,31 +6,6 @@
   justify-content: flex-start;
   margin-bottom: 10px;
 
-  // .actor-portrait {
-  //   position: relative;
-
-  //   &:hover {
-  //     .token-sync {
-  //       opacity: 1;
-  //     }
-  //   }
-
-  //   .token-sync {
-  //     position: absolute;
-  //     top: 0;
-  //     opacity: 0;
-  //   }
-  // }
-
-  // .profile-img {
-  //   flex: 0 0 90px;
-  //   margin-right: 5px;
-  //   height: 145px;
-  //   width: 145px;
-  //   object-fit: cover;
-  //   object-position: 50% 0;
-  // }
-
   .item-img {
     flex: 0 0 64px;
     margin-right: 5px;
@@ -40,16 +15,6 @@
     object-position: 50% 0;
     filter: drop-shadow(0px 0px 1px black);
   }
-
-  // .hitdie {
-  //   // width: 64px;
-  //   width: inherit;
-  //   // height: 32px;
-  //   &:hover {
-  //     filter: invert(8%) sepia(73%) saturate(6871%) hue-rotate(359deg) brightness(114%) contrast(107%)
-  //       drop-shadow(0px 0px 5px rgba(227, 30, 30, 0.4));
-  //   }
-  // }
 
   // .blinking {
   //   animation: blinker 1s linear infinite;
@@ -78,7 +43,8 @@
   }
 
   .deed-header {
-    display: flex;
+    display: -webkit-inline-flex;
+    align-items: center;
   }
 
   select.deed-option {
@@ -104,6 +70,7 @@
   }
 
   h3.deed-hdr {
+    flex: none;
     padding: 5px;
   }
 }
@@ -154,28 +121,18 @@ nav.sheet-tabs.side {
 .sheet-body .editor {
   height: 100%;
   min-height: 34px;
-  overflow: hidden;
 }
 
-// .sheet-body .wealth .attribute-group .attributes .attribute {
-//   width: auto;
-//   .attribute-value {
-//     input {
-//       width: auto;
-//     }
-//   }
-// }
-
-// .sheet-body {
-//   .profile-img {
-//     flex: 0 0 90px;
-//     margin-right: 5px;
-//     height: 45px;
-//     width: 45px;
-//     object-fit: cover;
-//     object-position: 50% 0;
-//   }
-// }
+.party-members {
+  .profile-img {
+    flex: 0 0 90px;
+    margin-right: 5px;
+    height: 45px;
+    width: 45px;
+    object-fit: cover;
+    object-position: 50% 0;
+  }
+}
 
 .helveczia.chat-block,
 .sheet-body,
@@ -207,9 +164,9 @@ nav.sheet-tabs.side {
           }
         }
 
-        .attribute-name {
-          // width: 40px;
-        }
+        // .attribute-name {
+        //   // width: 40px;
+        // }
 
         .attribute-name-long {
           width: 60px;

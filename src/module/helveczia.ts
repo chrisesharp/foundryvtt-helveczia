@@ -241,7 +241,7 @@ Hooks.on('getApplicationHeaderButtons', async (object, html) => {
 Hooks.on('renderSettings', async (object, html) => {
   const gamesystem = html.querySelector('.info');
   // License text
-  const template = 'systems/helveczia/templates/chat/license.html';
+  const template = 'systems/helveczia/templates/license.html';
   const rendered = await renderTemplate(template, {});
   gamesystem.querySelector('.system').innerHTML += rendered;
 

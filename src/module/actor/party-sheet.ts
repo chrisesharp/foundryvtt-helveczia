@@ -1,38 +1,47 @@
-import { Utils } from '../utils/utils';
 import { HVActor } from './actor';
 import { HVActorSheet } from './actor-sheet';
-import { PartyActorData } from './actor-types';
 
 export class HVPartySheet extends HVActorSheet {
-  static get defaultOptions() {
-    const width = game.user?.isGM ? 735 : 450;
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['helveczia', 'party-sheet'],
-      template: 'systems/helveczia/templates/party/party-sheet.hbs',
-      width: width,
-      height: 450,
+  static DEFAULT_OPTIONS = {
+    classes: ['helveczia', 'party-sheet'],
+    position: {
+      width: 735,
+      height: 550,
+    },
+    actions: {
+      remove: HVPartySheet.remove,
+      actor: HVPartySheet.getActorSheet,
+    },
+    window: {
       resizable: true,
-      scrollY: ['.party-members'],
-      dragDrop: [{ dragSelector: '.directory-item .actor', dropSelector: null }],
-      tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'summary' }],
-    });
-  }
+    },
+    dragDrop: [{ dragSelector: '.directory-item .actor', dropSelector: null }],
+    form: {
+      submitOnChange: true,
+    },
+  };
 
-  async getData() {
-    const baseData = await super.getData();
-    const actorData = baseData.actor as PartyActorData;
-    const data: any = {
+  static PARTS = {
+    header: {
+      template: 'systems/helveczia/templates/actor/partials/party-sheet-header.hbs',
+    },
+    body: {
+      template: 'systems/helveczia/templates/actor/partials/party-sheet.hbs',
+      scrollable: ['.party-members'],
+    },
+  };
+
+  async _prepareContext(_options) {
+    const party = this._preparePartyData();
+    return {
       config: CONFIG.HV,
       user: game.user,
-      actor: actorData,
-      party: this._preparePartyData(),
+      actor: this.actor,
+      party: party,
+      virtue: party.length
+        ? Math.round(party.map((i) => parseInt(i.system.virtue)).reduce((acc, n) => acc + n, 0) / party.length)
+        : 0,
     };
-    data.virtue = data.party.length
-      ? Math.round(data.party.map((i) => parseInt(i.system.virtue)).reduce((acc, n) => acc + n, 0) / data.party.length)
-      : 0;
-
-    data.enrichedDescription = await TextEditor.enrichHTML(this.object.system.description, { async: true });
-    return data;
   }
 
   _preparePartyData(): HVActor[] {
@@ -46,7 +55,7 @@ export class HVPartySheet extends HVActorSheet {
     await actor.setFlag(game.system.id, 'party', this.actor.uuid);
   }
 
-  async _removeActorFromParty(actor: HVActor) {
+  static async _removeActorFromParty(actor: HVActor) {
     await actor.unsetFlag(game.system.id, 'party');
   }
 
@@ -54,46 +63,22 @@ export class HVPartySheet extends HVActorSheet {
     return data.type === 'Actor';
   }
 
-  /** @override */
-  async _onDrop(event: DragEvent): Promise<void> {
-    event.preventDefault();
-    let data;
-    try {
-      data = JSON.parse(event.dataTransfer?.getData('text/plain') ?? '');
-
-      switch (data.type) {
-        case 'Actor':
-          this._onDropActor(event, data);
-      }
-    } catch (err) {
-      // noop
-    }
-  }
-
   async _onDropActor(_event, data): Promise<void> {
-    if (data.type !== 'Actor') {
-      return;
-    }
-    const droppedActor = await Utils.getActorFromUUID(data.uuid);
+    if (!this.actor.isOwner) return;
+    const droppedActor = await Actor.implementation.fromDropData(data);
     if (droppedActor) await this._addActorToParty(droppedActor);
-    this.render();
+    this.render(true);
   }
 
-  /** @override */
-  activateListeners(html) {
-    super.activateListeners(html);
-    html.find('a.resync').click(() => this.render(true));
+  static async remove(_event, target) {
+    const actorId = target.parentNode.parentNode.parentNode.dataset.actorId;
+    const actor = game.actors?.get(actorId);
+    if (actor) await HVPartySheet._removeActorFromParty(actor);
+    this.render(true);
+  }
 
-    html.find('a.remove').click(async (ev) => {
-      const actorId = ev.currentTarget.parentElement.parentElement.parentElement.dataset.actorId;
-      const actor = game.actors?.get(actorId);
-      if (actor) await this._removeActorFromParty(actor);
-      this.render();
-    });
-
-    html.find('img.profile-img').click((ev) => {
-      const actorId = ev.currentTarget.parentElement.parentElement.parentElement.dataset.actorId;
-      game.actors?.get(actorId)?.sheet?.render(true);
-    });
+  static async getActorSheet(_event, target) {
+    const actorId = target.dataset.actorId;
+    game.actors?.get(actorId)?.sheet?.render(true);
   }
 }

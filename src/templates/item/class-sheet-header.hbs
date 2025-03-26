@@ -1,0 +1,16 @@
+<header class="sheet-header">
+  <div class="header-fields">
+    <div class="flexrow" style="justify-content: center;align-items: center;">
+      <img class="item-img flex1" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+      <h1 class="charname flex3"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+  </div>
+  <div class="form-group">
+    <div class="form-fields" style="display: flex;">
+      <h4 class="specialism">{{ localize "HV.Specialism" }}:<input id="specialism" name="system.specialism" type="checkbox" {{ isChecked data.specialism}} title="is this a specialism?"/>
+      <select id="parent" name="system.parent" {{#unless data.specialism }}style="display: none;"{{/unless}}>
+        {{selectOptions classes selected=data.parent}}
+      </select>
+      </h4>
+    </div>
+  </div>
+</header>

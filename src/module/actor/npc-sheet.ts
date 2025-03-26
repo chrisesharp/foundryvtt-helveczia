@@ -96,7 +96,6 @@ export class HVNPCSheet extends HVActorSheet {
     }
   }
 
-  /** @override */
   async _prepareContext(options) {
     const data: any = {
       owner: this.actor.isOwner,

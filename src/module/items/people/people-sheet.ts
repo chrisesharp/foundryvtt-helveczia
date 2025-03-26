@@ -1,24 +1,31 @@
-import { onManageActiveEffect } from '../../effects';
 import { HVItemSheet } from '../item-sheet';
 
 export class PeopleSheet extends HVItemSheet {
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['helveczia', 'sheet', 'item'],
+  static DEFAULT_OPTIONS = {
+    classes: ['helveczia', 'sheet', 'item'],
+    position: {
       width: 375,
       height: 650,
+    },
+    actions: {
+      toggleEffect: this._effectToggle,
+    },
+    window: {
       resizable: true,
-      tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'editor' }],
-    });
-  }
-
-  /** @override */
-  activateListeners(html) {
-    super.activateListeners(html);
-    // Everything below here is only needed if the sheet is editable
-    if (!this.options.editable) return;
-
-    // Active Effect management
-    html.find('.effect-control').click((ev) => onManageActiveEffect(ev, this.item));
-  }
+    },
+  };
+  static PARTS = {
+    header: {
+      template: 'systems/helveczia/templates/item/people-sheet-header.hbs',
+    },
+    notes: {
+      template: 'systems/helveczia/templates/item/partials/item-notes.hbs',
+    },
+    tabs: {
+      template: 'systems/helveczia/templates/item/partials/item-nav.hbs',
+    },
+    effects: {
+      template: 'systems/helveczia/templates/item/partials/item-effects.hbs',
+    },
+  };
 }

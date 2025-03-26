@@ -1,0 +1,20 @@
+<section
+  class='sheet-body tab damage flexcol {{tab.cssClass}}'
+  data-group='primary'
+  data-tab='damage'
+>
+  <div class="flexrow">
+    <select class="flex1" name="system.attack" type="text">
+      {{selectOptions attacks selected=data.attack localize=true}}
+    </select>
+    {{#if (eq data.attack 'ranged')}}
+    <h3 class="flex2 flexrow">{{ localize 'HV.Reload'}}:<input name="system.reload" type="text" value="{{data.reload}}"/></h3>
+    {{/if}}
+    <h3 class="flex2 flexrow">{{ localize 'HV.additionalBonus' }}:<input name="system.bonus" type="text" value="{{data.bonus}}"/></h3>
+  </div>
+  <div class="flexcol">
+    <h3 class="flexrow">{{ localize 'HV.tabs.damage'}}:<input name="system.damage" type="text" value="{{data.damage}}" placeholder="1d3"/></h3>
+    <h3 class="flexrow">{{ localize 'HV.CriticalOn'}}:<input name="system.critical.range" type="text" value="{{data.critical.range}}"/></h3>
+    <h3 class="flexrow">{{ localize 'HV.DamageMultiplier'}}:<input name="system.critical.multiple" type="text" value="{{data.critical.multiple}}"/></h3>
+  </div>
+</section>

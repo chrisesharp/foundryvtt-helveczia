@@ -88,35 +88,6 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     return super.activateEditor(target, editorOptions, initialContent);
   }
 
-  onDropAllow(_actor, data): boolean {
-    // Prevent folders being dragged onto the sheet
-    return !(data.type === 'Folder');
-  }
-
-  async _onDropItem(event, data) {
-    if (!this.actor.isOwner) return false;
-    const item = await Item.implementation.fromDropData(data);
-
-    // Handle item sorting within the same Actor
-    if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, item);
-
-    // Create the owned item
-    return this._onDropItemCreate(item, event);
-  }
-
-  /**
-   * Handle the final creation of dropped Item data on the Actor.
-   * This method is factored out to allow downstream classes the opportunity to override item creation behavior.
-   * @param {object[]|object} itemData      The item data requested for creation
-   * @param {DragEvent} event               The concluding DragEvent which provided the drop data
-   * @returns {Promise<Item[]>}
-   * @private
-   */
-  async _onDropItemCreate(itemData, _event) {
-    itemData = itemData instanceof Array ? itemData : [itemData];
-    return this.actor.createEmbeddedDocuments('Item', itemData);
-  }
-
   async _removePeoples(item): Promise<boolean> {
     if (item.name === this.actor.system.people) return false;
     const peoples = this.actor.itemTypes['people'];
@@ -665,18 +636,6 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     await roll.toMessage({ speaker: speaker, flavor: content });
   }
 
-  // /**
-  //  * Extend and override the sheet header buttons
-  //  * @override
-  //  */
-  // _getHeaderButtons() {
-  //   const buttons = super._getHeaderButtons().filter((b) => b.class != 'configure-sheet');
-  //   const extras: Application.HeaderButton[] = [];
-  //   if (game.user?.isGM && this.actor.type != 'party') extras.push(HVPDF.getPDFButton(this));
-  //   if (game.user?.isGM && this.actor.type === 'npc') extras.push(NPCGenerator.getButton(this));
-  //   return extras.concat(buttons);
-  // }
-
   /** The following pieces set up drag handling and are unlikely to need modification  */
 
   /**
@@ -709,6 +668,35 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       };
       return new DragDrop(d);
     });
+  }
+
+  onDropAllow(_actor, data): boolean {
+    // Prevent folders being dragged onto the sheet
+    return !(data.type === 'Folder');
+  }
+
+  async _onDropItem(event, data) {
+    if (!this.actor.isOwner) return false;
+    const item = await Item.implementation.fromDropData(data);
+
+    // Handle item sorting within the same Actor
+    if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, item);
+
+    // Create the owned item
+    return this._onDropItemCreate(item, event);
+  }
+
+  /**
+   * Handle the final creation of dropped Item data on the Actor.
+   * This method is factored out to allow downstream classes the opportunity to override item creation behavior.
+   * @param {object[]|object} itemData      The item data requested for creation
+   * @param {DragEvent} event               The concluding DragEvent which provided the drop data
+   * @returns {Promise<Item[]>}
+   * @private
+   */
+  async _onDropItemCreate(itemData, _event) {
+    itemData = itemData instanceof Array ? itemData : [itemData];
+    return this.actor.createEmbeddedDocuments('Item', itemData);
   }
 
   _getEmbeddedDocument(target) {

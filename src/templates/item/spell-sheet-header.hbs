@@ -1,0 +1,36 @@
+<header class="sheet-header">
+  <div class="header-fields">
+    <div class="flexrow" style="justify-content: center;align-items: center;">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+    </div>
+    <div class="form-group">
+      <h3 class="spell-hdr">{{ localize 'HV.spell.level' }}:</h3>
+      <input name="system.level" type="text" value="{{data.level}}">
+      <select name="system.class" type="text">
+        {{selectOptions classes selected=data.class}}
+      </select>
+    </div>
+    <div class="form-group">
+      <h3 class="spell-hdr">{{ localize 'HV.spell.range' }}:</h3>
+      <input name="system.range" type="text" value="{{data.range}}">
+    </div>
+    <div class="form-group">
+      <h3 class="spell-hdr">{{ localize 'HV.spell.duration' }}:</h3>
+      <input name="system.duration" type="text" value="{{data.duration}}">
+    </div>
+    <div class="form-group">
+      <h3 class="spell-hdr">{{ localize 'HV.spell.area' }}:</h3>
+      <input name="system.area" type="text" value="{{data.area}}">
+    </div>
+    <div class="form-group">
+      <h3 class="spell-hdr">{{ localize 'HV.spell.save' }}:</h3>
+      <select name="system.save" type="text">
+        {{selectOptions saves selected=data.save}}
+      </select>
+    </div>
+    <div class="form-group">
+      <h3 class="spell-hdr">{{ localize 'HV.spell.component' }}:</h3>
+      <input name="system.component" type="text" value="{{data.component}}">
+    </div>
+  </div>
+</header>

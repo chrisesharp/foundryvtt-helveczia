@@ -1,10 +1,3 @@
-<form autocomplete="off">
-<div class="header" style="flex-wrap: nowrap;">
-    <div class="flexrow"  style="flex-wrap: nowrap;">
-      <a class="item-control resync"><i class="fas fa-sync"></i></a><h3 style="display: contents;"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h3>
-    </div>
-    <div>{{ localize 'HV.Average' }} {{ localize 'HV.virtue' }}: {{ virtue }}</div>
-  </div>
 <section class="sheet-body">
   <div class="party-members">
     <ol class="party-members">
@@ -12,7 +5,7 @@
       <li class="actor flexrow" data-actor-id="{{e.id}}">
           <div class="flexrow field-row">
             <div class="field-img">
-              <img src="{{e.img}}" class="profile-img"/>
+              <img src="{{e.img}}" class="profile-img" data-action="actor" data-actor-id="{{e.id}}"/>
             </div>
             <div title="{{e.name}}" class="field-name">
               {{e.name}}
@@ -39,7 +32,7 @@
               <i class="virtue-balance {{balance e.system.virtue}}" title="{{balanceTip e.system.virtue}}"></i>{{e.system.virtue}}
             </div>
             <div class="field-row">
-              <a class="remove"><i class="fas fa-times-circle" title="{{ localize 'HV.dialog.partysheet.remove'}}"></i></a>
+              <a class="remove" data-action="remove"><i class="fas fa-times-circle" title="{{ localize 'HV.dialog.partysheet.remove'}}"></i></a>
             </div>
             {{/if}}
           </div>
@@ -48,5 +41,4 @@
       {{/each}}
     </ol>
   </div>
-  </section>
-</form>
+</section>
