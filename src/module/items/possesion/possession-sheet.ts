@@ -16,7 +16,7 @@ export class PossessionSheet extends HVItemSheet {
   };
   static PARTS = {
     header: {
-      template: 'systems/helveczia/templates/item/possession-sheet-header.hbs',
+      template: 'systems/helveczia/templates/item/partials/possession-sheet-header.hbs',
     },
     notes: {
       template: 'systems/helveczia/templates/item/partials/item-notes.hbs',

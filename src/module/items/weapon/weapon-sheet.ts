@@ -16,10 +16,10 @@ export class WeaponSheet extends HVItemSheet {
   };
   static PARTS = {
     header: {
-      template: 'systems/helveczia/templates/item/weapon-sheet-header.hbs',
+      template: 'systems/helveczia/templates/item/partials/weapon-sheet-header.hbs',
     },
     damage: {
-      template: 'systems/helveczia/templates/item/weapon-sheet-damage.hbs',
+      template: 'systems/helveczia/templates/item/partials/weapon-sheet-damage.hbs',
     },
     notes: {
       template: 'systems/helveczia/templates/item/partials/item-notes.hbs',

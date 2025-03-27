@@ -16,7 +16,7 @@ export class DeedSheet extends HVItemSheet {
   };
   static PARTS = {
     header: {
-      template: 'systems/helveczia/templates/item/deed-sheet-header.hbs',
+      template: 'systems/helveczia/templates/item/partials/deed-sheet-header.hbs',
     },
     notes: {
       template: 'systems/helveczia/templates/item/partials/item-notes.hbs',

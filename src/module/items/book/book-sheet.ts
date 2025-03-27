@@ -17,10 +17,10 @@ export class BookSheet extends HVItemSheet {
   };
   static PARTS = {
     header: {
-      template: 'systems/helveczia/templates/item/book-sheet-header.hbs',
+      template: 'systems/helveczia/templates/item/partials/book-sheet-header.hbs',
     },
     spells: {
-      template: 'systems/helveczia/templates/item/book-sheet-spells.hbs',
+      template: 'systems/helveczia/templates/item/partials/book-sheet-spells.hbs',
     },
     notes: {
       template: 'systems/helveczia/templates/item/partials/item-notes.hbs',

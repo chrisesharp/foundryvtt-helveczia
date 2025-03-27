@@ -16,7 +16,7 @@ export class ArmourSheet extends HVItemSheet {
   };
   static PARTS = {
     header: {
-      template: 'systems/helveczia/templates/item/armour-sheet-header.hbs',
+      template: 'systems/helveczia/templates/item/partials/armour-sheet-header.hbs',
     },
     notes: {
       template: 'systems/helveczia/templates/item/partials/item-notes.hbs',

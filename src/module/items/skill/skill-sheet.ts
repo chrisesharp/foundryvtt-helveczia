@@ -16,7 +16,7 @@ export class SkillSheet extends HVItemSheet {
   };
   static PARTS = {
     header: {
-      template: 'systems/helveczia/templates/item/skill-sheet-header.hbs',
+      template: 'systems/helveczia/templates/item/partials/skill-sheet-header.hbs',
     },
     notes: {
       template: 'systems/helveczia/templates/item/partials/item-notes.hbs',

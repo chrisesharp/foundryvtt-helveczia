@@ -16,7 +16,7 @@ export class ClassSheet extends HVItemSheet {
   };
   static PARTS = {
     header: {
-      template: 'systems/helveczia/templates/item/class-sheet-header.hbs',
+      template: 'systems/helveczia/templates/item/partials/class-sheet-header.hbs',
     },
     notes: {
       template: 'systems/helveczia/templates/item/partials/item-notes.hbs',

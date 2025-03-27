@@ -16,7 +16,7 @@ export class SpellSheet extends HVItemSheet {
   };
   static PARTS = {
     header: {
-      template: 'systems/helveczia/templates/item/spell-sheet-header.hbs',
+      template: 'systems/helveczia/templates/item/partials/spell-sheet-header.hbs',
     },
     notes: {
       template: 'systems/helveczia/templates/item/partials/item-notes.hbs',
