@@ -63,18 +63,6 @@ export abstract class BaseItem {
   }
 
   /**
-   * Allows every item to register its own listeners for rendered actor sheets.
-   * Implements base listeners for adding, configuring and deleting embedded items.
-   */
-  static activateActorSheetListeners(_html, _sheet) {
-    if (!this.documentName) {
-      throw new Error(
-        'A subclass of the BaseItem must provide an documentName field or implement their own _onItemAdd() method.',
-      );
-    }
-  }
-
-  /**
    * Allows each item to add data to its own sheet.
    */
   static getSheetData(sheetData, _item) {
@@ -86,13 +74,6 @@ export abstract class BaseItem {
    */
   static getActorSheetData(sheetData, _actor) {
     return sheetData;
-  }
-
-  /**
-   * Allows each item to add listeners to its sheet
-   */
-  static activateListeners(_html, _item) {
-    // Do nothing by default
   }
 
   /**

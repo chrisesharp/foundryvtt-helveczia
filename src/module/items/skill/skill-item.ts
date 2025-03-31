@@ -8,16 +8,6 @@ export class SkillItem extends BaseItem {
     return 'skill';
   }
 
-  /**
-   * Adds skill specifig actorsheet listeners.
-   */
-  static activateActorSheetListeners(html, sheet) {
-    super.activateActorSheetListeners(html, sheet);
-
-    // Check or uncheck a single box
-    html.find('.helveczia-skill').click((e) => this._onRollSkill.call(this, e, sheet));
-  }
-
   static prepareItemData(itemDocument) {
     const data = super.prepareItemData(itemDocument);
     if (itemDocument.isEmbedded && itemDocument.parent instanceof Actor) {

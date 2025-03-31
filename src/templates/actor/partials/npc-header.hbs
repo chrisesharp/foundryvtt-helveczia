@@ -4,26 +4,26 @@
             <h2>~ Helvéczia ~</h2>
         </div>
         <div class="actor-portrait">
-            <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
-            <div class="token-sync" title="Match token with portrait">
+            <img class="profile-img" data-edit="img" data-action="onEditImage" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+            <div class="token-sync" data-action="tokenSync" title="Match token with portrait">
                 <a><i class="fas fa-sync"></i></a>
             </div>
         </div>
         <div class="actor-name" style="display: inline-flex;">
-            <a><i class="fas {{#if (eq sex 'male') }}fa-mars{{else}}fa-venus{{/if}} toggle-gender" data-actor-id="{{ actor._id}}" title="sex"></i></a>
+            <a><i class="fas {{#if (eq sex 'male') }}fa-mars{{else}}fa-venus{{/if}} toggle-gender" data-action="toggleGender" data-actor-id="{{ actor._id}}" title="sex"></i></a>
             <h3 style="display: contents;"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>,</h3>
-            <a><i class="fa fa-dice roll-name" data-actor-id="{{ actor._id}}"></i></a>
+            <a><i class="fa fa-dice roll-name" data-action="rollName" data-actor-id="{{ actor._id}}"></i></a>
         </div>
         <div class="actor-level" style="display: inline-flex;">
            <h3 style="display: contents;">{{ localize 'HV.Level.abbr' }}<input name="system.levelBonus" type="text" value="{{data.levelBonus}}" placeholder="1"/>,</h3>
         </div>
-         <div class="actor-class" style="display: inline-flex;">
+        <div class="actor-class" style="display: inline-flex;">
             <h3>{{ordinal data.level }}  {{localize 'HV.Level.long'}} {{data.people}}
                 {{#if fighter_class}}
                     {{#if fighter_specialism }}
                          {{ fighter_specialism }}
                     {{else}}
-                     <button style="width: 85px;" data-class="fighter" class="choose-specialism">{{ localize 'HV.Specialism' }}</button>
+                     <button style="width: auto;" data-action="chooseSpecialism" data-class="fighter" class="choose-specialism">{{ localize 'HV.Specialism' }}</button>
                     {{/if}}
                 {{else}}
                 {{data.class}}
@@ -41,8 +41,7 @@
                             {{ localize 'HV.AC' }}:
                         </h4>
                         <div class="attribute-value">
-                            <input name="system.baseAC" type="text" value="{{data.baseAC}}" data-dtype="Number" />
-                            <div>(</div><input name="system.ac" type="text" data-dtype="Number" value="{{data.ac}}" title="{{ localize 'HV.AC' }}" disabled><div>)</div>
+                            <input name="system.ac" type="text" value="{{data.ac}}" data-dtype="Number" />
                         </div>
                     </li>
                 </ol>
@@ -52,7 +51,7 @@
                             <a>{{ localize 'HV.initiative' }}:</a>
                         </h4>
                         <div class="attribute-value" title="{{ localize 'HV.initiative_bonus'}}">
-                            <input id="init-bonus" name="system.initiative" type="text" data-dtype="Number" value="{{ plusminus data.initiative}}" disabled>
+                            <input id='init-bonus' name="system.initiative" type="text" data-dtype="Number" value="{{ plusminus data.initiative}}" disabled>
                         </div>
                     </li>
                 </ol>
@@ -62,20 +61,19 @@
                             {{ localize 'HV.virtue' }}:
                         </h4>
                         <div class="attribute-value">
-                            <input name="system.virtue" type="text" data-dtype="Number" value="{{data.virtue}}">
-                             <a><i class="fas fa-dice roll-virtue" data-actor-id="{{ actor._id}}"></i></a>
+                            <input name="system.virtue" type="text" data-dtype="Number" value="{{data.virtue}}" disabled> <div>(</div><input name="system.origVirtue" type="text" data-dtype="Number" value="{{data.origVirtue}}" title="{{ localize 'HV.virtueOrig' }}" {{#unless user.isGM}}disabled{{/unless}}><div>)</div>
                         </div>
                     </li>
                 </ol>
                 <ol class="attributes">
                     <li class="attribute ability-score actor-hp">
-                        <h4 class="attribute-name box-title" title="{{ localize 'HV.HP.long' }}" >
+                        <h4 class="attribute-name box-title">
                             {{ localize 'HV.HP.abbr' }}:
                         </h4>
-                        <div class="attribute-value">
+                        <div class="attribute-value" style="min-width:fit-content;">
                             <input name="system.hp.value" type="text" data-dtype="Number" value="{{data.hp.value}}" title="{{ localize 'HV.HP.current' }}">
                             <div>(</div><input name="system.hp.max" type="text" data-dtype="Number" value="{{data.hp.max}}" title="{{ localize 'HV.HP.max' }}" {{#unless user.isGM}}disabled{{/unless}}><div>)</div>
-                            <img src="{{die data.hp.hd}}" class="hitdie {{#if needToRoll}}blinking{{/if}}" data-roll="{{data.hp.hd}}" data-label="HD">
+                            <img src="{{die data.hp.hd}}" class="hitdie {{#if needToRoll}}blinking{{/if}}" data-action="rollHitDie" data-roll="{{data.hp.hd}}" data-label="HD">
                         </div>
                         
                     </li>

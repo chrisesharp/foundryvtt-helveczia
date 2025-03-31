@@ -7,3 +7,9 @@
 .flex-between {
   justify-content: space-between;
 }
+
+.party-members {
+  .flexrow.field-row :first-child {
+    flex: 0 0 50px;
+  }
+}

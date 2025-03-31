@@ -1,26 +1,33 @@
 {{!-- Equipment --}}
+<section
+  class='sheet-body tab possessions flexcol {{tab.cssClass}}'
+  data-group='primary'
+  data-tab='possessions'
+>
 <div class="possessions">
     <h2 class="centred">~ {{ localize 'HV.items.possessions'}} ~</h2>
     <div class="possessions flexrow">
         <ol class="item-list worn">
             {{#each possessions.[articles] as |item|}}
-            <li class="item-entry flexcol" data-item-id="{{item.id}}">
-                <div class="item flexrow" data-item-id="{{item.id}}">
+            <li class="item-entry flexcol" data-drag="true" data-item-id="{{item.id}}">
+                <div class="item flexrow"  data-action="itemSummary" data-item-id="{{item.id}}">
                     <div class="item-image"><img src="{{item.img}}" width="12" height="12"/></div>
                     <h4 class="item-name">{{item.name}}</h4>
                     <div class="item-controls">
-                        <a class="item-control item-delete" title="{{localize 'HV.Delete'}} {{localize 'HV.items.possessions'}}"><i class="fas fa-trash"></i></a>
+                        <a class="item-control item-edit" data-action="itemEdit" title="{{localize 'HV.Edit'}} {{localize 'HV.items.article'}}"><i class="fas fa-edit"></i></a>
+                        <a class="item-control item-delete" data-action="itemDelete" title="{{localize 'HV.Delete'}} {{localize 'HV.items.article'}}"><i class="fas fa-trash"></i></a>
                     </div>
                 </div>
              </li>
             {{/each }}
             {{#each possessions.[armour] as |item|}}
-            <li class="item-entry flexcol" data-item-id="{{item.id}}">
-                <div class="item flexrow" data-item-id="{{item.id}}">
+            <li class="item-entry flexcol" data-drag="true" data-item-id="{{item.id}}">
+                <div class="item flexrow"  data-action="itemSummary" data-item-id="{{item.id}}">
                     <div class="item-image"><img src="{{item.img}}" width="12" height="12"/></div>
                     <h4 class="item-name">{{item.name}}</h4>
                     <div class="item-controls">
-                        <a class="item-control item-delete" title="{{localize 'HV.Delete'}} {{localize 'HV.items.armour'}}"><i class="fas fa-trash"></i></a>
+                        <a class="item-control item-edit" data-action="itemEdit" title="{{localize 'HV.Edit'}} {{localize 'HV.items.article'}}"><i class="fas fa-edit"></i></a>
+                        <a class="item-control item-delete" data-action="itemDelete" title="{{localize 'HV.Delete'}} {{localize 'HV.items.article'}}"><i class="fas fa-trash"></i></a>
                     </div>
                 </div>
              </li>
@@ -63,3 +70,4 @@
         </div>
     </div>
 </div>
+</section>

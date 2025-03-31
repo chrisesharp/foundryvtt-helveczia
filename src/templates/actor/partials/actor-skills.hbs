@@ -1,5 +1,9 @@
 {{!-- skills and abilities --}}
-<div class="skills">
+<section
+  class='sheet-body tab skills flexcol {{tab.cssClass}}'
+  data-group='primary'
+  data-tab='skills'
+>
     <ol class="item-list">
         <li class="flexrow item-header">
             <h2 class="centred">~ {{ localize 'HV.tabs.skills'}} ( {{ data.skills.length }} / {{ data.maxskills }} ) ~</h2>
@@ -9,12 +13,12 @@
         </li>
         {{#if german_skill }}
             {{#unless german_skill_generated}}
-            <button class="generate-craft-skill"><i class="fa fa-dice"></i>{{ localize 'HV.randomCraft' }}</button>
+            <button class="generate-craft-skill" data-action="generateCraftSkill"><i class="fa fa-dice"></i>{{ localize 'HV.randomCraft' }}</button>
             {{/unless}}
         {{/if}}
         {{#if student_class }}
             {{#unless student_skills_generated}}
-            <button class="generate-science-skills"><i class="fa fa-dice"></i>{{ localize 'HV.randomScience' }}</button>
+            <button class="generate-science-skills" data-action="generateScienceSkill"><i class="fa fa-dice"></i>{{ localize 'HV.randomScience' }}</button>
             {{/unless}}
             {{#if student_doctorate }}
             <h4>{{bonusSkills '1' 'Science' 'Doctorate' '6'}}</h4>
@@ -42,17 +46,17 @@
         {{/if}}
     {{#each data.skills as |item id|}}
         <li class="item-entry  {{#if (gt item.system.ability.length 0) }}item-rollable{{/if}} flexcol" data-item-id="{{item.id}}">
-            <div class="item flexrow">
+            <div class="item flexrow"  data-action="itemSummary" data-item-id="{{item.id}}">
                 {{#if (gt item.system.ability.length 0) }}
-                <div class="item-image rollable" data-roll="skill" data-item-id="{{item.id}}" data-attr="{{item.system.ability}}"><img src="{{item.img}}" width="24" height="24"/></div>
+                <div class="item-image rollable" data-action="roll" data-roll="skill" data-item-id="{{item.id}}" data-attr="{{item.system.ability}}"><img src="{{item.img}}" width="24" height="24"/></div>
                 {{else}}
                 <div class="item-image"><img src="{{item.img}}" width="24" height="24"/></div>
                 {{/if}}
                 <h4 class="item-name">{{item.name}}</h4>
                 {{#unless (itemLocked item)}}
                 <div class="item-controls">
-                    <a class="item-control item-edit" title="{{localize 'HV.Edit'}} {{localize 'HV.tabs.skills'}}"><i class="fas fa-edit"></i></a>
-                    <a class="item-control item-delete" title="{{localize 'HV.Delete'}} {{localize 'HV.tabs.skills'}}"><i class="fas fa-trash"></i></a>
+                    <a class="item-control item-edit" data-action="itemEdit" title="{{localize 'HV.Edit'}} {{localize 'HV.tabs.skills'}}"><i class="fas fa-edit"></i></a>
+                    <a class="item-control item-delete" data-action="itemDelete" title="{{localize 'HV.Delete'}} {{localize 'HV.tabs.skills'}}"><i class="fas fa-trash"></i></a>
                 </div>
                 {{else}}
                 <div class="item-controls">
@@ -63,4 +67,4 @@
         </li>
     {{/each}}
     </ol>
-</div>
+</section>

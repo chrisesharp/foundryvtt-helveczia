@@ -1,6 +1,7 @@
 import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
 import { TokenDataProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/tokenData';
 import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
+const { Token } = foundry.canvas.placeables;
 
 export class HVToken extends Token {
   protected _onCreate(options: PropertiesToSource<TokenDataProperties>, userId: DocumentModificationOptions): void {

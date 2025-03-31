@@ -12,28 +12,28 @@ export class BookItem extends BaseItem {
     return 'book';
   }
 
-  /**
-   * Adds skill specifig actorsheet listeners.
-   */
-  static activateActorSheetListeners(html, sheet) {
-    super.activateActorSheetListeners(html, sheet);
+  // /**
+  //  * Adds skill specifig actorsheet listeners.
+  //  */
+  // static activateActorSheetListeners(html, sheet) {
+  //   super.activateActorSheetListeners(html, sheet);
+  // }
 
-    // Check or uncheck a single box
-    // html.find(".helveczia-possession").click((e) => this._onRollSkill.call(this, e, sheet));
-  }
-
-  static activateListeners(html, item) {
-    // Delete Inventory Item
-    html.find('.item-delete').click((ev) => {
-      const li = $(ev.currentTarget).parents('.item-entry');
-      const itemID = li.data('item-id');
-      const updateData = {
-        spells: item.system.spells.filter((i) => i.id !== itemID),
-      };
-      item.update({ system: updateData });
-      li.slideUp(200, () => item.render(false));
-    });
-  }
+  // static activateListeners(html, item) {
+  //   // Delete Inventory Item
+  //   // WHY [0]?
+  //   html[0].querySelectorAll('.item-delete').forEach((el) => {
+  //     el.addEventListener('click', (ev) => {
+  //       const li = $(ev.currentTarget).parents('.item-entry');
+  //       const itemID = li.data('item-id');
+  //       const updateData = {
+  //         spells: item.system.spells.filter((i) => i.id !== itemID),
+  //       };
+  //       item.update({ system: updateData });
+  //       li.slideUp(200, () => item.render(false));
+  //     });
+  //   });
+  // }
 
   static async preCreate(data: ItemDataConstructorData, _options: DocumentModificationOptions, _user: BaseUser) {
     foundry.utils.mergeObject(
@@ -46,11 +46,11 @@ export class BookItem extends BaseItem {
   }
 
   /** @override */
-  static async getSheetData(sheetData, item) {
+  static async getSheetData(sheetData, itemSheet) {
     sheetData.coins = CONFIG.HV.coins;
     // sheetData.spells = item.object.system?.spells;
     sheetData.spells = [];
-    for (const spell of item.object.system?.spells) {
+    for (const spell of itemSheet.item.system?.spells) {
       sheetData.spells.push({ id: spell.id, link: await TextEditor.enrichHTML(spell.id, { async: true }) });
     }
     return sheetData;

@@ -1,12 +1,17 @@
 {{!-- abilities --}}
-<h2 class="centred">{{ localize 'HV.tabs.abilities' }}</h2>
+<section
+  class='sheet-body tab abilities flexcol {{tab.cssClass}}'
+  data-group='primary'
+  data-tab='abilities'
+>
+<h2 class="underline centred">{{ localize 'HV.tabs.abilities' }}</h2>
 {{#if no_abilities }}
-    <button class="generate-abilities"><i class="fa fa-dice"></i>{{ localize 'HV.RollAbilities' }}</button>
+    <button class="generate-abilities" data-action="generateAbilities"><i class="fa fa-dice"></i>{{ localize 'HV.RollAbilities' }}</button>
 {{else}}
 <div class="attribute-group flexrow">
     <ol class="attributes">
         <li class="attribute ability-score">
-            <h4 class="attribute-name box-title rollable"  data-roll="attr" data-attr="str" title="Originally {{data.scores.str.base}}">
+            <h4 class="attribute-name box-title rollable"  data-action="roll" data-roll="attr" data-attr="str" title="Originally {{data.scores.str.base}}">
                 {{ localize 'HV.scores.str.abbr' }}
             </h4>
             <div class="attribute-value">
@@ -15,7 +20,7 @@
             </div>
         </li>
         <li class="attribute ability-score ">
-            <h4 class="attribute-name box-title rollable"  data-roll="attr" data-attr="dex" title="Originally {{data.scores.dex.base}}">
+            <h4 class="attribute-name box-title rollable"  data-action="roll" data-roll="attr" data-attr="dex" title="Originally {{data.scores.dex.base}}">
                 {{ localize 'HV.scores.dex.abbr' }}
             </h4>
             <div class="attribute-value">
@@ -26,7 +31,7 @@
     </ol>
     <ol class="attributes">
         <li class="attribute ability-score ">
-            <h4 class="attribute-name box-title rollable" data-roll="attr" data-attr="con" title="Originally {{data.scores.con.base}}">
+            <h4 class="attribute-name box-title rollable" data-action="roll" data-roll="attr" data-attr="con" title="Originally {{data.scores.con.base}}">
                 {{ localize 'HV.scores.con.abbr' }}
             </h4>
             <div class="attribute-value">
@@ -35,7 +40,7 @@
             </div>
         </li>
         <li class="attribute ability-score " >
-            <h4 class="attribute-name box-title rollable" data-roll="attr" data-attr="int" title="Originally {{data.scores.int.base}}">
+            <h4 class="attribute-name box-title rollable" data-action="roll" data-roll="attr" data-attr="int" title="Originally {{data.scores.int.base}}">
                 {{ localize 'HV.scores.int.abbr' }}
             </h4>
             <div class="attribute-value">
@@ -46,7 +51,7 @@
     </ol>
     <ol class="attributes">
         <li class="attribute ability-score " >
-            <h4 class="attribute-name box-title rollable" data-roll="attr" data-attr="wis" title="Originally {{data.scores.wis.base}}">
+            <h4 class="attribute-name box-title rollable" data-action="roll" data-roll="attr" data-attr="wis" title="Originally {{data.scores.wis.base}}">
                 {{ localize 'HV.scores.wis.abbr' }}
             </h4>
             <div class="attribute-value">
@@ -55,7 +60,7 @@
             </div>
         </li>
         <li class="attribute ability-score " >
-            <h4 class="attribute-name box-title rollable" data-roll="attr" data-attr="cha" title="Originally {{data.scores.cha.base}}">
+            <h4 class="attribute-name box-title rollable" data-action="roll" data-roll="attr" data-attr="cha" title="Originally {{data.scores.cha.base}}">
                 {{ localize 'HV.scores.cha.abbr' }}
             </h4>
             <div class="attribute-value">
@@ -65,14 +70,14 @@
         </li>
     </ol>
 </div>
-<h2 class="centred">{{ localize 'HV.tabs.saves' }}</h2>
+<h2 class="underline centred">{{ localize 'HV.tabs.saves' }}</h2>
 <div class="sheet-saves-table">
     <h3 class="saves-value-header">+/-</h3>
     <h3 class="saves-base-header">{{ localize 'HV.base' }}</h3>
     <h3 class="saves-bonus-header">{{ localize 'HV.bonus' }}</h3>
-    <h3 class="saves-bravery-header rollable"  data-roll="save" data-attr="bravery">{{ localize 'HV.saves.bravery.long' }}</h3>
-    <h3 class="saves-deftness-header rollable"  data-roll="save" data-attr="deftness">{{ localize 'HV.saves.deftness.long' }}</h3>
-    <h3 class="saves-temptation-header rollable"  data-roll="save" data-attr="temptation">{{ localize 'HV.saves.temptation.long' }}</h3>
+    <h3 class="saves-bravery-header rollable"  data-action="roll" data-roll="save" data-attr="bravery">{{ localize 'HV.saves.bravery.long' }}</h3>
+    <h3 class="saves-deftness-header rollable"  data-action="roll" data-roll="save" data-attr="deftness">{{ localize 'HV.saves.deftness.long' }}</h3>
+    <h3 class="saves-temptation-header rollable"  data-action="roll" data-roll="save" data-attr="temptation">{{ localize 'HV.saves.temptation.long' }}</h3>
 
     <h3 class="saves-bravery-value">{{ plusminus data.saves.bravery.mod }}</h3>
     <h3 class="saves-bravery-lb">(</h3>
@@ -93,3 +98,4 @@
     <h3 class="saves-temptation-rb">)</h3>
 </div>
 {{/if}}
+</section>

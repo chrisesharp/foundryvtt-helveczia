@@ -21,16 +21,6 @@ export class DeedItem extends BaseItem {
     return 'deed';
   }
 
-  /**
-   * Adds skill specifig actorsheet listeners.
-   */
-  static activateActorSheetListeners(html, sheet) {
-    super.activateActorSheetListeners(html, sheet);
-
-    // Check or uncheck a single box
-    // html.find(".helveczia-possession").click((e) => this._onRollSkill.call(this, e, sheet));
-  }
-
   static async preCreate(data: ItemDataConstructorData, _options: DocumentModificationOptions, _user: BaseUser) {
     foundry.utils.mergeObject(
       data,

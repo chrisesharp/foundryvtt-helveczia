@@ -1,5 +1,5 @@
 import { HVCharacterCreator } from '../apps/chargen';
-import { getActorEffect, onManageActiveEffect } from '../effects';
+import { getActorEffect } from '../effects';
 import { ClassItem } from '../items/class/class-item';
 import { PeopleItem } from '../items/people/people-item';
 import { ClassItemData, DeedItemData, SkillItemData, SpellItemData } from '../items/item-types';
@@ -12,17 +12,67 @@ import { HVNameGenerator } from '../apps/names';
 import { HVPDF } from '../pdf';
 import { NPCGenerator } from '../apps/npcgen';
 import { EditorView } from 'fvtt-types/src/foundry/common/prosemirror/_module.mjs';
-const { DialogV2 } = foundry.applications.api;
-
+import { slideToggle } from '../utils/slide';
+const { DialogV2, HandlebarsApplicationMixin } = foundry.applications.api;
+const { ActorSheetV2 } = foundry.applications.sheets;
+const { renderTemplate } = foundry.applications.handlebars;
+const { DragDrop } = foundry.applications.ux;
 const log = new Logger();
 
-export class HVActorSheet extends ActorSheet {
-  /** @override */
-  get template() {
-    return `systems/helveczia/templates/actor/${this.actor.type}-sheet.hbs`;
+export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
+  constructor(options = {}) {
+    super(options);
+    this.#dragDrop = this.#createDragDropHandlers();
   }
 
-  /** @override */
+  static DEFAULT_OPTIONS = {
+    classes: ['helveczia', 'sheet', 'actor'],
+    position: {
+      width: 580,
+      height: 730,
+    },
+    actions: {
+      toggleGender: this._toggleGender,
+      rollHitDie: this._onRollHitPoints,
+      itemSummary: this._onItemSummary,
+      effectSummary: this._onEffectSummary,
+      generateAbilities: this._generateAbilities,
+      chooseRaceClass: this._chooseRaceClass,
+      chooseSpecialism: this._chooseSpecialism,
+      roll: this._onRoll,
+      rollVirtue: this._rollVirtue,
+      rollName: this._rollName,
+      generateCraftSkill: this._generateCraftSkill,
+      generateScienceSkill: this._generateScienceSkills,
+      absolution: this._onAbsolution,
+      itemEdit: this._itemEdit,
+      itemDelete: this._itemDelete,
+      tokenSync: this._tokenSync,
+      toggleEffect: this._effectToggle,
+      editEffect: this._effectEdit,
+      deleteEffect: this._effectDelete,
+      spellBonus: this._spellBonus,
+      spellCast: this._spellCast,
+      spellEmpty: this._rememorizeSpell,
+      printPDF: HVPDF.printSheet,
+      importNPC: NPCGenerator.importNPC,
+    },
+    window: {
+      resizable: true,
+      // controls: [HVPDF.getPDFButton()],
+    },
+    // Custom property that's merged into `this.options`
+    dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
+    form: {
+      submitOnChange: true,
+    },
+  };
+
+  _prepareContext(options) {
+    return super._prepareContext(options);
+  }
+
+  // /** @override */
   activateEditor(
     target: string,
     editorOptions?: Options | undefined,
@@ -36,16 +86,6 @@ export class HVActorSheet extends ActorSheet {
       editorOptions.height = 175;
     }
     return super.activateEditor(target, editorOptions, initialContent);
-  }
-
-  onDropAllow(_actor, data): boolean {
-    // Prevent folders being dragged onto the sheet
-    return !(data.type === 'Folder');
-  }
-
-  /** @override */
-  async _onDrop(event: DragEvent): Promise<void> {
-    super._onDrop(event);
   }
 
   async _removePeoples(item): Promise<boolean> {
@@ -88,176 +128,127 @@ export class HVActorSheet extends ActorSheet {
   }
 
   /** @override */
-  activateListeners(html) {
-    super.activateListeners(html);
-
-    // set character sex
-    html.find('.toggle-gender').click(this._toggleGender.bind(this));
-    // Item summaries
-    html.find('.item .item-name').click((event) => this._onItemSummary(event));
-    // Effect summaries
-    html.find('.effect-name').click((event) => this._onEffectSummary(event));
-
-    // Rollable abilities.
-    html.find('.rollable').click(this._onRoll.bind(this));
-
-    // Roll Hit Points.
-    html.find('.hitdie').click(this._onRollHitPoints.bind(this));
+  _onRender(_context, _options) {
+    this.#dragDrop.forEach((d) => d.bind(this.element));
+    const html = this.element;
 
     // Seek Guidance.
-    html.find('.holy-bible').click((_ev) => {
+    html.querySelector('.holy-bible')?.addEventListener('click', (_ev) => {
       CONFIG.HV.applications.holyBible?.seekGuidance(this.actor);
-    });
-
-    // Everything below here is only needed if the sheet is editable
-    if (!this.options.editable) return;
-
-    // Character generation to initialize
-    html.find('.generate-abilities').click(this._generateAbilities.bind(this));
-    html.find('.choose-race-class').click(this._generateRaceClass.bind(this));
-    html.find('.choose-specialism').click(this._chooseSpecialism.bind(this));
-    html.find('.roll-virtue').click(this.rollVirtue.bind(this));
-    html.find('.roll-name').click(this.rollName.bind(this));
-    html.find('.generate-craft-skill').click(this._generateCraftSkill.bind(this));
-    html.find('.generate-science-skills').click(this._generateScienceSkills.bind(this));
-    html.find('.absolution').click(this._onAbsolution.bind(this));
-
-    // Add Inventory Item
-    html.find('.item-create').click(this._onItemCreate.bind(this));
-
-    // Update Inventory Item
-    html.find('.item-edit').click((ev) => {
-      const li = $(ev.currentTarget).parents('.item-entry');
-      const item = this.actor.items.get(li.data('item-id'));
-      if (item) item.sheet?.render(true);
-    });
-
-    // Delete Inventory Item
-    html.find('.item-delete').click((ev) => {
-      const li = $(ev.currentTarget).parents('.item-entry');
-      const itemID = li.data('item-id');
-      this.actor.deleteEmbeddedDocuments('Item', [itemID]);
-      li.slideUp(200, () => this.render(false));
-    });
-
-    // Toggle spell bonus
-    html.find('.item-bonus').click(async (ev) => {
-      const li = $(ev.currentTarget).parents('.item-entry');
-      const itemID = li.data('item-id');
-      const item = this.actor.items.get(itemID);
-      if (item) {
-        const spellLevel = (item.system as SpellItemData).level;
-        const state = (item.getFlag('helveczia', 'bonusSpell') as boolean) ?? false;
-        const current = (this.actor.getFlag('helveczia', `bonusSpellsChosen-${spellLevel}`) as number) ?? 0;
-        if (state !== true) {
-          if (current < this.actor.getSpellBonus()[spellLevel - 1]) {
-            item.setFlag('helveczia', 'bonusSpell', true);
-            await this.actor.setFlag('helveczia', `bonusSpellsChosen-${spellLevel}`, current + 1);
-          }
-        } else {
-          item.setFlag('helveczia', 'bonusSpell', false);
-          await this.actor.setFlag('helveczia', `bonusSpellsChosen-${spellLevel}`, Math.max(0, current - 1));
-        }
-      }
-    });
-
-    // Toggle spell cast
-    html.find('.item-cast').click(async (ev) => {
-      const li = $(ev.currentTarget).parents('.item-entry');
-      const itemID = li.data('item-id');
-      const item = this.actor.items.get(itemID);
-      if (item) {
-        const state = item.getFlag('helveczia', 'castSpell') as boolean;
-        if (state !== true) {
-          await item.createChatMessage(this.actor, 'HV.SpellCast');
-          if (item.getFlag('helveczia', 'bonusSpell') === true) {
-            item.setFlag('helveczia', 'castSpell', true);
-          } else {
-            const spell = item.id ? [item.id] : [];
-            await this.actor.deleteEmbeddedDocuments('Item', spell);
-          }
-        } else {
-          ui.notifications.warn(game.i18n.localize('HV.warnings.alreadyCast'));
-        }
-      }
-    });
-
-    // Rememorize spell
-    html.find('.item-empty').click(async (ev) => {
-      const li = $(ev.currentTarget).parents('.item-entry');
-      const itemID = li.data('item-id');
-      const item = this.actor.items.get(itemID);
-      if (item) {
-        const rollData = await this.actor.getRollMods({ roll: 'save', attr: 'temptation' });
-        const roll = await this.actor.rollCheck(rollData, {});
-        if (roll.total >= roll.data.roll.target) {
-          await item.createChatMessage(this.actor, 'HV.SpellRememorize');
-          if (item.getFlag('helveczia', 'bonusSpell') === true) {
-            item.setFlag('helveczia', 'castSpell', false);
-          }
-        } else {
-          await item.createChatMessage(this.actor, 'HV.SpellLost.abbr');
-        }
-      }
-    });
-
-    // Active Effect management
-    html.find('.effect-control').click((ev) => onManageActiveEffect(ev, this.actor));
-
-    // Sync token with portrait
-    html.find('.token-sync').click(async () => {
-      const portrait = this.actor.img;
-      const path = portrait?.split('/') ?? [];
-      let token = '';
-      let step;
-      while (path.length > 1) {
-        step = path.shift();
-        token += `${step}/`;
-      }
-
-      // eslint-disable-next-line prettier/prettier
-      const regex = new RegExp('/assets\/people\/(fe)*male/');
-      const match = token.match(regex);
-      const extraSubfolder = match ? 'lg/' : '';
-      step = path.shift();
-      token += `${extraSubfolder}${step}`;
-      const data = {
-        prototypeToken: {
-          texture: {
-            src: token,
-          },
-        },
-      };
-      await this.actor.update(data);
-      ui.notifications.info(game.i18n.localize('HV.TokenSync'));
     });
   }
 
-  /**
-   * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  _onItemCreate(event) {
-    event.preventDefault();
-    const header = event.currentTarget;
-    // Get the type of item to create.
-    const type = header.dataset.type;
-    // Grab any data associated with this control.
-    const data = foundry.utils.duplicate(header.dataset);
-    // Initialize a default name.
-    const name = `New ${type.capitalize()}`;
-    // Prepare the item object.
-    const itemData = {
-      name: name,
-      type: type,
-      data: data,
-    };
-    // // Remove the type from the dataset since it's in the itemData.type prop.
-    delete itemData.data['type'];
+  static _itemEdit(_event, element) {
+    const li = element.parentNode.parentNode;
+    const item = this.actor.items.get(li.dataset.itemId);
+    item?.sheet?.render(true);
+  }
 
-    // Finally, create the item!
-    return this.actor.createEmbeddedDocuments('Item', [itemData]);
+  static async _itemDelete(_event, element) {
+    const li = element.parentNode.parentNode;
+    const itemID = li.dataset.itemId;
+    const item = this.actor.items.get(itemID);
+    await item.delete();
+  }
+
+  static async _tokenSync(_event, _target) {
+    const portrait = this.actor.img;
+    const path = portrait?.split('/') ?? [];
+    let token = '';
+    let step;
+    while (path.length > 1) {
+      step = path.shift();
+      token += `${step}/`;
+    }
+
+    // eslint-disable-next-line prettier/prettier
+    const regex = new RegExp('/assets\/people\/(fe)*male/');
+    const match = token.match(regex);
+    const extraSubfolder = match ? 'lg/' : '';
+    step = path.shift();
+    token += `${extraSubfolder}${step}`;
+    const data = {
+      prototypeToken: {
+        texture: {
+          src: token,
+        },
+      },
+    };
+    await this.actor.update(data);
+    ui.notifications.info(game.i18n.localize('HV.TokenSync'));
+  }
+
+  static async _effectToggle(_event, target) {
+    const effect = this._getEmbeddedDocument(target);
+    await effect.update({ disabled: !effect.disabled });
+  }
+
+  static async _effectEdit(_event, target) {
+    const effect = this._getEmbeddedDocument(target);
+    await effect?.sheet.render(true);
+  }
+
+  static async _effectDelete(_event, target) {
+    const effect = this._getEmbeddedDocument(target);
+    await effect.delete();
+  }
+
+  static async _spellBonus(_event, target) {
+    const li = target.closest('.item-entry');
+    const itemID = li.dataset.itemId;
+    const item = this.actor.items.get(itemID);
+    if (item) {
+      const spellLevel = (item.system as SpellItemData).level;
+      const state = (item.getFlag('helveczia', 'bonusSpell') as boolean) ?? false;
+      const current = (this.actor.getFlag('helveczia', `bonusSpellsChosen-${spellLevel}`) as number) ?? 0;
+      if (state !== true) {
+        if (current < this.actor.getSpellBonus()[spellLevel - 1]) {
+          item.setFlag('helveczia', 'bonusSpell', true);
+          await this.actor.setFlag('helveczia', `bonusSpellsChosen-${spellLevel}`, current + 1);
+        }
+      } else {
+        item.setFlag('helveczia', 'bonusSpell', false);
+        await this.actor.setFlag('helveczia', `bonusSpellsChosen-${spellLevel}`, Math.max(0, current - 1));
+      }
+    }
+  }
+
+  static async _spellCast(_event, target) {
+    const li = target.closest('.item-entry');
+    const itemID = li.dataset.itemId;
+    const item = this.actor.items.get(itemID);
+    if (item) {
+      const state = item.getFlag('helveczia', 'castSpell') as boolean;
+      if (state !== true) {
+        await item.createChatMessage(this.actor, 'HV.SpellCast');
+        if (item.getFlag('helveczia', 'bonusSpell') === true) {
+          item.setFlag('helveczia', 'castSpell', true);
+        } else {
+          const spell = item.id ? [item.id] : [];
+          await this.actor.deleteEmbeddedDocuments('Item', spell);
+        }
+      } else {
+        ui.notifications.warn(game.i18n.localize('HV.warnings.alreadyCast'));
+      }
+    }
+  }
+
+  static async _rememorizeSpell(_event, target) {
+    const li = target.closest('.item-entry');
+    const itemID = li.dataset.itemId;
+    const item = this.actor.items.get(itemID);
+    if (item) {
+      const rollData = await this.actor.getRollMods({ roll: 'save', attr: 'temptation' });
+      const roll = await this.actor.rollCheck(rollData, {});
+      if (roll.total >= roll.data.roll.target) {
+        await item.createChatMessage(this.actor, 'HV.SpellRememorize');
+        if (item.getFlag('helveczia', 'bonusSpell') === true) {
+          item.setFlag('helveczia', 'castSpell', false);
+        }
+      } else {
+        await item.createChatMessage(this.actor, 'HV.SpellLost.abbr');
+      }
+    }
   }
 
   /**
@@ -265,9 +256,8 @@ export class HVActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-  async _onRoll(event) {
+  static async _onRoll(event, element) {
     event.preventDefault();
-    const element = event.currentTarget;
     const dataset = element.dataset;
     let target: { id?: string } = {};
     if (game.user) {
@@ -285,13 +275,13 @@ export class HVActorSheet extends ActorSheet {
     this.actor.rollCheck(rollData, target);
   }
 
-  async _toggleGender(event) {
+  static async _toggleGender(event) {
     event.preventDefault();
     const sex = this.actor.getFlag('helveczia', 'sex') === 'male' ? 'female' : 'male';
     await this.actor.setFlag('helveczia', 'sex', sex);
   }
 
-  async _onRollHitPoints(event) {
+  static async _onRollHitPoints(event) {
     event.preventDefault();
     const hitpoints = await HVCharacterCreator.rollHitPoints(this.actor);
     const success = this.actor.system.hp.max < hitpoints.max;
@@ -319,68 +309,51 @@ export class HVActorSheet extends ActorSheet {
     this.actor.setFlag('helveczia', 'rolled-hits-lvl', this.actor.system.level);
   }
 
-  /**
-   * Handle adding a summary description for an Item
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  async _onItemSummary(event) {
+  static async _onItemSummary(event, target) {
     event.preventDefault();
-    const li = $(event.currentTarget).parents('.item-entry');
-    const item = this.actor.items.get(li.data('item-id'));
+    const li = target.parentNode;
+    const item = await this.actor.items.get(li.dataset.itemId);
     if (!item) return;
-    const description = await TextEditor.enrichHTML(item.system.description, { async: true });
-
-    // Toggle summary
-    if (li.hasClass('expanded')) {
-      const summary = li.children('.item-summary');
-      summary.slideUp(200, () => summary.remove());
-    } else {
+    if (!li.querySelector('.item-summary')) {
+      const description = await TextEditor.enrichHTML(item.system.description, { async: true });
       // Add item tags
-      let tags = `
-      <div class="item-summary">`;
-      tags += await this._getTags(item);
-      tags += `
+      let section = `
+      <div class="item-summary" style='display:none;'>`;
+      section += await this._getTags(item);
+      section += `
           <div>
               ${description}
           </div>
       </div>`;
-      const div = $(tags);
-      li.append(div.hide());
-      div.slideDown(200);
+      li.innerHTML += section;
     }
-    li.toggleClass('expanded');
+    slideToggle(li.querySelector('.item-summary'));
   }
 
-  async _onEffectSummary(event) {
+  static async _onEffectSummary(event, target) {
     event.preventDefault();
-    const li = $(event.currentTarget).parents('.item-entry');
-    const effect = getActorEffect(this.actor, li.data('effect-id'));
+    const li = target.parentNode;
+    const effect = getActorEffect(this.actor, li.dataset.effectId);
     if (!effect) return;
 
     // Toggle summary
-    if (li.hasClass('expanded')) {
-      const summary = li.children('.item-summary');
-      summary.slideUp(200, () => summary.remove());
-    } else {
+    if (!li.querySelector('.item-summary')) {
       const keys = effect.changes.map((e) => e.key.replace(/^system\./, '')).join(', ');
       const targets = await TextEditor.enrichHTML(keys, { async: true });
       // Add item tags
-      let tags = `
-      <div class="item-summary">`;
-      tags += `
+      let section = `
+      <div class="item-summary" style='display:none;'>`;
+      section += `
           <div>
               Affects ${targets}
           </div>
       </div>`;
-      const div = $(tags);
-      li.append(div.hide());
-      div.slideDown(200);
+      li.innerHTML += section;
     }
-    li.toggleClass('expanded');
+    slideToggle(li.querySelector('.item-summary'));
   }
 
-  _generateAbilities(event) {
+  static _generateAbilities(event) {
     event.preventDefault();
     new HVCharacterCreator({
       actor: this.actor,
@@ -389,7 +362,7 @@ export class HVActorSheet extends ActorSheet {
     }).render(true);
   }
 
-  async _generateRaceClass(event) {
+  static async _chooseRaceClass(event) {
     event.preventDefault();
     const templateData = {
       peoples: PeopleItem.peoples(),
@@ -398,9 +371,9 @@ export class HVActorSheet extends ActorSheet {
 
     const content = await renderTemplate('systems/helveczia/templates/actor/dialogs/choose-origin.hbs', templateData);
     DialogV2.wait({
+      classes: ['helveczia'],
       window: {
         title: 'HV.ChooseOriginClass',
-        classes: ['helveczia', 'helveczia-dialog'],
       },
       modal: true,
       content: content,
@@ -421,9 +394,9 @@ export class HVActorSheet extends ActorSheet {
     });
   }
 
-  async _chooseSpecialism(event) {
+  static async _chooseSpecialism(event, button) {
     event.preventDefault();
-    const button = event.currentTarget;
+    // const button = event.currentTarget;
     const profession = button?.dataset?.class;
     const templateData = {
       profession: profession,
@@ -435,9 +408,9 @@ export class HVActorSheet extends ActorSheet {
       templateData,
     );
     DialogV2.wait({
+      classes: ['helveczia'],
       window: {
         title: `${game.i18n.localize('HV.Choose')} ${game.i18n.localize('HV.Specialism')}`,
-        classes: ['helveczia', 'helveczia-dialog'],
       },
       modal: true,
       content: content,
@@ -457,9 +430,9 @@ export class HVActorSheet extends ActorSheet {
     });
   }
 
-  async rollName(event) {
+  static async _rollName(event, button) {
     event.preventDefault();
-    const button = event.currentTarget;
+    // const button = event.currentTarget;
     const actorId = button?.dataset?.actorId;
     const actor = game.actors?.get(actorId);
     const sex = (actor?.getFlag('helveczia', 'sex') as string) ?? 'male';
@@ -473,9 +446,9 @@ export class HVActorSheet extends ActorSheet {
     }
   }
 
-  async rollVirtue(event) {
+  static async _rollVirtue(event, button) {
     event.preventDefault();
-    const button = event.currentTarget;
+    // const button = event.currentTarget;
     const actorId = button?.dataset?.actorId;
     const title = `${game.i18n.localize('HV.RollVirtue')}`;
     const formula = `${this.actor.system.origVirtue}`.match(/(\dd\d[\+\-]?\d*)/g)
@@ -485,9 +458,9 @@ export class HVActorSheet extends ActorSheet {
       formula: formula,
     });
     DialogV2.wait({
+      classes: ['helveczia'],
       window: {
         title: title,
-        classes: ['helveczia', 'helveczia-dialog'],
       },
       content: content,
       default: 'submit',
@@ -546,7 +519,7 @@ export class HVActorSheet extends ActorSheet {
     return null;
   }
 
-  async _generateCraftSkill(event) {
+  static async _generateCraftSkill(event) {
     event.preventDefault();
     const existingSkills = (this.actor.system as CharacterActorData).skills.map((i) => i.name);
     const rndCraft = await this.getRandomCraft(existingSkills);
@@ -576,15 +549,15 @@ export class HVActorSheet extends ActorSheet {
     }
   }
 
-  async _generateScienceSkills(event) {
+  static async _generateScienceSkills(event) {
     event.preventDefault();
     const existingSkills = (this.actor.system as CharacterActorData).skills.map((i) => i.name);
-    existingSkills.push(await this._genRndScienceSkill(1, existingSkills));
-    await this._genRndScienceSkill(2, existingSkills);
+    existingSkills.push(await HVActorSheet._genRndScienceSkill(1, existingSkills));
+    await HVActorSheet._genRndScienceSkill(2, existingSkills);
     await this.actor.update();
   }
 
-  async _genRndScienceSkill(idx, existingSkills): Promise<string | null> {
+  static async _genRndScienceSkill(idx, existingSkills): Promise<string | null> {
     const rndSkill = await this.getRandomScience(existingSkills);
     if (rndSkill != null) {
       const skillData = { name: rndSkill.name, ability: (rndSkill.system as SkillItemData).ability };
@@ -619,7 +592,7 @@ export class HVActorSheet extends ActorSheet {
     return CONFIG.HV.itemClasses[item.type] ? CONFIG.HV.itemClasses[item.type].getTags(item, this.actor) : '';
   }
 
-  async _onAbsolution(event) {
+  static async _onAbsolution(event) {
     event.preventDefault();
     const sins: HVItem[] = this.actor.system.deeds.filter((d) => d.system.subtype === 'sin');
     const virtues = this.actor.system.deeds.filter((d) => d.system.subtype === 'virtue' && d.system.magnitude > 1);
@@ -663,15 +636,78 @@ export class HVActorSheet extends ActorSheet {
     await roll.toMessage({ speaker: speaker, flavor: content });
   }
 
+  /** The following pieces set up drag handling and are unlikely to need modification  */
+
   /**
-   * Extend and override the sheet header buttons
-   * @override
+   * Returns an array of DragDrop instances
+   * @type {DragDrop[]}
    */
-  _getHeaderButtons() {
-    const buttons = super._getHeaderButtons().filter((b) => b.class != 'configure-sheet');
-    const extras: Application.HeaderButton[] = [];
-    if (game.user?.isGM && this.actor.type != 'party') extras.push(HVPDF.getPDFButton(this));
-    if (game.user?.isGM && this.actor.type === 'npc') extras.push(NPCGenerator.getButton(this));
-    return extras.concat(buttons);
+  get dragDrop() {
+    return this.#dragDrop;
+  }
+
+  // This is marked as private because there's no real need
+  // for subclasses or external hooks to mess with it directly
+  #dragDrop;
+
+  /**
+   * Create drag-and-drop workflow handlers for this Application
+   * @returns {DragDrop[]}     An array of DragDrop handlers
+   * @private
+   */
+  #createDragDropHandlers() {
+    return this.options.dragDrop.map((d) => {
+      d.permissions = {
+        dragstart: this._canDragStart.bind(this),
+        drop: this._canDragDrop.bind(this),
+      };
+      d.callbacks = {
+        dragstart: this._onDragStart.bind(this),
+        dragover: this._onDragOver.bind(this),
+        drop: this._onDrop.bind(this),
+      };
+      return new DragDrop(d);
+    });
+  }
+
+  onDropAllow(_actor, data): boolean {
+    // Prevent folders being dragged onto the sheet
+    return !(data.type === 'Folder');
+  }
+
+  async _onDropItem(event, data) {
+    if (!this.actor.isOwner) return false;
+    const item = await Item.implementation.fromDropData(data);
+
+    // Handle item sorting within the same Actor
+    if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, item);
+
+    // Create the owned item
+    return this._onDropItemCreate(item, event);
+  }
+
+  /**
+   * Handle the final creation of dropped Item data on the Actor.
+   * This method is factored out to allow downstream classes the opportunity to override item creation behavior.
+   * @param {object[]|object} itemData      The item data requested for creation
+   * @param {DragEvent} event               The concluding DragEvent which provided the drop data
+   * @returns {Promise<Item[]>}
+   * @private
+   */
+  async _onDropItemCreate(itemData, _event) {
+    itemData = itemData instanceof Array ? itemData : [itemData];
+    return this.actor.createEmbeddedDocuments('Item', itemData);
+  }
+
+  _getEmbeddedDocument(target) {
+    const docRow = target.closest('div.item');
+    console.log(docRow.dataset);
+    if (docRow.dataset.documentClass === 'Item') {
+      return this.actor.items.get(docRow.dataset.itemId);
+    } else if (docRow.dataset.documentClass === 'ActiveEffect') {
+      const parent =
+        docRow.dataset.parentId === this.actor.id ? this.actor : this.actor.items.get(docRow?.dataset.parentId);
+      return parent?.effects.get(docRow?.dataset.effectId);
+    } else return console.warn('Could not find document class');
   }
 }

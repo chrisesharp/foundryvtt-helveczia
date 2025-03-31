@@ -1,0 +1,31 @@
+<header class="sheet-header">
+  <div class="header-fields">
+    <div class="flexrow" style="justify-content: center;align-items: center;">
+      <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+    </div>
+    <div class="form-group">
+      {{#if isGM }}
+      <div class="flexrow">
+        <select name="system.subtype" type="text">
+        {{selectOptions skillTypes selected=data.subtype localize=true}}
+        </select> {{ localize 'HV.skill' }}
+        <select name="system.ability" type="text">
+        {{selectOptions abilities selected=data.ability localize=true}}
+        </select> {{ localize 'HV.ability' }}
+      </div>
+      <div class="flexrow" title="{{ localize 'HV.bonus' }}">
+        <h3 style="display: contents; width: 40px;">{{ localize 'HV.additionalBonus' }}</h3>
+          <input name="system.bonus" type="text" data-dtype="Number" value="{{data.bonus}}">
+      </div>
+      {{else}}
+      <div style="display: inline-flex;" title="{{ localize 'HV.bonus' }}">
+        <h3>{{ typeOfSkill data.subtype }}, {{ usingAbility data.ability }}</h3>
+      </div>
+      <div style="display: inline-flex;" title="{{ localize 'HV.bonus' }}">
+        <h3>{{ localize 'HV.additionalBonus' }}: {{ plusminus data.bonus }}</h3>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</header>

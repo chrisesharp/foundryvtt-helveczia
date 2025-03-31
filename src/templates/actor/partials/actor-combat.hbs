@@ -1,5 +1,9 @@
 {{!-- skills and abilities --}}
-<div class="combat">
+<section
+  class='sheet-body tab combat flexcol {{tab.cssClass}}'
+  data-group='primary'
+  data-tab='combat'
+>
     <div class="combat-bonuses">
         <div class="combat-melee">
             <div>
@@ -36,16 +40,16 @@
         <li class="flexrow item-header">
             <h2 class="centred">~ {{ localize 'HV.tabs.combat'}} ~</h2>
         </li>
-        <li class="item-rollable flexcol" data-roll="attack" data-attr="cc">
+        <li class="item-entry item-rollable flexcol" data-roll="attack" data-attr="cc">
             <div class="item flexrow">
-                <div class="item-image rollable" data-roll="attack" data-attr="cc">&nbsp;<i class="fist fas fa-fist-raised" style="font-size: 1.2em;"></i></div>
+                <div class="item-image rollable" data-action="roll" data-roll="attack" data-attr="cc">&nbsp;<i class="fist fas fa-fist-raised" style="line-height: 24px; font-size: 1.2em;"></i></div>
                 <h4 class="item-name">{{ localize 'HV.attack.cc.long' }}</h4>
         </li>
     {{#each data.possessions.weapons as |item id|}}
     {{#if (isWorn item)}}
         <li class="item-entry item-rollable flexcol" data-item-id="{{item.id}}">
-            <div class="item flexrow">
-                <div class="item-image rollable" data-roll="weapon" data-item-id="{{item.id}}" data-attr="{{item.system.attack}}"><img src="{{item.img}}" width="24" height="24"/></div>
+            <div class="item flexrow" data-action="itemSummary" data-item-id="{{item.id}}">
+                <div class="item-image rollable" data-action="roll" data-roll="weapon" data-item-id="{{item.id}}" data-attr="{{item.system.attack}}"><img src="{{item.img}}" width="24" height="24"/></div>
                 <h4 class="item-name">{{item.name}}</h4>
             </div>
         </li>
@@ -55,4 +59,4 @@
     <div class="centred">
         <img class="centred" height="80px" src="systems/helveczia/assets/icons/weapons.png"/>
     </div>
-</div>
+</section>

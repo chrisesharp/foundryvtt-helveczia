@@ -8,17 +8,6 @@ export class PossessionItem extends BaseItem {
     return 'possession';
   }
 
-  /**
-   * Adds skill specifig actorsheet listeners.
-   */
-  static activateActorSheetListeners(html, sheet) {
-    super.activateActorSheetListeners(html, sheet);
-
-    // Check or uncheck a single box
-    // html.find(".helveczia-possession").click((e) => this._onRollSkill.call(this, e, sheet));
-    // html.find(".helveczia-possession").click((e) => this._onRollSkill.call(this, e, sheet));
-  }
-
   /** @override */
   static getSheetData(sheetData, _item) {
     sheetData.coins = CONFIG.HV.coins;

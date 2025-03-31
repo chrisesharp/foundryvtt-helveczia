@@ -8,21 +8,12 @@ import { HVActor } from '../../actor/actor';
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 import { SpellItemData } from '../item-types';
+const { renderTemplate } = foundry.applications.handlebars;
 
 export class SpellItem extends BaseItem {
   static DEFAULT_TOKEN = 'icons/svg/daze.svg';
   static get documentName() {
     return 'possession';
-  }
-
-  /**
-   * Adds skill specifig actorsheet listeners.
-   */
-  static activateActorSheetListeners(html, sheet) {
-    super.activateActorSheetListeners(html, sheet);
-
-    // Check or uncheck a single box
-    // html.find(".helveczia-possession").click((e) => this._onRollSkill.call(this, e, sheet));
   }
 
   static async createChatMessage(actor: HVActor, message: string, data: ItemData): Promise<void> {

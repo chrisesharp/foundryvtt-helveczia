@@ -4,7 +4,7 @@
             <div class="chat-title"><h2>{{ localize 'HV.dialog.NewHitpoints' }}</h2></div>
             <div class="chat-img" style="background-image:url('{{actor.img}}')"></div>
         </div>
-        <div>
+        <div class="chat-details">
         {{#if success}}
             <h3>{{actor.name}} {{ localize "HV.rolled" }} {{hitpoints.max}} {{ localize 'HV.dialog.NewHitpoints' }}!</h3>
         {{else}}

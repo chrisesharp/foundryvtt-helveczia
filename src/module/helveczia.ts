@@ -40,6 +40,14 @@ import { registerKeyBindings } from './keys';
 import { HVToken } from './token';
 import { HVSceneConfig } from './scene';
 
+const { DocumentSheetConfig } = foundry.applications.apps;
+const { CardHandConfig, CardPileConfig, SceneConfig } = foundry.applications.sheets;
+const { ActorDirectory, CardsDirectory, Settings } = foundry.applications.sidebar.tabs;
+const { FrameViewer } = foundry.applications.sidebar.apps;
+const { ActorSheet, ItemSheet } = foundry.appv1.sheets;
+const { Actors, Items } = foundry.documents.collections;
+const { renderTemplate } = foundry.applications.handlebars;
+
 const log = new Logger();
 
 // Initialize system
@@ -82,13 +90,13 @@ Hooks.once('init', async () => {
   // Register custom sheets (if any)
   // Register sheet application classes
 
-  DocumentSheetConfig.unregisterSheet(Cards, 'core', CardsHand);
+  DocumentSheetConfig.unregisterSheet(Cards, 'core', CardHandConfig);
   DocumentSheetConfig.registerSheet(Cards, 'core', HVCardsHand, {
     label: 'CARDS.CardsHand',
     types: ['hand'],
     makeDefault: true,
   });
-  DocumentSheetConfig.unregisterSheet(Cards, 'core', CardsPile);
+  DocumentSheetConfig.unregisterSheet(Cards, 'core', CardPileConfig);
   DocumentSheetConfig.registerSheet(Cards, 'core', HVCardsPile, {
     label: 'CARDS.CardsPile',
     types: ['pile'],
@@ -120,6 +128,8 @@ Hooks.once('init', async () => {
 Hooks.once('setup', async () => {
   // Do anything after initialization but before
   // ready
+  log.info('Setting core.uiConfig.colorScheme.applications to "light" so it works better for our color scheme');
+  game.settings?.set('core', 'uiConfig', { colorScheme: { applications: 'light', interface: 'dark' } });
 });
 
 // When ready
@@ -151,10 +161,6 @@ Hooks.on('preUpdateToken', async (tokenDocument, change, options, _userid) => {
 });
 
 Hooks.on('refreshToken', async (token, _options) => {
-  // if (options.refreshElevation) {
-  //   options.refreshElevation = !CONFIG.HV.depthTokens;
-  //   token.renderFlags.set(options);
-  // }
   if (CONFIG.HV.depthTokens) token.tooltip.text = '';
 });
 
@@ -173,7 +179,7 @@ Hooks.on('dropItemSheetData', (actor: HVActor, sheet: HVActorSheet, data) => {
   return sheet.onDropAllow(actor, data);
 });
 
-Hooks.on('renderChatMessage', HVChat.addChatCriticalButton);
+Hooks.on('renderChatMessageHTML', HVChat.addChatCriticalButton);
 Hooks.on('renderCombatTracker', HVCombat.format);
 
 Hooks.on('preCreateCombatant', (combatant, _data, _options, _userId) => {
@@ -220,33 +226,34 @@ Hooks.on('removePartyFromCombat', async (members: Actor[], combatant: Combatant)
 });
 
 // License and KOFI infos
-Hooks.on('renderSidebarTab', async (object, html) => {
-  if (object instanceof ActorDirectory) {
-    HVNameGenerator.addControl(object, html);
-  }
+Hooks.on('renderActorDirectory', async (object, html) => {
+  HVNameGenerator.addControl(object, html);
+});
 
-  if (object instanceof CardsDirectory) {
-    HVCardsControl.addControl(object, html);
-  }
+Hooks.on('renderCardsDirectory', async (object, html) => {
+  HVCardsControl.addControl(object, html);
+});
 
-  if (object instanceof Settings) {
-    const gamesystem = html.find('#game-details');
-    // License text
-    const template = 'systems/helveczia/templates/chat/license.html';
-    const rendered = await renderTemplate(template, {});
-    gamesystem.find('.system').append(rendered);
+Hooks.on('getApplicationHeaderButtons', async (object, html) => {
+  console.log(object, html);
+});
 
-    // User guide
-    const docs = html.find("button[data-action='docs']");
-    const site = 'https://chrisesharp.github.io/foundryvtt-helveczia';
-    const styling = 'border:none;margin-right:2px;vertical-align:middle;margin-bottom:5px';
-    $(
-      `<button data-action="userguide"><img src='systems/helveczia/assets/icons/shilling.png' width='16' height='16' style='${styling}'/>Helvéczia Guide</button>`,
-    ).insertAfter(docs);
-    html.find('button[data-action="userguide"]').click(() => {
-      const fv = new FrameViewer();
-      fv.url = site;
-      fv.render(true);
-    });
-  }
+Hooks.on('renderSettings', async (object, html) => {
+  const gamesystem = html.querySelector('.info');
+  // License text
+  const template = 'systems/helveczia/templates/license.html';
+  const rendered = await renderTemplate(template, {});
+  gamesystem.querySelector('.system').innerHTML += rendered;
+
+  // User guide
+  const docs = html.querySelector("button[data-app='support']");
+  const site = 'https://chrisesharp.github.io/foundryvtt-helveczia';
+  const styling = 'border:none;margin-right:2px;vertical-align:middle;margin-bottom:5px';
+  const button = `<button data-action="userguide"><img src='systems/helveczia/assets/icons/shilling.png' width='16' height='16' style='${styling}'/>Helvéczia Guide</button>`;
+  docs.parentNode.innerHTML += button;
+  html.querySelector('button[data-action="userguide"]').addEventListener('click', () => {
+    const fv = new FrameViewer({ url: site });
+    fv.url = site;
+    fv.render(true);
+  });
 });

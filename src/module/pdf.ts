@@ -420,23 +420,19 @@ export class HVPDF {
     }
   }
 
-  static getPDFButton(sheet): Application.HeaderButton {
-    const button: Application.HeaderButton = {
-      label: game.i18n.localize('HV.dialog.PDF'),
+  static getPDFButton() {
+    return {
+      label: 'HV.dialog.PDF',
       class: 'configure-actor',
       icon: 'fa-solid fa-file-pdf',
-      onclick: async (ev) => {
-        ui.notifications.info('Generating PDF now');
-        HVPDF.printSheet(ev, sheet);
-      },
+      action: 'printPDF',
     };
-    return button;
   }
 
-  static async printSheet(ev, sheet): Promise<void> {
+  static async printSheet(ev): Promise<void> {
     const sheetElement = ev.currentTarget.closest('.sheet').querySelector('.window-content');
     const char: character = {
-      actor: sheet.actor,
+      actor: this.actor,
       title: sheetElement.querySelector('.actor-class').querySelector('h3').innerText,
       initBonus: sheetElement.querySelector('input#init-bonus').value,
       strBonus: sheetElement.querySelector('input#str-mod').value.replace(/\(/, '').replace(/\)/, ''),
@@ -458,7 +454,7 @@ export class HVPDF {
       ranged: sheetElement.querySelector('h3#ranged-mod').innerText,
       cc: sheetElement.querySelector('h3#cc-mod').innerText,
     };
-    const pdf = new HVPDF(char, sheet);
+    const pdf = new HVPDF(char, this);
     await pdf.printOfficial();
     pdf.doc.save(`${char.actor.name}-sheet.pdf`);
   }

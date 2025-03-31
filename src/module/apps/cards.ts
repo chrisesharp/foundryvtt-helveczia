@@ -1,5 +1,7 @@
 import { Utils } from '../utils/utils';
 const { DialogV2 } = foundry.applications.api;
+const { CardDeckConfig, CardHandConfig } = foundry.applications.sheets;
+const { renderTemplate } = foundry.applications.handlebars;
 
 export class HVCardsControl {
   static addControl(_object, html): void {
@@ -10,8 +12,8 @@ export class HVCardsControl {
       )}'> ${game.i18n.localize('HV.dialog.cardgenerator')}
       </button>
       </div>`;
-      html.find('.header-search').before($(control));
-      html.find('.hv-card-gen').click((ev) => {
+      html.querySelector('.directory-header').innerHTML += control;
+      html.querySelector('.hv-card-gen').addEventListener('click', (ev) => {
         ev.preventDefault();
         Hooks.call('HV.Cards.genCards');
       });
@@ -33,6 +35,7 @@ export class HVCardsControl {
     const actors = game.actors?.filter((a) => a.hasPlayerOwner);
     const html = await renderTemplate('systems/helveczia/templates/cards/dialog-generate.hbs', { actors: actors });
     DialogV2.wait({
+      classes: ['helveczia'],
       window: {
         title: 'HV.dialog.cardgenerator',
       },
@@ -44,76 +47,39 @@ export class HVCardsControl {
   }
 }
 
-export class HVCardsPile extends CardsConfig {
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
+export class HVCardsPile extends CardDeckConfig {
+  static DEFAULT_OPTIONS = {
+    classes: ['helveczia'],
+    window: {
+      contentClasses: ['helveczia', 'dialog', 'creator'],
+    },
+  };
+  static PARTS = {
+    cards: {
+      root: true,
       template: 'systems/helveczia/templates/cards/cards-pile.hbs',
-    });
-  }
+    },
+  };
 }
 
-export class HVCardsHand extends CardsHand {
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
+export class HVCardsHand extends CardHandConfig {
+  static DEFAULT_OPTIONS = {
+    actions: {
+      draw: HVCardsHand.drawDialog,
+      pass: HVCardsHand.playDialog,
+    },
+    classes: ['helveczia'],
+    window: {
+      contentClasses: ['helveczia', 'dialog', 'creator'],
+    },
+  };
+
+  static PARTS = {
+    cards: {
+      root: true,
       template: 'systems/helveczia/templates/cards/cards-hand.hbs',
-    });
-  }
-
-  /** @ooverride */
-  getData(options) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const data: any = super.getData(options);
-    data.isGM = game.user?.isGM;
-    data.config = CONFIG.HV;
-    data.total = data.cards.reduce((acc, card) => acc + card.value, 0);
-    return data;
-  }
-
-  /** @ooverride */
-  activateListeners(html) {
-    super.activateListeners(html);
-  }
-
-  // /** @override */
-  async _onCardControl(event) {
-    const button = event.currentTarget;
-    const li = button.closest('.card');
-    const card = li ? this.object.cards.get(li.dataset.cardId) : null;
-    const cls = getDocumentClass('Card');
-
-    // Save any pending change to the form
-    await this._onSubmit(event, { preventClose: true, preventRender: true });
-
-    // Handle the control action
-    switch (button.dataset.action) {
-      case 'create':
-        return cls.createDialog({}, { parent: this.object, pack: this.object.pack });
-      case 'edit':
-        return card.sheet.render(true);
-      case 'delete':
-        return card.deleteDialog();
-      case 'deal':
-        return this.object.dealDialog();
-      case 'draw':
-        return this.drawDialog(this.object);
-      case 'pass':
-        return this.object.passDialog();
-      case 'play':
-        return this.playDialog(this.object, card);
-      case 'reset':
-        return this.object.resetDialog();
-      case 'shuffle':
-        this.options.sort = this.constructor.SORT_TYPES.SHUFFLED;
-        return this.object.shuffle();
-      case 'toggleSort':
-        this.options.sort = { standard: 'shuffled', shuffled: 'standard' }[this.options.sort];
-        return this.render();
-      case 'nextFace':
-        return card.update({ face: card.face === null ? 0 : card.face + 1 });
-      case 'prevFace':
-        return card.update({ face: card.face === 0 ? null : card.face - 1 });
-    }
-  }
+    },
+  };
 
   static async createHandsFor(name: string): Promise<void> {
     // const packName = 'helveczia.cards';
@@ -150,9 +116,10 @@ export class HVCardsHand extends CardsHand {
     }
   }
 
-  async drawDialog(source) {
+  static async drawDialog(event, target) {
     const user = game.user;
     if (user != null) {
+      const source = this.document;
       const sourceDeck = source.getFlag('helveczia', 'sourceDeck');
       const decks = [sourceDeck];
       if (!decks?.length) return ui.notifications.warn('CARDS.DrawWarnNoSources', { localize: true });
@@ -161,8 +128,9 @@ export class HVCardsHand extends CardsHand {
 
       return Dialog.prompt({
         title: game.i18n.localize('CARDS.DrawTitle'),
-        label: game.i18n.localize('CARDS.Draw'),
+        label: game.i18n.localize('CARDS.ACTIONS.Draw'),
         content: html,
+        classes: ['helveczia'],
         callback: (html) => {
           const form = html.querySelector('form.cards-dialog') as HTMLFormElement;
           if (form) {
@@ -181,19 +149,21 @@ export class HVCardsHand extends CardsHand {
     }
   }
 
-  async playDialog(source, card) {
+  static async playDialog(event, target) {
     const user = game.user;
+    const source = this.document;
     if (user != null) {
       const cards = game.cards?.filter(
-        (c) => c !== source && c.type !== 'deck' && c.testUserPermission(user, 'LIMITED'),
+        (c) => c !== source && c.type === 'pile' && c.testUserPermission(user, 'LIMITED'),
       );
       if (!cards?.length) return ui.notifications.warn('CARDS.PassWarnNoTargets', { localize: true });
-
+      const card = source.cards.filter((c) => c.id === target.dataset.cardId)[0];
       const html = await renderTemplate('systems/helveczia/templates/cards/dialog-play.hbs', { card, cards });
 
       return Dialog.prompt({
         title: game.i18n.localize('CARD.Play'),
         label: game.i18n.localize('CARD.Play'),
+        classes: ['helveczia'],
         content: html,
         callback: (html) => {
           const form = html.querySelector('form.cards-dialog') as HTMLFormElement;

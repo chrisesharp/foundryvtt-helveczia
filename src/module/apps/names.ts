@@ -48,8 +48,8 @@ export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
         )}'> ${game.i18n.localize('HV.dialog.namegenerator')}
         </button>
         </div>`;
-    html.find('.header-search').before($(control));
-    html.find('.hv-name-gen').click((ev) => {
+    html.querySelector('.directory-header').innerHTML += control;
+    html.querySelector('.hv-name-gen').addEventListener('click', (ev) => {
       ev.preventDefault();
       Hooks.call('HV.Names.genName');
     });

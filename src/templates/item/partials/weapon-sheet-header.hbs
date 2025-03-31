@@ -1,0 +1,30 @@
+<header class="sheet-header">
+  <div class="header-fields">
+    <div class="flexrow" style="justify-content: center;align-items: center;">
+      <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+    </div>
+    <div class="form-group">
+        <div class="flexrow">
+        {{#if isGM }}
+          <h3 class="cost">{{ localize "HV.Cost" }}: </h3>
+          <input class="cost" name="system.cost.value" type="text" value="{{data.cost.value}}">
+          <select name="system.cost.coin" type="text">
+          {{selectOptions coins selected=data.cost.coin}}
+          </select>
+        </div>
+        <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.Encumbrance' }}">
+          <h3 class="cost">{{ localize 'HV.Encumbrance' }}</h3><input class="cost" name="system.encumbrance" type="text" data-dtype="Number" value="{{ data.encumbrance}}">
+        </div>
+        {{else}}
+          <div class="actor-exp" style="display: inline-flex;">
+            <h3 class="cost">{{ localize "HV.Cost" }}: {{data.cost.value}} {{data.cost.coin}}</h3>
+          </div>
+          <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.Encumbrance' }}">
+            <h3 class="cost">{{ localize 'HV.Encumbrance' }}</h3><input class="cost" name="system.encumbrance" type="text" data-dtype="Number" value="{{ data.encumbrance}}" disabled>
+          </div>
+        {{/if}}
+        </div>
+      </div>
+  </div>
+</header>

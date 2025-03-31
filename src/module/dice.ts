@@ -1,6 +1,7 @@
 import { Evaluated } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/client/dice/roll';
 import { HVActor } from './actor/actor';
 const { DialogV2 } = foundry.applications.api;
+const { renderTemplate } = foundry.applications.handlebars;
 
 const templatePath = 'systems/helveczia/templates/chat/';
 
@@ -252,9 +253,9 @@ export class HVDice {
 
     return new Promise((resolve) => {
       DialogV2.wait({
+        classes: ['helveczia'],
         window: {
           title: title ?? '',
-          classes: ['helveczia', 'helveczia-dialog'],
         },
         modal: false,
         content: html,

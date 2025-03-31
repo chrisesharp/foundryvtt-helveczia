@@ -1,3 +1,4 @@
+form.application.helveczia,
 .helveczia.sheet {
   background: none;
   box-shadow: none;
@@ -8,18 +9,27 @@
   header.window-header {
     background: var(--color-header-background);
   }
+
+  .window-content .sheet-body {
+    overflow: auto;
+  }
 }
 
 dialog.application.dialog {
-  box-shadow: none;
-  border: 0;
-  -webkit-filter: drop-shadow(5px 5px 5px #222);
-  filter: drop-shadow(5px 5px 5px #222);
+  &.helveczia {
+    box-shadow: none;
+    border: 0;
+    -webkit-filter: drop-shadow(5px 5px 5px #222);
+    filter: drop-shadow(5px 5px 5px #222);
+    background-image: url('../assets/papers2.png');
+    background-color: transparent;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 20px;
+  }
 }
 
 .application {
-  background: none;
-
   &.helveczia {
     box-shadow: none;
     border: 0;
@@ -28,17 +38,10 @@ dialog.application.dialog {
   }
 }
 
-.application,
-.window-app {
+form.application.helveczia,
+.app.window-app.helveczia,
+.active-chat {
   font-family: $font-primary;
-
-  .chat-message {
-    background-image: url('../assets/papers2.png');
-    background-color: transparent;
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding: 20px;
-  }
 
   .dialog,
   .window-content {
@@ -93,7 +96,7 @@ dialog.application.dialog {
   text-shadow: none;
 }
 
-.rollable {
+.helveczia.sheet .rollable {
   &:hover,
   &:focus {
     color: #000;
@@ -160,7 +163,8 @@ div.chapter {
   }
 }
 
-div.verse-msg {
+div.verse-msg,
+div.verse-msg h2 {
   font-family: $font-secondary;
 }
 
@@ -192,4 +196,23 @@ section.helveczia.game-license {
   height: 28px;
   line-height: 26px;
   margin: 2px 4px;
+}
+
+.attribute {
+  list-style: none;
+}
+
+.helveczia.sheet {
+  & * {
+    margin: 1px;
+  }
+}
+
+.chat-message {
+  font-family: $font-primary;
+  background-image: url('../assets/papers2.png');
+  background-color: transparent;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 20px;
 }

@@ -4,25 +4,104 @@ import { Logger } from '../logger';
 import { HVActor } from './actor';
 import { HVActorSheet } from './actor-sheet';
 import { CharacterActorData } from './actor-types';
+import { HVPDF } from '../pdf';
 
 const log = new Logger();
 
 export class HVCharacterSheet extends HVActorSheet {
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['helveczia', 'sheet', 'actor', 'character'],
-      template: 'systems/helveczia/templates/actor/character-sheet.hbs',
+  static DEFAULT_OPTIONS = {
+    classes: ['helveczia', 'sheet', 'actor', 'character'],
+    position: {
       width: 580,
       height: 730,
+    },
+    actions: {
+      onEditImage: this._onEditImage,
+    },
+    window: {
       resizable: true,
-      tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'abilities' }],
-    });
+      controls: [HVPDF.getPDFButton()],
+    },
+    // Custom property that's merged into `this.options`
+    dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
+    form: {
+      submitOnChange: true,
+    },
+  };
+
+  /** @override */
+  static PARTS = {
+    header: {
+      template: 'systems/helveczia/templates/actor/partials/character-header.hbs',
+    },
+    tabs: {
+      template: 'systems/helveczia/templates/actor/partials/character-nav.hbs',
+    },
+    abilities: {
+      template: 'systems/helveczia/templates/actor/partials/actor-abilities.hbs',
+    },
+    skills: {
+      template: 'systems/helveczia/templates/actor/partials/actor-skills.hbs',
+    },
+    combat: {
+      template: 'systems/helveczia/templates/actor/partials/actor-combat.hbs',
+    },
+    possessions: {
+      template: 'systems/helveczia/templates/actor/partials/actor-equipment.hbs',
+    },
+    deeds: {
+      template: 'systems/helveczia/templates/actor/partials/actor-deeds.hbs',
+    },
+    effects: {
+      template: 'systems/helveczia/templates/actor/partials/actor-effects.hbs',
+    },
+    notes: {
+      template: 'systems/helveczia/templates/actor/partials/actor-notes.hbs',
+    },
+    fighter: {
+      template: 'systems/helveczia/templates/actor/partials/fighter.hbs',
+    },
+    cleric: {
+      template: 'systems/helveczia/templates/actor/partials/cleric.hbs',
+    },
+    vagabond: {
+      template: 'systems/helveczia/templates/actor/partials/vagabond.hbs',
+    },
+    student: {
+      template: 'systems/helveczia/templates/actor/partials/student.hbs',
+    },
+  };
+
+  /** @override */
+  _configureRenderOptions(options) {
+    super._configureRenderOptions(options);
+    // Not all parts always render
+    options.parts = ['header', 'tabs'];
+    // Don't show the other tabs if only limited view
+    if (this.document.limited) {
+      options.parts.push('notes');
+      return;
+    }
+    options.parts.push('abilities', 'skills', 'combat', 'possessions', 'deeds', 'notes');
+    if (game.settings?.get('helveczia', 'effects') && game.user.isGM) {
+      options.parts.push('effects');
+    }
+    if (this.actor.isCleric()) {
+      options.parts.push('cleric');
+    }
+    if (this.actor.isFighter()) {
+      options.parts.push('fighter');
+    }
+    if (this.actor.isVagabond()) {
+      options.parts.push('vagabond');
+    }
+    if (this.actor.isStudent()) {
+      options.parts.push('student');
+    }
   }
 
   /** @override */
-  async getData() {
-    const baseData = await super.getData();
-    const actorData = baseData.actor;
+  async _prepareContext(options) {
     const data: any = {
       owner: this.actor.isOwner,
       sex: this.actor.getFlag('helveczia', 'sex') ?? 'male',
@@ -59,15 +138,18 @@ export class HVCharacterSheet extends HVActorSheet {
       needToRoll:
         this.actor.system.hp.max === 0 ||
         (this.actor.getFlag('helveczia', 'rolled-hits-lvl') as number) < this.actor.system.level,
+      // Necessary for formInput and formFields helpers
+      fields: this.document.schema.fields,
     };
+    data.tabs = this._getTabs(options.parts);
     // Add actor, actor data and item
-    data.actor = actorData;
-    data.data = data.actor.system;
+    data.actor = this.actor;
+    data.data = this.actor.system;
     data.items = this.actor.items.map((i) => i);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.hasBible = data.items.filter((i) => i.name.includes('Bible')).length > 0;
     data.effects = prepareActiveEffectCategories(this.actor.allApplicableEffects());
-    data.maxspecialisms = this.actor.isVagabond() ? ((actorData.system as CharacterActorData).level >= 5 ? 3 : 2) : 1;
+    data.maxspecialisms = this.actor.isVagabond() ? ((this.actor.system as CharacterActorData).level >= 5 ? 3 : 2) : 1;
     data.spellslots = (this.actor as HVActor).getSpellSlots();
     data.spellBonus = (this.actor as HVActor).getSpellBonus();
     data.currentBonusSpells = [
@@ -77,28 +159,95 @@ export class HVCharacterSheet extends HVActorSheet {
     ];
     data.maxspells = data.spellslots.reduce((acc, n) => acc + n, 0);
     data.spellGroups = [1, 2, 3];
-    data.worn = [];
-    data.carried = [];
-    data.mount = [];
+    const slots = this.categorisePossessions(data.data.possessions);
+    data.worn = slots.worn;
+    data.carried = slots.carried;
+    data.mount = slots.mount;
+    return data;
+  }
 
-    for (const category of Object.values(data.data.possessions)) {
+  categorisePossessions(possessions): { worn: Item[]; carried: Item[]; mount: Item[] } {
+    const worn: Item[] = [];
+    const carried: Item[] = [];
+    const mount: Item[] = [];
+
+    for (const category of Object.values(possessions)) {
       for (const item of category as HVItem[]) {
         switch ((item as HVItem).getFlag('helveczia', 'position')) {
           case 'worn':
-            data.worn.push(item);
+            worn.push(item);
             break;
           case 'carried':
-            data.carried.push(item);
+            carried.push(item);
             break;
           default:
-            data.mount.push(item);
+            mount.push(item);
             break;
         }
       }
     }
 
-    data.enrichedDescription = await TextEditor.enrichHTML(this.object.system.description, { async: true });
-    return data;
+    return { worn: worn, carried: carried, mount: mount };
+  }
+
+  /**
+   * Generates the data for the generic tab navigation template
+   * @param {string[]} parts An array of named template parts to render
+   * @returns {Record<string, Partial<ApplicationTab>>}
+   * @protected
+   */
+  _getTabs(parts) {
+    // If you have sub-tabs this is necessary to change
+    const tabGroup = 'primary';
+    // Default tab for first time it's rendered this session
+    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = 'abilities';
+    return parts.reduce((tabs, partId) => {
+      const tab = {
+        cssClass: '',
+        group: tabGroup,
+        // Matches tab property to
+        id: '',
+        // FontAwesome Icon, if you so choose
+        icon: '',
+        // Run through localization
+        label: 'HV.tabs.',
+      };
+      switch (partId) {
+        case 'header':
+        case 'tabs':
+          return tabs;
+        default:
+          tab.id = partId;
+          tab.label += partId;
+          break;
+      }
+      if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';
+      tabs[partId] = tab;
+      return tabs;
+    }, {});
+  }
+
+  /** @override */
+  async _preparePartContext(partId, context) {
+    switch (partId) {
+      case 'notes':
+        context.tab = context.tabs[partId];
+        context.enrichedDescription = await TextEditor.enrichHTML(this.actor.system.description, {
+          secrets: this.document.isOwner,
+          rollData: this.actor.getRollData(),
+          // Relative UUID resolution
+          relativeTo: this.actor,
+        });
+        break;
+      case 'effects':
+        context.tab = context.tabs[partId];
+        context.effects = prepareActiveEffectCategories(this.actor.allApplicableEffects());
+        break;
+      default:
+        context.tab = context.tabs[partId];
+        break;
+    }
+    return context;
   }
 
   /**
@@ -106,7 +255,7 @@ export class HVCharacterSheet extends HVActorSheet {
    * @returns availableSlots : number
    */
   async _calculateAvailableSlots(): Promise<any> {
-    const sheetData = await this.getData();
+    const sheetData = this.categorisePossessions(this.actor.system?.possessions);
     const capacity = this.actor.system.capacity - 8;
     const wornUsed = sheetData.worn.map((i) => parseInt(i.system.encumbrance)).reduce((acc, n) => acc + n, 0);
     const carriedUsed = sheetData.carried.map((i) => parseInt(i.system.encumbrance)).reduce((acc, n) => acc + n, 0);
@@ -126,20 +275,8 @@ export class HVCharacterSheet extends HVActorSheet {
   async _onDropItem(event: DragEvent, data: ActorSheet.DropData.Item): Promise<unknown> {
     log.debug('_onDropItem() | ', event, data);
     let shouldContinue = true;
-    let item;
+    const item = await Item.implementation.fromDropData(data);
     let position = 'mount';
-    try {
-      const transfer = event.dataTransfer?.getData('text/plain') ?? '';
-      data = JSON.parse(transfer);
-      if (data['pack']) {
-        const pack = game.packs.get(data['pack']);
-        item = await pack?.getDocument(data['uuid']);
-      } else {
-        item = await fromUuid(data['uuid']);
-      }
-    } catch (err) {
-      return;
-    }
     log.debug('_onDropItem() | dropped item :', item);
     switch (item?.type) {
       case 'people':
@@ -266,5 +403,22 @@ export class HVCharacterSheet extends HVActorSheet {
       default:
         return super._onSortItem(event, itemData);
     }
+  }
+
+  static async _onEditImage(_event, target) {
+    const attr = target.dataset.edit;
+    const current = foundry.utils.getProperty(this.document, attr);
+    const { img } = this.document.constructor.getDefaultArtwork?.(this.document.toObject()) ?? {};
+    const fp = new FilePicker({
+      current,
+      type: 'image',
+      redirectToRoot: img ? [img] : [],
+      callback: (path) => {
+        this.document.update({ [attr]: path });
+      },
+      top: this.position.top + 40,
+      left: this.position.left + 10,
+    });
+    return fp.browse();
   }
 }
