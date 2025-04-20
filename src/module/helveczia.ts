@@ -42,7 +42,6 @@ import { HVSceneConfig } from './scene';
 
 const { DocumentSheetConfig } = foundry.applications.apps;
 const { CardHandConfig, CardPileConfig, SceneConfig } = foundry.applications.sheets;
-const { ActorDirectory, CardsDirectory, Settings } = foundry.applications.sidebar.tabs;
 const { FrameViewer } = foundry.applications.sidebar.apps;
 const { ActorSheet, ItemSheet } = foundry.appv1.sheets;
 const { Actors, Items } = foundry.documents.collections;

@@ -121,6 +121,18 @@ nav.sheet-tabs.side {
 .sheet-body .editor {
   height: 100%;
   min-height: 34px;
+
+  &.prosemirror {
+    position: relative;
+
+    button.toggle {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      height: 32px;
+      width: 32px;
+    }
+  }
 }
 
 .party-members {
