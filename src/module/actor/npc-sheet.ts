@@ -4,6 +4,7 @@ import { HVItem } from '../items/item';
 import { Logger } from '../logger';
 import { HVPDF } from '../pdf';
 import { HVActorSheet } from './actor-sheet';
+const { TextEditor } = foundry.applications.ux;
 
 const log = new Logger();
 

@@ -11,12 +11,11 @@ import { HVDice } from '../dice';
 import { HVNameGenerator } from '../apps/names';
 import { HVPDF } from '../pdf';
 import { NPCGenerator } from '../apps/npcgen';
-import { EditorView } from 'fvtt-types/src/foundry/common/prosemirror/_module.mjs';
 import { slideToggle } from '../utils/slide';
 const { DialogV2, HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
 const { renderTemplate } = foundry.applications.handlebars;
-const { DragDrop } = foundry.applications.ux;
+const { DragDrop, TextEditor } = foundry.applications.ux;
 const log = new Logger();
 
 export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
@@ -70,22 +69,6 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   _prepareContext(options) {
     return super._prepareContext(options);
-  }
-
-  // /** @override */
-  activateEditor(
-    target: string,
-    editorOptions?: Options | undefined,
-    initialContent?: string | undefined,
-  ): Promise<Editor | EditorView> {
-    // remove some controls to the editor as the space is lacking
-    if (target == 'system.description') {
-      // 'styles bullist numlist image table hr link removeformat code save'
-      editorOptions.toolbar = 'bullist hr link removeFormat save';
-      editorOptions.fitToSize = true;
-      editorOptions.height = 175;
-    }
-    return super.activateEditor(target, editorOptions, initialContent);
   }
 
   async _removePeoples(item): Promise<boolean> {

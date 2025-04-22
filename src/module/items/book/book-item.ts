@@ -5,35 +5,13 @@ import { HVActor } from '../../actor/actor';
 import { BaseItem } from '../base-item';
 import { HVItem } from '../item';
 import { BookItemData } from '../item-types';
+const { TextEditor } = foundry.applications.ux;
 
 export class BookItem extends BaseItem {
   static DEFAULT_TOKEN = 'icons/svg/book.svg';
   static get documentName() {
     return 'book';
   }
-
-  // /**
-  //  * Adds skill specifig actorsheet listeners.
-  //  */
-  // static activateActorSheetListeners(html, sheet) {
-  //   super.activateActorSheetListeners(html, sheet);
-  // }
-
-  // static activateListeners(html, item) {
-  //   // Delete Inventory Item
-  //   // WHY [0]?
-  //   html[0].querySelectorAll('.item-delete').forEach((el) => {
-  //     el.addEventListener('click', (ev) => {
-  //       const li = $(ev.currentTarget).parents('.item-entry');
-  //       const itemID = li.data('item-id');
-  //       const updateData = {
-  //         spells: item.system.spells.filter((i) => i.id !== itemID),
-  //       };
-  //       item.update({ system: updateData });
-  //       li.slideUp(200, () => item.render(false));
-  //     });
-  //   });
-  // }
 
   static async preCreate(data: ItemDataConstructorData, _options: DocumentModificationOptions, _user: BaseUser) {
     foundry.utils.mergeObject(

@@ -2,7 +2,7 @@ import { prepareActiveEffectCategories } from '../effects';
 import { HVItem } from './item';
 import { BookItemData } from './item-types';
 const { ItemSheetV2 } = foundry.applications.sheets;
-const { DragDrop } = foundry.applications.ux;
+const { DragDrop, TextEditor } = foundry.applications.ux;
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 
 export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {

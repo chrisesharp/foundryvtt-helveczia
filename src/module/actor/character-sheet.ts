@@ -5,6 +5,7 @@ import { HVActor } from './actor';
 import { HVActorSheet } from './actor-sheet';
 import { CharacterActorData } from './actor-types';
 import { HVPDF } from '../pdf';
+const { TextEditor } = foundry.applications.ux;
 
 const log = new Logger();
 

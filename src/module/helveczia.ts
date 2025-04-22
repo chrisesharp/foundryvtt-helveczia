@@ -247,8 +247,8 @@ Hooks.on('renderSettings', async (object, html) => {
   // User guide
   const docs = html.querySelector("button[data-app='support']");
   const site = 'https://chrisesharp.github.io/foundryvtt-helveczia';
-  const styling = 'border:none;margin-right:2px;vertical-align:middle;margin-bottom:5px';
-  const button = `<button data-action="userguide"><img src='systems/helveczia/assets/icons/shilling.png' width='16' height='16' style='${styling}'/>Helvéczia Guide</button>`;
+  const styling = 'border:none;margin-right:2px;vertical-align:middle;';
+  const button = `<button data-action="userguide"><img src='systems/helveczia/assets/icons/helveczia.png' width='19'style='${styling}'/>Helvéczia Guide</button>`;
   docs.parentNode.innerHTML += button;
   html.querySelector('button[data-action="userguide"]').addEventListener('click', () => {
     const fv = new FrameViewer({ url: site });
