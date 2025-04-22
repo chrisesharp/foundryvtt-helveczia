@@ -39,10 +39,10 @@ import { init as quench_tests_init } from '../tests/quench';
 import { registerKeyBindings } from './keys';
 import { HVToken } from './token';
 import { HVSceneConfig } from './scene';
+import { FrameView } from './utils/frameview';
 
 const { DocumentSheetConfig } = foundry.applications.apps;
 const { CardHandConfig, CardPileConfig, SceneConfig } = foundry.applications.sheets;
-const { FrameViewer } = foundry.applications.sidebar.apps;
 const { ActorSheet, ItemSheet } = foundry.appv1.sheets;
 const { Actors, Items } = foundry.documents.collections;
 const { renderTemplate } = foundry.applications.handlebars;
@@ -251,7 +251,7 @@ Hooks.on('renderSettings', async (object, html) => {
   const button = `<button data-action="userguide"><img src='systems/helveczia/assets/icons/helveczia.png' width='19'style='${styling}'/>Helvéczia Guide</button>`;
   docs.parentNode.innerHTML += button;
   html.querySelector('button[data-action="userguide"]').addEventListener('click', () => {
-    const fv = new FrameViewer({ url: site });
+    const fv = new FrameView({ url: site });
     fv.url = site;
     fv.render(true);
   });
