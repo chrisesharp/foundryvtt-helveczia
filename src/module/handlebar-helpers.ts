@@ -2,10 +2,6 @@ import { Cleric } from './items/class/cleric';
 import { Student } from './items/class/student';
 
 export const registerHandlebarHelpers = async function () {
-  Handlebars.registerHelper('abs', function (a) {
-    return Math.abs(a);
-  });
-
   Handlebars.registerHelper('ordinal', function (a) {
     const level: number = parseInt(a);
     const suffix = getOrdinal(level);
@@ -30,24 +26,8 @@ export const registerHandlebarHelpers = async function () {
     return cards.filter((c) => c.name.includes(playTarget));
   });
 
-  Handlebars.registerHelper('largest', function (lh, rh) {
-    return Math.max(parseInt(lh), parseInt(rh));
-  });
-
-  Handlebars.registerHelper('smallest', function (lh, rh) {
-    return Math.min(parseInt(lh), parseInt(rh));
-  });
-
   Handlebars.registerHelper('subtract', function (lh, rh) {
     return parseInt(lh) - parseInt(rh);
-  });
-
-  Handlebars.registerHelper('divide', function (lh, rh) {
-    return Math.floor(parseFloat(lh) / parseFloat(rh));
-  });
-
-  Handlebars.registerHelper('mult', function (lh, rh) {
-    return Math.round(100 * parseFloat(lh) * parseFloat(rh)) / 100;
   });
 
   Handlebars.registerHelper('times', function (n, block) {
@@ -109,22 +89,10 @@ export const registerHandlebarHelpers = async function () {
     return false;
   });
 
-  Handlebars.registerHelper('toLowerCase', function (str) {
-    return str.toLowerCase();
-  });
-
   Handlebars.registerHelper('die', function (die) {
     die = Math.min(20, Math.max(4, die));
     const key = `d${die}`;
     return key in CONFIG.HV.icons ? CONFIG.HV.icons[key] : CONFIG.HV.icons['d20'];
-  });
-
-  Handlebars.registerHelper('isChecked', function (isChecked) {
-    return isChecked ? ' checked ' : '';
-  });
-
-  Handlebars.registerHelper('isSelected', function (isSelected, value) {
-    return isSelected === value ? ' selected ' : '';
   });
 
   Handlebars.registerHelper('plusminus', function (value) {

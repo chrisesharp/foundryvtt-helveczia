@@ -6,7 +6,7 @@
   </div>
   <div class="form-group">
     <div class="form-fields" style="display: flex;">
-      <h4 class="specialism">{{ localize "HV.Specialism" }}:<input id="specialism" name="system.specialism" type="checkbox" {{ isChecked data.specialism}} title="is this a specialism?"/>
+      <h4 class="specialism">{{ localize "HV.Specialism" }}:<input id="specialism" name="system.specialism" type="checkbox" {{ checked data.specialism}} title="is this a specialism?"/>
       <select id="parent" name="system.parent" {{#unless data.specialism }}style="display: none;"{{/unless}}>
         {{selectOptions classes selected=data.parent}}
       </select>

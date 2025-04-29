@@ -18,7 +18,7 @@
             <h3 class="cost">{{ localize 'HV.AC' }}</h3><input class="cost" name="system.bonus" type="text" data-dtype="Number" value="{{ plusminus data.bonus}}">
           </div>
           <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.Shield' }}?">
-            <i class="fas fa-shield-alt"></i><input class="cost" name="system.shield" type="checkbox" data-dtype="Boolean" value="{{ data.shield}}" {{ isChecked data.shield}}>
+            <i class="fas fa-shield-alt"></i><input class="cost" name="system.shield" type="checkbox" data-dtype="Boolean" value="{{ data.shield}}" {{ checked data.shield}}>
           </div>
         </div>
         <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.Encumbrance' }}">
@@ -32,7 +32,7 @@
             <div class="flexrow">
               <div class="actor-exp" style="display: inline-flex;" title="{{ localize 'HV.AC' }}">
                 <h3 class="cost">{{ localize 'HV.AC' }}</h3><input class="cost" name="system.bonus" type="text" data-dtype="Number" value="{{ plusminus data.bonus}}" disabled>
-                {{#if ( isChecked data.shield) }}
+                {{#if ( checked data.shield) }}
                 <i class="fas fa-shield-alt"></i>
                 {{/if}}
               </div>
