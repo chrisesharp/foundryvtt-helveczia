@@ -2,14 +2,6 @@ import { Cleric } from './items/class/cleric';
 import { Student } from './items/class/student';
 
 export const registerHandlebarHelpers = async function () {
-  Handlebars.registerHelper('gt', function (a, b) {
-    return a > b;
-  });
-
-  Handlebars.registerHelper('lt', function (a, b) {
-    return a < b;
-  });
-
   Handlebars.registerHelper('abs', function (a) {
     return Math.abs(a);
   });
@@ -117,16 +109,6 @@ export const registerHandlebarHelpers = async function () {
     return false;
   });
 
-  Handlebars.registerHelper('concat', function (args) {
-    let outStr = '';
-    for (const arg in args) {
-      if (typeof args[arg] != 'object') {
-        outStr += args[arg];
-      }
-    }
-    return outStr;
-  });
-
   Handlebars.registerHelper('toLowerCase', function (str) {
     return str.toLowerCase();
   });
@@ -186,11 +168,7 @@ export const registerHandlebarHelpers = async function () {
     return `${state} Virtue`;
   });
 
-  Handlebars.registerHelper('contains', function (e, arr) {
-    return arr.includes(e);
-  });
-
-  Handlebars.registerHelper('length', function (arr) {
+  Handlebars.registerHelper('arrLength', function (arr) {
     return arr.length;
   });
 
