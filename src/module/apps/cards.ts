@@ -116,7 +116,7 @@ export class HVCardsHand extends CardHandConfig {
     }
   }
 
-  static async drawDialog(event, target) {
+  static async drawDialog(_event, _target) {
     const user = game.user;
     if (user != null) {
       const source = this.document;
@@ -149,7 +149,7 @@ export class HVCardsHand extends CardHandConfig {
     }
   }
 
-  static async playDialog(event, target) {
+  static async playDialog(_event, target) {
     const user = game.user;
     const source = this.document;
     if (user != null) {

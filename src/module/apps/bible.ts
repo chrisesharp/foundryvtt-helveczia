@@ -251,8 +251,8 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
-  async onSubmit(event, form, formData) {
-    const settings = foundry.utils.expandObject(formData.object);
-    // await Promise.all(Object.entries(settings).map(([key, value]) => game.settings.set('helveczia', key, value)));
-  }
+  // async onSubmit(event, form, formData) {
+  //   const settings = foundry.utils.expandObject(formData.object);
+  //   // await Promise.all(Object.entries(settings).map(([key, value]) => game.settings.set('helveczia', key, value)));
+  // }
 }

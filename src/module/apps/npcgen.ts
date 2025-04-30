@@ -68,7 +68,7 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     }).render(true);
   }
 
-  static async _onSubmit(event: Event, form: object, formData: object) {
+  static async _onSubmit(event: Event, _form: object, _formData: object) {
     event.preventDefault();
     const statblock = this.element.querySelector('textarea#statblock').value;
     let updateData = {};
