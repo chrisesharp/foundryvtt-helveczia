@@ -35,7 +35,8 @@
     "test": "echo \"Error: no tests specified\" && exit 0",
     "test:ci": "echo \"Error: no tests specified\" && exit 0",
     "cypress:open": "cypress open",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "createSymlinks": "node ./tools/create-symlinks.mjs"
   },
   "devDependencies": {
     "@babel/runtime": "^7.20.7",
@@ -56,7 +57,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "fflate": "^0.7.4",
     "fs-extra": "^10.0.0",
-    "fvtt-types": "npm:@league-of-foundry-developers/foundry-vtt-types@^12.331.3-beta",
+    "fvtt-types": "github:League-of-Foundry-Developers/foundry-vtt-types#main",
     "gulp": "^4.0.2",
     "gulp-dart-sass": "^1.0.2",
     "gulp-sourcemaps": "^3.0.0",

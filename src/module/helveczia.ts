@@ -233,10 +233,6 @@ Hooks.on('renderCardsDirectory', async (object, html) => {
   HVCardsControl.addControl(object, html);
 });
 
-Hooks.on('getApplicationHeaderButtons', async (object, html) => {
-  console.log(object, html);
-});
-
 Hooks.on('renderSettings', async (object, html) => {
   const gamesystem = html.querySelector('.info');
   // License text

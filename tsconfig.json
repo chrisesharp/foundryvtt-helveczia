@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["DOM", "ES2020"],
-    "types": ["fvtt-types", "@ethaks/fvtt-quench"],
+    "outDir": "dist/module",
+    "target": "esnext",
+    // "lib": ["DOM", "ES2020"],
+    // "types": ["fvtt-types", "@ethaks/fvtt-quench"],
     "esModuleInterop": true,
-    "moduleResolution": "node",
-    // "strict": true,
-    "strict": false,
+    "moduleResolution": "bundler",
+    "strict": true,
+    // "strict": false,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
@@ -27,8 +28,24 @@
     "noImplicitReturns": true /* Report error when not all code paths in function return a value. */,
     "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */,
 
-    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
+    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
+
+    "paths": {
+      "@client/*": ["./foundry/client/*"],
+      "@common/*": ["./foundry/common/*"]
+    }
   },
   // "include": ["src"]
-  "include": ["src/**/*.js", "src/**/*.ts", "src/**/*.d.ts"]
+  "exclude": ["node_modules", "**/node_modules/*", "dist/**/*"],
+  "include": [
+    "src/**/*.js",
+    "src/**/*.mjs",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "foundry/client/client.mjs",
+    "foundry/client/global.d.mts"
+  ],
+  "typeAcquisition": {
+    "include": ["jquery"]
+  }
 }
