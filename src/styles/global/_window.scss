@@ -215,4 +215,13 @@ section.helveczia.game-license {
   background-size: cover;
   background-repeat: no-repeat;
   padding: 20px;
+
+  &.whisper {
+    background-color: var(--color-whisper-background);
+    background-blend-mode: luminosity;
+
+    &.blind {
+      background-color: var(--color-blind-background);
+    }
+  }
 }

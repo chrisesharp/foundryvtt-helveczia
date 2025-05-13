@@ -64,8 +64,6 @@ Hooks.once('init', async () => {
   CONFIG.Combatant.documentClass = HVCombatant;
   CONFIG.Combat.documentClass = HVCombat;
 
-  CONFIG.ActiveEffect.legacyTransferral = false;
-
   // Register custom system settings
   registerSettings();
   CONFIG.HV.showEffects = game.settings.get('helveczia', 'effects') as boolean;
@@ -233,7 +231,7 @@ Hooks.on('renderCardsDirectory', async (object, html) => {
   HVCardsControl.addControl(object, html);
 });
 
-Hooks.on('renderSettings', async (object, html) => {
+Hooks.on('renderSettings', async (_, html) => {
   const gamesystem = html.querySelector('.info');
   // License text
   const template = 'systems/helveczia/templates/license.html';
