@@ -249,4 +249,9 @@ Hooks.on('renderSettings', async (_, html) => {
     fv.url = site;
     fv.render(true);
   });
+
+  Hooks.on('preCreateToken', async (_token, data, _action, _id) => {
+    const settings = canvas?.scene?.flags['helveczia'] ?? {};
+    data.elevation = settings.elevation ?? CONFIG.HV.DEFAULT_ELEVATION;
+  });
 });
