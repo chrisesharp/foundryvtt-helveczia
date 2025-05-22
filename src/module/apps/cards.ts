@@ -2,6 +2,7 @@ import { Utils } from '../utils/utils';
 const { DialogV2 } = foundry.applications.api;
 const { CardDeckConfig, CardHandConfig } = foundry.applications.sheets;
 const { renderTemplate } = foundry.applications.handlebars;
+const { FormDataExtended } = foundry.applications.ux;
 
 export class HVCardsControl {
   static addControl(_object, html): void {
