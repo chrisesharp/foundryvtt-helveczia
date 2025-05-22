@@ -60,6 +60,10 @@ form.application.helveczia,
     input {
       text-align: center;
     }
+
+    input[type='text'] {
+      box-shadow: none;
+    }
     input[type='number'] {
       -moz-appearance: textfield;
     }
