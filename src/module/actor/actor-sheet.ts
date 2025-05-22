@@ -684,7 +684,6 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   _getEmbeddedDocument(target) {
     const docRow = target.closest('div.item');
-    console.log(docRow.dataset);
     if (docRow.dataset.documentClass === 'Item') {
       return this.actor.items.get(docRow.dataset.itemId);
     } else if (docRow.dataset.documentClass === 'ActiveEffect') {
