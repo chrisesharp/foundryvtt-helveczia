@@ -108,7 +108,7 @@ export class DeedItem extends BaseItem {
 
     await ActiveEffect.create(
       {
-        label: game.i18n.localize(`HV.deeds.${item.system.subtype}`),
+        name: game.i18n.localize(`HV.deeds.${item.system.subtype}`),
         img: 'icons/svg/aura.svg',
         origin: item.uuid,
         transfer: true,
