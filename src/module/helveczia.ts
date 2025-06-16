@@ -126,7 +126,11 @@ Hooks.once('setup', async () => {
   // Do anything after initialization but before
   // ready
   log.info('Setting core.uiConfig.colorScheme.applications to "light" so it works better for our color scheme');
-  game.settings?.set('core', 'uiConfig', { colorScheme: { applications: 'light', interface: 'dark' } });
+  const settings = game.settings?.get('core', 'uiConfig');
+  settings.colorScheme.applications = 'light';
+  settings.colorScheme.interface = 'dark';
+  game.settings?.set('core', 'uiConfig', settings);
+  // game.settings?.set('core', 'uiConfig', { colorScheme: { applications: 'light', interface: 'dark' } });
 });
 
 // When ready
