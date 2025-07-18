@@ -43,14 +43,13 @@ export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static addControl(_object, html): void {
     const control = `<div flexrow>
-        <button class='hv-name-gen' type="button" title='${game.i18n.localize(
+        <button class='hv-name-gen' type="button" data-action="nameGen" title='${game.i18n.localize(
           'HV.dialog.namegenerator',
         )}'> ${game.i18n.localize('HV.dialog.namegenerator')}
         </button>
         </div>`;
-    html.querySelector('.directory-header').innerHTML += control;
+    html.querySelector('.header-actions.action-buttons').innerHTML += control;
     html.querySelector('.hv-name-gen').addEventListener('click', (ev) => {
-      ev.preventDefault();
       Hooks.call('HV.Names.genName');
     });
   }
