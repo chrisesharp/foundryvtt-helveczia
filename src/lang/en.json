@@ -205,7 +205,7 @@
       }
     },
     "items": {
-      "possessions": "Possesions",
+      "possessions": "Possessions",
       "armour": "Armour",
       "weapons": "Weapons",
       "weapon": "Weapon",
@@ -354,7 +354,7 @@
       "cardgenerator": "Add Devil's Bible",
       "cardlabel": "Add Devil's Bible for",
       "createDeckForActor": "Create Decks for Actor",
-      "namegenerator": "Random Name",
+      "namegenerator": "Names",
       "findname": "Find a Name",
       "nameerror": "Cannot suggest a {people} name",
       "sendname": "Send Name to Chat?",
