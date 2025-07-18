@@ -49,7 +49,7 @@ export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
         </button>
         </div>`;
     html.querySelector('.header-actions.action-buttons').innerHTML += control;
-    html.querySelector('.hv-name-gen').addEventListener('click', (ev) => {
+    html.querySelector('.hv-name-gen').addEventListener('click', () => {
       Hooks.call('HV.Names.genName');
     });
   }
