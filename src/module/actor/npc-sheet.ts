@@ -5,6 +5,7 @@ import { Logger } from '../logger';
 import { HVPDF } from '../pdf';
 import { HVActorSheet } from './actor-sheet';
 const { TextEditor } = foundry.applications.ux;
+const { FilePicker } = foundry.applications.apps;
 
 const log = new Logger();
 
