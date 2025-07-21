@@ -15,7 +15,6 @@ import { BaseUser } from '@league-of-foundry-developers/foundry-vtt-types/src/fo
 const log = new Logger();
 
 export class DeedItem extends BaseItem {
-  // static DEFAULT_TOKEN = 'systems/helveczia/assets/icons/angel_sm.png';
   static DEFAULT_TOKEN = 'icons/svg/aura.svg';
   static get documentName() {
     return 'deed';
@@ -62,7 +61,7 @@ export class DeedItem extends BaseItem {
     userId: string,
   ): Promise<void> {
     log.debug('DeedItem.onUpdate()|', item, changed, options, userId);
-    if (game.user?.isGM && !item.isEmbedded) {
+    if (game.user?.isGM) {
       await DeedItem.updateDeedEffects(item);
     }
   }
