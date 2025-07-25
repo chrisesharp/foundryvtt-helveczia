@@ -245,6 +245,13 @@ export class HVCharacterSheet extends HVActorSheet {
         context.tab = context.tabs[partId];
         context.effects = prepareActiveEffectCategories(this.actor.allApplicableEffects());
         break;
+      case 'possessions':
+        context.tab = context.tabs[partId];
+        context.availableSlots = await this._calculateAvailableSlots();
+        context.usedSlots = context.data.capacity - context.availableSlots['worn'] - context.availableSlots['carried'];
+        context.isEncumbered = context.usedSlots > context.data.capacity;
+        await this.actor.setFlag('helveczia', 'encumbered', context.isEncumbered);
+        break;
       default:
         context.tab = context.tabs[partId];
         break;
@@ -339,10 +346,12 @@ export class HVCharacterSheet extends HVActorSheet {
         log.debug('_onDropItem() | item encumbrance:', item.system.encumbrance);
         if (capacitySlots.worn >= item.system.encumbrance) {
           position = 'worn';
-        } else if (capacitySlots.carried >= item.system.encumbrance) {
+        } else {
+          //if (capacitySlots.carried >= item.system.encumbrance) {
           position = 'carried';
         }
-        shouldContinue = capacitySlots.carried + capacitySlots.worn + capacitySlots.mount >= item.system.encumbrance;
+        // shouldContinue = capacitySlots.carried + capacitySlots.worn + capacitySlots.mount >= item.system.encumbrance;
+        shouldContinue = true;
         log.debug('_onDropItem() | should continue?:', shouldContinue);
         break;
     }
@@ -379,7 +388,8 @@ export class HVCharacterSheet extends HVActorSheet {
     const columnID = positionTarget ? positionTarget.dataset.column : 'mount';
     const availableSlots = await this._calculateAvailableSlots();
     log.debug(`_onSortPossession() |encumbrance of item is ${source.system.encumbrance} `);
-    const ok = availableSlots[columnID] - source.system.encumbrance >= 0;
+    // const ok = availableSlots[columnID] - source.system.encumbrance >= 0;
+    const ok = !(columnID === 'worn' && availableSlots['worn'] <= 0);
     log.debug(`_onSortPossession() | ${ok} we have space, will place it at ${columnID} `);
     if (ok) source.setFlag('helveczia', 'position', columnID);
     return;

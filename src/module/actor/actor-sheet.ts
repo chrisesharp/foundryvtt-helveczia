@@ -669,6 +669,10 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     return this._onDropItemCreate(item, event);
   }
 
+  _onSortItem(_event, _itemData): Promise<HVItem[]> | undefined {
+    // Noop for abstract class
+    return;
+  }
   /**
    * Handle the final creation of dropped Item data on the Actor.
    * This method is factored out to allow downstream classes the opportunity to override item creation behavior.

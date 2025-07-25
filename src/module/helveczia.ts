@@ -161,6 +161,14 @@ Hooks.on('preUpdateToken', async (tokenDocument, change, options, _userid) => {
   }
 });
 
+Hooks.on('preUpdateActor', async (actor, _change, _options, _id) => {
+  const uuid = actor.getFlag(game.system.id, 'party');
+  if (uuid) {
+    const party = await Utils.getActorFromUUID(uuid);
+    party?.sheet?.render(true);
+  }
+});
+
 Hooks.on('refreshToken', async (token, _options) => {
   if (CONFIG.HV.depthTokens) token.tooltip.text = '';
 });

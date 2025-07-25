@@ -5,7 +5,10 @@
   data-tab='possessions'
 >
 <div class="possessions">
-    <h2 class="centred">~ {{ localize 'HV.items.possessions'}} ~</h2>
+    <h2 class="centred">~ {{ localize 'HV.items.possessions'}} ({{ usedSlots}} / {{ data.capacity }}) ~</h2>
+    {{#if isEncumbered }}
+    <i class="centred encumbered fas fa-weight-hanging fa-sm" title="{{ localize 'HV.Encumbrance'}}"></i>
+    {{/if}}
     <div class="possessions flexrow">
         <ol class="item-list worn" data-column="worn">
             <li class="items-header flexrow">

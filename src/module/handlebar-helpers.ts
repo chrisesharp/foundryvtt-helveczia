@@ -56,6 +56,10 @@ export const registerHandlebarHelpers = async function () {
     return item.getFlag('helveczia', 'position') === 'worn';
   });
 
+  Handlebars.registerHelper('isEncumbered', function (actor) {
+    return actor.getFlag('helveczia', 'encumbered');
+  });
+
   Handlebars.registerHelper('itemLocked', function (item) {
     return item.getFlag('helveczia', 'locked');
   });
