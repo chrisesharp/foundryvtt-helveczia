@@ -34,6 +34,12 @@ export class BookSheet extends HVItemSheet {
     },
   };
 
+  _getTabs(parts: any) {
+    const tabGroup = 'primary';
+    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = 'spells';
+    return super._getTabs(parts);
+  }
+
   static async _removeSpell(_event, target) {
     const li = target.closest('.item-entry');
     const itemID = li.dataset.itemId;
