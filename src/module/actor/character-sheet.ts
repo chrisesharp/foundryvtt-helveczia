@@ -409,7 +409,7 @@ export class HVCharacterSheet extends HVActorSheet {
       source.unsetFlag('helveczia', 'in-container');
     } else {
       const container = this.actor.items.filter((i) => i.id === containerTarget && i.type === 'container')[0];
-      const capacity = container?.system.capacity || 0;
+      const capacity = parseInt(container?.system.capacity) || 0;
       const usedSlots = container?.sheet._usedSlots();
       if (capacity - usedSlots > 0) {
         ContainerItem.insertItem(container, source, source.link);
