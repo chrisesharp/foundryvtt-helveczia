@@ -46,4 +46,13 @@ export function registerSettings(): void {
     type: String,
     default: '',
   });
+
+  game.settings.register('helveczia', 'encumbrance', {
+    name: game.i18n.localize('HV.Setting.encumbrance'),
+    hint: game.i18n.localize('HV.Setting.encumbranceHint'),
+    config: true,
+    scope: 'world',
+    type: Boolean,
+    default: false,
+  });
 }

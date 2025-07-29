@@ -260,7 +260,7 @@ export class HVActor extends Actor {
   _updateAbility(ability: { value: number; mod: number }, key: string) {
     ability.value = Math.min(Math.max(ability.value, 0), 18);
     ability.mod = Math.floor(ability.value / 3) - 3;
-    if (key === 'dex' && this.getFlag('helveczia', 'encumbered')) {
+    if (CONFIG.HV.applyEncumbrance && key === 'dex' && this.getFlag('helveczia', 'encumbered')) {
       ability.mod -= 2;
     }
   }

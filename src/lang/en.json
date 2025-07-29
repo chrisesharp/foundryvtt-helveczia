@@ -169,6 +169,8 @@
       "debugHint": "tick for debug logging level",
       "effects": "Show Effects Tabs",
       "effectsHint": "tick for visibility of active effects (advanced)",
+      "encumbrance": "Enforce encumbrance penalty",
+      "encumbranceHint": "tick to apply a penalty for encumbrance automatically",
       "token": {
         "Flip": "Flip token",
         "FlipHint": "tick to enable tokens to flip their facing when SHIFT + movement key pressed",
