@@ -114,6 +114,13 @@
       "type": "Item"
     },
     {
+      "name": "containers",
+      "label": "Luggage",
+      "package": "helveczia",
+      "path": "packs/containers",
+      "type": "Item"
+    },
+    {
       "name": "cards",
       "label": "Cards",
       "package": "helveczia",

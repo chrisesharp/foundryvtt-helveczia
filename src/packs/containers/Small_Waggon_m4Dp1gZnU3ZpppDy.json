@@ -1,0 +1,36 @@
+{
+  "folder": null,
+  "name": "Small Waggon",
+  "type": "container",
+  "_id": "m4Dp1gZnU3ZpppDy",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "",
+    "cost": {
+      "value": "2",
+      "coin": "th"
+    },
+    "encumbrance": "48",
+    "capacity": "48",
+    "contents": []
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.346",
+    "systemId": "helveczia",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 1753805391298,
+    "modifiedTime": 1753805391298,
+    "lastModifiedBy": "k52po8UVGe0kJkBK"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "k52po8UVGe0kJkBK": 3
+  },
+  "_key": "!items!m4Dp1gZnU3ZpppDy"
+}

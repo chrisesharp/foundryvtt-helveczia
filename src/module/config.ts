@@ -256,5 +256,5 @@ export const HV: HelvecziaConfig = {
     d20: 'systems/helveczia/assets/dice/d20.svg',
   },
 
-  containableItems: ['armour', 'weapon', 'possession', 'book'],
+  containableItems: ['armour', 'weapon', 'possession', 'book', 'container'],
 };
