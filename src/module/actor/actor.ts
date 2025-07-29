@@ -125,7 +125,7 @@ export class HVActor extends Actor {
     const data = this.system;
 
     for (const key of Object.keys(data.scores)) {
-      this._updateAbility(data.scores[key]);
+      this._updateAbility(data.scores[key], key);
     }
 
     this._calculateCapacity(data);
@@ -141,7 +141,7 @@ export class HVActor extends Actor {
     const data = this.system;
 
     for (const key of Object.keys(data.scores)) {
-      this._updateAbility(data.scores[key]);
+      this._updateAbility(data.scores[key], key);
     }
     this._updateSaves(data);
     this._updateCombatValues(data);
@@ -257,9 +257,12 @@ export class HVActor extends Actor {
   /**
    * Update current bonus for ability
    */
-  _updateAbility(ability: { value: number; mod: number }) {
+  _updateAbility(ability: { value: number; mod: number }, key: string) {
     ability.value = Math.min(Math.max(ability.value, 0), 18);
     ability.mod = Math.floor(ability.value / 3) - 3;
+    if (key === 'dex' && this.getFlag('helveczia', 'encumbered')) {
+      ability.mod -= 2;
+    }
   }
 
   // Manage potential effect collisions here
