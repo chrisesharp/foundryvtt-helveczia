@@ -1,8 +1,10 @@
 import { HVActor } from '../actor/actor';
 import { HVItem } from '../items/item';
 import { Logger } from '../logger';
+const { fromUuid } = foundry.utils;
 
 const log = new Logger();
+const uuidRegex = new RegExp('(?<actorId>Actor.[a-zA-Z0-9]+)?.?(?<itemId>Item.[a-zA-Z0-9]+)');
 
 type EmbeddedSubject = HVItem | HVActor;
 
@@ -37,6 +39,13 @@ export class Utils {
       return obj.actor as HVActor;
     }
     return obj as HVActor;
+  }
+
+  static getUuidFromLink(link) {
+    const groups = link.match(uuidRegex)?.groups;
+    const actorId = groups?.actorId;
+    const itemId = groups?.itemId;
+    return { actorId: actorId, itemId: itemId };
   }
 
   static canModifyActor(user: StoredDocument<User> | null, actor: HVActor | null): boolean {

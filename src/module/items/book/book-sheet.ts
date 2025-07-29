@@ -1,3 +1,4 @@
+const { fromUuidSync } = foundry.utils;
 import { HVItemSheet } from '../item-sheet';
 
 export class BookSheet extends HVItemSheet {
@@ -33,6 +34,12 @@ export class BookSheet extends HVItemSheet {
     },
   };
 
+  _getTabs(parts: any) {
+    const tabGroup = 'primary';
+    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = 'spells';
+    return super._getTabs(parts);
+  }
+
   static async _removeSpell(_event, target) {
     const li = target.closest('.item-entry');
     const itemID = li.dataset.itemId;
@@ -40,5 +47,13 @@ export class BookSheet extends HVItemSheet {
       spells: this.item.system.spells.filter((i) => i.id !== itemID),
     };
     this.item.update({ system: updateData });
+  }
+
+  onDropAllow(actor, data): boolean {
+    if (super.onDropAllow(actor, data)) {
+      const droppedItem = fromUuidSync(data.uuid);
+      return droppedItem?.type === 'spell';
+    }
+    return false;
   }
 }

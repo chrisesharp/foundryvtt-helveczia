@@ -2,6 +2,7 @@ import { jsPDF, jsPDFOptions } from 'jspdf';
 import { HVActor } from './actor/actor';
 import { HVActorSheet } from './actor/actor-sheet';
 import { HVItem } from './items/item';
+const { fromUuid } = foundry.utils;
 
 const pages = [
   'systems/helveczia/assets/empty_frame.png',

@@ -23,6 +23,7 @@ import { DeedSheet } from './items/deed/deed-sheet';
 import { ClassSheet } from './items/class/class-sheet';
 import { PeopleSheet } from './items/people/people-sheet';
 import { SpellSheet } from './items/spell/spell-sheet';
+import { ContainerSheet } from './items/container/container-sheet';
 
 import { HV } from './config';
 import { registerHandlebarHelpers } from './handlebar-helpers';
@@ -40,6 +41,7 @@ import { registerKeyBindings } from './keys';
 import { HVToken } from './token';
 import { HVSceneConfig } from './scene';
 import { FrameView } from './utils/frameview';
+import { HVItemSheet } from './items/item-sheet';
 
 const { DocumentSheetConfig } = foundry.applications.apps;
 const { CardHandConfig, CardPileConfig, SceneConfig } = foundry.applications.sheets;
@@ -69,6 +71,7 @@ Hooks.once('init', async () => {
   CONFIG.HV.showEffects = game.settings.get('helveczia', 'effects') as boolean;
   CONFIG.HV.flipTokens = game.settings.get('helveczia', 'token-flip') as boolean;
   CONFIG.HV.depthTokens = game.settings.get('helveczia', 'token-depth') as boolean;
+  CONFIG.HV.applyEncumbrance = game.settings.get('helveczia', 'encumbrance') as boolean;
 
   // Register custom handlebar helpers
   registerHandlebarHelpers();
@@ -114,6 +117,7 @@ Hooks.once('init', async () => {
   Items.registerSheet('helveczia', PeopleSheet, { types: ['people'] });
   Items.registerSheet('helveczia', SpellSheet, { types: ['spell'] });
   Items.registerSheet('helveczia', BookSheet, { types: ['book'] });
+  Items.registerSheet('helveczia', ContainerSheet, { types: ['container'] });
 
   DocumentSheetConfig.unregisterSheet(Scene, 'core', SceneConfig);
   DocumentSheetConfig.registerSheet(Scene, 'core', HVSceneConfig);
@@ -161,6 +165,14 @@ Hooks.on('preUpdateToken', async (tokenDocument, change, options, _userid) => {
   }
 });
 
+Hooks.on('preUpdateActor', async (actor, _change, _options, _id) => {
+  const uuid = actor.getFlag(game.system.id, 'party');
+  if (uuid) {
+    const party = await Utils.getActorFromUUID(uuid);
+    party?.sheet?.render(false);
+  }
+});
+
 Hooks.on('refreshToken', async (token, _options) => {
   if (CONFIG.HV.depthTokens) token.tooltip.text = '';
 });
@@ -176,7 +188,7 @@ Hooks.on('dropActorSheetData', (actor: HVActor, sheet: HVActorSheet, data) => {
   return sheet.onDropAllow(actor, data);
 });
 
-Hooks.on('dropItemSheetData', (actor: HVActor, sheet: HVActorSheet, data) => {
+Hooks.on('dropItemSheetData', (actor: HVActor, sheet: HVItemSheet, data) => {
   return sheet.onDropAllow(actor, data);
 });
 

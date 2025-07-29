@@ -45,6 +45,9 @@ export class WeaponItem extends BaseItem {
       ${reload}
       <li class="tag" title="${game.i18n.localize('HV.Critical')}">${itemData.critical.range}+</li>
       <li class="tag" title="${game.i18n.localize('HV.DamageMultiplier')}">x${itemData.critical.multiple}</li>
+      <li class="tag-weight fas fa-weight-hanging fa-2xs" title="${game.i18n.localize('HV.Encumbrance')}">${
+        itemData.encumbrance ?? 0
+      }</li>
     </ol>`;
     }
     return '';

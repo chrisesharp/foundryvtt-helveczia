@@ -5,6 +5,8 @@ import { HVActor } from './actor';
 import { HVActorSheet } from './actor-sheet';
 import { CharacterActorData } from './actor-types';
 import { HVPDF } from '../pdf';
+import { ContainerItem } from '../items/container/container-item';
+const { buildUuid } = foundry.utils;
 const { TextEditor } = foundry.applications.ux;
 const { FilePicker } = foundry.applications.apps;
 
@@ -175,16 +177,19 @@ export class HVCharacterSheet extends HVActorSheet {
 
     for (const category of Object.values(possessions)) {
       for (const item of category as HVItem[]) {
-        switch ((item as HVItem).getFlag('helveczia', 'position')) {
-          case 'worn':
-            worn.push(item);
-            break;
-          case 'carried':
-            carried.push(item);
-            break;
-          default:
-            mount.push(item);
-            break;
+        const container = item.getFlag('helveczia', 'in-container');
+        if (!container) {
+          switch (item.getFlag('helveczia', 'position')) {
+            case 'worn':
+              worn.push(item);
+              break;
+            case 'carried':
+              carried.push(item);
+              break;
+            default:
+              mount.push(item);
+              break;
+          }
         }
       }
     }
@@ -244,6 +249,13 @@ export class HVCharacterSheet extends HVActorSheet {
       case 'effects':
         context.tab = context.tabs[partId];
         context.effects = prepareActiveEffectCategories(this.actor.allApplicableEffects());
+        break;
+      case 'possessions':
+        context.tab = context.tabs[partId];
+        context.availableSlots = await this._calculateAvailableSlots();
+        context.usedSlots = context.data.capacity - context.availableSlots['worn'] - context.availableSlots['carried'];
+        context.isEncumbered = context.usedSlots > context.data.capacity;
+        await this.actor.setFlag('helveczia', 'encumbered', context.isEncumbered);
         break;
       default:
         context.tab = context.tabs[partId];
@@ -339,11 +351,15 @@ export class HVCharacterSheet extends HVActorSheet {
         log.debug('_onDropItem() | item encumbrance:', item.system.encumbrance);
         if (capacitySlots.worn >= item.system.encumbrance) {
           position = 'worn';
-        } else if (capacitySlots.carried >= item.system.encumbrance) {
+        } else {
+          //if (capacitySlots.carried >= item.system.encumbrance) {
           position = 'carried';
         }
-        shouldContinue = capacitySlots.carried + capacitySlots.worn + capacitySlots.mount >= item.system.encumbrance;
+        // shouldContinue = capacitySlots.carried + capacitySlots.worn + capacitySlots.mount >= item.system.encumbrance;
+        shouldContinue = true;
         log.debug('_onDropItem() | should continue?:', shouldContinue);
+        break;
+      case 'container':
         break;
     }
     if (shouldContinue) {
@@ -356,7 +372,9 @@ export class HVCharacterSheet extends HVActorSheet {
           case 'armour':
           case 'book':
           case 'possession':
+          case 'container':
             item.setFlag('helveczia', 'position', position);
+            item.unsetFlag('helveczia', 'in-container');
             log.debug(`_onDropItem() | set position of item to ${position}`);
             break;
           case 'spell':
@@ -377,11 +395,28 @@ export class HVCharacterSheet extends HVActorSheet {
   async _sortPossession(event, source): Promise<undefined> {
     const positionTarget = event.target.closest('[data-column]');
     const columnID = positionTarget ? positionTarget.dataset.column : 'mount';
-    const availableSlots = await this._calculateAvailableSlots();
-    log.debug(`_onSortPossession() |encumbrance of item is ${source.system.encumbrance} `);
-    const ok = availableSlots[columnID] - source.system.encumbrance >= 0;
-    log.debug(`_onSortPossession() | ${ok} we have space, will place it at ${columnID} `);
-    if (ok) source.setFlag('helveczia', 'position', columnID);
+    let containerTarget;
+    if (columnID === 'mount') {
+      containerTarget = event.target.closest('[data-item-id]')?.dataset.itemId;
+    }
+    if (!containerTarget) {
+      const availableSlots = await this._calculateAvailableSlots();
+      log.debug(`_onSortPossession() |encumbrance of item is ${source.system.encumbrance} `);
+      // const ok = availableSlots[columnID] - source.system.encumbrance >= 0;
+      const ok = !(columnID === 'worn' && availableSlots['worn'] <= 0);
+      log.debug(`_onSortPossession() | ${ok} we have space, will place it at ${columnID} `);
+      if (ok) source.setFlag('helveczia', 'position', columnID);
+      source.unsetFlag('helveczia', 'in-container');
+    } else {
+      const container = this.actor.items.filter((i) => i.id === containerTarget && i.type === 'container')[0];
+      const capacity = container?.system.capacity || 0;
+      const usedSlots = container?.sheet._usedSlots();
+      if (capacity - usedSlots > 0) {
+        ContainerItem.insertItem(container, source, source.link);
+      } else {
+        ui.notifications.warn('HV.items.noSpaceLeft', { localize: true });
+      }
+    }
     return;
   }
 
@@ -391,14 +426,8 @@ export class HVCharacterSheet extends HVActorSheet {
 
     switch (source?.type) {
       case 'armour':
-        this._sortPossession(event, source);
-        return;
       case 'possession':
-        this._sortPossession(event, source);
-        return;
       case 'weapon':
-        this._sortPossession(event, source);
-        return;
       case 'book':
         this._sortPossession(event, source);
         return;

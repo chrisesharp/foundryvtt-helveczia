@@ -1,0 +1,22 @@
+  <header class="sheet-header">
+    <div class="header-fields">
+      <div class="flexrow" style="justify-content: center;align-items: center;">
+        <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+        <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      </div>
+      <div class="form-group">
+        <div class="flexrow">
+          <h3 class="cost">{{ localize "HV.Cost" }}: </h3>
+          <input name="system.cost.value" type="text" value="{{data.cost.value}}">
+          <select name="system.cost.coin" type="text">
+            {{selectOptions coins selected=data.cost.coin}}
+          </select>
+          </div>
+        <div class="flexrow" title="{{ localize 'HV.Encumbrance' }}">
+            <h3 class="cost">{{ localize 'HV.Encumbrance' }}:</h3><input name="system.encumbrance" type="text" value="{{ data.encumbrance }}">
+        </div>
+        <div class="flexrow" title="{{ localize 'HV.items.capacity' }}">
+            <h3 class="cost">{{ localize 'HV.items.capacity' }}:</h3><input name="system.capacity" type="text" value="{{ data.capacity }}">
+        </div>
+      </div>
+  </header>

@@ -35,7 +35,9 @@ export class ArmourItem extends BaseItem {
     return `
     <ol class="tag-list">
       <li class="tag" title="${game.i18n.localize('HV.AC')}">+${itemData.bonus ?? 0}</li>
-      <li class="tag" title="${game.i18n.localize('HV.Encumbrance')}">${itemData.encumbrance ?? 0}</li>
+      <li class="tag-weight fas fa-weight-hanging fa-2xs" title="${game.i18n.localize('HV.Encumbrance')}">${
+      itemData.encumbrance ?? 0
+    }</li>
     </ol>`;
   }
 }

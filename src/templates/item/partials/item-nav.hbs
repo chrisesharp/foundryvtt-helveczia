@@ -1,14 +1,17 @@
 <nav class="sheet-tabs tabs" data-group="primary">
+    {{#ifIn 'spells' tabs }}
+        <a class="item {{tabs.spells.cssClass}}" data-action="tab" data-group="primary" data-tab="spells">{{ localize 'HV.tabs.spells'}}</a>
+    {{/ifIn}}
+    {{#ifIn 'contents' tabs }}
+        <a class="item {{tabs.contents.cssClass}}" data-action="tab" data-group="primary" data-tab="contents">{{ localize 'HV.tabs.possessions'}}</a>
+    {{/ifIn}}
+    {{#ifIn 'damage' tabs }}
+        <a class="item {{tabs.damage.cssClass}}" data-action="tab" data-group="primary" data-tab="damage">{{ localize 'HV.tabs.damage'}}</a>
+    {{/ifIn}}
     <a class="item {{tabs.notes.cssClass}}" data-action="tab" data-group="primary" data-tab="notes">{{ localize 'HV.tabs.notes'}}</a>
     {{#if config.showEffects }}
         {{#if isGM }}
         <a class="item {{tabs.effects.cssClass}}" data-action="tab" data-group="primary" data-tab="effects">{{ localize 'HV.tabs.effects'}}</a>
         {{/if}}
     {{/if}}
-    {{#ifIn 'spells' tabs }}
-        <a class="item {{tabs.spells.cssClass}}" data-action="tab" data-group="primary" data-tab="spells">{{ localize 'HV.tabs.spells'}}</a>
-    {{/ifIn}}
-    {{#ifIn 'damage' tabs }}
-        <a class="item {{tabs.damage.cssClass}}" data-action="tab" data-group="primary" data-tab="damage">{{ localize 'HV.tabs.damage'}}</a>
-    {{/ifIn}}
 </nav>

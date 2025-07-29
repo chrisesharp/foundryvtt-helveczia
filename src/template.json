@@ -93,11 +93,21 @@
     }
   },
   "Item": {
-    "types": ["possession", "people", "class", "skill", "armour", "weapon", "deed", "spell", "book"],
+    "types": ["possession", "people", "class", "skill", "armour", "weapon", "deed", "spell", "book", "container"],
     "templates": {
       "base": {
         "description": ""
       }
+    },
+    "container": {
+      "templates": ["base"],
+      "cost": {
+        "value": 0,
+        "coin": ""
+      },
+      "encumbrance": 1,
+      "capacity": 8,
+      "contents": []
     },
     "possession": {
       "templates": ["base"],

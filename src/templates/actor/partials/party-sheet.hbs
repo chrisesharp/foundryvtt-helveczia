@@ -30,6 +30,9 @@
               <i class="fas fa-heart" title="{{ localize 'HV.HP.long'}}"></i>{{e.system.hp.value}}
               &nbsp;
               <i class="virtue-balance {{balance e.system.virtue}}" title="{{balanceTip e.system.virtue}}"></i>{{e.system.virtue}}
+              {{#if (isEncumbered e) }}
+              <i class="fas fa-weight-hanging encumbered" title="{{ localize 'HV.Encumbrance'}}"></i>
+              {{/if}}
             </div>
             <div class="field-row">
               <a class="remove" data-action="remove"><i class="fas fa-times-circle" title="{{ localize 'HV.dialog.partysheet.remove'}}"></i></a>
