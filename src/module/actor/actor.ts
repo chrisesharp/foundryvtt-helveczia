@@ -80,7 +80,7 @@ export class HVActor extends Actor {
     const data = this.system;
 
     data.possessions = {
-      articles: this.itemTypes['possession'].concat(this.itemTypes['book']),
+      articles: this.itemTypes['possession'].concat(this.itemTypes['book'], this.itemTypes['container']),
       weapons: this.itemTypes['weapon'],
       armour: this.itemTypes['armour'].sort((a, b) => b.system.bonus - a.system.bonus),
     };

@@ -12,6 +12,7 @@ import { HVNameGenerator } from '../apps/names';
 import { HVPDF } from '../pdf';
 import { NPCGenerator } from '../apps/npcgen';
 import { slideToggle } from '../utils/slide';
+import { ContainerSheet } from '../items/container/container-sheet';
 const { DialogV2, HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
 const { renderTemplate } = foundry.applications.handlebars;
@@ -298,7 +299,17 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     const item = await this.actor.items.get(li.dataset.itemId);
     if (!item) return;
     if (!li.querySelector('.item-summary')) {
-      const description = await TextEditor.enrichHTML(item.system.description, { async: true });
+      let description = '';
+      switch (item.type) {
+        case 'container':
+          description = await HVActorSheet.createSummaryList(item.system?.contents, item.id);
+          break;
+        case 'book':
+          description = await HVActorSheet.createSummaryList(item.system?.spells);
+          break;
+        default:
+          description = await TextEditor.enrichHTML(item.system.description, { async: true });
+      }
       // Add item tags
       let section = `
       <div class="item-summary" style='display:none;'>`;
@@ -311,6 +322,21 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       li.innerHTML += section;
     }
     slideToggle(li.querySelector('.item-summary'));
+  }
+
+  static async createSummaryList(itemList, containerId) {
+    let description = '<div class="contents-list flexrow"';
+    if (containerId) description += ' data-container-id="' + containerId + '"';
+    description += '><ol class="item-list">';
+    for (const item of itemList) {
+      description += '<li class="item-entry flexcol" data-item-id="' + item.id + '">';
+      description += '<div class="item flexrow" data-action="itemSummary" data-item-id="' + item.id;
+      description += '">';
+      description += await TextEditor.enrichHTML(item.id, { async: true });
+      description += '</div></li>';
+    }
+    description += '</ol></div>';
+    return description;
   }
 
   static async _onEffectSummary(event, target) {
@@ -660,11 +686,20 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   async _onDropItem(event, data) {
     if (!this.actor.isOwner) return false;
+    const dataTransferred = TextEditor.getDragEventData(event);
     const item = await Item.implementation.fromDropData(data);
 
-    // Handle item sorting within the same Actor
-    if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, item);
+    const sourceElement = event.srcElement.closest('div.possessions')?.querySelector('.contents-list');
+    const containerId = sourceElement?.dataset?.containerId || dataTransferred['from'];
+    if (containerId) {
+      const container = this.actor.items.find((i) => i.type === 'container' && i.id === containerId);
+      if (container) ContainerSheet._removeItemById(container, item.id);
+    }
 
+    // Handle item sorting within the same Actor
+    if (this.actor.uuid === item.parent?.uuid) {
+      return this._onSortItem(event, item);
+    }
     // Create the owned item
     return this._onDropItemCreate(item, event);
   }

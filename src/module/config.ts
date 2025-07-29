@@ -6,6 +6,7 @@ import { DeedItem } from './items/deed/deed-item';
 import { ArmourItem } from './items/armour/armour-item';
 import { WeaponItem } from './items/weapon/weapon-item';
 import { SpellItem } from './items/spell/spell-item';
+import { ContainerItem } from './items/container/container-item';
 import { PossessionItem } from './items/possesion/possession-item';
 import { HVActor } from './actor/actor';
 import { HVCharacterCreator } from './apps/chargen';
@@ -98,6 +99,8 @@ export interface HelvecziaConfig {
   icons: {
     [key: string]: string;
   };
+
+  containableItems: string[];
 }
 
 export const HV: HelvecziaConfig = {
@@ -125,6 +128,7 @@ export const HV: HelvecziaConfig = {
     weapon: WeaponItem,
     spell: SpellItem,
     book: BookItem,
+    container: ContainerItem,
   },
 
   applications: {
@@ -251,4 +255,6 @@ export const HV: HelvecziaConfig = {
     d12: 'systems/helveczia/assets/dice/d12.svg',
     d20: 'systems/helveczia/assets/dice/d20.svg',
   },
+
+  containableItems: ['armour', 'weapon', 'possession', 'book'],
 };

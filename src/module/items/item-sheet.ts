@@ -1,9 +1,11 @@
 import { prepareActiveEffectCategories } from '../effects';
+import { ContainerItem } from './container/container-item';
 import { HVItem } from './item';
-import { BookItemData } from './item-types';
+import { BookItemData, ContainerItemData } from './item-types';
 const { ItemSheetV2 } = foundry.applications.sheets;
 const { DragDrop, TextEditor } = foundry.applications.ux;
 const { HandlebarsApplicationMixin } = foundry.applications.api;
+const { fromUuidSync } = foundry.utils;
 
 export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
   constructor(options = {}) {
@@ -76,6 +78,7 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
     options.parts = ['header', 'tabs', 'notes'];
     if (this.document.limited) return;
     if (this.document.type === 'book') options.parts.push('spells');
+    if (this.document.type === 'container') options.parts.push('contents');
     if (this.document.type === 'weapon') options.parts.push('damage');
     if (game.settings?.get('helveczia', 'effects') && game.user.isGM) {
       options.parts.push('effects');
@@ -113,19 +116,22 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
 
   /** @override */
   async _onDragStart(event) {
-    const div = event.currentTarget;
+    const target = event.currentTarget;
     // Create drag data
-    const dragData = {};
-    const itemId = div.dataset.itemId;
+    let dragData;
+    const a = target.querySelector('a[data-uuid]');
+    const itemId = a?.dataset.uuid;
     // Owned Items
     if (itemId) {
-      let item = game.items?.get(itemId);
+      let item = fromUuidSync(itemId);
       if (!item) {
         const pack = game.packs.get('helveczia.spells');
         item = ((await pack?.getDocument(itemId)) as StoredDocument<HVItem>) ?? undefined;
       }
-      dragData['type'] = 'Item';
-      dragData['data'] = item?.data;
+      dragData = item.toDragData();
+      // dragData['type'] = 'Item';
+      // dragData['data'] = item?.data;
+      dragData['from'] = this.item.id;
     }
     if (Object.keys(dragData).length === 0) return;
     // Set data transfer
@@ -139,11 +145,21 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
     const result = myRe.exec(link);
 
     const name = result && result.length > 1 ? result[1] : undefined;
-
     if (name) {
-      const spells = foundry.utils.duplicate((this.item.system as BookItemData).spells);
-      spells.push({ id: link, name: name });
-      return this.item.update({ system: { spells: spells } });
+      switch (this.item.type) {
+        case 'book':
+          const spells = foundry.utils.duplicate((this.item.system as BookItemData).spells);
+          if (!spells.find((spell) => spell.name === name)) {
+            spells.push({ id: link, name: name });
+            return this.item.update({ system: { spells: spells } });
+          }
+          break;
+        case 'container':
+          const droppedItem = fromUuidSync(data.uuid);
+          return ContainerItem.insertItem(this.item, droppedItem, link);
+        default:
+          return;
+      }
     }
     return;
   }

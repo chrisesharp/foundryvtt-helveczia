@@ -41,7 +41,9 @@ export class BookItem extends BaseItem {
     const itemData = item.system as BookItemData;
     return `
     ${top}
-      <li class="tag" title="${game.i18n.localize('HV.Encumbrance')}">${itemData.encumbrance ?? 0}</li>
+      <li class="tag-weight fas fa-weight-hanging fa-2xs" title="${game.i18n.localize('HV.Encumbrance')}">${
+      itemData.encumbrance ?? 0
+    }</li>
    ${bottom}`;
   }
 }

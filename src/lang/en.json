@@ -214,7 +214,10 @@
       "wealth": "Wealth",
       "carried": "Carried",
       "worn": "Worn",
-      "mount": "Mount"
+      "mount": "Mount",
+      "noMount": "No luggage",
+      "capacity": "Capacity",
+      "noSpaceLeft": "No space left there"
     },
     "Thalers": {
       "long": "Thalers",
@@ -432,7 +435,8 @@
       "weapon": "Weapon",
       "deed": "Deed",
       "spell": "Spell",
-      "book": "Book"
+      "book": "Book",
+      "container": "Container"
     }
   }
 }

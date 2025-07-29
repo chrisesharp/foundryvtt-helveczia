@@ -33,7 +33,7 @@
             </li>
             {{#each carried as |item|}}
              <li class="item-entry flexcol" data-drag="true" data-item-id="{{item.id}}">
-                <div class="item flexrow" data-item-id="{{item.id}}">
+                <div class="item flexrow" data-action="itemSummary" data-item-id="{{item.id}}">
                     <div class="item-image"><img src="{{item.img}}" width="12" height="12"/></div>
                     <h4 class="item-name">{{item.name}}</h4>
                     <div class="item-controls">
@@ -48,9 +48,16 @@
             <li class="items-header flexrow">
                 <h2>~ {{ localize 'HV.items.mount'}} ~</h2>
             </li>
+            {{#unless (arrLength mount) }}
+                <li class="item-entry flexcol">
+                    <div class="item flexrow">
+                        <h4> {{ localize 'HV.items.noMount' }}</h4>
+                    </div>
+                </li>
+            {{/unless }}
             {{#each mount as |item|}}
             <li class="item-entry flexcol" data-drag="true" data-item-id="{{item.id}}">
-                <div class="item flexrow" data-item-id="{{item.id}}">
+                <div class="item flexrow" data-action="itemSummary" data-item-id="{{item.id}}">
                     <div class="item-image"><img src="{{item.img}}" width="12" height="12"/></div>
                     <h4 class="item-name">{{item.name}}</h4>
                     <div class="item-controls">

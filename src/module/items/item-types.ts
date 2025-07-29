@@ -16,6 +16,21 @@ export interface PossessionItemData {
   data: PossessionData;
 }
 
+type ContainerData = BaseData & {
+  cost: {
+    value: number;
+    coin: string;
+  };
+  encumbrance: number;
+  capacity: number;
+  contents: entry[];
+};
+
+export interface ContainerItemData {
+  type: 'container';
+  data: ContainerData;
+}
+
 type entry = {
   id: string;
   name: string;
@@ -126,4 +141,5 @@ export type HVItemData =
   | PeopleItemData
   | DeedItemData
   | SpellItemData
-  | BookItemData;
+  | BookItemData
+  | ContainerItemData;
