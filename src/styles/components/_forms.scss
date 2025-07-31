@@ -47,6 +47,20 @@
     align-items: center;
   }
 
+  .spell-header {
+    display: flex;
+    align-content: center;
+
+    .spell-attributes {
+      display: flex;
+      .spell-attribute {
+        align-items: center;
+        display: flex;
+        width: -webkit-fill-available;
+      }
+    }
+  }
+
   select.deed-option {
     border: 0;
   }

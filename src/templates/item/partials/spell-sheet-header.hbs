@@ -3,34 +3,50 @@
     <div class="flexrow" style="justify-content: center;align-items: center;">
       <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
     </div>
-    <div class="form-group">
-      <h3 class="spell-hdr">{{ localize 'HV.spell.level' }}:</h3>
-      <input name="system.level" type="text" value="{{data.level}}">
-      <select name="system.class" type="text">
-        {{selectOptions classes selected=data.class localize=true}}
-      </select>
+    <div class="spell-header flexrow">
+      <ol class="spell-attributes">
+        <li class="spell-attribute" style="display:flex;">
+            <h3 class="spell-hdr">{{ localize 'HV.spell.level' }}:</h3>
+            <input name="system.level" type="text" value="{{data.level}}">
+            <select name="system.class" type="text">
+              {{selectOptions classes selected=data.class localize=true}}
+            </select>
+        </li>
+      </ol>
+      </div>
+    <div class="spell-header flexrow">
+      <ol class="spell-attributes">
+        <li class="spell-attribute">
+          <h3 class="spell-hdr">{{ localize 'HV.spell.range' }}:</h3>
+          <input name="system.range" type="text" value="{{data.range}}">
+        </li>
+        <li class="spell-attribute">
+          <h3 class="spell-hdr">{{ localize 'HV.spell.duration' }}:</h3>
+          <input name="system.duration" type="text" value="{{data.duration}}">
+        </li>
+      </ol>
     </div>
-    <div class="form-group">
-      <h3 class="spell-hdr">{{ localize 'HV.spell.range' }}:</h3>
-      <input name="system.range" type="text" value="{{data.range}}">
+    <div class="spell-header flexrow">
+      <ol class="spell-attributes">
+        <li class="spell-attribute">
+            <h3 class="spell-hdr">{{ localize 'HV.spell.area' }}:</h3>
+            <input name="system.area" type="text" value="{{data.area}}">
+        </li>
+      </ol>
     </div>
-    <div class="form-group">
-      <h3 class="spell-hdr">{{ localize 'HV.spell.duration' }}:</h3>
-      <input name="system.duration" type="text" value="{{data.duration}}">
-    </div>
-    <div class="form-group">
-      <h3 class="spell-hdr">{{ localize 'HV.spell.area' }}:</h3>
-      <input name="system.area" type="text" value="{{data.area}}">
-    </div>
-    <div class="form-group">
-      <h3 class="spell-hdr">{{ localize 'HV.spell.save' }}:</h3>
-      <select name="system.save" type="text">
-        {{selectOptions saves selected=data.save localize=true}}
-      </select>
-    </div>
-    <div class="form-group">
-      <h3 class="spell-hdr">{{ localize 'HV.spell.component' }}:</h3>
-      <input name="system.component" type="text" value="{{data.component}}">
+    <div class="spell-header flexrow">
+      <ol class="spell-attributes">
+        <li class="spell-attribute">
+            <h3 class="spell-hdr">{{ localize 'HV.spell.save' }}:</h3>
+            <select name="system.save" type="text">
+              {{selectOptions saves selected=data.save localize=true}}
+            </select>
+        </li>
+        <li class="spell-attribute">
+            <h3 class="spell-hdr">{{ localize 'HV.spell.component' }}:</h3>
+            <input name="system.component" type="text" value="{{data.component}}">
+        </li>
+      </ol>
     </div>
   </div>
 </header>
