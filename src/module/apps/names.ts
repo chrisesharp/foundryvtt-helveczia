@@ -42,12 +42,13 @@ export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
   private helveczian = false;
 
   static addControl(_object, html): void {
-    const control = `<div flexrow>
-        <button class='hv-name-gen' type="button" data-action="nameGen" title='${game.i18n.localize(
-          'HV.dialog.namegenerator',
-        )}'> ${game.i18n.localize('HV.dialog.namegenerator')}
-        </button>
-        </div>`;
+    const control = `
+    <button class='hv-name-gen' type="button" data-action="nameGen" title='${game.i18n.localize(
+      'HV.dialog.namegenerator',
+    )}'>
+      <i class="fa-solid fa-people-simple" inert=""></i>
+      <span>${game.i18n.localize('HV.dialog.namegenerator')}</span>
+    </button>`;
     html.querySelector('.header-actions.action-buttons').innerHTML += control;
     html.querySelector('.hv-name-gen').addEventListener('click', () => {
       Hooks.call('HV.Names.genName');

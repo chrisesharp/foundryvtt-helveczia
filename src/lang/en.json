@@ -360,7 +360,7 @@
       "cardgenerator": "Add Devil's Bible",
       "cardlabel": "Add Devil's Bible for",
       "createDeckForActor": "Create Decks for Actor",
-      "namegenerator": "Names",
+      "namegenerator": "Random Names",
       "findname": "Find a Name",
       "nameerror": "Cannot suggest a {people} name",
       "sendname": "Send Name to Chat?",

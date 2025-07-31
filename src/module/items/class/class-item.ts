@@ -154,7 +154,7 @@ export class ClassItem extends BaseItem {
   static getSheetData(data, _sheet) {
     const classes = {};
     Object.keys(ClassItem.professions).forEach((name) => {
-      classes[name.toLowerCase()] = name;
+      classes[name.toLowerCase()] = game.i18n.localize(`HV.class.${name.toLowerCase()}`);
     });
     data.classes = classes;
     return data;

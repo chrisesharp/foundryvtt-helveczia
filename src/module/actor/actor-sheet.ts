@@ -405,7 +405,6 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   static async _chooseSpecialism(event, button) {
     event.preventDefault();
-    // const button = event.currentTarget;
     const profession = button?.dataset?.class;
     const templateData = {
       profession: profession,

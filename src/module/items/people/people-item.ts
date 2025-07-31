@@ -224,7 +224,7 @@ export class PeopleItem extends BaseItem {
         user: game.user?.id,
         speaker: ChatMessage.getSpeaker({ actor: actor }),
         content: await renderTemplate('systems/helveczia/templates/chat/hungarian-fate.hbs', {
-          randomSave: randomSave,
+          randomSave: `HV.saves.${randomSave}.long`,
           actor: actor,
         }),
       });

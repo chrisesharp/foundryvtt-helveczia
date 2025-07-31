@@ -7,7 +7,7 @@
       <h3 class="spell-hdr">{{ localize 'HV.spell.level' }}:</h3>
       <input name="system.level" type="text" value="{{data.level}}">
       <select name="system.class" type="text">
-        {{selectOptions classes selected=data.class}}
+        {{selectOptions classes selected=data.class localize=true}}
       </select>
     </div>
     <div class="form-group">
@@ -25,7 +25,7 @@
     <div class="form-group">
       <h3 class="spell-hdr">{{ localize 'HV.spell.save' }}:</h3>
       <select name="system.save" type="text">
-        {{selectOptions saves selected=data.save}}
+        {{selectOptions saves selected=data.save localize=true}}
       </select>
     </div>
     <div class="form-group">

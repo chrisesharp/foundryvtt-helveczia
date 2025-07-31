@@ -8,7 +8,7 @@
     <div class="form-fields" style="display: flex;">
       <h4 class="specialism">{{ localize "HV.Specialism" }}:<input id="specialism" name="system.specialism" type="checkbox" {{ checked data.specialism}} title="is this a specialism?"/>
       <select id="parent" name="system.parent" {{#unless data.specialism }}style="display: none;"{{/unless}}>
-        {{selectOptions classes selected=data.parent}}
+        {{selectOptions classes selected=data.parent localize=true}}
       </select>
       </h4>
     </div>
