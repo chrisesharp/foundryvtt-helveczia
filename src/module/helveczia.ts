@@ -72,6 +72,7 @@ Hooks.once('init', async () => {
   CONFIG.HV.flipTokens = game.settings.get('helveczia', 'token-flip') as boolean;
   CONFIG.HV.depthTokens = game.settings.get('helveczia', 'token-depth') as boolean;
   CONFIG.HV.applyEncumbrance = game.settings.get('helveczia', 'encumbrance') as boolean;
+  CONFIG.HV.allowPlayerDeedEdit = game.settings.get('helveczia', 'player-deed-edit') as boolean;
 
   // Register custom handlebar helpers
   registerHandlebarHelpers();

@@ -172,6 +172,8 @@
       "effectsHint": "tick for visibility of active effects (advanced)",
       "encumbrance": "Enforce encumbrance penalty",
       "encumbranceHint": "tick to apply a penalty for encumbrance automatically",
+      "playerDeedEdit": "Allow players to edit deeds",
+      "playerDeedEditHint": "tick to allow players to edit their own deed details",
       "token": {
         "Flip": "Flip token",
         "FlipHint": "tick to enable tokens to flip their facing when SHIFT + movement key pressed",

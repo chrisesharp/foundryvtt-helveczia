@@ -55,4 +55,13 @@ export function registerSettings(): void {
     type: Boolean,
     default: false,
   });
+
+  game.settings.register('helveczia', 'player-deed-edit', {
+    name: game.i18n.localize('HV.Setting.playerDeedEdit'),
+    hint: game.i18n.localize('HV.Setting.playerDeedEditHint'),
+    config: true,
+    scope: 'world',
+    type: Boolean,
+    default: false,
+  });
 }

@@ -6,7 +6,6 @@ import { HVActorSheet } from './actor-sheet';
 import { CharacterActorData } from './actor-types';
 import { HVPDF } from '../pdf';
 import { ContainerItem } from '../items/container/container-item';
-const { buildUuid } = foundry.utils;
 const { TextEditor } = foundry.applications.ux;
 const { FilePicker } = foundry.applications.apps;
 
@@ -256,6 +255,10 @@ export class HVCharacterSheet extends HVActorSheet {
         context.usedSlots = context.data.capacity - context.availableSlots['worn'] - context.availableSlots['carried'];
         context.isEncumbered = context.usedSlots > context.data.capacity;
         await this.actor.setFlag('helveczia', 'encumbered', context.isEncumbered);
+        break;
+      case 'deeds':
+        context.tab = context.tabs[partId];
+        context.allowPlayerEdit = CONFIG.HV.allowPlayerDeedEdit || game.user?.isGM;
         break;
       default:
         context.tab = context.tabs[partId];
