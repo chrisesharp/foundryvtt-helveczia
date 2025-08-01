@@ -151,7 +151,7 @@ export class HVCharacterSheet extends HVActorSheet {
     data.data = this.actor.system;
     data.items = this.actor.items.map((i) => i);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
-    data.hasBible = data.items.filter((i) => i.name.includes('Bible')).length > 0;
+    data.hasBible = data.items.filter((i) => i.name.includes('Bible') || i.name.includes('Szentírás')).length > 0;
     data.effects = prepareActiveEffectCategories(this.actor.allApplicableEffects());
     data.maxspecialisms = this.actor.isVagabond() ? ((this.actor.system as CharacterActorData).level >= 5 ? 3 : 2) : 1;
     data.spellslots = (this.actor as HVActor).getSpellSlots();

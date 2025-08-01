@@ -90,8 +90,8 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
     const templateData = {
       config: CONFIG.HV,
       speaker: speaker.alias,
-      text: '<h3>seeking guidance from the Holy Writ...</h3>',
-      title: 'Seeking guidance...',
+      text: `<h3>${game.i18n.localize('HV.dialog.HolyWrit')}</h3>`,
+      title: game.i18n.localize('HV.dialog.HolyWrit'),
     };
     const content = await renderTemplate('systems/helveczia/templates/chat/bible-choose.hbs', templateData);
     ChatMessage.create({
@@ -176,7 +176,7 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
       chapter: this.chapter,
       verse: this.verse,
       text: $(this.content).find(`li#verse-${this.verse}`).html(),
-      title: 'The Holy Writ guides...',
+      title: game.i18n.localize('HV.dialog.HolyWritGuides'),
     };
     const content = await renderTemplate('systems/helveczia/templates/chat/bible-verse.hbs', templateData);
     ChatMessage.create({

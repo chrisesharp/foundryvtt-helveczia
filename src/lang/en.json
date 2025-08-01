@@ -369,6 +369,7 @@
       "PDF": "Print",
       "StatBlock": "Paste statblock here...\nEg.\nVampire rose: LVL 3+2; AC 15; Atk +5 vine 1d6+2 and grab CC;\nSpec strangle 2d6+2/r, heals 2 Hp/r by sucking blood, Climb +5, Sneak +5; +5/+3/+3; V 7.\nHp 15",
       "HolyWrit": "seeking guidance from the Holy Writ...",
+      "HolyWritGuides": "The Holy Writ guides...",
       "NewHitpoints": "New Hitpoints",
       "NoNewHitpoints": "Sorry, you didn't roll any higher than your current maximum hitpoints!"
     },
