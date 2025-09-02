@@ -112,7 +112,17 @@ export class HVCharacterCreator extends HandlebarsApplicationMixin(ApplicationV2
     const level = data.level;
     const hd = data.hp.hd;
     const con = data.scores.con.mod;
-    const rollParts = [`${level - 1}d${hd}`, `${hd}+${con}`, `${con}*${level - 1}`];
+    const rollParts: string[] = [];
+    if (actorData.type === 'character') {
+      // Max hitpoints for first HD
+      // e.g. 2nd level = 2D8 -> 1D8 + 8
+      rollParts.push(`${hd}+${con}`); // Max hitpoints for 1 HD, + con bonus
+      rollParts.push(`${level - 1}d${hd}`); // variable remaining HDs
+      rollParts.push(`${con}*${level - 1}`); // remaining con bonuses
+    } else {
+      rollParts.push(`${level}d${hd}`);
+      rollParts.push(`${level}*${con}`);
+    }
     if (data.npcModBonus > 0) {
       rollParts.push(`${level}*${data.npcModBonus}`);
     }
