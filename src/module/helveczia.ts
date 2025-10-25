@@ -46,7 +46,7 @@ import { HVItemSheet } from './items/item-sheet';
 const { DocumentSheetConfig } = foundry.applications.apps;
 const { CardHandConfig, CardPileConfig, SceneConfig } = foundry.applications.sheets;
 const { ActorSheet, ItemSheet } = foundry.appv1.sheets;
-const { Actors, Items } = foundry.documents.collections;
+const { Actors, Items, Scenes } = foundry.documents.collections;
 const { renderTemplate } = foundry.applications.handlebars;
 
 const log = new Logger();
@@ -119,9 +119,11 @@ Hooks.once('init', async () => {
   Items.registerSheet('helveczia', SpellSheet, { types: ['spell'] });
   Items.registerSheet('helveczia', BookSheet, { types: ['book'] });
   Items.registerSheet('helveczia', ContainerSheet, { types: ['container'] });
+  Scenes.unregisterSheet('core', SceneConfig);
+  Scenes.registerSheet('core', HVSceneConfig, { makeDefault: true });
 
-  DocumentSheetConfig.unregisterSheet(Scene, 'core', SceneConfig);
-  DocumentSheetConfig.registerSheet(Scene, 'core', HVSceneConfig);
+  // DocumentSheetConfig.unregisterSheet(Scene, 'core', SceneConfig);
+  // DocumentSheetConfig.registerSheet(Scene, 'helveczia', HVSceneConfig, { makeDefault: true });
 
   quench_tests_init(); // Will have no effect unless Quench is active
 });
