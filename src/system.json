@@ -155,6 +155,17 @@
     "distance": 5,
     "units": "ft"
   },
+  "media": [
+    {
+      "type": "cover",
+      "url": "systems/helveczia/assets/cover.png"
+    },
+    {
+      "type": "setup",
+      "url": "systems/helveczia/assets/cover.png"
+    }
+  ],
+  "background": "systems/helveczia/assets/cover.png",
   "primaryTokenAttribute": "",
   "secondaryTokenAttribute": ""
 }
