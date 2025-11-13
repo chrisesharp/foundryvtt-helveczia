@@ -42,6 +42,11 @@ $font-secondary: 'MedievalSharp', cursive;
   display: grid;
 }
 
+.bracket {
+  align-content: center;
+  padding-bottom: 5px;
+}
+
 .centred {
   display: grid;
   justify-content: center;

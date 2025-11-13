@@ -96,7 +96,7 @@
                             {{ localize 'HV.virtue' }}:
                         </h4>
                         <div class="attribute-value">
-                            <input name="system.virtue" type="text" data-dtype="Number" value="{{data.virtue}}" disabled> <div>(</div><input name="system.origVirtue" type="text" data-dtype="Number" value="{{data.origVirtue}}" title="{{ localize 'HV.virtueOrig' }}" {{#unless user.isGM}}disabled{{/unless}}><div>)</div>
+                            <input name="system.virtue" type="text" data-dtype="Number" value="{{data.virtue}}" disabled> <div class="bracket">(</div><input name="system.origVirtue" type="text" data-dtype="Number" value="{{data.origVirtue}}" title="{{ localize 'HV.virtueOrig' }}" {{#unless user.isGM}}disabled{{/unless}}><div class="bracket">)</div>
                         </div>
                     </li>
                 </ol>
@@ -105,12 +105,13 @@
                         <h4 class="attribute-name box-title">
                             {{ localize 'HV.HP.abbr' }}:
                         </h4>
-                        <div class="attribute-value" style="min-width:fit-content;">
+                        <div class="attribute-value">
                             <input name="system.hp.value" type="text" data-dtype="Number" value="{{data.hp.value}}" title="{{ localize 'HV.HP.current' }}">
-                            <div>(</div><input name="system.hp.max" type="text" data-dtype="Number" value="{{data.hp.max}}" title="{{ localize 'HV.HP.max' }}" {{#unless user.isGM}}disabled{{/unless}}><div>)</div>
-                            <img src="{{die data.hp.hd}}" class="hitdie {{#if needToRoll}}blinking{{/if}}" data-action="rollHitDie" data-roll="{{data.hp.hd}}" data-label="HD">
+                            <div class="bracket">(</div>
+                            <input name="system.hp.max" type="text" data-dtype="Number" value="{{data.hp.max}}" title="{{ localize 'HV.HP.max' }}" {{#unless user.isGM}}disabled{{/unless}}>
+                            <div class="bracket">)</div>
                         </div>
-                        
+                        <img src="{{die data.hp.hd}}" class="hitdie {{#if needToRoll}}blinking{{/if}}" data-action="rollHitDie" data-roll="{{data.hp.hd}}" data-label="HD">
                     </li>
                 </ol>
             </div>
