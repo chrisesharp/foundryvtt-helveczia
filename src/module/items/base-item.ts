@@ -47,13 +47,13 @@ export abstract class BaseItem {
   static prepareItemData(itemDocument) {
     const itemData = itemDocument;
     if (itemData.effects) {
-      itemData.effects.forEach(async (e) => {
+      for (const effect of itemData.effects) {
         try {
-          e.origin = itemDocument.uuid;
+          effect.origin = itemDocument.uuid;
         } catch (err) {
           log.error('prepareItemData() |', err);
         }
-      });
+      }
     }
     return itemData;
   }

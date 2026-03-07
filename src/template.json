@@ -19,29 +19,35 @@
         "saves": {
           "bravery": {
             "base": 0,
-            "bonus": 0
+            "bonus": 0,
+            "mod": 0
           },
           "deftness": {
             "base": 0,
-            "bonus": 0
+            "bonus": 0,
+            "mod": 0
           },
           "temptation": {
             "base": 0,
-            "bonus": 0
+            "bonus": 0,
+            "mod": 0
           }
         },
         "attack": {
           "melee": {
             "base": 0,
-            "bonus": 0
+            "bonus": 0,
+            "mod": 0
           },
           "ranged": {
             "base": 0,
-            "bonus": 0
+            "bonus": 0,
+            "mod": 0
           },
           "cc": {
             "base": 0,
-            "bonus": 0
+            "bonus": 0,
+            "mod": 0
           }
         },
         "scores": {
@@ -74,7 +80,21 @@
           "th": 0,
           "pf": 0,
           "gr": 0
-        }
+        },
+        "possessions": {
+          "articles": [],
+          "weapons": [],
+          "armour": []
+        },
+        "skills": [],
+        "peoples": [],
+        "classes": [],
+        "specialisms": [],
+        "deeds": [],
+        "sins": [],
+        "virtues": [],
+        "spells": [[], [], []],
+        "capacity": 0
       }
     },
     "character": {
@@ -86,10 +106,17 @@
       "levelBonus": "1",
       "baseAC": 10,
       "experience": 0,
-      "stats": {}
+      "stats": {
+        "saves": {
+          "bravery": 0,
+          "deftness": 0,
+          "temptation": 0
+        }
+      }
     },
     "party": {
-      "templates": []
+      "templates": [],
+      "members": []
     }
   },
   "Item": {

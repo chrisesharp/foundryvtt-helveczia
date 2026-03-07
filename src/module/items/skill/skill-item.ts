@@ -11,8 +11,7 @@ export class SkillItem extends BaseItem {
   static prepareItemData(itemDocument) {
     const data = super.prepareItemData(itemDocument);
     if (itemDocument.isEmbedded && itemDocument.parent instanceof Actor) {
-      const extraData = CONFIG.HV.itemClasses['people']?.augmentOwnedItem(itemDocument.parent, data);
-      foundry.utils.mergeObject(data, extraData);
+      CONFIG.HV.itemClasses['people']?.augmentOwnedItem(itemDocument.parent, data);
     }
     return data;
   }

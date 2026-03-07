@@ -14,13 +14,10 @@ export class HVActor extends Actor {
   /**
    * Augment the basic actor data with additional dynamic data.
    */
-  /** @override */
-  prepareData() {
-    super.prepareData();
-  }
 
   /** @override */
   prepareBaseData(): void {
+    super.prepareBaseData();
     switch (this.type) {
       case 'character':
         {
@@ -224,9 +221,9 @@ export class HVActor extends Actor {
    */
   _updateSaves(data: any) {
     if (this.type === 'npc' && data.stats.saves) {
-      data.saves.bravery.mod = parseInt(data.stats.saves.bravery);
-      data.saves.deftness.mod = parseInt(data.stats.saves.deftness);
-      data.saves.temptation.mod = parseInt(data.stats.saves.temptation);
+      data.saves.bravery.mod = parseInt(data.stats.saves.bravery ?? 0);
+      data.saves.deftness.mod = parseInt(data.stats.saves.deftness ?? 0);
+      data.saves.temptation.mod = parseInt(data.stats.saves.temptation ?? 0);
     } else {
       const virtue = this.isHighVirtue() ? 1 : 0;
       data.saves.bravery.bonus += data.scores.con.mod + virtue + data.npcModBonus;
@@ -263,12 +260,6 @@ export class HVActor extends Actor {
     if (CONFIG.HV.applyEncumbrance && key === 'dex' && this.getFlag('helveczia', 'encumbered')) {
       ability.mod -= 2;
     }
-  }
-
-  // Manage potential effect collisions here
-  /** @override */
-  applyActiveEffects() {
-    super.applyActiveEffects();
   }
 
   applyCustomEffect(changeData) {
@@ -396,39 +387,69 @@ export class HVActor extends Actor {
     }
   }
 
+  // /** @override */
+  // async _preCreate(data, options, user) {
+  //   await super._preCreate(data, options, user);
+
+  //   const defaultToken = data.type === 'party' ? CONFIG.HV.DEFAULT_PARTY : CONFIG.HV.DEFAULT_TOKEN;
+
+  //   const disposition = data.type !== 'npc' ? CONST.TOKEN_DISPOSITIONS.FRIENDLY : CONST.TOKEN_DISPOSITIONS.HOSTILE;
+
+  //   // Modify THIS (the document instance), not data
+  //   if (!this.img) {
+  //     this.updateSource({ img: defaultToken });
+  //   }
+
+  //   if (!this.prototypeToken.texture?.src) {
+  //     this.updateSource({
+  //       'prototypeToken.displayName': CONST.TOKEN_DISPLAY_MODES.HOVER,
+  //       'prototypeToken.actorLink': true,
+  //       'prototypeToken.disposition': disposition,
+  //       'prototypeToken.lockRotation': true,
+  //       'prototypeToken.texture.src': defaultToken,
+  //     });
+  //   }
+  // }
+  // /** @override */
+  // async _onCreate(data, options, userId) {
+  //   await super._onCreate(data, options, userId);
+
+  //   console.log('_onCreate - Actor created:', {
+  //     img: this.img,
+  //     tokenSrc: this.prototypeToken.texture.src,
+  //   });
+  // }
+
   /** @override */
-  async _preCreate(data, options, user) {
-    await super._preCreate(data, options, user);
-    data.prototypeToken = data.prototypeToken || {};
+  _initializeSource(source, options = {}) {
+    // Apply defaults BEFORE calling super
+    if (options.creation) {
+      const defaultToken = source.type === 'party' ? CONFIG.HV.DEFAULT_PARTY : CONFIG.HV.DEFAULT_TOKEN;
 
-    const disposition = data.type !== 'npc' ? CONST.TOKEN_DISPOSITIONS.FRIENDLY : CONST.TOKEN_DISPOSITIONS.HOSTILE;
-    // Set basic token data for newly created actors.
+      const disposition = source.type !== 'npc' ? CONST.TOKEN_DISPOSITIONS.FRIENDLY : CONST.TOKEN_DISPOSITIONS.HOSTILE;
 
-    const defaultToken = data.type === 'party' ? CONFIG.HV.DEFAULT_PARTY : CONFIG.HV.DEFAULT_TOKEN;
+      // Set img default
+      if (!source.img) {
+        source.img = defaultToken;
+      }
 
-    foundry.utils.mergeObject(
-      data,
-      {
-        img: defaultToken,
-      },
-      { overwrite: false },
-    );
+      // Set prototypeToken defaults
+      if (!source.prototypeToken) {
+        source.prototypeToken = {};
+      }
 
-    foundry.utils.mergeObject(
-      data.prototypeToken,
-      {
-        displayName: CONST.TOKEN_DISPLAY_MODES.HOVER,
-        actorLink: true,
-        disposition: disposition,
-        lockRotation: true,
-        texture: {
-          src: data.img,
-        },
-      },
-      { overwrite: false },
-    );
+      const pt = source.prototypeToken;
+      if (!pt.displayName) pt.displayName = CONST.TOKEN_DISPLAY_MODES.HOVER;
+      if (pt.actorLink === undefined) pt.actorLink = true;
+      if (!pt.disposition) pt.disposition = disposition;
+      if (pt.lockRotation === undefined) pt.lockRotation = true;
 
-    this.updateSource(data);
+      if (!pt.texture) pt.texture = {};
+      if (!pt.texture.src) pt.texture.src = defaultToken;
+    }
+
+    // NOW call super - it will see your defaults are already set
+    return super._initializeSource(source, options);
   }
 
   isNoClass(): boolean {
