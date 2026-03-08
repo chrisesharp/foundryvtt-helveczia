@@ -1,7 +1,7 @@
 import { prepareActiveEffectCategories } from '../effects';
 import { ContainerItem } from './container/container-item';
 import { HVItem } from './item';
-import { BookItemData, ContainerItemData } from './item-types';
+import { BookItemData } from './item-types';
 const { ItemSheetV2 } = foundry.applications.sheets;
 const { DragDrop, TextEditor } = foundry.applications.ux;
 const { HandlebarsApplicationMixin } = foundry.applications.api;
@@ -129,8 +129,6 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
         item = ((await pack?.getDocument(itemId)) as StoredDocument<HVItem>) ?? undefined;
       }
       dragData = item.toDragData();
-      // dragData['type'] = 'Item';
-      // dragData['data'] = item?.data;
       dragData['from'] = this.item.id;
     }
     if (Object.keys(dragData).length === 0) return;
@@ -212,8 +210,6 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
     switch (data.type) {
       case 'Item':
         return this._onDropItem(event, data);
-      // case 'Folder':
-      //   return this._onDropFolder(event, data);
       default:
         return;
     }

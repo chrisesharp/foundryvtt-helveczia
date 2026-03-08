@@ -82,7 +82,6 @@ export const registerHandlebarHelpers = async function () {
       if (specialisms[s] === name) return true;
     }
     return false;
-    // return Student.specialisms().includes(name);
   });
 
   Handlebars.registerHelper('isClericSpecialSkill', function (name) {

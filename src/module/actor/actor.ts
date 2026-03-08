@@ -387,39 +387,6 @@ export class HVActor extends Actor {
     }
   }
 
-  // /** @override */
-  // async _preCreate(data, options, user) {
-  //   await super._preCreate(data, options, user);
-
-  //   const defaultToken = data.type === 'party' ? CONFIG.HV.DEFAULT_PARTY : CONFIG.HV.DEFAULT_TOKEN;
-
-  //   const disposition = data.type !== 'npc' ? CONST.TOKEN_DISPOSITIONS.FRIENDLY : CONST.TOKEN_DISPOSITIONS.HOSTILE;
-
-  //   // Modify THIS (the document instance), not data
-  //   if (!this.img) {
-  //     this.updateSource({ img: defaultToken });
-  //   }
-
-  //   if (!this.prototypeToken.texture?.src) {
-  //     this.updateSource({
-  //       'prototypeToken.displayName': CONST.TOKEN_DISPLAY_MODES.HOVER,
-  //       'prototypeToken.actorLink': true,
-  //       'prototypeToken.disposition': disposition,
-  //       'prototypeToken.lockRotation': true,
-  //       'prototypeToken.texture.src': defaultToken,
-  //     });
-  //   }
-  // }
-  // /** @override */
-  // async _onCreate(data, options, userId) {
-  //   await super._onCreate(data, options, userId);
-
-  //   console.log('_onCreate - Actor created:', {
-  //     img: this.img,
-  //     tokenSrc: this.prototypeToken.texture.src,
-  //   });
-  // }
-
   /** @override */
   _initializeSource(source, options = {}) {
     // Apply defaults BEFORE calling super

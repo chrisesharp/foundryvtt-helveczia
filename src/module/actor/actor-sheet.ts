@@ -59,7 +59,6 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     },
     window: {
       resizable: true,
-      // controls: [HVPDF.getPDFButton()],
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -89,7 +88,6 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       return true;
     } else {
       const requiredProfession = itemData.parent?.toLowerCase();
-      // const thisActorProfession = this.actor.system.class?.toLowerCase();
       if (this.actor.isNamedType(requiredProfession, 'class')) {
         if (requiredProfession === 'fighter') {
           log.debug(`_removeClasses() | Removing specialisms for ${requiredProfession} `);
@@ -440,7 +438,6 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   static async _rollName(event, button) {
     event.preventDefault();
-    // const button = event.currentTarget;
     const actorId = button?.dataset?.actorId;
     const actor = game.actors?.get(actorId);
     const sex = (actor?.getFlag('helveczia', 'sex') as string) ?? 'male';
@@ -456,7 +453,6 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   static async _rollVirtue(event, button) {
     event.preventDefault();
-    // const button = event.currentTarget;
     const actorId = button?.dataset?.actorId;
     const title = `${game.i18n.localize('HV.RollVirtue')}`;
     const formula = `${this.actor.system.origVirtue}`.match(/(\dd\d[\+\-]?\d*)/g)

@@ -2,8 +2,6 @@ import { Utils } from '../../utils/utils';
 import { HVItemSheet } from '../item-sheet';
 const { fromUuidSync } = foundry.utils;
 
-// const uuidRegex = new RegExp('(?<actorId>Actor\.[a-zA-Z0-9]+)?\.?(?<itemId>Item\.[a-zA-Z0-9]+)');
-
 export class ContainerSheet extends HVItemSheet {
   static DEFAULT_OPTIONS = {
     classes: ['helveczia', 'sheet', 'item'],
