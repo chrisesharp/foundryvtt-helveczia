@@ -23,6 +23,7 @@ export class ContainerData extends BaseItemData {
         new fields.SchemaField({
           id: new fields.StringField({ blank: true }),
           name: new fields.StringField({ blank: true }),
+          encumbrance: new fields.NumberField({ required: true, integer: true, min: 0 }),
         }),
         { initial: [] },
       ),

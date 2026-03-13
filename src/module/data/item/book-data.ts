@@ -20,7 +20,7 @@ export class BookData extends BaseItemData {
       encumbrance: new fields.NumberField({ required: true, initial: 1, integer: true, min: 0 }),
       spells: new fields.ArrayField(
         new fields.SchemaField({
-          id: new fields.DocumentUUIDField({ blank: true }),
+          id: new fields.StringField({ blank: true }),
           name: new fields.StringField({ blank: true }),
         }),
         { initial: [] },
