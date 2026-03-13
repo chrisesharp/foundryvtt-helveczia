@@ -1,7 +1,7 @@
 import { jsPDF, jsPDFOptions } from 'jspdf';
-import { HVActor } from './documents/actor';
-import { HVActorSheet } from './applications/sheets/actor-sheet';
-import { HVItem } from './documents/item';
+import { HVActor } from '../documents/actor';
+import { HVActorSheet } from './sheets/actor-sheet';
+import { HVItem } from '../documents/item';
 const { fromUuid } = foundry.utils;
 
 const pages = [

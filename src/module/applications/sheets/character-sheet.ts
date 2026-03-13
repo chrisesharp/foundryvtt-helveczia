@@ -4,7 +4,7 @@ import { Logger } from '../../logger';
 import { HVActor } from '../../documents/actor';
 import { HVActorSheet } from './actor-sheet';
 import { CharacterActorData } from '../../../types/actor-types';
-import { HVPDF } from '../../pdf';
+import { HVPDF } from '../pdf';
 import { ContainerItem } from '../../documents/container-item';
 const { TextEditor } = foundry.applications.ux;
 const { FilePicker } = foundry.applications.apps;

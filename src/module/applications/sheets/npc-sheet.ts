@@ -2,7 +2,7 @@ import { NPCGenerator } from '../npcgen';
 import { prepareActiveEffectCategories } from '../../effects';
 import { HVItem } from '../../documents/item';
 import { Logger } from '../../logger';
-import { HVPDF } from '../../pdf';
+import { HVPDF } from '../pdf';
 import { HVActorSheet } from './actor-sheet';
 const { TextEditor } = foundry.applications.ux;
 const { FilePicker } = foundry.applications.apps;
