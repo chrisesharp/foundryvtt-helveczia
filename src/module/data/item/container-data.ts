@@ -29,4 +29,21 @@ export class ContainerData extends BaseItemData {
       ),
     };
   }
+
+  /**
+   * Migrate source data from some prior format into a new specification.
+   * This is called automatically when initializing the data model.
+   * @param {object} source  Candidate source data
+   * @returns {object}       Migrated source data
+   */
+  static migrateData(source: any): any {
+    if (source.contents.length > 0) {
+      for (const item of source.contents) {
+        if (item.encumbrance === undefined || item.encumbrance === null) {
+          item.encumbrance = 1;
+        }
+      }
+    }
+    return source;
+  }
 }
