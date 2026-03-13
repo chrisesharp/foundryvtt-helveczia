@@ -1,4 +1,4 @@
-import { HVActor } from '../actor/actor';
+import { HVActor } from '../documents/actor';
 import { Utils } from '../utils/utils';
 import { HVCharacterCreator } from './chargen';
 

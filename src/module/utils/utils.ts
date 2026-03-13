@@ -1,4 +1,4 @@
-import { HVActor } from '../actor/actor';
+import { HVActor } from '../documents/actor';
 import { HVItem } from '../items/item';
 import { Logger } from '../logger';
 const { fromUuid } = foundry.utils;

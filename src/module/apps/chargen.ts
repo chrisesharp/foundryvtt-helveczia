@@ -1,5 +1,5 @@
 import { Evaluated } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/client/dice/roll';
-import { HVActor } from '../actor/actor';
+import { HVActor } from '../documents/actor';
 import { Logger } from '../logger';
 import { Utils } from '../utils/utils';
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;

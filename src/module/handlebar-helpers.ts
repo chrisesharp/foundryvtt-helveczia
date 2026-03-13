@@ -1,5 +1,5 @@
-import { Cleric } from './items/class/cleric';
-import { Student } from './items/class/student';
+import { Cleric } from './documents/cleric';
+import { Student } from './documents/student';
 
 export const registerHandlebarHelpers = async function () {
   Handlebars.registerHelper('ordinal', function (a) {

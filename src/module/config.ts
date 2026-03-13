@@ -1,16 +1,16 @@
-import { BaseItem } from './items/base-item';
-import { SkillItem } from './items/skill/skill-item';
-import { ClassItem } from './items/class/class-item';
-import { PeopleItem } from './items/people/people-item';
-import { DeedItem } from './items/deed/deed-item';
-import { ArmourItem } from './items/armour/armour-item';
-import { WeaponItem } from './items/weapon/weapon-item';
-import { SpellItem } from './items/spell/spell-item';
-import { ContainerItem } from './items/container/container-item';
-import { PossessionItem } from './items/possesion/possession-item';
-import { HVActor } from './actor/actor';
+import { BaseItem } from './documents/base-item';
+import { SkillItem } from './documents/skill-item';
+import { ClassItem } from './documents/class-item';
+import { PeopleItem } from './documents/people-item';
+import { DeedItem } from './documents/deed-item';
+import { ArmourItem } from './documents/armour-item';
+import { WeaponItem } from './documents/weapon-item';
+import { SpellItem } from './documents/spell-item';
+import { ContainerItem } from './documents/container-item';
+import { PossessionItem } from './documents/possession-item';
+import { HVActor } from './documents/actor';
 import { HVCharacterCreator } from './apps/chargen';
-import { BookItem } from './items/book/book-item';
+import { BookItem } from './documents/book-item';
 import { KJVBible } from './apps/bible';
 
 export interface HelvecziaConfig {

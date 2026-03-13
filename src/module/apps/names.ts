@@ -11,7 +11,7 @@ import { HungarianNames } from './names/hungarian';
 import { CossackNames } from './names/cossack';
 import { GypsyNames } from './names/gypsy';
 import { JewishNames } from './names/jewish';
-import { PeopleItem } from '../items/people/people-item';
+import { PeopleItem } from '../documents/people-item';
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 type NameType = {

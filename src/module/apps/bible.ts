@@ -1,6 +1,6 @@
 import { books } from '../../assets/holy-bible/books';
 import { marked } from 'marked';
-import { HVActor } from '../actor/actor';
+import { HVActor } from '../documents/actor';
 import { EmptyObject } from '@league-of-foundry-developers/foundry-vtt-types/src/types/utils.mjs';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;

@@ -1,4 +1,4 @@
-import { HVActor } from './actor/actor';
+import { HVActor } from './documents/actor';
 
 export function getActorEffect(owner: HVActor, effectId: string) {
   let effect: ActiveEffectData | null = null;

@@ -1,5 +1,5 @@
 import { Evaluated } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/client/dice/roll';
-import { HVActor } from './actor/actor';
+import { HVActor } from './documents/actor';
 const { DialogV2 } = foundry.applications.api;
 const { renderTemplate } = foundry.applications.handlebars;
 
