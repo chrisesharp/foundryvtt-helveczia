@@ -9,9 +9,9 @@ import { SpellItem } from './documents/spell-item';
 import { ContainerItem } from './documents/container-item';
 import { PossessionItem } from './documents/possession-item';
 import { HVActor } from './documents/actor';
-import { HVCharacterCreator } from './apps/chargen';
+import { HVCharacterCreator } from './applications/chargen';
 import { BookItem } from './documents/book-item';
-import { KJVBible } from './apps/bible';
+import { KJVBible } from './applications/bible';
 
 export interface HelvecziaConfig {
   createCardsFor?: (string) => void;

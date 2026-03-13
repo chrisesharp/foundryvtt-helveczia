@@ -1,4 +1,4 @@
-import { HVCharacterCreator } from '../../apps/chargen';
+import { HVCharacterCreator } from '../chargen';
 import { getActorEffect } from '../../effects';
 import { ClassItem } from '../../documents/class-item';
 import { PeopleItem } from '../../documents/people-item';
@@ -10,7 +10,7 @@ import { Utils } from '../../utils/utils';
 import { HVDice } from '../../dice';
 import { HVNameGenerator } from '../../apps/names';
 import { HVPDF } from '../../pdf';
-import { NPCGenerator } from '../../apps/npcgen';
+import { NPCGenerator } from '../npcgen';
 import { slideToggle } from '../../utils/slide';
 import { ContainerSheet } from '../../applications/sheets/container-sheet';
 const { DialogV2, HandlebarsApplicationMixin } = foundry.applications.api;

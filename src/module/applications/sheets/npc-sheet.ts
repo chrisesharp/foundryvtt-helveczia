@@ -1,4 +1,4 @@
-import { NPCGenerator } from '../../apps/npcgen';
+import { NPCGenerator } from '../npcgen';
 import { prepareActiveEffectCategories } from '../../effects';
 import { HVItem } from '../../documents/item';
 import { Logger } from '../../logger';
