@@ -54,7 +54,7 @@ import { HVNameGenerator } from './applications/names';
 import { Utils } from './utils/utils';
 import { init as quench_tests_init } from '../tests/quench';
 import { registerKeyBindings } from './keys';
-import { HVToken } from './documents/token';
+import { HVToken } from './placeables/token';
 import { HVSceneConfig } from './scene';
 import { FrameView } from './utils/frameview';
 import { HVItem } from './documents/item';
