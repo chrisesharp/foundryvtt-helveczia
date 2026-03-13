@@ -289,12 +289,10 @@ export class HVCharacterSheet extends HVActorSheet {
   }
 
   /** @override */
-  async _onDropItem(event: DragEvent, data: ActorSheet.DropData.Item): Promise<unknown> {
-    log.debug('_onDropItem() | ', event, data);
+  async _onDropItem(event: DragEvent, item: Item): Promise<unknown> {
+    log.debug('_onDropItem() | ', event, item);
     let shouldContinue = true;
-    const item = await Item.implementation.fromDropData(data);
     let position = 'mount';
-    log.debug('_onDropItem() | dropped item :', item);
     switch (item?.type) {
       case 'people':
         shouldContinue = await this._removePeoples(item);
@@ -366,22 +364,22 @@ export class HVCharacterSheet extends HVActorSheet {
         break;
     }
     if (shouldContinue) {
-      const items = (await super._onDropItem(event, data)) as HVItem[];
-      const item = items?.length ? items[0] : null;
-      log.debug('_onDropItem() | created item:', item);
-      if (item) {
-        switch (item.type) {
+      const items = (await super._onDropItem(event, item)) as HVItem[];
+      const createdItem = items?.length ? items[0] : null;
+      log.debug('_onDropItem() | created item:', createdItem);
+      if (createdItem) {
+        switch (createdItem.type) {
           case 'weapon':
           case 'armour':
           case 'book':
           case 'possession':
           case 'container':
-            item.setFlag('helveczia', 'position', position);
-            item.unsetFlag('helveczia', 'in-container');
+            createdItem.setFlag('helveczia', 'position', position);
+            createdItem.unsetFlag('helveczia', 'in-container');
             log.debug(`_onDropItem() | set position of item to ${position}`);
             break;
           case 'spell':
-            await item.createChatMessage(this.actor, 'HV.SpellMemorize');
+            await createdItem.createChatMessage(this.actor, 'HV.SpellMemorize');
             break;
         }
       }

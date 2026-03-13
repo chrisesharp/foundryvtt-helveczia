@@ -28,7 +28,7 @@
             >
                 <h4 class="item-name effect-name">{{effect.name}}</h4>
                 <div class="effect-source">{{effect.sourceName}}</div>
-                <div class="effect-duration">{{#if effect.duration.duration }}{{effect.duration.label}}{{/if}}</div>
+                <div class="effect-duration">{{#if effect.duration.seconds }}{{effect.duration.label}}{{/if}}</div>
                 <div class="item-controls effect-controls flexrow">
                     <a class="effect-control" data-action="toggleEffect" title="{{localize 'HV.effect.Toggle'}}">
                         <i class="fas {{#if effect.disabled}}fa-check{{else}}fa-times{{/if}}"></i>

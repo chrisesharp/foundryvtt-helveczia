@@ -155,6 +155,25 @@
     "distance": 5,
     "units": "ft"
   },
+  "documentTypes": {
+    "Actor": {
+      "character": {},
+      "npc": {},
+      "party": {}
+    },
+    "Item": {
+      "possession": {},
+      "container": {},
+      "book": {},
+      "people": {},
+      "class": {},
+      "skill": {},
+      "armour": {},
+      "weapon": {},
+      "deed": {},
+      "spell": {}
+    }
+  },
   "media": [
     {
       "type": "cover",
@@ -166,6 +185,6 @@
     }
   ],
   "background": "systems/helveczia/assets/cover.png",
-  "primaryTokenAttribute": "",
+  "primaryTokenAttribute": "hp",
   "secondaryTokenAttribute": ""
 }

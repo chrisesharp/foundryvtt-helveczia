@@ -201,11 +201,9 @@ export class HVNPCSheet extends HVActorSheet {
   }
 
   /** @override */
-  async _onDropItem(event: DragEvent, data: ActorSheet.DropData.Item): Promise<unknown> {
-    log.debug('_onDropItem() | ', event, data);
+  async _onDropItem(event: DragEvent, item: Item): Promise<unknown> {
+    log.debug('_onDropItem() | ', event, item);
     let shouldContinue = true;
-    const item = await Item.implementation.fromDropData(data);
-    log.debug('_onDropItem() | dropped item :', item);
     switch (item?.type) {
       case 'people':
         shouldContinue = await this._removePeoples(item);
@@ -223,16 +221,16 @@ export class HVNPCSheet extends HVActorSheet {
         break;
     }
     if (shouldContinue) {
-      const items = (await super._onDropItem(event, data)) as HVItem[];
+      const items = (await super._onDropItem(event, item)) as HVItem[];
       const item = items?.length ? items[0] : null;
-      log.debug('_onDropItem() | created item:', item);
-      if (item) {
-        switch (item.type) {
+      log.debug('_onDropItem() | created item:', createdItem);
+      if (createdItem) {
+        switch (createdItem.type) {
           case 'weapon':
           case 'armour':
           case 'book':
           case 'possession':
-            item.setFlag('helveczia', 'position', 'worn');
+            createdItem.setFlag('helveczia', 'position', 'worn');
             log.debug(`_onDropItem() | set position of item to worn`);
             break;
         }

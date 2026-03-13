@@ -14,6 +14,22 @@ import { Logger } from './logger';
 import { HVCharacterSheet } from './actor/character-sheet';
 import { HVActor } from './actor/actor';
 
+// Import data models
+import { CharacterData } from './data/actor/character-data';
+import { NPCData } from './data/actor/npc-data';
+import { PartyData } from './data/actor/party-data';
+
+import { PossessionData } from './data/item/possession-data';
+import { ContainerData } from './data/item/container-data';
+import { BookData } from './data/item/book-data';
+import { PeopleData } from './data/item/people-data';
+import { ClassData } from './data/item/class-data';
+import { SkillData } from './data/item/skill-data';
+import { ArmourData } from './data/item/armour-data';
+import { WeaponData } from './data/item/weapon-data';
+import { DeedData } from './data/item/deed-data';
+import { SpellData } from './data/item/spell-data';
+
 import { HVItem } from './items/item';
 import { SkillSheet } from './items/skill/skill-sheet';
 import { PossessionSheet } from './items/possesion/possession-sheet';
@@ -65,6 +81,27 @@ Hooks.once('init', async () => {
   CONFIG.Token.objectClass = HVToken;
   CONFIG.Combatant.documentClass = HVCombatant;
   CONFIG.Combat.documentClass = HVCombat;
+
+  // Register Actor data models
+  CONFIG.Actor.dataModels = {
+    character: CharacterData,
+    npc: NPCData,
+    party: PartyData,
+  };
+
+  // Register Item data models
+  CONFIG.Item.dataModels = {
+    possession: PossessionData,
+    container: ContainerData,
+    book: BookData,
+    people: PeopleData,
+    class: ClassData,
+    skill: SkillData,
+    armour: ArmourData,
+    weapon: WeaponData,
+    deed: DeedData,
+    spell: SpellData,
+  };
 
   // Register custom system settings
   registerSettings();
@@ -130,8 +167,7 @@ Hooks.once('init', async () => {
 
 // Setup system
 Hooks.once('setup', async () => {
-  // Do anything after initialization but before
-  // ready
+  // Do anything after initialization but before ready
   log.info('Setting core.uiConfig.colorScheme.applications to "light" so it works better for our color scheme');
   const settings = game.settings?.get('core', 'uiConfig');
   settings.colorScheme.applications = 'light';
@@ -144,6 +180,7 @@ Hooks.once('setup', async () => {
 Hooks.once('ready', async () => {
   // Do anything once the system is ready
   if (game.user?.isGM) {
+    // Run migrations AFTER documents are initialized
     Utils.migrate();
 
     const hungarians = game.actors?.filter((i) => i.isHungarian());

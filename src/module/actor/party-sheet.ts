@@ -63,10 +63,9 @@ export class HVPartySheet extends HVActorSheet {
     return data.type === 'Actor';
   }
 
-  async _onDropActor(_event, data): Promise<void> {
+  async _onDropActor(_event, actor): Promise<void> {
     if (!this.actor.isOwner) return;
-    const droppedActor = await Actor.implementation.fromDropData(data);
-    if (droppedActor) await this._addActorToParty(droppedActor);
+    if (actor) await this._addActorToParty(actor);
     this.render(true);
   }
 

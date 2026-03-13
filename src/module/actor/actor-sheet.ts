@@ -679,10 +679,10 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     return !(data.type === 'Folder');
   }
 
-  async _onDropItem(event, data) {
+  async _onDropItem(event, item) {
     if (!this.actor.isOwner) return false;
     const dataTransferred = TextEditor.getDragEventData(event);
-    const item = await Item.implementation.fromDropData(data);
+    // const item = await Item.implementation.fromDropData(data);
 
     const sourceElement = event.srcElement.closest('div.possessions')?.querySelector('.contents-list');
     const containerId = sourceElement?.dataset?.containerId || dataTransferred['from'];
