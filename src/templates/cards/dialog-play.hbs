@@ -1,23 +1,21 @@
-<form class="cards-dialog">
-    <figure>
-        <img class="thumbnail" src="{{card.img}}" height="480"/>
-        <figcaption>{{card.name}}</figcaption>
-    </figure>
-    <p class="notes">{{localize "CARD.PlayHint"}}</p>
+<figure>
+    <img class="thumbnail" src="{{card.img}}" height="480"/>
+    <figcaption>{{card.name}}</figcaption>
+</figure>
+<p class="notes">{{localize "CARD.PlayHint"}}</p>
 
-    <div class="form-group stacked">
-        <label>{{localize "CARDS.PassTo"}}</label>
-        <div class="form-fields">
-            <select name="to">
-                {{selectOptions (cardsFilter card.parent.flags.helveczia.playTarget cards) nameAttr="id" labelAttr="name"}}
-            </select>
-        </div>
+<div class="form-group stacked">
+    <label>{{localize "CARDS.PassTo"}}</label>
+    <div class="form-fields">
+        <select name="to">
+            {{selectOptions choices valueAttr="id" labelAttr="name"}}
+        </select>
     </div>
+</div>
 
-    <div class="form-group">
-        <label>{{localize "CARDS.Facedown"}}</label>
-        <div class="form-fields">
-            <input type="checkbox" name="down"/>
-        </div>
+<div class="form-group">
+    <label>{{localize "CARDS.Facedown"}}</label>
+    <div class="form-fields">
+        <input type="checkbox" name="down"/>
     </div>
-</form>
+</div>

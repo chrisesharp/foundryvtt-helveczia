@@ -2,7 +2,6 @@ import { Utils } from '../utils/utils';
 const { DialogV2 } = foundry.applications.api;
 const { CardDeckConfig, CardHandConfig } = foundry.applications.sheets;
 const { renderTemplate } = foundry.applications.handlebars;
-const { FormDataExtended } = foundry.applications.ux;
 
 export class HVCardsControl {
   static addControl(_object, html): void {
@@ -125,25 +124,32 @@ export class HVCardsHand extends CardHandConfig {
 
       const html = await renderTemplate('systems/helveczia/templates/cards/dialog-draw.hbs', {});
 
-      return Dialog.prompt({
-        title: game.i18n.localize('CARDS.DrawTitle'),
-        label: game.i18n.localize('CARDS.ACTIONS.Draw'),
-        content: html,
+      const buttons = [
+        {
+          label: game.i18n.localize('CARDS.ACTIONS.Draw'),
+          icon: 'fas fa-cards',
+          action: 'draw',
+          callback: (event, button, _dialog) => button.form.elements.number.value,
+        },
+      ];
+
+      return DialogV2.wait({
         classes: ['helveczia'],
-        callback: (html) => {
-          const form = html.querySelector('form.cards-dialog') as HTMLFormElement;
-          if (form) {
-            const fd = new FormDataExtended(form, {}).object;
-            const from = game.cards?.get(sourceDeck);
-            const options = { how: CONST.CARD_DRAW_MODES.RANDOM, updateData: { face: null } };
-            return source.draw(from, fd.number, options).catch((err) => {
-              ui.notifications.error(err.message);
-              return [];
-            });
-          }
+        window: {
+          title: game.i18n.localize('CARDS.DrawTitle'),
+        },
+        content: html,
+        buttons: buttons,
+        submit: (result) => {
+          const from = game.cards?.get(sourceDeck);
+          const options = { how: CONST.CARD_DRAW_MODES.RANDOM, updateData: { face: null } };
+          return source.draw(from, parseInt(result), options).catch((err) => {
+            ui.notifications.error(err.message);
+            return [];
+          });
         },
         rejectClose: false,
-        options: { jQuery: false },
+        close: () => {},
       });
     }
   }
@@ -157,26 +163,36 @@ export class HVCardsHand extends CardHandConfig {
       );
       if (!cards?.length) return ui.notifications.warn('CARDS.PassWarnNoTargets', { localize: true });
       const card = source.cards.filter((c) => c.id === target.dataset.cardId)[0];
-      const html = await renderTemplate('systems/helveczia/templates/cards/dialog-play.hbs', { card, cards });
+      const choices = cards
+        .filter((c) => c.name.includes(card.parent.flags.helveczia.playTarget))
+        .map((c) => ({ name: c.name, id: c.id }));
+      const html = await renderTemplate('systems/helveczia/templates/cards/dialog-play.hbs', { card, choices });
 
-      return Dialog.prompt({
-        title: game.i18n.localize('CARD.Play'),
-        label: game.i18n.localize('CARD.Play'),
+      const buttons = [
+        {
+          label: game.i18n.localize('CARD.Play'),
+          icon: 'fas fa-cards',
+          action: 'play',
+          callback: (event, button, _dialog) => button.form.elements,
+        },
+      ];
+
+      return DialogV2.wait({
         classes: ['helveczia'],
+        window: {
+          title: game.i18n.localize('CARD.Play'),
+        },
         content: html,
-        callback: (html) => {
-          const form = html.querySelector('form.cards-dialog') as HTMLFormElement;
-          if (form) {
-            const fd = new FormDataExtended(form, {}).object;
-            const to = game.cards?.get(fd.to as string);
-            const options = { action: 'play', updateData: fd.down ? { face: null } : {} };
-            return source.pass(to, [card.id], options).catch((err) => {
-              return ui.notifications.error(err.message);
-            });
-          }
+        buttons: buttons,
+        submit: (result) => {
+          const to = game.cards?.get(result.to.value as string);
+          const options = { action: 'play', updateData: result.down.checked ? { face: null } : {} };
+          return source.pass(to, [card.id], options).catch((err) => {
+            return ui.notifications.error(err.message);
+          });
         },
         rejectClose: false,
-        options: { jQuery: false },
+        close: () => {},
       });
     }
   }
