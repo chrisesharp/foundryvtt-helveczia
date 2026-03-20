@@ -1,17 +1,17 @@
-import { BaseItem } from './items/base-item';
-import { SkillItem } from './items/skill/skill-item';
-import { ClassItem } from './items/class/class-item';
-import { PeopleItem } from './items/people/people-item';
-import { DeedItem } from './items/deed/deed-item';
-import { ArmourItem } from './items/armour/armour-item';
-import { WeaponItem } from './items/weapon/weapon-item';
-import { SpellItem } from './items/spell/spell-item';
-import { ContainerItem } from './items/container/container-item';
-import { PossessionItem } from './items/possesion/possession-item';
-import { HVActor } from './actor/actor';
-import { HVCharacterCreator } from './apps/chargen';
-import { BookItem } from './items/book/book-item';
-import { KJVBible } from './apps/bible';
+import { BaseItem } from './documents/base-item';
+import { SkillItem } from './documents/skill-item';
+import { ClassItem } from './documents/class-item';
+import { PeopleItem } from './documents/people-item';
+import { DeedItem } from './documents/deed-item';
+import { ArmourItem } from './documents/armour-item';
+import { WeaponItem } from './documents/weapon-item';
+import { SpellItem } from './documents/spell-item';
+import { ContainerItem } from './documents/container-item';
+import { PossessionItem } from './documents/possession-item';
+import { HVActor } from './documents/actor';
+import { HVCharacterCreator } from './applications/chargen';
+import { BookItem } from './documents/book-item';
+import { KJVBible } from './applications/bible';
 
 export interface HelvecziaConfig {
   createCardsFor?: (string) => void;
@@ -33,7 +33,6 @@ export interface HelvecziaConfig {
   applications: {
     peoplePicker: HVCharacterCreator | null;
     holyBible: KJVBible | null;
-    // classPicker: ClassPicker | null;
   };
 
   challengeAwards: {
@@ -86,8 +85,6 @@ export interface HelvecziaConfig {
     [key: number]: number[];
   };
 
-  // spellPacks: string[];
-
   coins: {
     [key: string]: string;
   };
@@ -134,7 +131,6 @@ export const HV: HelvecziaConfig = {
   applications: {
     peoplePicker: null,
     holyBible: new KJVBible({}),
-    // classPicker: ClassPicker,
   },
 
   challengeAwards: {
@@ -226,15 +222,6 @@ export const HV: HelvecziaConfig = {
     5: [3, 2, 1],
     6: [3, 3, 2],
   },
-
-  // spellPacks: [
-  //   'helveczia.student-spells-1',
-  //   'helveczia.student-spells-2',
-  //   'helveczia.student-spells-3',
-  //   'helveczia.cleric-spells-1',
-  //   'helveczia.cleric-spells-2',
-  //   'helveczia.cleric-spells-3',
-  // ],
 
   coins: {
     th: 'Th',

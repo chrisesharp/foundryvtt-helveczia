@@ -1,4 +1,4 @@
-import { HVActor } from './actor/actor';
+import { HVActor } from './documents/actor';
 
 export function getActorEffect(owner: HVActor, effectId: string) {
   let effect: ActiveEffectData | null = null;
@@ -19,12 +19,6 @@ export function onManageActiveEffect(event, target, owner) {
   event.preventDefault();
   const a = target;
   const li = a.closest('li');
-  // let effect: ActiveEffectData | null = null;
-  // if (owner instanceof HVActor) {
-  //   effect = getActorEffect(owner, li.dataset.effectId);
-  // } else {
-  //   effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId)[0] : null;
-  // }
   const effect = this._getEmbeddedDocument(target);
   switch (a.dataset.action) {
     case 'create':

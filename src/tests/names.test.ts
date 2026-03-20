@@ -1,4 +1,4 @@
-import { HVNameGenerator } from '../module/apps/names';
+import { HVNameGenerator } from '../module/applications/names';
 
 export function nameTests(context) {
   const { describe, it, beforeEach, before, afterEach, after, expect } = context;

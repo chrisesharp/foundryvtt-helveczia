@@ -11,37 +11,53 @@
 import { registerSettings } from './settings';
 import { preloadTemplates } from './preloadTemplates';
 import { Logger } from './logger';
-import { HVCharacterSheet } from './actor/character-sheet';
-import { HVActor } from './actor/actor';
+import { HVCharacterSheet } from './applications/sheets/character-sheet';
+import { HVActor } from './documents/actor';
 
-import { HVItem } from './items/item';
-import { SkillSheet } from './items/skill/skill-sheet';
-import { PossessionSheet } from './items/possesion/possession-sheet';
-import { ArmourSheet } from './items/armour/armour-sheet';
-import { WeaponSheet } from './items/weapon/weapon-sheet';
-import { DeedSheet } from './items/deed/deed-sheet';
-import { ClassSheet } from './items/class/class-sheet';
-import { PeopleSheet } from './items/people/people-sheet';
-import { SpellSheet } from './items/spell/spell-sheet';
-import { ContainerSheet } from './items/container/container-sheet';
+// Import data models
+import { CharacterData } from './data/actor/character-data';
+import { NPCData } from './data/actor/npc-data';
+import { PartyData } from './data/actor/party-data';
+
+import { PossessionData } from './data/item/possession-data';
+import { ContainerData } from './data/item/container-data';
+import { BookData } from './data/item/book-data';
+import { PeopleData } from './data/item/people-data';
+import { ClassData } from './data/item/class-data';
+import { SkillData } from './data/item/skill-data';
+import { ArmourData } from './data/item/armour-data';
+import { WeaponData } from './data/item/weapon-data';
+import { DeedData } from './data/item/deed-data';
+import { SpellData } from './data/item/spell-data';
+
+import { HVItemSheet } from './applications/sheets/item-sheet';
+import { HVActorSheet } from './applications/sheets/actor-sheet';
+import { HVNPCSheet } from './applications/sheets/npc-sheet';
+import { HVPartySheet } from './applications/sheets/party-sheet';
+import { SkillSheet } from './applications/sheets/skill-sheet';
+import { PossessionSheet } from './applications/sheets/possession-sheet';
+import { ArmourSheet } from './applications/sheets/armour-sheet';
+import { WeaponSheet } from './applications/sheets/weapon-sheet';
+import { DeedSheet } from './applications/sheets/deed-sheet';
+import { ClassSheet } from './applications/sheets/class-sheet';
+import { PeopleSheet } from './applications/sheets/people-sheet';
+import { SpellSheet } from './applications/sheets/spell-sheet';
+import { ContainerSheet } from './applications/sheets/container-sheet';
+import { BookSheet } from './applications/sheets/book-sheet';
 
 import { HV } from './config';
 import { registerHandlebarHelpers } from './handlebar-helpers';
-import { HVActorSheet } from './actor/actor-sheet';
 import { HVChat } from './chat';
-import { HVNPCSheet } from './actor/npc-sheet';
-import { BookSheet } from './items/book/book-sheet';
 import { HVCombat, HVCombatant } from './combat';
-import { HVCardsHand, HVCardsPile, HVCardsControl } from './apps/cards';
-import { HVNameGenerator } from './apps/names';
-import { HVPartySheet } from './actor/party-sheet';
+import { HVCardsHand, HVCardsPile, HVCardsControl } from './applications/cards';
+import { HVNameGenerator } from './applications/names';
 import { Utils } from './utils/utils';
 import { init as quench_tests_init } from '../tests/quench';
 import { registerKeyBindings } from './keys';
-import { HVToken } from './token';
+import { HVToken } from './placeables/token';
 import { HVSceneConfig } from './scene';
 import { FrameView } from './utils/frameview';
-import { HVItemSheet } from './items/item-sheet';
+import { HVItem } from './documents/item';
 
 const { DocumentSheetConfig } = foundry.applications.apps;
 const { CardHandConfig, CardPileConfig, SceneConfig } = foundry.applications.sheets;
@@ -65,6 +81,27 @@ Hooks.once('init', async () => {
   CONFIG.Token.objectClass = HVToken;
   CONFIG.Combatant.documentClass = HVCombatant;
   CONFIG.Combat.documentClass = HVCombat;
+
+  // Register Actor data models
+  CONFIG.Actor.dataModels = {
+    character: CharacterData,
+    npc: NPCData,
+    party: PartyData,
+  };
+
+  // Register Item data models
+  CONFIG.Item.dataModels = {
+    possession: PossessionData,
+    container: ContainerData,
+    book: BookData,
+    people: PeopleData,
+    class: ClassData,
+    skill: SkillData,
+    armour: ArmourData,
+    weapon: WeaponData,
+    deed: DeedData,
+    spell: SpellData,
+  };
 
   // Register custom system settings
   registerSettings();
@@ -130,8 +167,7 @@ Hooks.once('init', async () => {
 
 // Setup system
 Hooks.once('setup', async () => {
-  // Do anything after initialization but before
-  // ready
+  // Do anything after initialization but before ready
   log.info('Setting core.uiConfig.colorScheme.applications to "light" so it works better for our color scheme');
   const settings = game.settings?.get('core', 'uiConfig');
   settings.colorScheme.applications = 'light';
@@ -144,6 +180,7 @@ Hooks.once('setup', async () => {
 Hooks.once('ready', async () => {
   // Do anything once the system is ready
   if (game.user?.isGM) {
+    // Run migrations AFTER documents are initialized
     Utils.migrate();
 
     const hungarians = game.actors?.filter((i) => i.isHungarian());

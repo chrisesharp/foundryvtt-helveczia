@@ -3,7 +3,6 @@
 .item-list {
   list-style: none;
   margin: 7px 0;
-  // padding: 0;
 
   .items-header {
     font-weight: bold;
@@ -49,8 +48,6 @@
   .item {
     min-height: 24px;
     height: auto;
-    // line-height: 24px;
-    // padding: 3px 0;
     border-bottom: 1px solid #bbb;
 
     .item-image {
