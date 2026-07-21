@@ -87,14 +87,14 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       await Utils.deleteEmbeddedArray(classes, this.actor);
       return true;
     } else {
-      const requiredProfession = itemData.parent?.toLowerCase();
+      const requiredProfession = itemData.parentClass?.toLowerCase();
       if (this.actor.isNamedType(requiredProfession, 'class')) {
         if (requiredProfession === 'fighter') {
           log.debug(`_removeClasses() | Removing specialisms for ${requiredProfession} `);
           const classes = this.actor.itemTypes['class'].filter(
             (i) =>
               (i.system as ClassItemData).specialism &&
-              (i.system as ClassItemData).parent.toLowerCase() === this.actor.system.class.toLowerCase(),
+              (i.system as ClassItemData).parentClass.toLowerCase() === this.actor.system.class.toLowerCase(),
           );
           await Utils.deleteEmbeddedArray(classes, this.actor);
         }

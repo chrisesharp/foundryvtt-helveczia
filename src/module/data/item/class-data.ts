@@ -14,7 +14,7 @@ export class ClassData extends BaseItemData {
     return {
       ...super.defineSchema(),
       specialism: new fields.BooleanField({ required: true, initial: false }),
-      parent: new fields.StringField({ initial: '', blank: true }),
+      parentClass: new fields.StringField({ initial: '', blank: true }),
     };
   }
 }

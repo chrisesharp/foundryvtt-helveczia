@@ -10,7 +10,7 @@
   "system": {
     "description": "<p>The character can select and learn four extra skills which help in concealment, subterfuge, larceny and getting rich in general.</p>\n<p>Science and Craft skills &ndash; which are marks of a life lived usefully &ndash; cannot be chosen.</p>",
     "specialism": true,
-    "parent": "vagabond"
+    "parentClass": "vagabond"
   },
   "ownership": {
     "default": 0,

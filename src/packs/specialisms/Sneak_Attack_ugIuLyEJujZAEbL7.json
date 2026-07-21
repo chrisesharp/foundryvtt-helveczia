@@ -10,7 +10,7 @@
   "system": {
     "description": "<p>This ability can be used if the character can strike an unaware opponent &ndash; e.g. sneaking up on him, stabbing him under a table during conversation, or sniping him from a tree.</p>\n<p>For every odd level, a successful sneak attack deals an extra +1d6 damage (up to +3d6 on fifth level).</p>\n<p>Thrown and missile weapons can also be used, and with the right instrument, it can also incapacitate opponents instead of killing them.</p>",
     "specialism": true,
-    "parent": "vagabond"
+    "parentClass": "vagabond"
   },
   "ownership": {
     "default": 0,

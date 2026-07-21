@@ -41,7 +41,7 @@
   "system": {
     "description": "<p>Although pistols and rifles are more often used to fire volleys due to their general inaccuracy, some have still mastered</p>\n<p>them to the point of impressive precision.</p>\n<p>Sharpshooters may only wear light armour, but with firearms and other missiles, they either receive +2 to their attacks, or they can reload faster: pistols, carbines and crossbows in 1/2 round, blunderbusses and muskets in 1 round, and cannons in 2 1/2 rounds. They can always choose between the two options according to their present situation.</p>",
     "specialism": true,
-    "parent": "fighter"
+    "parentClass": "fighter"
   },
   "ownership": {
     "default": 0,

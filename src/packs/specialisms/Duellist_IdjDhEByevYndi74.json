@@ -41,7 +41,7 @@
   "system": {
     "description": "<p>Those who can dance with a sharp blade in the hand, will only enter the field in light armour.</p>\n<p>They can transfer part or whole of their base attack bonus to AC to protect either themselves or others. This AC bonus can be granted to one person for every odd level. If it is higher than their Strength bonus, they can&nbsp; use their Dexterity bonus for melee attacks.</p>\n<p>Finally, they receive a +2 to all combat checks.</p>",
     "specialism": true,
-    "parent": "fighter"
+    "parentClass": "fighter"
   },
   "ownership": {
     "default": 0,

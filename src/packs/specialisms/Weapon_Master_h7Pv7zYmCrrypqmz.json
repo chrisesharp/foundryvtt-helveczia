@@ -10,7 +10,7 @@
   "system": {
     "description": "<p>Those who see their training as a higher calling will fight with their chosen weapon like a whirlwind.</p>\n<p>On every odd level, due to their special combat experience, they receive +2 to the damage of a selected weapon type (e.g. swords, polearms, bludgeoning weapons, etc.).&nbsp; Selected twice, the bonus increases to +3, or they receive +1 to hit; selected three times, they receive both benefits.</p>",
     "specialism": true,
-    "parent": "fighter"
+    "parentClass": "fighter"
   },
   "ownership": {
     "default": 0,

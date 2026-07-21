@@ -85,7 +85,10 @@ export class ClassItem extends BaseItem {
     }
     const prof = ClassItem.professions[profName];
     if (prof) return prof;
-    const parent = capitalize((itemData.system as ClassItemData).parent);
+    const systemData = itemData.system as any;
+    const parentRaw: string = systemData?.parentClass ?? '';
+    if (!parentRaw) return undefined;
+    const parent = capitalize(parentRaw);
     return ClassItem.professions[parent];
   }
 
@@ -144,7 +147,7 @@ export class ClassItem extends BaseItem {
     if (!Utils.canModifyActor(game.user, item.actor)) {
       return;
     }
-    if (item.parent) {
+    if (item.actor) {
       const prof = ClassItem.findProfession(item);
       const func = prof?.onCreate;
       if (func) func(item);

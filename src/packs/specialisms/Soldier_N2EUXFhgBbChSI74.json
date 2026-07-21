@@ -47,7 +47,7 @@
   "system": {
     "description": "<p>The most common representatives of the class, equally adept at warfare and&nbsp;combat against multiple opponents.</p>\n<p>Firstly, they receive +1 to their base attack bonus, which always puts them one level higher&nbsp;than their peers, and gives them a secondary&nbsp;attack at level 5.</p>\n<p>Furthermore, they can&nbsp;carry over their damage: if their attack reduces an opponent to 0 Hp, the remaining damage carries over to the next foe.</p>",
     "specialism": true,
-    "parent": "fighter"
+    "parentClass": "fighter"
   },
   "ownership": {
     "default": 0,

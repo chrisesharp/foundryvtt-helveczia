@@ -16,7 +16,9 @@ export class HVItem extends Item {
     if (CONFIG.HV.itemClasses[this.type]) {
       await CONFIG.HV.itemClasses[this.type].preCreate(data, options, user);
     }
-    this.updateSource(data);
+    // Note: do NOT call this.updateSource(data) here. In Foundry V14, _preCreate operates on
+    // createData which is sent to the server as-is; updateSource only modifies the ephemeral
+    // temp document and has no effect on what gets persisted.
   }
 
   protected async _onCreate(

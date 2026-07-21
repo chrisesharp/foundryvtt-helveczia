@@ -10,7 +10,7 @@
   "system": {
     "description": "<p>The best Hussars are the Hungarians and the Poles, but their regiment have also emerged elsewhere.</p>\n<p>From the saddle, these light cavalrymen receive an extra attack every round with a +1 base attack bonus.</p>",
     "specialism": true,
-    "parent": "fighter"
+    "parentClass": "fighter"
   },
   "ownership": {
     "default": 0,

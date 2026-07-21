@@ -10,7 +10,7 @@
   "system": {
     "description": "<p>It is especially the Meistersinger and grey veterans who know it well that every mountain, spring and ruined post station has its story, and one who knows these stories can avoid unforeseen danger, or get involved in lucrative adventures.</p>\n<p>The character gains the Legends (Wis) skill.</p>",
     "specialism": true,
-    "parent": "vagabond"
+    "parentClass": "vagabond"
   },
   "ownership": {
     "default": 0,

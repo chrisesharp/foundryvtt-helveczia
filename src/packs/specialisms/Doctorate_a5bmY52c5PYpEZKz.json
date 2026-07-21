@@ -6,7 +6,7 @@
   "system": {
     "description": "<p>Students who reach sixth level may obtain a university doctorate by presenting and defending their scientific findings, at no small cost and effort. This is the source of significant prestige, but also has more tangible benefits. The character can distribute 6 extra points among Science skills (although a single skill can only be increased by 3), or learn a completely new Science.</p>\n<p>Furthermore, not only do they obtain 1d3+3 levels' worth of new spells in the process, but from now on, they can also devise spells of their own, which will bear their name till the end of the world.</p>",
     "specialism": true,
-    "parent": "student"
+    "parentClass": "student"
   },
   "effects": [],
   "flags": {},

@@ -10,7 +10,7 @@
   "system": {
     "description": "<p>Due to Fortune&rsquo;s attentions, the character can add +2 to a saving throw or initiative roll 1d3 times in a single adventure. The boon can be used before or after declaring the roll; the 1d3 to establish</p>\n<p>Fortune&rsquo;s current generosity should be rolled on the first use.</p>",
     "specialism": true,
-    "parent": "vagabond"
+    "parentClass": "vagabond"
   },
   "ownership": {
     "default": 0,

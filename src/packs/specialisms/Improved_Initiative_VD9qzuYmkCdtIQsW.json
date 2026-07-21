@@ -41,7 +41,7 @@
   "system": {
     "description": "<p>The character is quick like oiled lightning, receiving a +4 to initiative rolls.</p>",
     "specialism": true,
-    "parent": "vagabond"
+    "parentClass": "vagabond"
   },
   "ownership": {
     "default": 0,

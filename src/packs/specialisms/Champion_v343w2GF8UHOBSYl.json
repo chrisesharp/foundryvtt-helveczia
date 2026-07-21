@@ -59,7 +59,7 @@
   "system": {
     "description": "<p>Grizzled, hardy folks from the mountains, the darkest forests, and the strongmen of town fairs. Their muscles are like tempered steel, their bones forged iron.</p>\n<p>They roll their Hp with a mighty 1d12, and receive a +1 to all their saving throws.</p>",
     "specialism": true,
-    "parent": "fighter"
+    "parentClass": "fighter"
   },
   "ownership": {
     "default": 0,

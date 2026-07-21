@@ -128,7 +128,8 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
       const specialisms = Utils.findLocalizedPack('specialisms');
       const specialism = await HVCharacterCreator.getDocument(cls, specialisms);
       if (specialism && specialism.system.specialism) {
-        const professionName = specialism.system.parent.capitalize();
+        const parentClass: string = (specialism.system as any).parentClass ?? '';
+        const professionName = parentClass ? parentClass[0].toUpperCase() + parentClass.slice(1).toLowerCase() : '';
         const hasSpecialism = actor.itemTypes['class'].filter((c) => c.name === specialism.name).length > 0;
         const hasProfession = actor.itemTypes['class'].filter((c) => c.name === professionName).length > 0;
         if (!hasSpecialism) {
