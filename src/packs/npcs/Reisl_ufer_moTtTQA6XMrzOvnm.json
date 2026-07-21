@@ -106,7 +106,7 @@
       "system": {
         "description": "<p>As Helv&eacute;czia is populated by a free folk, it sends many fighters and mercenaries to the rest of the world, where they enjoy considerable, although often ill reputation. Even His Holiness, the Roman Pope, Pius XXVI is guarded from the dangers of heresy and treacherous intent by the Helv&eacute;czian Guard.</p>\n<p>Just as many fighters come to the land of Helv&eacute;czia, for fame, fortune, and freedom (mostly from prosecution).</p>\n<p>Fighters stand their own in melee combat and ranged engagements, and take wounds much better than other classes.</p>\n<ul>\n<li>Attack bonus: Level*1</li>\n<li>Saving throws: Bravery by the first, Deftness and Temptation by the second column</li>\n<li>Weapon use: any</li>\n<li>Armour use: any</li>\n<li>Hp: 1d10 per level</li>\n</ul>\n<p>&nbsp;</p>\n<p>All Fighters benefit from the following:</p>\n<ul>\n<li>Reflecting their practice and worldly experience, they receive an extra skill on the 3rd and 5th level.</li>\n</ul>",
         "specialism": false,
-        "parent": "cleric",
+        "parentClass": "",
         "quantity": null,
         "weight": null
       },
@@ -138,7 +138,7 @@
       "system": {
         "description": "<p>Those who see their training as a higher calling will fight with their chosen weapon like a whirlwind.</p>\n<p>On every odd level, due to their special combat experience, they receive +2 to the damage of a selected weapon type (e.g. swords, polearms, bludgeoning weapons, etc.).&nbsp; Selected twice, the bonus increases to +3, or they receive +1 to hit; selected three times, they receive both benefits.</p>",
         "specialism": true,
-        "parent": "fighter"
+        "parentClass": "fighter"
       },
       "ownership": {
         "default": 0,
