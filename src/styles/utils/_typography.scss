@@ -5,6 +5,34 @@ $font-primary: 'IM Fell English', serif;
 // $font-secondary: 'Germania One', cursive;
 $font-secondary: 'MedievalSharp', cursive;
 
+// Re-declare the CSS custom properties that body.theme-dark / .themed.theme-dark
+// override, scoped to our sheet roots.  Because these declarations live on the
+// same element that carries the .helveczia class they win the cascade without
+// needing !important, and every child that inherits via var() automatically picks
+// up the light values — including inputs, labels, buttons, and future elements.
+.application.helveczia,
+.app.helveczia,
+.window-app.helveczia {
+  --color-text-emphatic: var(--color-dark-1);
+  --color-text-primary: var(--color-dark-2);
+  --color-text-secondary: var(--color-dark-3);
+  --color-text-subtle: var(--color-dark-4);
+  --color-text-selection: var(--color-light-1);
+  --color-text-selection-bg: var(--color-dark-6);
+  --color-form-label: var(--color-dark-2);
+  --color-form-label-hover: var(--color-dark-1);
+  color-scheme: light;
+
+  // foundry2.css sets --input-text-color directly on every input via `body.theme-dark input`,
+  // which bypasses any ancestor-level override.  We must re-set it on the inputs themselves
+  // inside the helveczia sheet to win the cascade.
+  input,
+  select,
+  textarea {
+    --input-text-color: var(--color-dark-3);
+  }
+}
+
 .application.helveczia .window-content,
 .app.helveczia .window-content,
 .window-app.helveczia .window-content {
@@ -23,6 +51,13 @@ $font-secondary: 'MedievalSharp', cursive;
 
   & h2 {
     padding-top: 2%;
+  }
+
+  & a,
+  & label,
+  & span,
+  & p {
+    color: $colorDark;
   }
 }
 

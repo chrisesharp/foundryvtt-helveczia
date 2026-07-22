@@ -133,29 +133,31 @@ Hooks.once('init', async () => {
     label: 'CARDS.CardsHand',
     types: ['hand'],
     makeDefault: true,
+    themes: null, // Opt out of Foundry theming; sheet has its own parchment background
   });
   DocumentSheetConfig.unregisterSheet(Cards, 'core', CardPileConfig);
   DocumentSheetConfig.registerSheet(Cards, 'core', HVCardsPile, {
     label: 'CARDS.CardsPile',
     types: ['pile'],
     makeDefault: true,
+    themes: null, // Opt out of Foundry theming; sheet has its own parchment background
   });
 
   Actors.unregisterSheet('core', ActorSheet);
   Items.unregisterSheet('core', ItemSheet);
-  Actors.registerSheet('helveczia', HVCharacterSheet, { types: ['character'], makeDefault: true });
-  Actors.registerSheet('helveczia', HVNPCSheet, { types: ['npc'], makeDefault: true });
-  Actors.registerSheet('helveczia', HVPartySheet, { types: ['party'], makeDefault: true });
-  Items.registerSheet('helveczia', SkillSheet, { types: ['skill'] });
-  Items.registerSheet('helveczia', PossessionSheet, { types: ['possession'] });
-  Items.registerSheet('helveczia', ArmourSheet, { types: ['armour'] });
-  Items.registerSheet('helveczia', WeaponSheet, { types: ['weapon'] });
-  Items.registerSheet('helveczia', ClassSheet, { types: ['class'] });
-  Items.registerSheet('helveczia', DeedSheet, { types: ['deed'] });
-  Items.registerSheet('helveczia', PeopleSheet, { types: ['people'] });
-  Items.registerSheet('helveczia', SpellSheet, { types: ['spell'] });
-  Items.registerSheet('helveczia', BookSheet, { types: ['book'] });
-  Items.registerSheet('helveczia', ContainerSheet, { types: ['container'] });
+  Actors.registerSheet('helveczia', HVCharacterSheet, { types: ['character'], makeDefault: true, themes: null });
+  Actors.registerSheet('helveczia', HVNPCSheet, { types: ['npc'], makeDefault: true, themes: null });
+  Actors.registerSheet('helveczia', HVPartySheet, { types: ['party'], makeDefault: true, themes: null });
+  Items.registerSheet('helveczia', SkillSheet, { types: ['skill'], themes: null });
+  Items.registerSheet('helveczia', PossessionSheet, { types: ['possession'], themes: null });
+  Items.registerSheet('helveczia', ArmourSheet, { types: ['armour'], themes: null });
+  Items.registerSheet('helveczia', WeaponSheet, { types: ['weapon'], themes: null });
+  Items.registerSheet('helveczia', ClassSheet, { types: ['class'], themes: null });
+  Items.registerSheet('helveczia', DeedSheet, { types: ['deed'], themes: null });
+  Items.registerSheet('helveczia', PeopleSheet, { types: ['people'], themes: null });
+  Items.registerSheet('helveczia', SpellSheet, { types: ['spell'], themes: null });
+  Items.registerSheet('helveczia', BookSheet, { types: ['book'], themes: null });
+  Items.registerSheet('helveczia', ContainerSheet, { types: ['container'], themes: null });
   Scenes.unregisterSheet('core', SceneConfig);
   Scenes.registerSheet('core', HVSceneConfig, { makeDefault: true });
 
