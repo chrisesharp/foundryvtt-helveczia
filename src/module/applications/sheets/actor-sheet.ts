@@ -161,17 +161,17 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   }
 
   static async _effectToggle(_event, target) {
-    const effect = this._getEmbeddedDocument(target);
+    const effect = HVActorSheet._getEmbeddedDocument(target, this.actor);
     await effect.update({ disabled: !effect.disabled });
   }
 
   static async _effectEdit(_event, target) {
-    const effect = this._getEmbeddedDocument(target);
+    const effect = HVActorSheet._getEmbeddedDocument(target, this.actor);
     await effect?.sheet.render(true);
   }
 
   static async _effectDelete(_event, target) {
-    const effect = this._getEmbeddedDocument(target);
+    const effect = HVActorSheet._getEmbeddedDocument(target, this.actor);
     await effect.delete();
   }
 
@@ -311,7 +311,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       // Add item tags
       let section = `
       <div class="item-summary" style='display:none;'>`;
-      section += await this._getTags(item);
+      section += await HVActorSheet._getTags(item, this.actor);
       section += `
           <div>
               ${description}
@@ -499,17 +499,17 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     });
   }
 
-  async getRandomCraft(existingSkills: string[]): Promise<StoredDocument<HVItem> | null> {
+  static async getRandomCraft(existingSkills: string[]): Promise<StoredDocument<HVItem> | null> {
     const craftPack = Utils.findLocalizedPack('crafts');
-    return this.getRandomSkill(craftPack, existingSkills);
+    return HVActorSheet.getRandomSkill(craftPack, existingSkills);
   }
 
-  async getRandomScience(existingSkills: string[]): Promise<StoredDocument<HVItem> | null> {
+  static async getRandomScience(existingSkills: string[]): Promise<StoredDocument<HVItem> | null> {
     const sciencePack = Utils.findLocalizedPack('sciences');
-    return this.getRandomSkill(sciencePack, existingSkills);
+    return HVActorSheet.getRandomSkill(sciencePack, existingSkills);
   }
 
-  async getRandomSkill(pack, existingSkills: string[]): Promise<StoredDocument<HVItem> | null> {
+  static async getRandomSkill(pack, existingSkills: string[]): Promise<StoredDocument<HVItem> | null> {
     if (pack) {
       const skillNames = (await pack.getIndex()).map((e) => {
         if (!existingSkills.includes(e.name)) return e._id;
@@ -526,7 +526,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   static async _generateCraftSkill(event) {
     event.preventDefault();
     const existingSkills = (this.actor.system as CharacterActorData).skills.map((i) => i.name);
-    const rndCraft = await this.getRandomCraft(existingSkills);
+    const rndCraft = await HVActorSheet.getRandomCraft(existingSkills);
     if (rndCraft) {
       const craft = { name: rndCraft?.name, ability: (rndCraft.system as SkillItemData).ability };
       const description = game.i18n.localize('HV.bonusGermanCraftSkill');
@@ -556,13 +556,13 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   static async _generateScienceSkills(event) {
     event.preventDefault();
     const existingSkills = (this.actor.system as CharacterActorData).skills.map((i) => i.name);
-    existingSkills.push(await HVActorSheet._genRndScienceSkill(1, existingSkills));
-    await HVActorSheet._genRndScienceSkill(2, existingSkills);
+    existingSkills.push(await HVActorSheet._genRndScienceSkill(1, existingSkills, this.actor));
+    await HVActorSheet._genRndScienceSkill(2, existingSkills, this.actor);
     await this.actor.update();
   }
 
-  static async _genRndScienceSkill(idx, existingSkills): Promise<string | null> {
-    const rndSkill = await this.getRandomScience(existingSkills);
+  static async _genRndScienceSkill(idx, existingSkills, actor): Promise<string | null> {
+    const rndSkill = await HVActorSheet.getRandomScience(existingSkills);
     if (rndSkill != null) {
       const skillData = { name: rndSkill.name, ability: (rndSkill.system as SkillItemData).ability };
       const description = game.i18n.localize('HV.bonusStudentScienceSkill');
@@ -576,15 +576,15 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
           description: description,
         },
       };
-      const itemData = await this.actor.createEmbeddedDocuments('Item', [skill]);
+      const itemData = await actor.createEmbeddedDocuments('Item', [skill]);
       const id = (itemData[0] as Item).id;
       if (id) {
-        const item = this.actor.items.get(id);
+        const item = actor.items.get(id);
         if (item) {
           await item.setFlag('helveczia', 'locked', true);
           const flag = `student-skill-generated-${idx}`;
-          await this.actor.setFlag('helveczia', flag, skill.name);
-          log.debug(`getRndScienceSkill() | Set flag: ${flag} to ${this.actor.getFlag('helveczia', flag)}`);
+          await actor.setFlag('helveczia', flag, skill.name);
+          log.debug(`getRndScienceSkill() | Set flag: ${flag} to ${actor.getFlag('helveczia', flag)}`);
         }
         return rndSkill.name;
       }
@@ -592,8 +592,8 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     return null;
   }
 
-  async _getTags(item: HVItem): Promise<string> {
-    return CONFIG.HV.itemClasses[item.type] ? CONFIG.HV.itemClasses[item.type].getTags(item, this.actor) : '';
+  static async _getTags(item: HVItem, actor): Promise<string> {
+    return CONFIG.HV.itemClasses[item.type] ? CONFIG.HV.itemClasses[item.type].getTags(item, actor) : '';
   }
 
   static async _onAbsolution(event) {
@@ -716,13 +716,12 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     return this.actor.createEmbeddedDocuments('Item', itemData);
   }
 
-  _getEmbeddedDocument(target) {
+  static _getEmbeddedDocument(target, actor) {
     const docRow = target.closest('div.item');
     if (docRow.dataset.documentClass === 'Item') {
-      return this.actor.items.get(docRow.dataset.itemId);
+      return actor.items.get(docRow.dataset.itemId);
     } else if (docRow.dataset.documentClass === 'ActiveEffect') {
-      const parent =
-        docRow.dataset.parentId === this.actor.id ? this.actor : this.actor.items.get(docRow?.dataset.parentId);
+      const parent = docRow.dataset.parentId === actor.id ? actor : actor.items.get(docRow?.dataset.parentId);
       return parent?.effects.get(docRow?.dataset.effectId);
     } else return console.warn('Could not find document class');
   }

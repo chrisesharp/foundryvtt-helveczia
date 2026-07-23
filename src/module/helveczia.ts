@@ -170,12 +170,28 @@ Hooks.once('init', async () => {
 // Setup system
 Hooks.once('setup', async () => {
   // Do anything after initialization but before ready
-  log.info('Setting core.uiConfig.colorScheme.applications to "light" so it works better for our color scheme');
-  const settings = game.settings?.get('core', 'uiConfig');
-  settings.colorScheme.applications = 'light';
-  settings.colorScheme.interface = 'dark';
-  game.settings?.set('core', 'uiConfig', settings);
-  // game.settings?.set('core', 'uiConfig', { colorScheme: { applications: 'light', interface: 'dark' } });
+  // Only override uiConfig colour scheme for Helveczia worlds.
+  // core.uiConfig is a client-scoped (localStorage) setting, so it would otherwise
+  // persist into every other world/system the user opens in the same browser.
+  if (game.system?.id === 'helveczia') {
+    log.info('Setting core.uiConfig.colorScheme for Helveczia colour scheme');
+    const settings = game.settings?.get('core', 'uiConfig');
+    const original = { applications: settings.colorScheme.applications, interface: settings.colorScheme.interface };
+    settings.colorScheme.applications = 'light';
+    settings.colorScheme.interface = 'dark';
+    game.settings?.set('core', 'uiConfig', settings);
+
+    // Restore the user's original colour scheme when they navigate away,
+    // so it does not bleed into other worlds/systems on the same browser.
+    window.addEventListener('beforeunload', () => {
+      const s = game.settings?.get('core', 'uiConfig');
+      if (s) {
+        s.colorScheme.applications = original.applications;
+        s.colorScheme.interface = original.interface;
+        game.settings?.set('core', 'uiConfig', s);
+      }
+    });
+  }
 });
 
 // When ready
