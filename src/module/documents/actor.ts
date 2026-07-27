@@ -220,10 +220,15 @@ export class HVActor extends Actor {
    * Update base & bonus for saves
    */
   _updateSaves(data: any) {
-    if (this.type === 'npc' && data.stats.saves) {
-      data.saves.bravery.mod = parseInt(data.stats.saves.bravery ?? 0);
-      data.saves.deftness.mod = parseInt(data.stats.saves.deftness ?? 0);
-      data.saves.temptation.mod = parseInt(data.stats.saves.temptation ?? 0);
+    const braveMod = parseInt(data.stats?.saves?.bravery ?? 0);
+    const deftMod = parseInt(data.stats?.saves?.deftness ?? 0);
+    const temptMod = parseInt(data.stats?.saves?.temptation ?? 0);
+    const customSaves = braveMod !== 0 || deftMod !== 0 || temptMod !== 0;
+
+    if (this.type === 'npc' && customSaves) {
+      data.saves.bravery.mod = braveMod;
+      data.saves.deftness.mod = deftMod;
+      data.saves.temptation.mod = temptMod;
     } else {
       const virtue = this.isHighVirtue() ? 1 : 0;
       data.saves.bravery.bonus += data.scores.con.mod + virtue + data.npcModBonus;
