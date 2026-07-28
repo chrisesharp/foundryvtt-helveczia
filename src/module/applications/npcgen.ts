@@ -114,6 +114,7 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
    */
   async createNPC(event: Event, formData: object) {
     event.preventDefault();
+    formData.prototypeToken = { name: formData.name };
     await this.setProfession(this.actor, formData);
     await this.addSkills(this.actor, formData);
     await this.addWeapons(this.actor, formData);
