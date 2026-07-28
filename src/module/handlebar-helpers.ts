@@ -8,6 +8,10 @@ export const registerHandlebarHelpers = async function () {
     return `${level}${suffix}`;
   });
 
+  Handlebars.registerHelper('isNPC', function (actor) {
+    return actor.type === 'npc';
+  });
+
   Handlebars.registerHelper('localizedAttr', function (attr) {
     return game.i18n.localize(`HV.scores.${attr}.abbr`);
   });

@@ -46,7 +46,7 @@
                 <h4 class="item-name">{{ localize 'HV.attack.cc.long' }}</h4>
         </li>
     {{#each data.possessions.weapons as |item id|}}
-    {{#if (isWorn item)}}
+    {{#if (or (isNPC @root.actor) (isWorn item))}}
         <li class="item-entry item-rollable flexcol" data-item-id="{{item.id}}">
             <div class="item flexrow" data-action="itemSummary" data-item-id="{{item.id}}">
                 <div class="item-image rollable" data-action="roll" data-roll="weapon" data-item-id="{{item.id}}" data-attr="{{item.system.attack}}"><img src="{{item.img}}" width="24" height="24"/></div>
