@@ -169,4 +169,4 @@ async function link() {
   }
 }
 
-export { watch as watch, build as build, clean as clean, link as link };
+export { watch, build, clean, link };
