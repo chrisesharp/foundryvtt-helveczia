@@ -1,10 +1,4 @@
-import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
-import {
-  ItemDataBaseProperties,
-  ItemDataConstructorData,
-} from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
-import { BaseUser } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/documents.mjs';
-import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
+import type { DocumentModificationContext } from '../types/foundry-types';
 import { HVActor } from './actor';
 import { Logger } from '../logger';
 import { HVItem } from './item';
@@ -19,24 +13,25 @@ export abstract class BaseItem {
    * Called by HVItem in _preCreate()
    * @param data
    * @param options
-   * @param userId
+   * @param user
    */
   static async preCreate(
-    _data: ItemDataConstructorData,
-    _options: DocumentModificationOptions,
-    _user: BaseUser,
+    _data: DeepPartial<Item['_source']>,
+    _options: DocumentModificationContext,
+    _user: foundry.documents.BaseUser,
   ): Promise<void> {}
 
   /**
    * Called by HVItem in _onCreate()
+   * @param item
    * @param data
    * @param options
    * @param userId
    */
   static async onCreate(
     _item: HVItem,
-    _data: PropertiesToSource<ItemDataBaseProperties>,
-    _options: DocumentModificationOptions,
+    _data: Item['_source'],
+    _options: DocumentModificationContext,
     _userId: string,
   ): Promise<void> {}
 
@@ -100,8 +95,8 @@ export abstract class BaseItem {
 
   static async onUpdate(
     _item: HVItem,
-    _changed: DeepPartial<PropertiesToSource<ItemDataBaseProperties>>,
-    _options: DocumentModificationOptions,
+    _changed: DeepPartial<Item['_source']>,
+    _options: DocumentModificationContext,
     _userId: string,
   ): Promise<void> {}
 

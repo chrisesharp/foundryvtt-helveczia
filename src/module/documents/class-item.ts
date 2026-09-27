@@ -1,9 +1,4 @@
-import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
-import {
-  ItemData,
-  ItemDataBaseProperties,
-} from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
-import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
+import type { DocumentModificationContext } from '../../types/foundry-types';
 import { BaseItem } from './base-item';
 import { HVItem } from '../item';
 import { Logger } from '../logger';
@@ -31,7 +26,7 @@ function capitalize(word: string): string {
 }
 
 export class ClassItem extends BaseItem {
-  static professions: {
+  static readonly professions: {
     [key: string]: ProfEntry;
   } = {
     Cleric: {
@@ -73,7 +68,7 @@ export class ClassItem extends BaseItem {
     }, {});
   }
 
-  static findProfession(itemData: ItemData): ProfEntry | undefined {
+  static findProfession(itemData: Item['_source']): ProfEntry | undefined {
     const archetypes = ['cleric', 'student', 'vagabond', 'fighter'];
     let profName = itemData.name;
     for (const a of archetypes) {
@@ -138,12 +133,7 @@ export class ClassItem extends BaseItem {
     super.activateActorSheetListeners(html, sheet);
   }
 
-  static async onCreate(
-    item: HVItem,
-    _data: PropertiesToSource<ItemDataBaseProperties>,
-    _options: DocumentModificationOptions,
-    _userId: string,
-  ) {
+  static async onCreate(item: HVItem, _data: Item['_source'], _options: DocumentModificationContext, _userId: string) {
     if (!Utils.canModifyActor(game.user, item.actor)) {
       return;
     }

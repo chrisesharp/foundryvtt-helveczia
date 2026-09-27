@@ -1,6 +1,4 @@
-import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
-import { ItemDataBaseProperties } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
-import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
+import type { DocumentModificationContext } from '../../types/foundry-types';
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
 import { HVItem } from '../item';
@@ -20,7 +18,7 @@ type PeoplesEntry = {
 };
 
 export class PeopleItem extends BaseItem {
-  static races: {
+  static readonly races: {
     [key: string]: PeoplesEntry;
   } = {
     german: {
@@ -151,7 +149,7 @@ export class PeopleItem extends BaseItem {
     super.activateActorSheetListeners(html, sheet);
   }
 
-  static findPeoples(itemData: ItemData): PeoplesEntry | undefined {
+  static findPeoples(itemData: Item['_source']): PeoplesEntry | undefined {
     let peoplesName = itemData.name;
     for (const r in PeopleItem.races) {
       const name = game.i18n.localize(`HV.people.${r}`);
@@ -165,8 +163,8 @@ export class PeopleItem extends BaseItem {
 
   static async onCreate(
     item: HVItem,
-    itemData: PropertiesToSource<ItemDataBaseProperties>,
-    _options: DocumentModificationOptions,
+    itemData: Item['_source'],
+    _options: DocumentModificationContext,
     _userId: string,
   ) {
     if (!Utils.canModifyActor(game.user, item.actor)) {

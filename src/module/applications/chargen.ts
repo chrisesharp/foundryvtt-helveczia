@@ -1,4 +1,3 @@
-import { Evaluated } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/client/dice/roll';
 import { HVActor } from '../documents/actor';
 import { Logger } from '../logger';
 import { Utils } from '../utils/utils';
@@ -99,11 +98,11 @@ export class HVCharacterCreator extends HandlebarsApplicationMixin(ApplicationV2
     );
   }
 
-  rollAbility(): Promise<Evaluated<Roll<any>>> {
+  rollAbility(): Promise<Roll> {
     return HVCharacterCreator.rollScore(['4d6kh3']);
   }
 
-  rollVirtue(): Promise<Evaluated<Roll<any>>> {
+  rollVirtue(): Promise<Roll> {
     return HVCharacterCreator.rollScore(['3d6']);
   }
 
@@ -135,12 +134,12 @@ export class HVCharacterCreator extends HandlebarsApplicationMixin(ApplicationV2
     };
   }
 
-  async rollWealth(): Promise<Evaluated<Roll<any>>> {
+  async rollWealth(): Promise<Roll> {
     const wealthRoll = await HVCharacterCreator.rollScore(['2d6']);
     return wealthRoll._total < 12 ? wealthRoll : HVCharacterCreator.rollScore(['2d6*100']);
   }
 
-  static rollScore(rollParts): Promise<Evaluated<Roll<any>>> {
+  static rollScore(rollParts): Promise<Roll> {
     const data = {
       roll: {
         type: 'result',

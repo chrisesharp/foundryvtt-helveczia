@@ -1,6 +1,4 @@
-import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
-import { ItemDataConstructorData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
-import { BaseUser } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/documents.mjs';
+import type { DocumentModificationContext } from '../../types/foundry-types';
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
 import { HVItem } from '../item';
@@ -13,7 +11,11 @@ export class BookItem extends BaseItem {
     return 'book';
   }
 
-  static async preCreate(data: ItemDataConstructorData, _options: DocumentModificationOptions, _user: BaseUser) {
+  static async preCreate(
+    data: DeepPartial<Item['_source']>,
+    _options: DocumentModificationContext,
+    _user: foundry.documents.BaseUser,
+  ) {
     foundry.utils.mergeObject(
       data,
       {

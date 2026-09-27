@@ -1,16 +1,12 @@
-import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
-// eslint-disable-next-line prettier/prettier
-import { ItemDataBaseProperties, ItemDataConstructorData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
-import { BaseUser } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/documents.mjs';
-import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
+import type { DocumentModificationContext } from '../types/foundry-types';
 import { HVActor } from '../documents/actor';
 import { HVItemData } from '../../types/item-types';
 
 export class HVItem extends Item {
   protected async _preCreate(
-    data: ItemDataConstructorData,
-    options: DocumentModificationOptions,
-    user: BaseUser,
+    data: DeepPartial<Item['_source']>,
+    options: DocumentModificationContext,
+    user: foundry.documents.BaseUser,
   ): Promise<void> {
     await super._preCreate(data, options, user);
     if (CONFIG.HV.itemClasses[this.type]) {
@@ -22,8 +18,8 @@ export class HVItem extends Item {
   }
 
   protected async _onCreate(
-    data: PropertiesToSource<ItemDataBaseProperties>,
-    options: DocumentModificationOptions,
+    data: Item['_source'],
+    options: DocumentModificationContext,
     userId: string,
   ): Promise<void> {
     super._onCreate(data, options, userId);
@@ -45,7 +41,7 @@ export class HVItem extends Item {
   }
 
   //** @override */
-  protected _onDelete(_options: DocumentModificationOptions, _userId: string): void {
+  protected _onDelete(_options: DocumentModificationContext, _userId: string): void {
     if (this.isEmbedded) {
       CONFIG.HV.itemClasses[this.type]?.onDelete(this.actor, this);
     }
@@ -53,8 +49,8 @@ export class HVItem extends Item {
 
   //** @override */
   protected _onUpdate(
-    changed: DeepPartial<PropertiesToSource<ItemDataBaseProperties>>,
-    options: DocumentModificationOptions,
+    changed: DeepPartial<Item['_source']>,
+    options: DocumentModificationContext,
     userId: string,
   ): void {
     if (CONFIG.HV.itemClasses[this.type]) {

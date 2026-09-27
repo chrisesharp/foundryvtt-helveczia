@@ -1,16 +1,10 @@
-import { DocumentModificationOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs';
-import {
-  ItemDataBaseProperties,
-  ItemDataConstructorData,
-} from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData';
-import { PropertiesToSource } from '@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes';
+import type { DocumentModificationContext } from '../../types/foundry-types';
 import { BaseItem } from './base-item';
 import { HVItem } from '../item';
 import { Logger } from '../logger';
 import { DeedItemData } from '../../types/item-types';
 import { HVActor } from './actor';
 import { Utils } from '../utils/utils';
-import { BaseUser } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/documents.mjs';
 
 const log = new Logger();
 
@@ -20,7 +14,11 @@ export class DeedItem extends BaseItem {
     return 'deed';
   }
 
-  static async preCreate(data: ItemDataConstructorData, _options: DocumentModificationOptions, _user: BaseUser) {
+  static async preCreate(
+    data: DeepPartial<Item['_source']>,
+    _options: DocumentModificationContext,
+    _user: foundry.documents.BaseUser,
+  ) {
     foundry.utils.mergeObject(
       data,
       {
@@ -30,12 +28,7 @@ export class DeedItem extends BaseItem {
     );
   }
 
-  static async onCreate(
-    item: HVItem,
-    data: PropertiesToSource<ItemDataBaseProperties>,
-    options: DocumentModificationOptions,
-    userId: string,
-  ) {
+  static async onCreate(item: HVItem, data: Item['_source'], options: DocumentModificationContext, userId: string) {
     if (!item.isEmbedded) {
       await DeedItem.addDeedEffects(item);
     }
@@ -56,8 +49,8 @@ export class DeedItem extends BaseItem {
 
   static async onUpdate(
     item: HVItem,
-    changed: DeepPartial<PropertiesToSource<ItemDataBaseProperties>>,
-    options: DocumentModificationOptions,
+    changed: DeepPartial<Item['_source']>,
+    options: DocumentModificationContext,
     userId: string,
   ): Promise<void> {
     log.debug('DeedItem.onUpdate()|', item, changed, options, userId);

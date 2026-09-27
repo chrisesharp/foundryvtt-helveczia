@@ -1,7 +1,6 @@
 import { books } from '../../assets/holy-bible/books';
 import { marked } from 'marked';
 import { HVActor } from '../documents/actor';
-import { EmptyObject } from '@league-of-foundry-developers/foundry-vtt-types/src/types/utils.mjs';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 const { renderTemplate } = foundry.applications.handlebars;
@@ -148,7 +147,7 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
       | undefined;
     parts?: string[] | undefined;
     isFirstRender?: boolean | undefined;
-  }): Promise<EmptyObject> {
+  }): Promise<Record<string, never>> {
     const data: any = foundry.utils.deepClone(super._prepareContext(options));
     data.user = game.user;
     data.config = CONFIG.HV;

@@ -1,4 +1,3 @@
-import { Evaluated } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/client/dice/roll';
 import { HVActor } from './documents/actor';
 const { DialogV2 } = foundry.applications.api;
 const { renderTemplate } = foundry.applications.handlebars;
@@ -52,7 +51,7 @@ export class HVDice {
     return result;
   }
 
-  static async digestAttackResult(data, roll: Evaluated<Roll>) {
+  static async digestAttackResult(data, roll: Roll) {
     let opponent: HVActor | undefined;
     let against = '';
     let withWeapon = '';
@@ -110,15 +109,7 @@ export class HVDice {
     return result;
   }
 
-  static async sendRoll({
-    parts = [],
-    data,
-    flags,
-    title,
-    flavour,
-    speaker,
-    form,
-  }: HVRollData): Promise<Evaluated<Roll<any>>> {
+  static async sendRoll({ parts = [], data, flags, title, flavour, speaker, form }: HVRollData): Promise<Roll<any>> {
     const template = data.roll.dmg?.length ? `${templatePath}/roll-attack.hbs` : `${templatePath}/roll-ability.hbs`;
     const chatData: any = {
       user: game.user?.id,
@@ -141,7 +132,7 @@ export class HVDice {
 
     const roll = await new Roll(parts.join('+'), data).evaluate();
 
-    let dmgRoll: Evaluated<Roll<any>>;
+    let dmgRoll: Roll<any>;
     if (data.roll.dmg?.length) {
       dmgRoll = await new Roll(data.roll.dmg.join('+'), data).evaluate();
     }
@@ -204,7 +195,7 @@ export class HVDice {
     title,
     flavour,
     speaker,
-  }: HVRollData): Promise<Evaluated<Roll<any>>> {
+  }: HVRollData): Promise<Roll<any>> {
     let rolled = false;
     const template = `${templatePath}/roll-dialog.hbs`;
     const dialogData = {
@@ -249,7 +240,7 @@ export class HVDice {
     ];
 
     const html = await renderTemplate(template, dialogData);
-    let roll: Promise<Evaluated<Roll<any>>>;
+    let roll: Promise<Roll<any>>;
 
     return new Promise((resolve) => {
       DialogV2.wait({
