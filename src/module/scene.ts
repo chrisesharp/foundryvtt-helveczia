@@ -1,3 +1,4 @@
+// @ts-nocheck
 const { SceneConfig } = foundry.applications.sheets;
 
 export class HVSceneConfig extends SceneConfig {

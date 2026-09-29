@@ -54,7 +54,6 @@ export class HVChat {
     cb.querySelector('button[data-action="critroll"]').addEventListener('click', (ev) => {
       HVChat._onCritClick(ev, actor, msgContent);
     });
-    return;
   }
 
   static async _onCritClick(ev, actor, msgContent) {

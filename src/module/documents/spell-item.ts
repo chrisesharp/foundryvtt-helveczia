@@ -1,12 +1,11 @@
-import type { DocumentModificationContext } from '../../types/foundry-types';
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
-import { HVItem } from '../item';
-import { SpellItemData } from '../../types/item-types';
+import { HVItem } from './item';
+import { SpellItemData } from '../types/item-types';
 const { renderTemplate } = foundry.applications.handlebars;
 
 export class SpellItem extends BaseItem {
-  static DEFAULT_TOKEN = 'icons/svg/daze.svg';
+  static readonly DEFAULT_TOKEN = 'icons/svg/daze.svg';
   static get documentName() {
     return 'possession';
   }
@@ -41,11 +40,7 @@ export class SpellItem extends BaseItem {
     });
   }
 
-  static async preCreate(
-    data: DeepPartial<Item['_source']>,
-    _options: DocumentModificationContext,
-    _user: foundry.documents.BaseUser,
-  ) {
+  static async preCreate(data: DeepPartial<Item['_source']>, _options: DocumentModificationContext, _user: any) {
     foundry.utils.mergeObject(
       data,
       {

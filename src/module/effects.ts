@@ -1,7 +1,7 @@
 import { HVActor } from './documents/actor';
 
 export function getActorEffect(owner: HVActor, effectId: string) {
-  let effect: ActiveEffectData | null = null;
+  let effect: ActiveEffect | null = null;
   for (const e of owner.allApplicableEffects()) {
     if (e.id === effectId) {
       effect = e;

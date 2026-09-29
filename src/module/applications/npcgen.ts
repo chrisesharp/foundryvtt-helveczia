@@ -9,14 +9,16 @@ const weaponRegEx = /(?<bonus>\+\d)+(?<weaponName>[a-zA-Z\s]*)+(?<dmg>\dd\d+([\+
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
-  private actor: HVActor;
+  // Allow static methods to access instance props (Foundry V14 action handler pattern)
+  static [key: string]: any;
+  declare actor: HVActor;
 
   constructor({ actor, ...options }) {
     super(options);
     this.actor = actor;
   }
 
-  static DEFAULT_OPTIONS = {
+  static readonly DEFAULT_OPTIONS = {
     id: 'npc-creator',
     classes: ['helveczia'],
     form: {
@@ -36,7 +38,7 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     actor: null,
   };
 
-  static PARTS = {
+  static readonly PARTS = {
     helveczia: {
       template: 'systems/helveczia/templates/actor/dialogs/npc-creation.hbs',
     },
@@ -45,7 +47,7 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     },
   };
 
-  protected async _prepareContext(_options): Promise<EmptyObject> {
+  protected async _prepareContext(_options): Promise<Record<string, unknown>> {
     return {
       buttons: [{ type: 'submit', icon: 'fa-solid fa-save', label: 'HV.Create' }],
     };
@@ -112,7 +114,7 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
    * @param formData {Object}   The object of validated form data with which to update the object
    * @private
    */
-  async createNPC(event: Event, formData: object) {
+  async createNPC(event: Event, formData: any) {
     event.preventDefault();
     formData.prototypeToken = { name: formData.name };
     await this.setProfession(this.actor, formData);
@@ -122,7 +124,7 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     this.actor?.sheet?.render(true);
   }
 
-  async setProfession(actor: HVActor, formData: object): Promise<void> {
+  async setProfession(actor: HVActor, formData: any): Promise<void> {
     const groups = formData?.system?.levelBonus.match(levelBonusRegEx)?.groups;
     const cls = groups?.class?.trim();
     if (cls) {
@@ -149,7 +151,7 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
-  async addSkills(actor: HVActor, formData: object): Promise<void> {
+  async addSkills(actor: HVActor, formData: any): Promise<void> {
     const lvlGroups = formData?.system?.levelBonus.match(levelBonusRegEx)?.groups;
     const threat = parseInt(lvlGroups?.lvl) ?? 0;
     const skills: Record<string, unknown>[] = [];
@@ -183,7 +185,7 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
-  async addWeapons(actor: HVActor, formData: object): Promise<void> {
+  async addWeapons(actor: HVActor, formData: any): Promise<void> {
     const weapons: Record<string, unknown>[] = [];
     const weaponpacks = Utils.findLocalizedPack('weapons');
 

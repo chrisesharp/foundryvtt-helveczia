@@ -10,7 +10,7 @@ export class HVToken extends Token {
    * @param {boolean} [options.elevation]   Re-draw elevation text
    * @param {boolean} [options.nameplate]   Re-draw the nameplate?
    */
-  refreshHUD(options = {}) {
+  refreshHUD(options: any = {}) {
     options.elevation = !CONFIG.HV.depthTokens;
     super.refreshHUD(options);
   }

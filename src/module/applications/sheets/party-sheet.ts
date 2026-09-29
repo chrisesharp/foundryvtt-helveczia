@@ -2,7 +2,8 @@ import { HVActor } from '../../documents/actor';
 import { HVActorSheet } from './actor-sheet';
 
 export class HVPartySheet extends HVActorSheet {
-  static DEFAULT_OPTIONS = {
+  static [key: string]: any;
+  static readonly DEFAULT_OPTIONS: Record<string, any> = {
     classes: ['helveczia', 'party-sheet'],
     position: {
       width: 735,
@@ -21,7 +22,7 @@ export class HVPartySheet extends HVActorSheet {
     },
   };
 
-  static PARTS = {
+  static readonly PARTS = {
     header: {
       template: 'systems/helveczia/templates/actor/partials/party-sheet-header.hbs',
     },

@@ -1,7 +1,7 @@
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
-import { HVItem } from '../item';
-import { ContainerItemData } from '../../types/item-types';
+import { HVItem } from './item';
+import { ContainerItemData } from '../types/item-types';
 const { TextEditor } = foundry.applications.ux;
 
 export class ContainerItem extends BaseItem {

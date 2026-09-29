@@ -1,7 +1,7 @@
 import { HVItemSheet } from './item-sheet';
 
 export class SkillSheet extends HVItemSheet {
-  static DEFAULT_OPTIONS = {
+  static readonly DEFAULT_OPTIONS: Record<string, any> = {
     classes: ['helveczia', 'sheet', 'item'],
     position: {
       width: 450,
@@ -14,7 +14,7 @@ export class SkillSheet extends HVItemSheet {
       resizable: true,
     },
   };
-  static PARTS = {
+  static readonly PARTS = {
     header: {
       template: 'systems/helveczia/templates/item/partials/skill-sheet-header.hbs',
     },

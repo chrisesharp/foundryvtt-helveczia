@@ -57,6 +57,8 @@ function getBreakPoints(line, cols): [string, string] {
 }
 
 export class HVPDF {
+  // Allow static methods to access instance props (Foundry V14 action handler pattern)
+  static [key: string]: any;
   doc: jsPDF;
   x = 0;
   y = 0;
@@ -133,8 +135,7 @@ export class HVPDF {
     const memorized = this.char.actor.itemTypes['spell'];
     const spellbooks = this.char.actor.itemTypes['book']
       .filter((i) => i.system.spells.length > 0)
-      .map((i) => i.system.spells)
-      .flat();
+      .flatMap((i) => i.system.spells);
     if (spellbooks.length) {
       for (const i of spellbooks) {
         const uuid = i.id.replace('@UUID[', '').split(']')[0];
@@ -157,7 +158,7 @@ export class HVPDF {
         25,
         108,
         3,
-        allSpells.sort((a, b) => a.system.level - b.system.level),
+        allSpells.toSorted((a, b) => a.system.level - b.system.level),
       );
       this.doc.setFontSize(fontSize);
     }

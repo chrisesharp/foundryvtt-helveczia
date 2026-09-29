@@ -1,10 +1,10 @@
-import { CharacterActorData, HVActorData, NPCActorData } from '../../types/actor-types';
+import { CharacterActorData, HVActorData, NPCActorData } from '../types/actor-types';
 import { Logger } from '../logger';
 import { HVDice } from '../dice';
 import { Student } from './student';
 import { Cleric } from './cleric';
 import { Fighter } from './fighter';
-import { SkillItemData, WeaponItemData } from '../../types/item-types';
+import { SkillItemData, WeaponItemData } from '../types/item-types';
 import { PeopleItem } from './people-item';
 import { HVItem } from './item';
 
@@ -393,7 +393,7 @@ export class HVActor extends Actor {
   }
 
   /** @override */
-  _initializeSource(source, options = {}) {
+  _initializeSource(source, options: any = {}) {
     // Apply defaults BEFORE calling super
     if (options.creation) {
       const defaultToken = source.type === 'party' ? CONFIG.HV.DEFAULT_PARTY : CONFIG.HV.DEFAULT_TOKEN;
@@ -574,7 +574,7 @@ export class HVActor extends Actor {
         log.error('getRollMods() | itemId not found on actor');
       }
     }
-    return { mods: mod, longName: longName, dmg: dmg, item: item };
+    return { mods: mod, longName: longName, dmg: dmg, item: item as any };
   }
 
   async getItemRollMod(itemID: string): Promise<string> {

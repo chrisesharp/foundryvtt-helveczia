@@ -1,7 +1,7 @@
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
-import { HVItem } from '../item';
-import { PossessionItemData } from '../../types/item-types';
+import { HVItem } from './item';
+import { PossessionItemData } from '../types/item-types';
 
 export class PossessionItem extends BaseItem {
   static get documentName() {

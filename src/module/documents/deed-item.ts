@@ -1,24 +1,19 @@
-import type { DocumentModificationContext } from '../../types/foundry-types';
 import { BaseItem } from './base-item';
-import { HVItem } from '../item';
+import { HVItem } from './item';
 import { Logger } from '../logger';
-import { DeedItemData } from '../../types/item-types';
+import { DeedItemData } from '../types/item-types';
 import { HVActor } from './actor';
 import { Utils } from '../utils/utils';
 
 const log = new Logger();
 
 export class DeedItem extends BaseItem {
-  static DEFAULT_TOKEN = 'icons/svg/aura.svg';
+  static readonly DEFAULT_TOKEN = 'icons/svg/aura.svg';
   static get documentName() {
     return 'deed';
   }
 
-  static async preCreate(
-    data: DeepPartial<Item['_source']>,
-    _options: DocumentModificationContext,
-    _user: foundry.documents.BaseUser,
-  ) {
+  static async preCreate(data: DeepPartial<Item['_source']>, _options: DocumentModificationContext, _user: any) {
     foundry.utils.mergeObject(
       data,
       {
@@ -113,7 +108,7 @@ export class DeedItem extends BaseItem {
   static async updateDeedEffects(item: HVItem) {
     log.debug('DeedItem.updateDeedEffecst() | updating deed effects for ', item);
     const changes = DeedItem.calculateEffectChange(item);
-    const updates = item.effects.map((i) => ({ _id: i.id, changes: [changes] }));
+    const updates = (item.effects as any).map((i) => ({ _id: i.id, changes: [changes] }));
     await item.updateEmbeddedDocuments('ActiveEffect', updates);
   }
 }

@@ -1,5 +1,5 @@
 import { HVActor } from '../documents/actor';
-import { HVItem } from '../items/item';
+import { HVItem } from '../documents/item';
 import { Logger } from '../logger';
 const { fromUuid } = foundry.utils;
 
@@ -132,7 +132,7 @@ async function migrateTo3_1_Actor(actor: HVActor) {
     await actor.setFlag('helveczia', 'cleric-doctorate', false);
   }
   log.debug(`utils.migrateTo3_1_Actor() | updating ${actor.name}`);
-  return Utils.deleteEmbeddedArray(skills, actor);
+  return Utils.deleteEmbeddedArray(skills as any, actor);
 }
 
 async function migrateTo4_0_6_Actor(actor: HVActor) {

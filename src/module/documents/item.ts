@@ -1,12 +1,11 @@
-import type { DocumentModificationContext } from '../types/foundry-types';
 import { HVActor } from '../documents/actor';
-import { HVItemData } from '../../types/item-types';
+import { HVItemData } from '../types/item-types';
 
 export class HVItem extends Item {
   protected async _preCreate(
     data: DeepPartial<Item['_source']>,
     options: DocumentModificationContext,
-    user: foundry.documents.BaseUser,
+    user: any,
   ): Promise<void> {
     await super._preCreate(data, options, user);
     if (CONFIG.HV.itemClasses[this.type]) {
@@ -72,12 +71,12 @@ export class HVItem extends Item {
 
   async createChatMessage(actor: HVActor, message: string): Promise<void> {
     if (CONFIG.HV.itemClasses[this.type]) {
-      CONFIG.HV.itemClasses[this.type].createChatMessage(actor, message, this);
+      CONFIG.HV.itemClasses[this.type].createChatMessage(actor, message, this as any);
     }
   }
 
   /** @override */
-  async _onDropItem(_event: DragEvent, _data: ActorSheet.DropData.Item): Promise<unknown> {
+  async _onDropItem(_event: DragEvent, _data: any): Promise<unknown> {
     // console.log('Item.onDropItem()', event, data);
     return null;
   }

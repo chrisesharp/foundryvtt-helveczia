@@ -7,7 +7,7 @@ export class FrameView extends ApplicationV2 {
   /* -------------------------------------------- */
 
   /** @inheritDoc */
-  static DEFAULT_OPTIONS = {
+  static readonly DEFAULT_OPTIONS = {
     id: 'frame-viewer',
     classes: ['theme-dark'],
     window: { icon: 'fa-solid fa-browser' },

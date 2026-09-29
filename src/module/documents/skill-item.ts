@@ -1,7 +1,7 @@
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
-import { HVItem } from '../item';
-import { SkillItemData } from '../../types/item-types';
+import { HVItem } from './item';
+import { SkillItemData } from '../types/item-types';
 
 export class SkillItem extends BaseItem {
   static get documentName() {
