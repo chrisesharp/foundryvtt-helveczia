@@ -291,6 +291,7 @@ declare global {
       let Combatant: { documentClass: any };
       let Combat: { documentClass: any; initiative: any };
       let sounds: { dice: string; [key: string]: any };
+      let ChatMessage: { modes: Record<string, string>; documentClass: any; [key: string]: any };
       let Dice: { [key: string]: any };
       let ActiveEffect: { documentClass: any };
     }
