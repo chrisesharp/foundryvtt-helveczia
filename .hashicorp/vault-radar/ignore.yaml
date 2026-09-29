@@ -1,2 +1,3 @@
 - paths:
-    - "src/**/*.ts"
+    - "src/module/documents/*.ts"
+    - "src/module/config.ts"
