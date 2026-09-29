@@ -34,13 +34,19 @@
       .tag-weight {
         margin: 1px 2px;
         border: 1px solid $colorFaint;
-        font-size: 8px;
         line-height: 14px;
         background: $colorOlive;
         padding: 1px 4px;
         color: whitesmoke;
         border-radius: 3px;
         box-shadow: 0 0 1px $colorFaint;
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+
+        i {
+          font-size: 8px;
+        }
       }
     }
   }
