@@ -202,7 +202,7 @@ export class HVDice {
       formula: parts.join(' '),
       data: data,
       rollMode: data.roll.blindroll ? 'blindroll' : game.settings.get('core', 'rollMode'),
-      rollModes: CONFIG.Dice.rollModes,
+      rollModes: CONFIG.ChatMessage.modes,
       diffs: CONFIG.HV.difficulties,
     };
     const rollData: HVRollData = {
