@@ -21,7 +21,7 @@ export function updateChatMessage(actor, msgId, crit) {
   log.debug('_updateChatMessage() | calling socket as GM for message ', msgId, crit);
   ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor: actor }),
-    content: $(crit).html(),
+    content: (crit as Element).outerHTML,
   });
 }
 

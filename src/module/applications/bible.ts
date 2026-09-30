@@ -167,11 +167,13 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async sendVerse() {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = this.content;
     const templateData = {
       config: CONFIG.HV,
       chapter: this.chapter,
       verse: this.verse,
-      text: $(this.content).find(`li#verse-${this.verse}`).html(),
+      text: tmp.querySelector(`li#verse-${this.verse}`)?.innerHTML ?? '',
       title: game.i18n.localize('HV.dialog.HolyWritGuides'),
     };
     const content = await renderTemplate('systems/helveczia/templates/chat/bible-verse.hbs', templateData);

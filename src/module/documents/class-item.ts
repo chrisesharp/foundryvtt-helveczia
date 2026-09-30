@@ -6,7 +6,6 @@ import { Student } from './student';
 import { Vagabond } from './vagabond';
 import { Fighter } from './fighter';
 import { Cleric } from './cleric';
-import { ClassItemData } from '../types/item-types';
 import { Utils } from '../utils/utils';
 
 const log = new Logger();
@@ -128,7 +127,7 @@ export class ClassItem extends BaseItem {
   /**
    * Adds skill specifig actorsheet listeners.
    */
-  static activateActorSheetListeners(html: any, sheet: any) {
+  static activateActorSheetListeners(_html: any, _sheet: any) {
     // V1 legacy: base class may not have this method
   }
 

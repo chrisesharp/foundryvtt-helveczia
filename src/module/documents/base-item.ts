@@ -160,10 +160,4 @@ export abstract class BaseItem {
   static get defaultName() {
     return this.documentName.charAt(0).toUpperCase() + this.documentName.slice(1);
   }
-
-  protected static isEditMode(e): boolean {
-    const element = jQuery(e.currentTarget);
-
-    return !!element.closest('.fatex-js-edit-mode').length;
-  }
 }

@@ -144,7 +144,7 @@ export class PeopleItem extends BaseItem {
   /**
    * Adds skill specifig actorsheet listeners.
    */
-  static activateActorSheetListeners(html: any, sheet: any) {
+  static activateActorSheetListeners(_html: any, _sheet: any) {
     // V1 legacy: base class may not have this method
   }
 
