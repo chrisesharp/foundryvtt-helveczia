@@ -1,7 +1,7 @@
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
 import { HVItem } from './item';
-import { SkillItemData } from '../types/item-types';
+import { SkillData } from '../types/item-types';
 
 export class SkillItem extends BaseItem {
   static get documentName() {
@@ -28,10 +28,10 @@ export class SkillItem extends BaseItem {
   }
 
   static async getTags(item: HVItem, actor: HVActor): Promise<string> {
-    if ((item.system as SkillItemData).ability.length) {
+    if ((item.system as SkillData).ability.length) {
       return `
     <ol class="tag-list">
-      <li class="tag">${game.i18n.localize(`HV.scores.${(item.system as SkillItemData).ability}.abbr`)}</li>
+      <li class="tag">${game.i18n.localize(`HV.scores.${(item.system as SkillData).ability}.abbr`)}</li>
       <li class="tag">${await actor.getItemRollMod(item.id ?? '')}</li>
     </ol>`;
     }

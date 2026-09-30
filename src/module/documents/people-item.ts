@@ -1,7 +1,7 @@
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
 import { HVItem } from './item';
-import { SkillItemData } from '../types/item-types';
+import { SkillData } from '../types/item-types';
 import { Logger } from '../logger';
 import { HVActorData } from '../types/actor-types';
 import { Utils } from '../utils/utils';
@@ -77,9 +77,7 @@ export class PeopleItem extends BaseItem {
     actor.setFlag('helveczia', 'german-skill', false);
     const crafts = actor.items.filter(
       (i) =>
-        i.type === 'skill' &&
-        (i.system as SkillItemData).subtype === 'craft' &&
-        i.getFlag('helveczia', 'locked') === true,
+        i.type === 'skill' && (i.system as SkillData).subtype === 'craft' && i.getFlag('helveczia', 'locked') === true,
     );
     await Utils.deleteEmbeddedArray(crafts as any, actor);
   }

@@ -1,7 +1,7 @@
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
 import { HVItem } from './item';
-import { ArmourItemData } from '../types/item-types';
+import { ArmourData } from '../types/item-types';
 
 export class ArmourItem extends BaseItem {
   static readonly DEFAULT_TOKEN = 'icons/svg/shield.svg';
@@ -28,7 +28,7 @@ export class ArmourItem extends BaseItem {
 
   /** @override */
   static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
-    const itemData = item.system as ArmourItemData;
+    const itemData = item.system as ArmourData;
     return `
     <ol class="tag-list">
       <li class="tag" title="${game.i18n.localize('HV.AC')}">+${itemData.bonus ?? 0}</li>

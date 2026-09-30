@@ -1,7 +1,7 @@
 import { HVItem } from './item';
 import { Logger } from '../logger';
 import { HVActor } from './actor';
-import { ClassItemData, SkillItemData } from '../types/item-types';
+import { ClassData, SkillData } from '../types/item-types';
 import { Utils } from '../utils/utils';
 
 const log = new Logger();
@@ -33,7 +33,7 @@ async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void
     (i) =>
       i.type === 'skill' &&
       i.name === name &&
-      (i.system as SkillItemData).subtype === 'magical' &&
+      (i.system as SkillData).subtype === 'magical' &&
       (i as HVItem).getFlag('helveczia', 'locked') === true,
   );
   log.debug(`Cleric.deleteSpecialistSkill() | matching skills:`, skills);
@@ -64,7 +64,7 @@ export class Cleric {
 
   static async onCreate(item: HVItem): Promise<void> {
     const actor = item.actor;
-    const sourceItemData = item.system as ClassItemData;
+    const sourceItemData = item.system as ClassData;
     if (sourceItemData.specialism) {
       if (!actor?.isCleric()) {
         ui.notifications.error(
@@ -134,7 +134,7 @@ export class Cleric {
   }
 
   static async cleanup(actor: HVActor, item: any): Promise<void> {
-    const sourceItemData = item.system as ClassItemData;
+    const sourceItemData = item.system as ClassData;
     if (sourceItemData.specialism) {
       return;
     }

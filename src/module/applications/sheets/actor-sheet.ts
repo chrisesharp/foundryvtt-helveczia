@@ -2,7 +2,7 @@ import { HVCharacterCreator } from '../chargen';
 import { getActorEffect } from '../../effects';
 import { ClassItem } from '../../documents/class-item';
 import { PeopleItem } from '../../documents/people-item';
-import { ClassItemData, DeedItemData, SkillItemData, SpellItemData } from '../../types/item-types';
+import { ClassData, DeedData, SkillData, SpellData } from '../../types/item-types';
 import { Logger } from '../../logger';
 import { HVItem } from '../../documents/item';
 import { CharacterActorData } from '../../types/actor-types';
@@ -83,7 +83,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   async _removeClasses(item): Promise<boolean> {
     if (item.name === this.actor.system.class) return false;
-    const itemData = item.system as ClassItemData;
+    const itemData = item.system as ClassData;
     if (!itemData.specialism) {
       log.debug('_removeClasses() | Removing previous classes');
       const classes = this.actor.itemTypes['class'];
@@ -96,8 +96,8 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
           log.debug(`_removeClasses() | Removing specialisms for ${requiredProfession} `);
           const classes = this.actor.itemTypes['class'].filter(
             (i) =>
-              (i.system as ClassItemData).specialism &&
-              (i.system as ClassItemData).parentClass.toLowerCase() === this.actor.system.class.toLowerCase(),
+              (i.system as ClassData).specialism &&
+              (i.system as ClassData).parentClass.toLowerCase() === this.actor.system.class.toLowerCase(),
           );
           await Utils.deleteEmbeddedArray(classes, this.actor);
         }
@@ -183,7 +183,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     const itemID = li.dataset.itemId;
     const item = this.actor.items.get(itemID);
     if (item) {
-      const spellLevel = (item.system as SpellItemData).level;
+      const spellLevel = (item.system as SpellData).level;
       const state = (item.getFlag('helveczia', 'bonusSpell') as boolean) ?? false;
       const current = (this.actor.getFlag('helveczia', `bonusSpellsChosen-${spellLevel}`) as number) ?? 0;
       if (state !== true) {
@@ -531,7 +531,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     const existingSkills = (this.actor.system as CharacterActorData).skills.map((i) => i.name);
     const rndCraft = await HVActorSheet.getRandomCraft(existingSkills);
     if (rndCraft) {
-      const craft = { name: rndCraft?.name, ability: (rndCraft.system as SkillItemData).ability };
+      const craft = { name: rndCraft?.name, ability: (rndCraft.system as SkillData).ability };
       const description = game.i18n.localize('HV.bonusGermanCraftSkill');
       const skill = {
         name: craft.name,
@@ -567,7 +567,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   static async _genRndScienceSkill(idx, existingSkills, actor): Promise<string | null> {
     const rndSkill = await HVActorSheet.getRandomScience(existingSkills);
     if (rndSkill != null) {
-      const skillData = { name: rndSkill.name, ability: (rndSkill.system as SkillItemData).ability };
+      const skillData = { name: rndSkill.name, ability: (rndSkill.system as SkillData).ability };
       const description = game.i18n.localize('HV.bonusStudentScienceSkill');
       const skill = {
         name: skillData.name,
@@ -619,7 +619,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     while (sins.length > 0) {
       const sin = sins.shift();
       if (sin) {
-        const mag: number = Math.floor((sin?.system as DeedItemData).magnitude);
+        const mag: number = Math.floor((sin?.system as DeedData).magnitude);
         if (absolvedTotal + mag <= roll.total) {
           absolvedTotal += mag;
           absolved.push(sin);

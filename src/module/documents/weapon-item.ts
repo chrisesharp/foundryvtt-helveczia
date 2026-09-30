@@ -1,7 +1,7 @@
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
 import { HVItem } from './item';
-import { WeaponItemData } from '../types/item-types';
+import { WeaponData } from '../types/item-types';
 
 export class WeaponItem extends BaseItem {
   static readonly DEFAULT_TOKEN = 'icons/svg/sword.svg';
@@ -28,7 +28,7 @@ export class WeaponItem extends BaseItem {
 
   /** @override */
   static async getTags(item: HVItem, actor: HVActor): Promise<string> {
-    const itemData = item.system as WeaponItemData;
+    const itemData = item.system as WeaponData;
     const reload =
       itemData.attack === 'ranged'
         ? `<li class="tag" title="${game.i18n.localize('HV.Reload')}">${itemData.reload}</li>`

@@ -1,7 +1,7 @@
 import { HVItem } from './item';
 import { Logger } from '../logger';
 import { HVActor } from './actor';
-import { ClassItemData, SkillItemData } from '../types/item-types';
+import { ClassData, SkillData } from '../types/item-types';
 import { Utils } from '../utils/utils';
 
 const log = new Logger();
@@ -25,7 +25,7 @@ async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void
     (i) =>
       i.type === 'skill' &&
       i.name === name &&
-      (i.system as SkillItemData).subtype === 'magical' &&
+      (i.system as SkillData).subtype === 'magical' &&
       i.getFlag('helveczia', 'locked') === true,
   );
   log.debug(`Student.deleteSpecialistSkill() | matching skills:`, skills);
@@ -55,7 +55,7 @@ export class Student {
   }
 
   static async onCreate(item: HVItem): Promise<void> {
-    const sourceItemData = item.system as ClassItemData;
+    const sourceItemData = item.system as ClassData;
     if (sourceItemData.specialism) {
       if (!item.actor?.isStudent()) {
         ui.notifications.error(
@@ -140,7 +140,7 @@ export class Student {
   }
 
   static async cleanup(actor: HVActor, item: any): Promise<void> {
-    const sourceItemData = item.system as ClassItemData;
+    const sourceItemData = item.system as ClassData;
     if (sourceItemData.specialism) {
       return;
     }
@@ -152,7 +152,7 @@ export class Student {
     );
     await actor.setFlag('helveczia', 'student-class', false);
     const sciences = actor.items.filter(
-      (i) => (i.system as SkillItemData).subtype === 'science' && i.getFlag('helveczia', 'locked') === true,
+      (i) => (i.system as SkillData).subtype === 'science' && i.getFlag('helveczia', 'locked') === true,
     );
     if (sciences.length > 0) {
       for (const science of sciences) {

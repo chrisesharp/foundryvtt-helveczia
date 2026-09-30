@@ -4,7 +4,7 @@ import { HVDice } from '../dice';
 import { Student } from './student';
 import { Cleric } from './cleric';
 import { Fighter } from './fighter';
-import { SkillItemData, WeaponItemData } from '../types/item-types';
+import { SkillData, WeaponData } from '../types/item-types';
 import { PeopleItem } from './people-item';
 import { HVItem } from './item';
 
@@ -519,7 +519,7 @@ export class HVActor extends Actor {
       case 'weapon':
         data.resource = '';
         if (item) {
-          dmg.push((item.system as WeaponItemData).damage);
+          dmg.push((item.system as WeaponData).damage);
         } else {
           dmg.push('1d3');
         }
@@ -546,7 +546,7 @@ export class HVActor extends Actor {
         switch (item.type) {
           case 'skill':
             {
-              const skill = item.system as SkillItemData;
+              const skill = item.system as SkillData;
               const bonus = Math.floor(skill.bonus);
               const ability = this.system.scores[skill.ability]?.mod;
               mod.push(bonus);
@@ -557,7 +557,7 @@ export class HVActor extends Actor {
             break;
           case 'weapon':
             {
-              const weapon = item.system as WeaponItemData;
+              const weapon = item.system as WeaponData;
               const bonus = Math.floor(weapon.bonus);
               const ability = this.system.attack[weapon.attack]?.mod;
               if (weapon.attack === 'melee') dmg.push(this.system.attack.melee?.bonus);
@@ -584,7 +584,7 @@ export class HVActor extends Actor {
       switch (item.type) {
         case 'skill':
           {
-            const itemData = item.system as SkillItemData;
+            const itemData = item.system as SkillData;
             const data = await this.getRollMods({ attr: itemData.ability, roll: item.type, itemId: item.id });
             const value = data.mods.reduce((acc, n) => acc + n, 0);
             mods = value > 0 ? `+${value}` : `${value}`;
