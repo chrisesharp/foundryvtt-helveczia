@@ -10,7 +10,8 @@ const { FilePicker } = foundry.applications.apps;
 const log = new Logger();
 
 export class HVNPCSheet extends HVActorSheet {
-  static DEFAULT_OPTIONS = {
+  static [key: string]: any;
+  static readonly DEFAULT_OPTIONS: Record<string, any> = {
     classes: ['helveczia', 'sheet', 'actor', 'npc'],
     position: {
       width: 580,
@@ -31,7 +32,7 @@ export class HVNPCSheet extends HVActorSheet {
   };
 
   /** @override */
-  static PARTS = {
+  static readonly PARTS = {
     header: {
       template: 'systems/helveczia/templates/actor/partials/npc-header.hbs',
     },

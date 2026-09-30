@@ -57,6 +57,8 @@ function getBreakPoints(line, cols): [string, string] {
 }
 
 export class HVPDF {
+  // Allow static methods to access instance props (Foundry V14 action handler pattern)
+  static [key: string]: any;
   doc: jsPDF;
   x = 0;
   y = 0;
@@ -133,8 +135,7 @@ export class HVPDF {
     const memorized = this.char.actor.itemTypes['spell'];
     const spellbooks = this.char.actor.itemTypes['book']
       .filter((i) => i.system.spells.length > 0)
-      .map((i) => i.system.spells)
-      .flat();
+      .flatMap((i) => i.system.spells);
     if (spellbooks.length) {
       for (const i of spellbooks) {
         const uuid = i.id.replace('@UUID[', '').split(']')[0];
@@ -157,7 +158,7 @@ export class HVPDF {
         25,
         108,
         3,
-        allSpells.sort((a, b) => a.system.level - b.system.level),
+        allSpells.toSorted((a, b) => a.system.level - b.system.level),
       );
       this.doc.setFontSize(fontSize);
     }
@@ -246,12 +247,11 @@ export class HVPDF {
     let yPos = y;
     let count = 0;
     for (const weapon of this.char.actor.system.possessions.weapons) {
-      const skillBonusTags = $.parseHTML(await CONFIG.HV.itemClasses['weapon'].getTags(weapon, this.char.actor));
-      const tags = $(skillBonusTags).children();
-      const skillBonus: string[] = [];
-      $.each(tags, (_i, val) => {
-        skillBonus.push(val.innerText);
-      });
+      const weaponTagsTmp = document.createElement('div');
+      weaponTagsTmp.innerHTML = await CONFIG.HV.itemClasses['weapon'].getTags(weapon, this.char.actor);
+      const skillBonus: string[] = Array.from(weaponTagsTmp.querySelectorAll('li.tag, li.tag-weight')).map((el) =>
+        (el as HTMLElement).innerText.trim(),
+      );
       this.doc.text(`${weapon.name} (${skillBonus.join(',')})`, x, yPos, { lineHeightFactor: 0.5 });
       count++;
       if (count < 3) {
@@ -283,9 +283,11 @@ export class HVPDF {
     const startY = y;
     let count = 0;
     for (const skill of this.char.actor.itemTypes['skill']) {
-      const skillBonusTags = $.parseHTML(await CONFIG.HV.itemClasses['skill'].getTags(skill, this.char.actor));
-      const lastTag = $(skillBonusTags).children().last().text();
-      const skillBonus = lastTag != '' ? parseInt($(skillBonusTags).children().last().text()) : 0;
+      const skillTagsTmp = document.createElement('div');
+      skillTagsTmp.innerHTML = await CONFIG.HV.itemClasses['skill'].getTags(skill, this.char.actor);
+      const tagElements = skillTagsTmp.querySelectorAll('li.tag');
+      const lastTag = (tagElements[tagElements.length - 1] as HTMLElement)?.innerText.trim() ?? '';
+      const skillBonus = lastTag !== '' ? parseInt(lastTag) : 0;
       if (skillBonus) {
         this.doc.text(`${skill.name}`, xPos, yPos, { lineHeightFactor: 0.5 });
         this.printTriple(
@@ -342,8 +344,9 @@ export class HVPDF {
   }
 
   printDescription(x: number, y: number, text: string, linespace: number, cols = 100): number {
-    const desc = $.parseHTML(text)[0];
-    const lines = wordwrap($(desc).text(), cols);
+    const descTmp = document.createElement('div');
+    descTmp.innerHTML = text;
+    const lines = wordwrap(descTmp.textContent ?? '', cols);
     lines.forEach((line) => {
       this.doc.text(line, x, y);
       y += linespace;
@@ -362,16 +365,16 @@ export class HVPDF {
     let yPos = y;
     for (const category of [this.char.actor.system.sins, this.char.actor.system.virtues]) {
       for (const deed of category) {
-        const deedTags = $.parseHTML(await CONFIG.HV.itemClasses['deed'].getTags(deed, this.char.actor));
-        const descHTML = $.parseHTML(deed.system.description);
-        const tags = $(deedTags).children();
-        const deedBonus: string[] = [];
-        $.each(tags, (_i, val) => {
-          deedBonus.push(val.innerText);
-        });
-        this.doc.text(`${deed.name} (${deedBonus.join(',')}):`, xPos, yPos);
+        const deedTagsTmp = document.createElement('div');
+        deedTagsTmp.innerHTML = await CONFIG.HV.itemClasses['deed'].getTags(deed, this.char.actor);
+        const deedBonus: string[] = Array.from(deedTagsTmp.querySelectorAll('li.tag')).map((el) =>
+          (el as HTMLElement).innerText.trim(),
+        );
+        const descTmp = document.createElement('div');
+        descTmp.innerHTML = deed.system.description;
+        this.doc.text(`${deed.name} (${deedBonus.join(', ')}):`, xPos, yPos);
         yPos += 6;
-        const lines = wordwrap($(descHTML).text(), 40);
+        const lines = wordwrap(descTmp.textContent ?? '', 40);
         lines.forEach((line) => {
           this.doc.text(line, xPos + 5, yPos);
           yPos += 6;
@@ -430,8 +433,8 @@ export class HVPDF {
     };
   }
 
-  static async printSheet(ev): Promise<void> {
-    const sheetElement = ev.currentTarget.closest('.sheet').querySelector('.window-content');
+  static async printSheet(_ev, _target): Promise<void> {
+    const sheetElement = this.element.querySelector('.window-content');
     const char: character = {
       actor: this.actor,
       title: sheetElement.querySelector('.actor-class').querySelector('h3').innerText,

@@ -2,10 +2,10 @@ import { HVCharacterCreator } from '../chargen';
 import { getActorEffect } from '../../effects';
 import { ClassItem } from '../../documents/class-item';
 import { PeopleItem } from '../../documents/people-item';
-import { ClassItemData, DeedItemData, SkillItemData, SpellItemData } from '../../../types/item-types';
+import { ClassItemData, DeedItemData, SkillItemData, SpellItemData } from '../../types/item-types';
 import { Logger } from '../../logger';
 import { HVItem } from '../../documents/item';
-import { CharacterActorData } from '../../../types/actor-types';
+import { CharacterActorData } from '../../types/actor-types';
 import { Utils } from '../../utils/utils';
 import { HVDice } from '../../dice';
 import { HVNameGenerator } from '../../applications/names';
@@ -20,12 +20,15 @@ const { DragDrop, TextEditor } = foundry.applications.ux;
 const log = new Logger();
 
 export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
+  // Allow static methods to access instance props (Foundry V14 action handler pattern)
+  static [key: string]: any;
+
   constructor(options = {}) {
     super(options);
     this.#dragDrop = this.#createDragDropHandlers();
   }
 
-  static DEFAULT_OPTIONS = {
+  static readonly DEFAULT_OPTIONS: Record<string, any> = {
     classes: ['helveczia', 'sheet', 'actor'],
     position: {
       width: 580,
@@ -303,7 +306,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
           description = await HVActorSheet.createSummaryList(item.system?.contents, item.id);
           break;
         case 'book':
-          description = await HVActorSheet.createSummaryList(item.system?.spells);
+          description = await HVActorSheet.createSummaryList(item.system?.spells, undefined);
           break;
         default:
           description = await TextEditor.enrichHTML(item.system.description, { async: true });
@@ -345,7 +348,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
     // Toggle summary
     if (!li.querySelector('.item-summary')) {
-      const keys = effect.changes.map((e) => e.key.replace(/^system\./, '')).join(', ');
+      const keys = (effect as any).changes.map((e) => e.key.replace(/^system\./, '')).join(', ');
       const targets = await TextEditor.enrichHTML(keys, { async: true });
       // Add item tags
       let section = `

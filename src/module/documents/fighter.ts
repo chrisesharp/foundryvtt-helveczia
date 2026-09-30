@@ -1,7 +1,7 @@
-import { HVItem } from '../item';
+import { HVItem } from './item';
 import { Logger } from '../logger';
 import { HVActor } from './actor';
-import { ClassItemData } from '../../types/item-types';
+import { ClassItemData } from '../types/item-types';
 
 const log = new Logger();
 

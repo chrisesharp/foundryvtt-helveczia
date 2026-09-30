@@ -3,7 +3,8 @@ import { HVItemSheet } from './item-sheet';
 const { fromUuidSync } = foundry.utils;
 
 export class ContainerSheet extends HVItemSheet {
-  static DEFAULT_OPTIONS = {
+  static [key: string]: any;
+  static readonly DEFAULT_OPTIONS: Record<string, any> = {
     classes: ['helveczia', 'sheet', 'item'],
     position: {
       width: 450,
@@ -17,7 +18,7 @@ export class ContainerSheet extends HVItemSheet {
       resizable: true,
     },
   };
-  static PARTS = {
+  static readonly PARTS = {
     header: {
       template: 'systems/helveczia/templates/item/partials/container-sheet-header.hbs',
     },

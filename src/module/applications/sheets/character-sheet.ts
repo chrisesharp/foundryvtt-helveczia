@@ -3,7 +3,7 @@ import { HVItem } from '../../documents/item';
 import { Logger } from '../../logger';
 import { HVActor } from '../../documents/actor';
 import { HVActorSheet } from './actor-sheet';
-import { CharacterActorData } from '../../../types/actor-types';
+import { CharacterActorData } from '../../types/actor-types';
 import { HVPDF } from '../pdf';
 import { ContainerItem } from '../../documents/container-item';
 const { TextEditor } = foundry.applications.ux;
@@ -12,7 +12,8 @@ const { FilePicker } = foundry.applications.apps;
 const log = new Logger();
 
 export class HVCharacterSheet extends HVActorSheet {
-  static DEFAULT_OPTIONS = {
+  static [key: string]: any;
+  static readonly DEFAULT_OPTIONS: Record<string, any> = {
     classes: ['helveczia', 'sheet', 'actor', 'character'],
     position: {
       width: 580,
@@ -33,7 +34,7 @@ export class HVCharacterSheet extends HVActorSheet {
   };
 
   /** @override */
-  static PARTS = {
+  static readonly PARTS = {
     header: {
       template: 'systems/helveczia/templates/actor/partials/character-header.hbs',
     },

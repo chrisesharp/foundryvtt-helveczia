@@ -1,4 +1,4 @@
-import { HVActor } from '../module/documents/actor';
+import { HVActor } from '../documents/actor';
 
 type Ability =
   | any
@@ -84,13 +84,16 @@ type BaseData = {
   deeds: [Item];
   spells: [Item];
   capacity: number;
+  [key: string]: any;
 };
 
 export interface CharacterActorData {
   type: 'character';
   system: BaseData & {
     npcModBonus: number;
+    [key: string]: any;
   };
+  [key: string]: any;
 }
 
 export interface NPCActorData {
@@ -99,14 +102,18 @@ export interface NPCActorData {
     levelBonus: string;
     npcModBonus: number;
     baseAC: number;
+    [key: string]: any;
   };
+  [key: string]: any;
 }
 
 export interface PartyActorData {
   type: 'party';
   system: BaseData & {
     members: HVActor[];
+    [key: string]: any;
   };
+  [key: string]: any;
 }
 
 ///////////////////////////////

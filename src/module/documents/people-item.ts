@@ -1,10 +1,9 @@
-import type { DocumentModificationContext } from '../../types/foundry-types';
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
-import { HVItem } from '../item';
-import { SkillItemData } from '../../types/item-types';
+import { HVItem } from './item';
+import { SkillItemData } from '../types/item-types';
 import { Logger } from '../logger';
-import { HVActorData } from '../../types/actor-types';
+import { HVActorData } from '../types/actor-types';
 import { Utils } from '../utils/utils';
 const { renderTemplate } = foundry.applications.handlebars;
 
@@ -82,7 +81,7 @@ export class PeopleItem extends BaseItem {
         (i.system as SkillItemData).subtype === 'craft' &&
         i.getFlag('helveczia', 'locked') === true,
     );
-    await Utils.deleteEmbeddedArray(crafts, actor);
+    await Utils.deleteEmbeddedArray(crafts as any, actor);
   }
 
   static async onCreateDutch(item: HVItem): Promise<void> {
@@ -145,8 +144,8 @@ export class PeopleItem extends BaseItem {
   /**
    * Adds skill specifig actorsheet listeners.
    */
-  static activateActorSheetListeners(html, sheet) {
-    super.activateActorSheetListeners(html, sheet);
+  static activateActorSheetListeners(_html: any, _sheet: any) {
+    // V1 legacy: base class may not have this method
   }
 
   static findPeoples(itemData: Item['_source']): PeoplesEntry | undefined {
@@ -167,7 +166,7 @@ export class PeopleItem extends BaseItem {
     _options: DocumentModificationContext,
     _userId: string,
   ) {
-    if (!Utils.canModifyActor(game.user, item.actor)) {
+    if (!Utils.canModifyActor(game.user, item.actor as any)) {
       return;
     }
 

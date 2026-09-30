@@ -1,8 +1,7 @@
-import type { DocumentModificationContext } from '../types/foundry-types';
 import { HVActor } from './actor';
 import { Logger } from '../logger';
 import { HVItem } from './item';
-import { HVItemData } from '../../types/item-types';
+import { HVItemData } from '../types/item-types';
 
 const log = new Logger();
 
@@ -18,7 +17,7 @@ export abstract class BaseItem {
   static async preCreate(
     _data: DeepPartial<Item['_source']>,
     _options: DocumentModificationContext,
-    _user: foundry.documents.BaseUser,
+    _user: any,
   ): Promise<void> {}
 
   /**
@@ -160,11 +159,5 @@ export abstract class BaseItem {
    */
   static get defaultName() {
     return this.documentName.charAt(0).toUpperCase() + this.documentName.slice(1);
-  }
-
-  protected static isEditMode(e): boolean {
-    const element = jQuery(e.currentTarget);
-
-    return !!element.closest('.fatex-js-edit-mode').length;
   }
 }

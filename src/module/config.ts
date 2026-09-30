@@ -42,6 +42,8 @@ export interface HelvecziaConfig {
   showEffects: boolean;
   flipTokens: boolean;
   depthTokens: boolean;
+  applyEncumbrance: boolean;
+  allowPlayerDeedEdit: boolean;
 
   XPLevels: {
     [key: number]: number;
@@ -109,6 +111,8 @@ export const HV: HelvecziaConfig = {
   showEffects: false,
   flipTokens: false,
   depthTokens: false,
+  applyEncumbrance: false,
+  allowPlayerDeedEdit: false,
 
   actorClasses: {
     character: HVActor,

@@ -48,13 +48,13 @@ export class HVCardsControl {
 }
 
 export class HVCardsPile extends CardDeckConfig {
-  static DEFAULT_OPTIONS = {
+  static readonly DEFAULT_OPTIONS = {
     classes: ['helveczia'],
     window: {
       contentClasses: ['helveczia', 'dialog', 'creator'],
     },
   };
-  static PARTS = {
+  static readonly PARTS = {
     cards: {
       root: true,
       template: 'systems/helveczia/templates/cards/cards-pile.hbs',
@@ -63,7 +63,9 @@ export class HVCardsPile extends CardDeckConfig {
 }
 
 export class HVCardsHand extends CardHandConfig {
-  static DEFAULT_OPTIONS = {
+  // Allow static methods to access instance props (Foundry V14 action handler pattern)
+  static [key: string]: any;
+  static readonly DEFAULT_OPTIONS = {
     actions: {
       draw: HVCardsHand.drawDialog,
       pass: HVCardsHand.playDialog,
@@ -74,7 +76,7 @@ export class HVCardsHand extends CardHandConfig {
     },
   };
 
-  static PARTS = {
+  static readonly PARTS = {
     cards: {
       root: true,
       template: 'systems/helveczia/templates/cards/cards-hand.hbs',

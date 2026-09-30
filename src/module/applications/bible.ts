@@ -72,17 +72,14 @@ async function fetchHtmlAsText(url) {
 }
 
 export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
+  // Allow static methods to access instance props (Foundry V14 action handler pattern)
+  static [key: string]: any;
   private book = '';
   private chapter = '';
   private verse = 1;
   private occurrences = 1;
   private index = 0;
   private content = '';
-
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  constructor(object: {}, options?: any) {
-    super(object, options);
-  }
 
   async seekGuidance(actor?: HVActor) {
     const speaker = ChatMessage.getSpeaker({ actor: actor });
@@ -105,7 +102,7 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
     return game.i18n.localize(this.options.window.title);
   }
 
-  static DEFAULT_OPTIONS = {
+  static readonly DEFAULT_OPTIONS = {
     id: 'holy-bible',
     classes: ['helveczia'],
     form: {
@@ -124,7 +121,7 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
     },
   };
 
-  static PARTS = {
+  static readonly PARTS = {
     helveczia: {
       template: 'systems/helveczia/templates/bible/bible.hbs',
     },
@@ -170,11 +167,13 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async sendVerse() {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = this.content;
     const templateData = {
       config: CONFIG.HV,
       chapter: this.chapter,
       verse: this.verse,
-      text: $(this.content).find(`li#verse-${this.verse}`).html(),
+      text: tmp.querySelector(`li#verse-${this.verse}`)?.innerHTML ?? '',
       title: game.i18n.localize('HV.dialog.HolyWritGuides'),
     };
     const content = await renderTemplate('systems/helveczia/templates/chat/bible-verse.hbs', templateData);
@@ -243,7 +242,7 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
       if (verse) {
         verse.classList.add('highlighted');
         chapter.scrollTo({
-          top: verse.offsetTop - chapter.offsetTop - 70,
+          top: (verse as HTMLElement).offsetTop - (chapter as HTMLElement).offsetTop - 70,
         });
         this.chapter = chapter.querySelector('h1')?.innerHTML ?? '';
       }

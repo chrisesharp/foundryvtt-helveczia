@@ -36,6 +36,8 @@ const nameMap = {
 };
 
 export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
+  // Allow static methods to access instance props (Foundry V14 action handler pattern)
+  static [key: string]: any;
   private generatedName = '';
   private sex = 'male';
   private people = 'german';
@@ -59,7 +61,7 @@ export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     return game.i18n.localize(this.options.window.title);
   }
 
-  static DEFAULT_OPTIONS = {
+  static readonly DEFAULT_OPTIONS = {
     id: 'name-generator',
     classes: ['helveczia'],
     actions: {
@@ -82,7 +84,7 @@ export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     helveczian: false,
   };
 
-  static PARTS = {
+  static readonly PARTS = {
     helveczia: {
       template: 'systems/helveczia/templates/names/dialog-name.hbs',
     },
@@ -91,7 +93,7 @@ export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     },
   };
 
-  protected async _prepareContext(_options): Promise<EmptyObject> {
+  protected async _prepareContext(_options): Promise<Record<string, unknown>> {
     return {
       sexes: {
         male: 'HV.Male',
@@ -117,7 +119,7 @@ export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     };
   }
 
-  static async showDialog(options = {}): Promise<Dialog | unknown> {
+  static async showDialog(options = {}): Promise<void> {
     new HVNameGenerator(options).render(true);
   }
 

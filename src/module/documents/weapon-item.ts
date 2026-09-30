@@ -1,20 +1,15 @@
-import type { DocumentModificationContext } from '../../types/foundry-types';
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
-import { HVItem } from '../item';
-import { WeaponItemData } from '../../types/item-types';
+import { HVItem } from './item';
+import { WeaponItemData } from '../types/item-types';
 
 export class WeaponItem extends BaseItem {
-  static DEFAULT_TOKEN = 'icons/svg/sword.svg';
+  static readonly DEFAULT_TOKEN = 'icons/svg/sword.svg';
   static get documentName() {
     return 'weapon';
   }
 
-  static async preCreate(
-    data: DeepPartial<Item['_source']>,
-    _options: DocumentModificationContext,
-    _user: foundry.documents.BaseUser,
-  ) {
+  static async preCreate(data: DeepPartial<Item['_source']>, _options: DocumentModificationContext, _user: any) {
     foundry.utils.mergeObject(
       data,
       {
@@ -47,9 +42,9 @@ export class WeaponItem extends BaseItem {
       ${reload}
       <li class="tag" title="${game.i18n.localize('HV.Critical')}">${itemData.critical.range}+</li>
       <li class="tag" title="${game.i18n.localize('HV.DamageMultiplier')}">x${itemData.critical.multiple}</li>
-      <li class="tag-weight fas fa-weight-hanging fa-2xs" title="${game.i18n.localize('HV.Encumbrance')}">${
-        itemData.encumbrance ?? 0
-      }</li>
+      <li class="tag-weight" title="${game.i18n.localize(
+        'HV.Encumbrance',
+      )}"><i class="fas fa-weight-hanging fa-2xs"></i>${itemData.encumbrance ?? 0}</li>
     </ol>`;
     }
     return '';

@@ -1,7 +1,7 @@
-import { HVItem } from '../item';
+import { HVItem } from './item';
 import { Logger } from '../logger';
 import { HVActor } from './actor';
-import { ClassItemData, SkillItemData } from '../../types/item-types';
+import { ClassItemData, SkillItemData } from '../types/item-types';
 import { Utils } from '../utils/utils';
 
 const log = new Logger();
@@ -37,7 +37,7 @@ async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void
       (i as HVItem).getFlag('helveczia', 'locked') === true,
   );
   log.debug(`Cleric.deleteSpecialistSkill() | matching skills:`, skills);
-  await Utils.deleteEmbeddedArray(skills, actor);
+  await Utils.deleteEmbeddedArray(skills as any, actor);
 }
 
 async function createSpecialistSkill(item: HVItem, skillData: any): Promise<void> {
@@ -47,7 +47,7 @@ async function createSpecialistSkill(item: HVItem, skillData: any): Promise<void
     const i = item.actor?.items.get(id);
     if (i) {
       await i.setFlag('helveczia', 'locked', true);
-      await item.actor?.update();
+      await item.actor?.update({});
     }
   }
 }

@@ -7,6 +7,9 @@ const { renderTemplate } = foundry.applications.handlebars;
 const log = new Logger();
 
 export class HVCharacterCreator extends HandlebarsApplicationMixin(ApplicationV2) {
+  // Allow static methods to access instance props (Foundry V14 action handler pattern)
+  static [key: string]: any;
+
   A = {
     str: 0,
     wis: 0,
@@ -26,9 +29,9 @@ export class HVCharacterCreator extends HandlebarsApplicationMixin(ApplicationV2
   };
 
   private scores = { A: this.A, B: this.B };
-  private actor: HVActor;
+  declare actor: HVActor;
 
-  static DEFAULT_OPTIONS = {
+  static readonly DEFAULT_OPTIONS = {
     id: 'character-creator',
     classes: ['helveczia'],
     form: {
@@ -48,7 +51,7 @@ export class HVCharacterCreator extends HandlebarsApplicationMixin(ApplicationV2
     actor: null,
   };
 
-  static PARTS = {
+  static readonly PARTS = {
     helveczia: {
       template: 'systems/helveczia/templates/actor/dialogs/character-creation.hbs',
     },
@@ -73,7 +76,7 @@ export class HVCharacterCreator extends HandlebarsApplicationMixin(ApplicationV2
    * Construct and return the data object used to render the HTML template for this form application.
    * @return {Object}
   //  */
-  protected async _prepareContext(_options): Promise<EmptyObject> {
+  protected async _prepareContext(_options): Promise<Record<string, unknown>> {
     await this.generateOptions();
     const scores = { A: this.A, B: this.B };
     return {

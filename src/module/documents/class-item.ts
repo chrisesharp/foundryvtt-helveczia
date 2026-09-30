@@ -1,13 +1,11 @@
-import type { DocumentModificationContext } from '../../types/foundry-types';
 import { BaseItem } from './base-item';
-import { HVItem } from '../item';
+import { HVItem } from './item';
 import { Logger } from '../logger';
 import { HVActor } from './actor';
 import { Student } from './student';
 import { Vagabond } from './vagabond';
 import { Fighter } from './fighter';
 import { Cleric } from './cleric';
-import { ClassItemData } from '../../types/item-types';
 import { Utils } from '../utils/utils';
 
 const log = new Logger();
@@ -129,12 +127,12 @@ export class ClassItem extends BaseItem {
   /**
    * Adds skill specifig actorsheet listeners.
    */
-  static activateActorSheetListeners(html, sheet) {
-    super.activateActorSheetListeners(html, sheet);
+  static activateActorSheetListeners(_html: any, _sheet: any) {
+    // V1 legacy: base class may not have this method
   }
 
   static async onCreate(item: HVItem, _data: Item['_source'], _options: DocumentModificationContext, _userId: string) {
-    if (!Utils.canModifyActor(game.user, item.actor)) {
+    if (!Utils.canModifyActor(game.user, item.actor as any)) {
       return;
     }
     if (item.actor) {

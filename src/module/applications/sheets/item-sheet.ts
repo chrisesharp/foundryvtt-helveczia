@@ -1,19 +1,22 @@
 import { prepareActiveEffectCategories } from '../../effects';
 import { ContainerItem } from '../../documents/container-item';
 import { HVItem } from '../../documents/item';
-import { BookItemData } from '../../../types/item-types';
+import { BookItemData } from '../../types/item-types';
 const { ItemSheetV2 } = foundry.applications.sheets;
 const { DragDrop, TextEditor } = foundry.applications.ux;
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { fromUuidSync } = foundry.utils;
 
 export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
+  // Allow static methods to access instance props (Foundry V14 action handler pattern)
+  static [key: string]: any;
+
   constructor(options = {}) {
     super(options);
     this.#dragDrop = this.#createDragDropHandlers();
   }
 
-  static DEFAULT_OPTIONS = {
+  static readonly DEFAULT_OPTIONS: Record<string, any> = {
     classes: ['helveczia', 'sheet', 'item'],
     position: {
       width: 450,

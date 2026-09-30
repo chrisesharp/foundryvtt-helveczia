@@ -2,7 +2,8 @@ const { fromUuidSync } = foundry.utils;
 import { HVItemSheet } from './item-sheet';
 
 export class BookSheet extends HVItemSheet {
-  static DEFAULT_OPTIONS = {
+  static [key: string]: any;
+  static readonly DEFAULT_OPTIONS: Record<string, any> = {
     classes: ['helveczia', 'sheet', 'item'],
     position: {
       width: 450,
@@ -16,7 +17,7 @@ export class BookSheet extends HVItemSheet {
       resizable: true,
     },
   };
-  static PARTS = {
+  static readonly PARTS = {
     header: {
       template: 'systems/helveczia/templates/item/partials/book-sheet-header.hbs',
     },

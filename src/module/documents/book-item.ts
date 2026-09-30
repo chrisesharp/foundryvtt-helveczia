@@ -1,21 +1,16 @@
-import type { DocumentModificationContext } from '../../types/foundry-types';
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
-import { HVItem } from '../item';
-import { BookItemData } from '../../types/item-types';
+import { HVItem } from './item';
+import { BookItemData } from '../types/item-types';
 const { TextEditor } = foundry.applications.ux;
 
 export class BookItem extends BaseItem {
-  static DEFAULT_TOKEN = 'icons/svg/book.svg';
+  static readonly DEFAULT_TOKEN = 'icons/svg/book.svg';
   static get documentName() {
     return 'book';
   }
 
-  static async preCreate(
-    data: DeepPartial<Item['_source']>,
-    _options: DocumentModificationContext,
-    _user: foundry.documents.BaseUser,
-  ) {
+  static async preCreate(data: DeepPartial<Item['_source']>, _options: DocumentModificationContext, _user: any) {
     foundry.utils.mergeObject(
       data,
       {
@@ -43,9 +38,9 @@ export class BookItem extends BaseItem {
     const itemData = item.system as BookItemData;
     return `
     ${top}
-      <li class="tag-weight fas fa-weight-hanging fa-2xs" title="${game.i18n.localize('HV.Encumbrance')}">${
-      itemData.encumbrance ?? 0
-    }</li>
+      <li class="tag-weight" title="${game.i18n.localize(
+        'HV.Encumbrance',
+      )}"><i class="fas fa-weight-hanging fa-2xs"></i>${itemData.encumbrance ?? 0}</li>
    ${bottom}`;
   }
 }
