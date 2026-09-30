@@ -52,7 +52,7 @@ export class PeopleItem extends BaseItem {
   }
 
   static async onCreateItalian(item: HVItem): Promise<void> {
-    const currenWealth = foundry.utils.duplicate((item.actor?.system as HVActorData).wealth);
+    const currenWealth = foundry.utils.duplicate((item.actor?.system as HVActorData['system']).wealth);
     const fortune = Math.round(Math.random() * 5) + 1;
     currenWealth.th += fortune;
     await item.actor?.update({ system: { wealth: currenWealth } });
@@ -66,7 +66,7 @@ export class PeopleItem extends BaseItem {
   static async cleanupItalian(actor: HVActor): Promise<void> {
     const fortune = actor.getFlag('helveczia', 'italian-fortune') as number;
     if (fortune) {
-      const currenWealth = foundry.utils.duplicate((actor?.system as HVActorData).wealth);
+      const currenWealth = foundry.utils.duplicate((actor?.system as HVActorData['system']).wealth);
       currenWealth.th -= fortune;
       await actor?.update({ system: { wealth: currenWealth } });
     }

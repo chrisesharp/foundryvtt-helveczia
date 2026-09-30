@@ -528,7 +528,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   static async _generateCraftSkill(event) {
     event.preventDefault();
-    const existingSkills = (this.actor.system as CharacterActorData).skills.map((i) => i.name);
+    const existingSkills = (this.actor.system as CharacterActorData['system']).skills.map((i) => i.name);
     const rndCraft = await HVActorSheet.getRandomCraft(existingSkills);
     if (rndCraft) {
       const craft = { name: rndCraft?.name, ability: (rndCraft.system as SkillData).ability };
@@ -558,7 +558,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   static async _generateScienceSkills(event) {
     event.preventDefault();
-    const existingSkills = (this.actor.system as CharacterActorData).skills.map((i) => i.name);
+    const existingSkills = (this.actor.system as CharacterActorData['system']).skills.map((i) => i.name);
     existingSkills.push(await HVActorSheet._genRndScienceSkill(1, existingSkills, this.actor));
     await HVActorSheet._genRndScienceSkill(2, existingSkills, this.actor);
     await this.actor.update();
