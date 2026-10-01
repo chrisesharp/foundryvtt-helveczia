@@ -1,3 +1,5 @@
+import type { HVItem } from '../../documents/item';
+
 /**
  * Base Actor Data Model
  * Shared fields for all actor types in Helvéczia
@@ -99,20 +101,21 @@ export class BaseActorData extends TypeDataModel {
         pf: new fields.NumberField({ required: true, initial: 0, integer: true, min: 0 }),
         gr: new fields.NumberField({ required: true, initial: 0, integer: true, min: 0 }),
       }),
-
-      // These are populated by prepareDerivedData in actor.ts
-      possessions: new fields.ObjectField({ initial: { articles: [], weapons: [], armour: [] } }),
-      skills: new fields.ArrayField(new fields.ObjectField(), { initial: [] }),
-      peoples: new fields.ArrayField(new fields.ObjectField(), { initial: [] }),
-      classes: new fields.ArrayField(new fields.ObjectField(), { initial: [] }),
-      specialisms: new fields.ArrayField(new fields.ObjectField(), { initial: [] }),
-      deeds: new fields.ArrayField(new fields.ObjectField(), { initial: [] }),
-      sins: new fields.ArrayField(new fields.ObjectField(), { initial: [] }),
-      virtues: new fields.ArrayField(new fields.ObjectField(), { initial: [] }),
-      spells: new fields.ArrayField(new fields.ArrayField(new fields.ObjectField()), { initial: [[], [], []] }),
-      capacity: new fields.NumberField({ required: true, initial: 0, integer: true, min: 0 }),
     };
   }
+
+  // Derived item lists — populated by HVActor._categoriseItems() during prepareDerivedData().
+  // These are NOT schema fields and are never persisted to the database.
+  declare possessions: { articles: HVItem[]; weapons: HVItem[]; armour: HVItem[] };
+  declare skills: HVItem[];
+  declare peoples: HVItem[];
+  declare classes: HVItem[];
+  declare specialisms: HVItem[];
+  declare deeds: HVItem[];
+  declare sins: HVItem[];
+  declare virtues: HVItem[];
+  declare spells: HVItem[][];
+  declare capacity: number;
 
   prepareDerivedData() {
     // Derived data is calculated in actor.ts _prepareCharacterData() and _prepareNPCData()
@@ -126,7 +129,7 @@ export class BaseActorData extends TypeDataModel {
    */
   static migrateData(source: any): any {
     // Convert string numbers to actual numbers for all numeric fields
-    const numericFields = ['virtue', 'initiative', 'maxskills', 'level', 'capacity'];
+    const numericFields = ['virtue', 'initiative', 'maxskills', 'level'];
 
     for (const field of numericFields) {
       if (source[field] !== undefined && typeof source[field] === 'string') {

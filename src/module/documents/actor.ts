@@ -118,7 +118,7 @@ export class HVActor extends Actor {
   /**
    * Prepare Character type specific data
    */
-  async _prepareCharacterData() {
+  _prepareCharacterData() {
     const data = this.system;
 
     for (const key of Object.keys(data.scores)) {
@@ -134,7 +134,7 @@ export class HVActor extends Actor {
   /**
    * Prepare NPC type specific data
    */
-  async _prepareNPCData() {
+  _prepareNPCData() {
     const data = this.system;
 
     for (const key of Object.keys(data.scores)) {
@@ -247,7 +247,7 @@ export class HVActor extends Actor {
   /**
    * Update base & bonus for skills
    */
-  async _updateSkills(data: any) {
+  _updateSkills(data: any) {
     const peopleBonus = data.peoples[0]?.getSkillsBonus(this) ?? 0;
     const classBonus = data.classes[0]?.getSkillsBonus(this) ?? 0;
     data.maxskills += data.scores.int.mod + peopleBonus + classBonus + data.npcModBonus;
