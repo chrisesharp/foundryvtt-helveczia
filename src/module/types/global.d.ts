@@ -138,6 +138,7 @@ declare global {
       contents: any[];
       get(id: string): any;
       filter(fn: (e: any) => boolean): any[];
+      find(fn: (e: any) => boolean): any | undefined;
     };
     sheet: any;
     isOwner: boolean;
@@ -168,6 +169,7 @@ declare global {
       contents: any[];
       get(id: string): any;
       filter(fn: (e: any) => boolean): any[];
+      find(fn: (e: any) => boolean): any | undefined;
     };
     actor: Actor | null;
     isOwner: boolean;

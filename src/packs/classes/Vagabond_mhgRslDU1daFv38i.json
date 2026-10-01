@@ -5,48 +5,6 @@
   "img": "icons/svg/coins.svg",
   "effects": [
     {
-      "_id": "JJZAEtiB0B7DOteB",
-      "changes": [
-        {
-          "key": "system.saves.deftness.base",
-          "mode": 0,
-          "value": "{\"type\":\"save\",\"primary\":\"true\"}",
-          "priority": null
-        },
-        {
-          "key": "system.saves.bravery.base",
-          "mode": 0,
-          "value": "{\"type\":\"save\",\"primary\":\"false\"}",
-          "priority": null
-        },
-        {
-          "key": "system.saves.temptation.base",
-          "mode": 0,
-          "value": "{\"type\":\"save\",\"primary\":\"false\"}",
-          "priority": null
-        }
-      ],
-      "disabled": false,
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
-      "icon": "icons/svg/aura.svg",
-      "origin": "Item.JZr56IoZquOrwlPL",
-      "transfer": true,
-      "flags": {},
-      "tint": null,
-      "name": "Saves",
-      "description": "",
-      "statuses": [],
-      "_key": "!items.effects!mhgRslDU1daFv38i.JJZAEtiB0B7DOteB"
-    },
-    {
       "_id": "KCH70gHQpjKjHgre",
       "changes": [
         {

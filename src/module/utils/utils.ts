@@ -19,6 +19,7 @@ const migrations = {
   '3.0.10': migrateTo3_1_0,
   '4.0.5': migrateTo4_0_6,
   '6.0.0': migrateTo6_0_1,
+  '6.0.5': migrateTo6_0_6,
 };
 
 export class Utils {
@@ -64,9 +65,12 @@ export class Utils {
     }
 
     const currentVersion = game.settings.get('helveczia', 'systemMigrationVersion') as string;
-    Object.keys(migrations).forEach(function (key) {
-      if (!currentVersion || foundry.utils.isNewerVersion(key, currentVersion)) migrations[key]();
-    });
+    const pending = Object.keys(migrations).filter(
+      (key) => !currentVersion || foundry.utils.isNewerVersion(key, currentVersion),
+    );
+    for (const key of pending) {
+      await migrations[key](key);
+    }
   }
 
   static findLocalizedPack(pack: string): CompendiumCollection<any> | undefined {
@@ -154,4 +158,29 @@ async function migrateTo6_0_1_Item(item: HVItem) {
   if (source.parentClass) return;
   log.debug(`utils.migrateTo6_0_1_Item() | renaming system.parent → system.parentClass on "${item.name}" (${item.id})`);
   await item.update({ 'system.parentClass': oldParent, 'system.-=parent': null });
+}
+
+async function migrateTo6_0_6() {
+  const options = { permanent: true };
+  ui.notifications.warn('Migrating your data to version 6.0.6. Please wait until it finishes.', options);
+  // Remove the redundant "Saves" active effect (id JJZAEtiB0B7DOteB) from Vagabond
+  // class items embedded on actors.  Save bases are now computed entirely by
+  // _updateSaves() → getSaveBase(); the effect was double-applying the calculation.
+  for (const actor of game.actors?.contents ?? []) {
+    for (const item of actor.items?.contents ?? []) {
+      await migrateRemoveVagabondSaveEffect(item);
+    }
+  }
+  await game.settings.set('helveczia', 'systemMigrationVersion', game.system.version);
+  ui.notifications.info('Data migrated to version 6.0.6.', options);
+}
+
+async function migrateRemoveVagabondSaveEffect(item: HVItem) {
+  if (item.type !== 'class') return;
+  const saveEffect = item.effects.find((e) => e.id === 'JJZAEtiB0B7DOteB');
+  if (!saveEffect) return;
+  log.debug(
+    `utils.migrateRemoveVagabondSaveEffect() | removing redundant Saves effect from "${item.name}" (${item.id}) on actor "${item.parent?.name}"`,
+  );
+  await saveEffect.delete();
 }
