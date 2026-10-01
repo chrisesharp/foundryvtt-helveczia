@@ -71,6 +71,41 @@ export class HVActor extends Actor {
         this._prepareNPCData();
         break;
     }
+
+    // Apply custom active effects after all base derived values are computed,
+    // so that isFighter()/isVagabond() resolve correctly and the results are not
+    // clobbered by _updateAttackMods / _updateSaves.
+    this._applyCustomActiveEffects();
+  }
+
+  /**
+   * Re-apply custom (mode 0) active effects that depend on derived data being ready.
+   * Called at the end of prepareDerivedData so that class checks and base calculations
+   * are already in place.  After writing to .base or .bonus fields the relevant .mod
+   * value is recalculated.
+   */
+  _applyCustomActiveEffects(): void {
+    for (const effect of this.allApplicableEffects()) {
+      if (!effect.active) continue;
+      for (const change of effect.system.changes) {
+        if (change.type !== 'custom') continue; // CUSTOM only
+        this.applyCustomEffect(change);
+      }
+    }
+    // Recalculate .mod for attack and saves after effects may have modified .base or .bonus.
+    const data = this.system;
+    if (data.attack) {
+      for (const type of ['melee', 'ranged', 'cc'] as const) {
+        const atk = data.attack[type];
+        if (atk) atk.mod = atk.base + atk.bonus;
+      }
+    }
+    if (data.saves) {
+      for (const saveType of Object.keys(data.saves)) {
+        const save = data.saves[saveType];
+        if (save) save.mod = save.base + save.bonus;
+      }
+    }
   }
 
   _categoriseItems() {
@@ -268,12 +303,22 @@ export class HVActor extends Actor {
   }
 
   applyCustomEffect(changeData) {
-    const key = changeData.key;
+    // Guard: derived item lists (populated by _categoriseItems) must be ready before we can
+    // evaluate class-dependent effects.  The hook fires during the "initial" phase — before
+    // prepareDerivedData — so we return early there; _applyCustomActiveEffects re-invokes
+    // this method at the end of prepareDerivedData when everything is ready.
+    if (!this.system.classes) return;
+    const rawKey: string = changeData.key;
+    const key = rawKey.startsWith('system.') ? rawKey.slice(7) : rawKey;
     let change: { type?: string; primary?: boolean; value?: string } = {};
-    try {
-      change = changeData.value ? JSON.parse(changeData.value) : {};
-    } catch (err) {
-      log.debug('applyCustomEffect() | error: ', err);
+    if (changeData.value && typeof changeData.value === 'object') {
+      change = changeData.value;
+    } else {
+      try {
+        change = changeData.value ? JSON.parse(changeData.value) : {};
+      } catch (err) {
+        log.debug('applyCustomEffect() | error: ', err);
+      }
     }
     switch (change?.type) {
       case 'save':
@@ -314,12 +359,10 @@ export class HVActor extends Actor {
     const melee = `${key}.melee.base`;
     const ranged = `${key}.ranged.base`;
     const lvl = foundry.utils.getProperty(this.system, 'level') ?? 1;
-    const currentMeleeBase = foundry.utils.getProperty(this.system, 'melee') ?? 0;
-    const currentRangedBase = foundry.utils.getProperty(this.system, 'ranged') ?? 0;
     if (!isNaN(lvl)) {
       const base = value === 'fighter' ? lvl : Math.floor((lvl * 2) / 3);
-      foundry.utils.setProperty(this.system, melee, currentMeleeBase + base);
-      foundry.utils.setProperty(this.system, ranged, currentRangedBase + base);
+      foundry.utils.setProperty(this.system, melee, base);
+      foundry.utils.setProperty(this.system, ranged, base);
     }
   }
 
