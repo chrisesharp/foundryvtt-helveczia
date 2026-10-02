@@ -2,6 +2,7 @@ import { Logger } from './logger';
 
 const log = new Logger();
 const colours = ['yellow', 'orange', 'red'];
+let combatKeyListenersAdded = false;
 
 export class HVCombat extends Combat {
   static format(combatTracker, html, data) {
@@ -85,27 +86,35 @@ export class HVCombat extends Combat {
       });
     });
 
-    window.addEventListener('keydown', (ev) => {
-      if (ev.key === 'Shift') {
-        html.querySelectorAll('.init-mod.fa-plus').forEach((el) => {
-          el.style.display = 'none';
-        });
-        html.querySelectorAll('.init-mod.fa-minus').forEach((el) => {
-          el.style.display = 'inline';
-        });
-      }
-    });
+    if (!combatKeyListenersAdded) {
+      window.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Shift') {
+          const root = ui.combat?.element;
+          if (!root) return;
+          root.querySelectorAll('.init-mod.fa-plus').forEach((el: HTMLElement) => {
+            el.style.display = 'none';
+          });
+          root.querySelectorAll('.init-mod.fa-minus').forEach((el: HTMLElement) => {
+            el.style.display = 'inline';
+          });
+        }
+      });
 
-    window.addEventListener('keyup', (ev) => {
-      if (ev.key === 'Shift') {
-        html.querySelectorAll('.init-mod.fa-plus').forEach((el) => {
-          el.style.display = 'inline';
-        });
-        html.querySelectorAll('.init-mod.fa-minus').forEach((el) => {
-          el.style.display = 'none';
-        });
-      }
-    });
+      window.addEventListener('keyup', (ev) => {
+        if (ev.key === 'Shift') {
+          const root = ui.combat?.element;
+          if (!root) return;
+          root.querySelectorAll('.init-mod.fa-plus').forEach((el: HTMLElement) => {
+            el.style.display = 'inline';
+          });
+          root.querySelectorAll('.init-mod.fa-minus').forEach((el: HTMLElement) => {
+            el.style.display = 'none';
+          });
+        }
+      });
+
+      combatKeyListenersAdded = true;
+    }
 
     html.querySelectorAll('.combatant-control.init-change').forEach((el) => {
       el.addEventListener('click', async (ev) => {
@@ -132,6 +141,8 @@ export class HVCombatant extends Combatant {
     const initBonus = this.getFlag('helveczia', 'init-bonus') as number;
     if (initBonus > 0) {
       formula += `+${initBonus}`;
+    } else if (initBonus < 0) {
+      formula += `${initBonus}`;
     }
     return formula;
   }
