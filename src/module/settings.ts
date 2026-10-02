@@ -20,6 +20,9 @@ export function registerSettings(): void {
     scope: 'world',
     type: Boolean,
     config: true,
+    onChange: (value: boolean) => {
+      CONFIG.HV.showEffects = value;
+    },
   });
 
   game.settings.register('helveczia', 'token-flip', {
@@ -29,6 +32,9 @@ export function registerSettings(): void {
     scope: 'world',
     type: Boolean,
     config: true,
+    onChange: (value: boolean) => {
+      CONFIG.HV.flipTokens = value;
+    },
   });
 
   game.settings.register('helveczia', 'token-depth', {
@@ -38,6 +44,9 @@ export function registerSettings(): void {
     scope: 'world',
     type: Boolean,
     config: true,
+    onChange: (value: boolean) => {
+      CONFIG.HV.depthTokens = value;
+    },
   });
 
   game.settings.register('helveczia', 'systemMigrationVersion', {
@@ -54,6 +63,9 @@ export function registerSettings(): void {
     scope: 'world',
     type: Boolean,
     default: false,
+    onChange: (value: boolean) => {
+      CONFIG.HV.applyEncumbrance = value;
+    },
   });
 
   game.settings.register('helveczia', 'player-deed-edit', {
@@ -63,5 +75,8 @@ export function registerSettings(): void {
     scope: 'world',
     type: Boolean,
     default: false,
+    onChange: (value: boolean) => {
+      CONFIG.HV.allowPlayerDeedEdit = value;
+    },
   });
 }
