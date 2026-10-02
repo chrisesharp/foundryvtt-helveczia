@@ -14,7 +14,7 @@ export class ContainerItem extends BaseItem {
     sheetData.coins = CONFIG.HV.coins;
     sheetData.contents = [];
     for (const item of itemSheet.item.system?.contents) {
-      sheetData.contents.push({ id: item.id, link: await TextEditor.enrichHTML(item.id, { async: true }) });
+      sheetData.contents.push({ id: item.id, link: await TextEditor.enrichHTML(item.id) });
     }
     return sheetData;
   }

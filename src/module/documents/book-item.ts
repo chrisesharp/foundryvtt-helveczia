@@ -26,7 +26,7 @@ export class BookItem extends BaseItem {
     // sheetData.spells = item.object.system?.spells;
     sheetData.spells = [];
     for (const spell of itemSheet.item.system?.spells) {
-      sheetData.spells.push({ id: spell.id, link: await TextEditor.enrichHTML(spell.id, { async: true }) });
+      sheetData.spells.push({ id: spell.id, link: await TextEditor.enrichHTML(spell.id) });
     }
     return sheetData;
   }

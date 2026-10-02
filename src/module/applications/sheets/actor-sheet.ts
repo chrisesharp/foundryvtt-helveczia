@@ -309,7 +309,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
           description = await HVActorSheet.createSummaryList(item.system?.spells, undefined);
           break;
         default:
-          description = await TextEditor.enrichHTML(item.system.description, { async: true });
+          description = await TextEditor.enrichHTML(item.system.description);
       }
       // Add item tags
       let section = `
@@ -330,10 +330,9 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     if (containerId) description += ' data-container-id="' + containerId + '"';
     description += '><ol class="item-list">';
     for (const item of itemList) {
-      description += '<li class="item-entry flexcol" data-item-id="' + item.id + '">';
-      description += '<div class="item flexrow" data-action="itemSummary" data-item-id="' + item.id;
-      description += '">';
-      description += await TextEditor.enrichHTML(item.id, { async: true });
+      description += '<li class="item-entry flexcol" data-item-id="' + item.name + '">';
+      description += '<div class="item flexrow">';
+      description += await TextEditor.enrichHTML(item.id);
       description += '</div></li>';
     }
     description += '</ol></div>';
@@ -349,7 +348,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     // Toggle summary
     if (!li.querySelector('.item-summary')) {
       const keys = (effect as any).changes.map((e) => e.key.replace(/^system\./, '')).join(', ');
-      const targets = await TextEditor.enrichHTML(keys, { async: true });
+      const targets = await TextEditor.enrichHTML(keys);
       // Add item tags
       let section = `
       <div class="item-summary" style='display:none;'>`;
