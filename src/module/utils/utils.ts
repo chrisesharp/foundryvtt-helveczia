@@ -51,12 +51,7 @@ export class Utils {
   }
 
   static canModifyActor(user: StoredDocument<User> | null, actor: HVActor | null): boolean {
-    return (
-      user != null &&
-      actor != null &&
-      user.isGM &&
-      actor?.testUserPermission(user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)
-    );
+    return user != null && actor != null && actor.testUserPermission(user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER);
   }
 
   static async migrate() {
