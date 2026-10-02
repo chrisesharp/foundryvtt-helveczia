@@ -1,4 +1,4 @@
-import { CharacterActorData, HVActorData, NPCActorData } from '../types/actor-types';
+import { HVActorData } from '../types/actor-types';
 import { Logger } from '../logger';
 import { HVDice } from '../dice';
 import { Student } from './student';
@@ -397,34 +397,19 @@ export class HVActor extends Actor {
   }
 
   /**
-   * Override getRollData() supplied to roll
+   * Override getRollData() supplied to roll.
+   * Flattens ability scores to top-level keys so that roll formulas
+   * like @str.mod resolve without needing to navigate data.scores.
    */
   /** @override */
   getRollData() {
     const data = super.getRollData();
-    this._getCharacterRollData(data as CharacterActorData['system']);
-    this._getNPCRollData(data as NPCActorData['system']);
+    if (data?.scores) {
+      for (const [k, v] of Object.entries(data.scores as Record<string, unknown>)) {
+        data[k] = v;
+      }
+    }
     return data;
-  }
-
-  _getCharacterRollData(data: CharacterActorData['system']): void {
-    if (this.type !== 'character') return;
-    // log.debug('Character RollData:', data);
-    if (data?.scores) {
-      for (const [k, v] of Object.entries(data.scores)) {
-        data[k] = v;
-      }
-    }
-  }
-
-  _getNPCRollData(data: NPCActorData['system']): void {
-    if (this.type !== 'npc') return;
-    // log.debug('NPC RollData:', data);
-    if (data?.scores) {
-      for (const [k, v] of Object.entries(data.scores)) {
-        data[k] = v;
-      }
-    }
   }
 
   /** @override */
