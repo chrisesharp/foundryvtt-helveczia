@@ -91,7 +91,7 @@ export class Cleric {
     } else {
       log.debug('Cleric.onCreate() | cleric-class flag set to true');
       actor?.setFlag('helveczia', 'cleric-class', true);
-      Promise.all(
+      await Promise.all(
         specialistSkills.map((s) => {
           const skill = {
             name: game.i18n.localize(`HV.specialisms.cleric.${s}`),
@@ -111,7 +111,7 @@ export class Cleric {
   }
 
   static getSkillsBonus(actor: HVActor): number {
-    const doctorateSkill = actor.getFlag('helveczia', 'student-doctorate');
+    const doctorateSkill = actor.getFlag('helveczia', 'cleric-doctorate');
     // base 3 extra to cover Cleric specialist skills. and 1 extra at 6th level
     const bonusSkills = specialistSkills.length;
     return doctorateSkill ? bonusSkills + 1 : bonusSkills;
@@ -138,7 +138,7 @@ export class Cleric {
     if (sourceItemData.specialism) {
       return;
     }
-    Promise.all(
+    await Promise.all(
       Object.keys(clericSpecialisms).map((s) => {
         actor?.setFlag('helveczia', clericSpecialisms[s].flag, false);
         return deleteSpecialistSkill(actor, game.i18n.localize(`HV.specialisms.cleric.${s}`));

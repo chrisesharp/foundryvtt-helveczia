@@ -335,6 +335,10 @@ export class HVCharacterSheet extends HVActorSheet {
           case 'spell':
             await createdItem.createChatMessage(this.actor, 'HV.SpellMemorize');
             break;
+          case 'class':
+            this.tabGroups['primary'] = this._getDefaultTab();
+            this.render();
+            break;
         }
       }
     }

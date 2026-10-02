@@ -49,7 +49,7 @@ export class Student {
   static specialisms(): {} {
     const keys = ['spells', 'doctorate'];
     return keys.reduce((dict, p) => {
-      dict[p] = game.i18n.localize(`HV.specialisms.cleric.${p}`);
+      dict[p] = game.i18n.localize(`HV.specialisms.student.${p}`);
       return dict;
     }, {});
   }
@@ -94,7 +94,7 @@ export class Student {
     } else {
       log.debug('Student.onCreate() | student-class flag set to true');
       item.actor?.setFlag('helveczia', 'student-class', true);
-      Promise.all(
+      await Promise.all(
         specialistSkills.map((s) => {
           const skill = {
             name: game.i18n.localize(`HV.specialisms.student.${s}`),
@@ -144,7 +144,7 @@ export class Student {
     if (sourceItemData.specialism) {
       return;
     }
-    Promise.all(
+    await Promise.all(
       Object.keys(studentSpecialisms).map((s) => {
         actor?.setFlag('helveczia', studentSpecialisms[s].flag, false);
         return deleteSpecialistSkill(actor, game.i18n.localize(`HV.specialisms.student.${s}`));
