@@ -17,6 +17,7 @@ const { DialogV2, HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
 const { renderTemplate } = foundry.applications.handlebars;
 const { DragDrop, TextEditor } = foundry.applications.ux;
+const { FilePicker } = foundry.applications.apps;
 const log = new Logger();
 
 export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
@@ -59,6 +60,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       spellEmpty: this._rememorizeSpell,
       printPDF: HVPDF.printSheet,
       importNPC: NPCGenerator.importNPC,
+      onEditImage: this._onEditImage,
     },
     window: {
       resizable: true,
@@ -765,5 +767,22 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       const parent = docRow.dataset.parentId === actor.id ? actor : actor.items.get(docRow?.dataset.parentId);
       return parent?.effects.get(docRow?.dataset.effectId);
     } else return console.warn('Could not find document class');
+  }
+
+  static async _onEditImage(_event, target) {
+    const attr = target.dataset.edit;
+    const current = foundry.utils.getProperty(this.document, attr);
+    const { img } = this.document.constructor.getDefaultArtwork?.(this.document.toObject()) ?? {};
+    const fp = new FilePicker({
+      current,
+      type: 'image',
+      redirectToRoot: img ? [img] : [],
+      callback: (path) => {
+        this.document.update({ [attr]: path });
+      },
+      top: this.position.top + 40,
+      left: this.position.left + 10,
+    });
+    return fp.browse();
   }
 }
