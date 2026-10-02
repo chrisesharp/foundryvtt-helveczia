@@ -1,35 +1,10 @@
 import { HVItem } from './item';
 import { Logger } from '../logger';
 import { HVActor } from './actor';
-import { ClassItemData, SkillItemData } from '../types/item-types';
-import { Utils } from '../utils/utils';
+import { ClassData } from '../types/item-types';
+import { createLockedSkill, deleteLockedSkill } from './class-utils';
 
 const log = new Logger();
-
-async function deleteSpecialism(actor: HVActor, name: string): Promise<void> {
-  log.debug(`Vagabond.deleteSpecialism() | deleting ${name}`);
-  const skills = actor.items.filter(
-    (i) =>
-      i.type === 'skill' &&
-      i.name === name &&
-      (i.system as SkillItemData).subtype === 'vagabond' &&
-      i.getFlag('helveczia', 'locked') === true,
-  );
-  log.debug(`Vagabond.deleteSpecialism() | matching skills:`, skills);
-  await Utils.deleteEmbeddedArray(skills as any, actor);
-}
-
-async function createSpecialismSkill(item: HVItem, skillData: any): Promise<void> {
-  const itemData = (await item.actor?.createEmbeddedDocuments('Item', [skillData])) ?? [];
-  const id = (itemData[0] as Item).id;
-  if (id) {
-    const i = item.actor?.items.get(id);
-    if (i) {
-      await i.setFlag('helveczia', 'locked', true);
-      await item.actor?.update({});
-    }
-  }
-}
 
 export class Vagabond {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -46,7 +21,7 @@ export class Vagabond {
   }
 
   static async onCreate(item: HVItem): Promise<void> {
-    const sourceItemData = item.system as ClassItemData;
+    const sourceItemData = item.system as ClassData;
     if (sourceItemData.specialism) {
       if (!item.actor?.isVagabond()) {
         ui.notifications.error(
@@ -66,7 +41,7 @@ export class Vagabond {
           log.debug('Vagabond.onCreate() | vagabond-skills flag set to true');
           item.actor?.setFlag('helveczia', 'vagabond-skills', true);
           break;
-        case 'legends':
+        case 'legends': {
           const legendDescription = game.i18n.localize('HV.vagabond.legends');
           const legendsSkill = {
             name: game.i18n.localize(`HV.specialisms.vagabond.${foundName}`),
@@ -77,9 +52,10 @@ export class Vagabond {
               subtype: 'vagabond',
             },
           };
-          createSpecialismSkill(item, legendsSkill);
+          createLockedSkill(item, legendsSkill);
           break;
-        case 'sneak':
+        }
+        case 'sneak': {
           const sneakDescription = game.i18n.localize('HV.vagabond.sneakAttack');
           const sneakSkill = {
             name: game.i18n.localize(`HV.specialisms.vagabond.${foundName}`),
@@ -90,9 +66,10 @@ export class Vagabond {
               subtype: 'vagabond',
             },
           };
-          createSpecialismSkill(item, sneakSkill);
+          createLockedSkill(item, sneakSkill);
           break;
-        case 'luck':
+        }
+        case 'luck': {
           const luckDescription = game.i18n.localize('HV.vagabond.travellersLuck');
           const luckSkill = {
             name: game.i18n.localize(`HV.specialisms.vagabond.${foundName}`),
@@ -103,8 +80,9 @@ export class Vagabond {
               subtype: 'vagabond',
             },
           };
-          createSpecialismSkill(item, luckSkill);
+          createLockedSkill(item, luckSkill);
           break;
+        }
       }
     } else {
       log.debug('Vagabond.onCreate() | vagabond-class flag set to true');
@@ -146,13 +124,13 @@ export class Vagabond {
           log.debug('Vagabond.cleanup() |  vagabond-skills flag set to false');
           break;
         case 'legends':
-          deleteSpecialism(actor, item.name);
+          deleteLockedSkill(actor, item.name, 'vagabond');
           break;
         case 'luck':
-          deleteSpecialism(actor, item.name);
+          deleteLockedSkill(actor, item.name, 'vagabond');
           break;
         case 'sneak':
-          deleteSpecialism(actor, item.name);
+          deleteLockedSkill(actor, item.name, 'vagabond');
           break;
       }
     } else {

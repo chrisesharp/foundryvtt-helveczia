@@ -1,7 +1,7 @@
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
 import { HVItem } from './item';
-import { BookItemData } from '../types/item-types';
+import { BookData } from '../types/item-types';
 const { TextEditor } = foundry.applications.ux;
 
 export class BookItem extends BaseItem {
@@ -26,7 +26,7 @@ export class BookItem extends BaseItem {
     // sheetData.spells = item.object.system?.spells;
     sheetData.spells = [];
     for (const spell of itemSheet.item.system?.spells) {
-      sheetData.spells.push({ id: spell.id, link: await TextEditor.enrichHTML(spell.id, { async: true }) });
+      sheetData.spells.push({ id: spell.id, link: await TextEditor.enrichHTML(spell.id) });
     }
     return sheetData;
   }
@@ -35,7 +35,7 @@ export class BookItem extends BaseItem {
   static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
     const top = `<ol class="tag-list">`;
     const bottom = `</ol>`;
-    const itemData = item.system as BookItemData;
+    const itemData = item.system as BookData;
     return `
     ${top}
       <li class="tag-weight" title="${game.i18n.localize(

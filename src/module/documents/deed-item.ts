@@ -1,7 +1,7 @@
 import { BaseItem } from './base-item';
 import { HVItem } from './item';
 import { Logger } from '../logger';
-import { DeedItemData } from '../types/item-types';
+import { DeedData } from '../types/item-types';
 import { HVActor } from './actor';
 import { Utils } from '../utils/utils';
 
@@ -65,20 +65,20 @@ export class DeedItem extends BaseItem {
   }
 
   static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
-    const isSin = (item.system as DeedItemData).subtype === 'sin';
+    const isSin = (item.system as DeedData).subtype === 'sin';
     const mag = isSin
-      ? 0 - Math.floor((item.system as DeedItemData).magnitude)
-      : 0 + Math.floor((item.system as DeedItemData).magnitude);
+      ? 0 - Math.floor((item.system as DeedData).magnitude)
+      : 0 + Math.floor((item.system as DeedData).magnitude);
     const value = mag > 0 ? `+${mag}` : mag;
     return `
     <ol class="tag-list">
-      <li class="tag">${game.i18n.localize(`HV.deeds.${(item.system as DeedItemData).subtype}`)}</li>
+      <li class="tag">${game.i18n.localize(`HV.deeds.${(item.system as DeedData).subtype}`)}</li>
       <li class="tag">${value}</li>
     </ol>`;
   }
 
   static calculateEffectChange(item: HVItem) {
-    const itemData = item.system as DeedItemData;
+    const itemData = item.system as DeedData;
     const magnitude = itemData.magnitude;
     const subtype = itemData.subtype;
     const value = subtype === 'virtue' ? magnitude : 0 - magnitude;

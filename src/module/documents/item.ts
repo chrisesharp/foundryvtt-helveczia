@@ -74,12 +74,6 @@ export class HVItem extends Item {
       CONFIG.HV.itemClasses[this.type].createChatMessage(actor, message, this as any);
     }
   }
-
-  /** @override */
-  async _onDropItem(_event: DragEvent, _data: any): Promise<unknown> {
-    // console.log('Item.onDropItem()', event, data);
-    return null;
-  }
 }
 
 declare global {

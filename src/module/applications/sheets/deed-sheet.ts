@@ -2,16 +2,9 @@ import { HVItemSheet } from './item-sheet';
 
 export class DeedSheet extends HVItemSheet {
   static readonly DEFAULT_OPTIONS: Record<string, any> = {
-    classes: ['helveczia', 'sheet', 'item'],
     position: {
       width: 450,
       height: 350,
-    },
-    actions: {
-      toggleEffect: this._effectToggle,
-    },
-    window: {
-      resizable: true,
     },
   };
   static readonly PARTS = {

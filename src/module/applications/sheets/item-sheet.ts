@@ -1,7 +1,7 @@
 import { prepareActiveEffectCategories } from '../../effects';
 import { ContainerItem } from '../../documents/container-item';
 import { HVItem } from '../../documents/item';
-import { BookItemData } from '../../types/item-types';
+import { BookData } from '../../types/item-types';
 const { ItemSheetV2 } = foundry.applications.sheets;
 const { DragDrop, TextEditor } = foundry.applications.ux;
 const { HandlebarsApplicationMixin } = foundry.applications.api;
@@ -23,7 +23,7 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
       height: 500,
     },
     actions: {
-      // actor: HVPartySheet.getActorSheet,
+      toggleEffect: this._effectToggle,
     },
     window: {
       resizable: true,
@@ -149,7 +149,7 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
     if (name) {
       switch (this.item.type) {
         case 'book':
-          const spells = foundry.utils.duplicate((this.item.system as BookItemData).spells);
+          const spells = foundry.utils.duplicate((this.item.system as BookData).spells);
           if (!spells.find((spell) => spell.name === name)) {
             spells.push({ id: link, name: name });
             return this.item.update({ system: { spells: spells } });

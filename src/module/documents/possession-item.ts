@@ -1,7 +1,7 @@
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
 import { HVItem } from './item';
-import { PossessionItemData } from '../types/item-types';
+import { PossessionData } from '../types/item-types';
 
 export class PossessionItem extends BaseItem {
   static get documentName() {
@@ -16,7 +16,7 @@ export class PossessionItem extends BaseItem {
 
   /** @override */
   static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
-    const itemData = item.system as PossessionItemData;
+    const itemData = item.system as PossessionData;
     return `
     <ol class="tag-list">
       <li class="tag-weight" title="${game.i18n.localize(

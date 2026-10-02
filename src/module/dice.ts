@@ -157,33 +157,26 @@ export class HVDice {
       ? await HVDice.digestAttackResult(data, roll)
       : HVDice.digestResult(data, roll);
 
-    return new Promise(async (resolve) => {
-      templateData.rollHV = await roll.render();
-      templateData.dmgResult = dmgRoll?.total;
-      templateData.rollDamage = dmgRoll ? await dmgRoll.render() : undefined;
-      renderTemplate(template, templateData).then((content) => {
-        chatData.content = content;
-        // 2 Step Dice So Nice
-        if (game['dice3d']) {
-          game['dice3d'].showForRoll(roll, game.user, true, chatData.whisper, chatData.blind).then(() => {
-            if (templateData.result.isSuccess && dmgRoll) {
-              templateData.result.dmg = dmgRoll.total;
-              game['dice3d'].showForRoll(dmgRoll, game.user, true, chatData.whisper, chatData.blind).then(() => {
-                ChatMessage.create(chatData);
-                resolve(roll);
-              });
-            } else {
-              ChatMessage.create(chatData);
-              resolve(roll);
-            }
-          });
-        } else {
-          chatData.sound = CONFIG.sounds.dice;
-          ChatMessage.create(chatData);
-          resolve(roll);
-        }
-      });
-    });
+    templateData.rollHV = await roll.render();
+    templateData.dmgResult = dmgRoll?.total;
+    templateData.rollDamage = dmgRoll ? await dmgRoll.render() : undefined;
+
+    const content = await renderTemplate(template, templateData);
+    chatData.content = content;
+
+    // 2 Step Dice So Nice
+    if (game['dice3d']) {
+      await game['dice3d'].showForRoll(roll, game.user, true, chatData.whisper, chatData.blind);
+      if (templateData.result.isSuccess && dmgRoll) {
+        templateData.result.dmg = dmgRoll.total;
+        await game['dice3d'].showForRoll(dmgRoll, game.user, true, chatData.whisper, chatData.blind);
+      }
+    } else {
+      chatData.sound = CONFIG.sounds.dice;
+    }
+
+    await ChatMessage.create(chatData);
+    return roll;
   }
 
   static async Roll({
@@ -196,7 +189,6 @@ export class HVDice {
     flavour,
     speaker,
   }: HVRollData): Promise<Roll<any>> {
-    let rolled = false;
     const template = `${templatePath}/roll-dialog.hbs`;
     const dialogData = {
       formula: parts.join(' '),
@@ -218,31 +210,30 @@ export class HVDice {
       return HVDice.sendRoll(rollData);
     }
 
-    const buttons = [
-      {
-        label: 'HV.Roll',
-        action: 'ok',
-        icon: 'fas fa-dice-d20',
-        callback: (html) => {
-          rolled = true;
-          rollData.form = html.currentTarget.querySelector('form');
-          roll = HVDice.sendRoll(rollData);
-        },
-      },
-      {
-        action: 'cancel',
-        icon: 'fas fa-times',
-        label: 'HV.Cancel',
-        callback: () => {
-          /*noop */
-        },
-      },
-    ];
-
     const html = await renderTemplate(template, dialogData);
-    let roll: Promise<Roll<any>>;
 
     return new Promise((resolve) => {
+      const buttons = [
+        {
+          label: 'HV.Roll',
+          action: 'ok',
+          icon: 'fas fa-dice-d20',
+          callback: async (event) => {
+            rollData.form = event.currentTarget.querySelector('form');
+            const result = await HVDice.sendRoll(rollData);
+            resolve(result);
+          },
+        },
+        {
+          action: 'cancel',
+          icon: 'fas fa-times',
+          label: 'HV.Cancel',
+          callback: () => {
+            resolve(null as any);
+          },
+        },
+      ];
+
       DialogV2.wait({
         classes: ['helveczia'],
         window: {
@@ -252,13 +243,6 @@ export class HVDice {
         content: html,
         buttons: buttons,
         rejectClose: false,
-        submit: () => {
-          if (rolled) {
-            resolve(roll);
-          } else {
-            PromiseRejectionEvent;
-          }
-        },
       });
     });
   }

@@ -1,10 +1,10 @@
-import { CharacterActorData, HVActorData, NPCActorData } from '../types/actor-types';
+import { HVActorData } from '../types/actor-types';
 import { Logger } from '../logger';
 import { HVDice } from '../dice';
 import { Student } from './student';
 import { Cleric } from './cleric';
 import { Fighter } from './fighter';
-import { SkillItemData, WeaponItemData } from '../types/item-types';
+import { SkillData, WeaponData } from '../types/item-types';
 import { PeopleItem } from './people-item';
 import { HVItem } from './item';
 
@@ -30,9 +30,6 @@ export class HVActor extends Actor {
       case 'npc':
         this.calculateNPCThreatLevel();
         break;
-      case 'party':
-        this.setPartyData();
-        break;
     }
   }
 
@@ -52,11 +49,6 @@ export class HVActor extends Actor {
     data.experience = CONFIG.HV.challengeAwards[data.level + threat];
   }
 
-  setPartyData(): void {
-    this.img = this.prototypeToken.texture.src;
-    this.prototypeToken.name = this.name;
-  }
-
   /** @override */
   prepareDerivedData(): void {
     this._categoriseItems();
@@ -70,6 +62,41 @@ export class HVActor extends Actor {
       case 'npc':
         this._prepareNPCData();
         break;
+    }
+
+    // Apply custom active effects after all base derived values are computed,
+    // so that isFighter()/isVagabond() resolve correctly and the results are not
+    // clobbered by _updateAttackMods / _updateSaves.
+    this._applyCustomActiveEffects();
+  }
+
+  /**
+   * Re-apply custom (mode 0) active effects that depend on derived data being ready.
+   * Called at the end of prepareDerivedData so that class checks and base calculations
+   * are already in place.  After writing to .base or .bonus fields the relevant .mod
+   * value is recalculated.
+   */
+  _applyCustomActiveEffects(): void {
+    for (const effect of this.allApplicableEffects()) {
+      if (!effect.active) continue;
+      for (const change of effect.system.changes) {
+        if (change.type !== 'custom') continue; // CUSTOM only
+        this.applyCustomEffect(change);
+      }
+    }
+    // Recalculate .mod for attack and saves after effects may have modified .base or .bonus.
+    const data = this.system;
+    if (data.attack) {
+      for (const type of ['melee', 'ranged', 'cc'] as const) {
+        const atk = data.attack[type];
+        if (atk) atk.mod = atk.base + atk.bonus;
+      }
+    }
+    if (data.saves) {
+      for (const saveType of Object.keys(data.saves)) {
+        const save = data.saves[saveType];
+        if (save) save.mod = save.base + save.bonus;
+      }
     }
   }
 
@@ -116,32 +143,32 @@ export class HVActor extends Actor {
   }
 
   /**
-   * Prepare Character type specific data
+   * Prepare common actor data shared across characters and NPCs.
    */
-  async _prepareCharacterData() {
-    const data = this.system;
-
+  _prepareBaseActorData(data: any): void {
     for (const key of Object.keys(data.scores)) {
       this._updateAbility(data.scores[key], key);
     }
-
-    this._calculateCapacity(data);
     this._updateSaves(data);
-    this._updateSkills(data);
     this._updateCombatValues(data);
+  }
+
+  /**
+   * Prepare Character type specific data
+   */
+  _prepareCharacterData(): void {
+    const data = this.system;
+    this._prepareBaseActorData(data);
+    this._calculateCapacity(data);
+    this._updateSkills(data);
   }
 
   /**
    * Prepare NPC type specific data
    */
-  async _prepareNPCData() {
+  _prepareNPCData(): void {
     const data = this.system;
-
-    for (const key of Object.keys(data.scores)) {
-      this._updateAbility(data.scores[key], key);
-    }
-    this._updateSaves(data);
-    this._updateCombatValues(data);
+    this._prepareBaseActorData(data);
   }
 
   /**
@@ -247,7 +274,7 @@ export class HVActor extends Actor {
   /**
    * Update base & bonus for skills
    */
-  async _updateSkills(data: any) {
+  _updateSkills(data: any) {
     const peopleBonus = data.peoples[0]?.getSkillsBonus(this) ?? 0;
     const classBonus = data.classes[0]?.getSkillsBonus(this) ?? 0;
     data.maxskills += data.scores.int.mod + peopleBonus + classBonus + data.npcModBonus;
@@ -268,12 +295,22 @@ export class HVActor extends Actor {
   }
 
   applyCustomEffect(changeData) {
-    const key = changeData.key;
+    // Guard: derived item lists (populated by _categoriseItems) must be ready before we can
+    // evaluate class-dependent effects.  The hook fires during the "initial" phase — before
+    // prepareDerivedData — so we return early there; _applyCustomActiveEffects re-invokes
+    // this method at the end of prepareDerivedData when everything is ready.
+    if (!this.system.classes) return;
+    const rawKey: string = changeData.key;
+    const key = rawKey.startsWith('system.') ? rawKey.slice(7) : rawKey;
     let change: { type?: string; primary?: boolean; value?: string } = {};
-    try {
-      change = changeData.value ? JSON.parse(changeData.value) : {};
-    } catch (err) {
-      log.debug('applyCustomEffect() | error: ', err);
+    if (changeData.value && typeof changeData.value === 'object') {
+      change = changeData.value;
+    } else {
+      try {
+        change = changeData.value ? JSON.parse(changeData.value) : {};
+      } catch (err) {
+        log.debug('applyCustomEffect() | error: ', err);
+      }
     }
     switch (change?.type) {
       case 'save':
@@ -314,12 +351,10 @@ export class HVActor extends Actor {
     const melee = `${key}.melee.base`;
     const ranged = `${key}.ranged.base`;
     const lvl = foundry.utils.getProperty(this.system, 'level') ?? 1;
-    const currentMeleeBase = foundry.utils.getProperty(this.system, 'melee') ?? 0;
-    const currentRangedBase = foundry.utils.getProperty(this.system, 'ranged') ?? 0;
     if (!isNaN(lvl)) {
       const base = value === 'fighter' ? lvl : Math.floor((lvl * 2) / 3);
-      foundry.utils.setProperty(this.system, melee, currentMeleeBase + base);
-      foundry.utils.setProperty(this.system, ranged, currentRangedBase + base);
+      foundry.utils.setProperty(this.system, melee, base);
+      foundry.utils.setProperty(this.system, ranged, base);
     }
   }
 
@@ -362,34 +397,19 @@ export class HVActor extends Actor {
   }
 
   /**
-   * Override getRollData() supplied to roll
+   * Override getRollData() supplied to roll.
+   * Flattens ability scores to top-level keys so that roll formulas
+   * like @str.mod resolve without needing to navigate data.scores.
    */
   /** @override */
   getRollData() {
     const data = super.getRollData();
-    this._getCharacterRollData(data as CharacterActorData['system']);
-    this._getNPCRollData(data as NPCActorData['system']);
+    if (data?.scores) {
+      for (const [k, v] of Object.entries(data.scores as Record<string, unknown>)) {
+        data[k] = v;
+      }
+    }
     return data;
-  }
-
-  _getCharacterRollData(data: CharacterActorData['system']): void {
-    if (this.type !== 'character') return;
-    // log.debug('Character RollData:', data);
-    if (data?.scores) {
-      for (const [k, v] of Object.entries(data.scores)) {
-        data[k] = v;
-      }
-    }
-  }
-
-  _getNPCRollData(data: NPCActorData['system']): void {
-    if (this.type !== 'npc') return;
-    // log.debug('NPC RollData:', data);
-    if (data?.scores) {
-      for (const [k, v] of Object.entries(data.scores)) {
-        data[k] = v;
-      }
-    }
   }
 
   /** @override */
@@ -519,7 +539,7 @@ export class HVActor extends Actor {
       case 'weapon':
         data.resource = '';
         if (item) {
-          dmg.push((item.system as WeaponItemData).damage);
+          dmg.push((item.system as WeaponData).damage);
         } else {
           dmg.push('1d3');
         }
@@ -546,7 +566,7 @@ export class HVActor extends Actor {
         switch (item.type) {
           case 'skill':
             {
-              const skill = item.system as SkillItemData;
+              const skill = item.system as SkillData;
               const bonus = Math.floor(skill.bonus);
               const ability = this.system.scores[skill.ability]?.mod;
               mod.push(bonus);
@@ -557,7 +577,7 @@ export class HVActor extends Actor {
             break;
           case 'weapon':
             {
-              const weapon = item.system as WeaponItemData;
+              const weapon = item.system as WeaponData;
               const bonus = Math.floor(weapon.bonus);
               const ability = this.system.attack[weapon.attack]?.mod;
               if (weapon.attack === 'melee') dmg.push(this.system.attack.melee?.bonus);
@@ -584,7 +604,7 @@ export class HVActor extends Actor {
       switch (item.type) {
         case 'skill':
           {
-            const itemData = item.system as SkillItemData;
+            const itemData = item.system as SkillData;
             const data = await this.getRollMods({ attr: itemData.ability, roll: item.type, itemId: item.id });
             const value = data.mods.reduce((acc, n) => acc + n, 0);
             mods = value > 0 ? `+${value}` : `${value}`;

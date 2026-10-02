@@ -10,36 +10,36 @@ export function getActorEffect(owner: HVActor, effectId: string) {
   }
   return effect;
 }
-/**
- * Manage Active Effect instances through the Actor Sheet via effect control buttons.
- * @param {MouseEvent} event      The left-click event on the effect control
- * @param {Actor|Item} owner      The owning entity which manages this effect
- */
-export function onManageActiveEffect(event, target, owner) {
-  event.preventDefault();
-  const a = target;
-  const li = a.closest('li');
-  const effect = this._getEmbeddedDocument(target);
-  switch (a.dataset.action) {
-    case 'create':
-      return ActiveEffect.create(
-        {
-          name: 'New Effect',
-          icon: 'icons/svg/aura.svg',
-          origin: owner.uuid,
-          'duration.rounds': li.dataset.effectType === 'temporary' ? 1 : undefined,
-          disabled: li.dataset.effectType === 'inactive',
-        },
-        { parent: owner },
-      );
-    case 'edit':
-      return effect?.sheet.render(true);
-    case 'delete':
-      return effect?.delete();
-    case 'toggle':
-      return effect?.update({ disabled: !effect.disabled });
-  }
-}
+// /**
+//  * Manage Active Effect instances through the Actor Sheet via effect control buttons.
+//  * @param {MouseEvent} event      The left-click event on the effect control
+//  * @param {Actor|Item} owner      The owning entity which manages this effect
+//  */
+// export function onManageActiveEffect(event, target, owner) {
+//   event.preventDefault();
+//   const a = target;
+//   const li = a.closest('li');
+//   const effect = this._getEmbeddedDocument(target);
+//   switch (a.dataset.action) {
+//     case 'create':
+//       return ActiveEffect.create(
+//         {
+//           name: 'New Effect',
+//           icon: 'icons/svg/aura.svg',
+//           origin: owner.uuid,
+//           'duration.rounds': li.dataset.effectType === 'temporary' ? 1 : undefined,
+//           disabled: li.dataset.effectType === 'inactive',
+//         },
+//         { parent: owner },
+//       );
+//     case 'edit':
+//       return effect?.sheet.render(true);
+//     case 'delete':
+//       return effect?.delete();
+//     case 'toggle':
+//       return effect?.update({ disabled: !effect.disabled });
+//   }
+// }
 
 /**
  * Prepare the data structure for Active Effects which are currently applied to an Actor or Item.

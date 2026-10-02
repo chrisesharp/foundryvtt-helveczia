@@ -1,7 +1,7 @@
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
 import { HVItem } from './item';
-import { SpellItemData } from '../types/item-types';
+import { SpellData } from '../types/item-types';
 const { renderTemplate } = foundry.applications.handlebars;
 
 export class SpellItem extends BaseItem {
@@ -68,7 +68,7 @@ export class SpellItem extends BaseItem {
 
   /** @override */
   static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
-    const itemData = item.system as SpellItemData;
+    const itemData = item.system as SpellData;
     const tag = itemData.save !== '-' ? game.i18n.localize(`HV.saves.${itemData.save}.long`) : undefined;
     const line = tag ? `<li class="tag" title="${game.i18n.localize('HV.Save')}">${tag}</li>` : '';
     return `

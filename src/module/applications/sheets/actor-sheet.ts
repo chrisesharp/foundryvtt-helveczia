@@ -2,7 +2,7 @@ import { HVCharacterCreator } from '../chargen';
 import { getActorEffect } from '../../effects';
 import { ClassItem } from '../../documents/class-item';
 import { PeopleItem } from '../../documents/people-item';
-import { ClassItemData, DeedItemData, SkillItemData, SpellItemData } from '../../types/item-types';
+import { ClassData, DeedData, SkillData, SpellData } from '../../types/item-types';
 import { Logger } from '../../logger';
 import { HVItem } from '../../documents/item';
 import { CharacterActorData } from '../../types/actor-types';
@@ -17,6 +17,7 @@ const { DialogV2, HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
 const { renderTemplate } = foundry.applications.handlebars;
 const { DragDrop, TextEditor } = foundry.applications.ux;
+const { FilePicker } = foundry.applications.apps;
 const log = new Logger();
 
 export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
@@ -59,6 +60,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       spellEmpty: this._rememorizeSpell,
       printPDF: HVPDF.printSheet,
       importNPC: NPCGenerator.importNPC,
+      onEditImage: this._onEditImage,
     },
     window: {
       resizable: true,
@@ -74,6 +76,45 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     return super._prepareContext(options);
   }
 
+  /**
+   * Returns the tab id that should be active on first render.
+   * Subclasses override this to change their own default.
+   */
+  protected _getDefaultTab(): string {
+    return 'abilities';
+  }
+
+  /**
+   * Generates the data for the generic tab navigation template.
+   * @param {string[]} parts An array of named template parts to render
+   * @returns {Record<string, Partial<ApplicationTab>>}
+   */
+  _getTabs(parts) {
+    const tabGroup = 'primary';
+    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = this._getDefaultTab();
+    return parts.reduce((tabs, partId) => {
+      const tab = {
+        cssClass: '',
+        group: tabGroup,
+        id: '',
+        icon: '',
+        label: 'HV.tabs.',
+      };
+      switch (partId) {
+        case 'header':
+        case 'tabs':
+          return tabs;
+        default:
+          tab.id = partId;
+          tab.label += partId;
+          break;
+      }
+      if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';
+      tabs[partId] = tab;
+      return tabs;
+    }, {});
+  }
+
   async _removePeoples(item): Promise<boolean> {
     if (item.name === this.actor.system.people) return false;
     const peoples = this.actor.itemTypes['people'];
@@ -83,7 +124,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   async _removeClasses(item): Promise<boolean> {
     if (item.name === this.actor.system.class) return false;
-    const itemData = item.system as ClassItemData;
+    const itemData = item.system as ClassData;
     if (!itemData.specialism) {
       log.debug('_removeClasses() | Removing previous classes');
       const classes = this.actor.itemTypes['class'];
@@ -96,8 +137,8 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
           log.debug(`_removeClasses() | Removing specialisms for ${requiredProfession} `);
           const classes = this.actor.itemTypes['class'].filter(
             (i) =>
-              (i.system as ClassItemData).specialism &&
-              (i.system as ClassItemData).parentClass.toLowerCase() === this.actor.system.class.toLowerCase(),
+              (i.system as ClassData).specialism &&
+              (i.system as ClassData).parentClass.toLowerCase() === this.actor.system.class.toLowerCase(),
           );
           await Utils.deleteEmbeddedArray(classes, this.actor);
         }
@@ -124,16 +165,16 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   }
 
   static _itemEdit(_event, element) {
-    const li = element.parentNode.parentNode;
-    const item = this.actor.items.get(li.dataset.itemId);
+    const li = element.closest('[data-item-id]');
+    const item = this.actor.items.get(li?.dataset.itemId);
     item?.sheet?.render(true);
   }
 
   static async _itemDelete(_event, element) {
-    const li = element.parentNode.parentNode;
-    const itemID = li.dataset.itemId;
+    const li = element.closest('[data-item-id]');
+    const itemID = li?.dataset.itemId;
     const item = this.actor.items.get(itemID);
-    await item.delete();
+    await item?.delete();
   }
 
   static async _tokenSync(_event, _target) {
@@ -183,7 +224,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     const itemID = li.dataset.itemId;
     const item = this.actor.items.get(itemID);
     if (item) {
-      const spellLevel = (item.system as SpellItemData).level;
+      const spellLevel = (item.system as SpellData).level;
       const state = (item.getFlag('helveczia', 'bonusSpell') as boolean) ?? false;
       const current = (this.actor.getFlag('helveczia', `bonusSpellsChosen-${spellLevel}`) as number) ?? 0;
       if (state !== true) {
@@ -309,7 +350,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
           description = await HVActorSheet.createSummaryList(item.system?.spells, undefined);
           break;
         default:
-          description = await TextEditor.enrichHTML(item.system.description, { async: true });
+          description = await TextEditor.enrichHTML(item.system.description);
       }
       // Add item tags
       let section = `
@@ -330,10 +371,9 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     if (containerId) description += ' data-container-id="' + containerId + '"';
     description += '><ol class="item-list">';
     for (const item of itemList) {
-      description += '<li class="item-entry flexcol" data-item-id="' + item.id + '">';
-      description += '<div class="item flexrow" data-action="itemSummary" data-item-id="' + item.id;
-      description += '">';
-      description += await TextEditor.enrichHTML(item.id, { async: true });
+      description += '<li class="item-entry flexcol" data-item-id="' + item.name + '">';
+      description += '<div class="item flexrow">';
+      description += await TextEditor.enrichHTML(item.id);
       description += '</div></li>';
     }
     description += '</ol></div>';
@@ -349,7 +389,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     // Toggle summary
     if (!li.querySelector('.item-summary')) {
       const keys = (effect as any).changes.map((e) => e.key.replace(/^system\./, '')).join(', ');
-      const targets = await TextEditor.enrichHTML(keys, { async: true });
+      const targets = await TextEditor.enrichHTML(keys);
       // Add item tags
       let section = `
       <div class="item-summary" style='display:none;'>`;
@@ -528,10 +568,10 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   static async _generateCraftSkill(event) {
     event.preventDefault();
-    const existingSkills = (this.actor.system as CharacterActorData).skills.map((i) => i.name);
+    const existingSkills = (this.actor.system as CharacterActorData['system']).skills.map((i) => i.name);
     const rndCraft = await HVActorSheet.getRandomCraft(existingSkills);
     if (rndCraft) {
-      const craft = { name: rndCraft?.name, ability: (rndCraft.system as SkillItemData).ability };
+      const craft = { name: rndCraft?.name, ability: (rndCraft.system as SkillData).ability };
       const description = game.i18n.localize('HV.bonusGermanCraftSkill');
       const skill = {
         name: craft.name,
@@ -558,7 +598,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   static async _generateScienceSkills(event) {
     event.preventDefault();
-    const existingSkills = (this.actor.system as CharacterActorData).skills.map((i) => i.name);
+    const existingSkills = (this.actor.system as CharacterActorData['system']).skills.map((i) => i.name);
     existingSkills.push(await HVActorSheet._genRndScienceSkill(1, existingSkills, this.actor));
     await HVActorSheet._genRndScienceSkill(2, existingSkills, this.actor);
     await this.actor.update();
@@ -567,7 +607,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   static async _genRndScienceSkill(idx, existingSkills, actor): Promise<string | null> {
     const rndSkill = await HVActorSheet.getRandomScience(existingSkills);
     if (rndSkill != null) {
-      const skillData = { name: rndSkill.name, ability: (rndSkill.system as SkillItemData).ability };
+      const skillData = { name: rndSkill.name, ability: (rndSkill.system as SkillData).ability };
       const description = game.i18n.localize('HV.bonusStudentScienceSkill');
       const skill = {
         name: skillData.name,
@@ -619,7 +659,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     while (sins.length > 0) {
       const sin = sins.shift();
       if (sin) {
-        const mag: number = Math.floor((sin?.system as DeedItemData).magnitude);
+        const mag: number = Math.floor((sin?.system as DeedData).magnitude);
         if (absolvedTotal + mag <= roll.total) {
           absolvedTotal += mag;
           absolved.push(sin);
@@ -727,5 +767,22 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       const parent = docRow.dataset.parentId === actor.id ? actor : actor.items.get(docRow?.dataset.parentId);
       return parent?.effects.get(docRow?.dataset.effectId);
     } else return console.warn('Could not find document class');
+  }
+
+  static async _onEditImage(_event, target) {
+    const attr = target.dataset.edit;
+    const current = foundry.utils.getProperty(this.document, attr);
+    const { img } = this.document.constructor.getDefaultArtwork?.(this.document.toObject()) ?? {};
+    const fp = new FilePicker({
+      current,
+      type: 'image',
+      redirectToRoot: img ? [img] : [],
+      callback: (path) => {
+        this.document.update({ [attr]: path });
+      },
+      top: this.position.top + 40,
+      left: this.position.left + 10,
+    });
+    return fp.browse();
   }
 }

@@ -1,8 +1,8 @@
 import { HVItem } from './item';
 import { Logger } from '../logger';
 import { HVActor } from './actor';
-import { ClassItemData, SkillItemData } from '../types/item-types';
-import { Utils } from '../utils/utils';
+import { ClassData, SkillData } from '../types/item-types';
+import { createLockedSkill, deleteLockedSkill } from './class-utils';
 
 const log = new Logger();
 
@@ -19,43 +19,18 @@ const studentSpecialisms = {
 
 const specialistSkills = ['spells'];
 
-async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void> {
-  log.debug(`Student.deleteSpecialistSkill() | deleting ${name}`);
-  const skills = actor.items.filter(
-    (i) =>
-      i.type === 'skill' &&
-      i.name === name &&
-      (i.system as SkillItemData).subtype === 'magical' &&
-      i.getFlag('helveczia', 'locked') === true,
-  );
-  log.debug(`Student.deleteSpecialistSkill() | matching skills:`, skills);
-  await Utils.deleteEmbeddedArray(skills as any, actor);
-}
-
-async function createSpecialistSkill(item: HVItem, skillData: any): Promise<void> {
-  const itemData = (await item.actor?.createEmbeddedDocuments('Item', [skillData])) ?? [];
-  const id = (itemData[0] as Item).id;
-  if (id) {
-    const i = item.actor?.items.get(id);
-    if (i) {
-      await i.setFlag('helveczia', 'locked', true);
-      await item.actor?.update({});
-    }
-  }
-}
-
 export class Student {
   // eslint-disable-next-line @typescript-eslint/ban-types
   static specialisms(): {} {
     const keys = ['spells', 'doctorate'];
     return keys.reduce((dict, p) => {
-      dict[p] = game.i18n.localize(`HV.specialisms.cleric.${p}`);
+      dict[p] = game.i18n.localize(`HV.specialisms.student.${p}`);
       return dict;
     }, {});
   }
 
   static async onCreate(item: HVItem): Promise<void> {
-    const sourceItemData = item.system as ClassItemData;
+    const sourceItemData = item.system as ClassData;
     if (sourceItemData.specialism) {
       if (!item.actor?.isStudent()) {
         ui.notifications.error(
@@ -94,7 +69,7 @@ export class Student {
     } else {
       log.debug('Student.onCreate() | student-class flag set to true');
       item.actor?.setFlag('helveczia', 'student-class', true);
-      Promise.all(
+      await Promise.all(
         specialistSkills.map((s) => {
           const skill = {
             name: game.i18n.localize(`HV.specialisms.student.${s}`),
@@ -107,7 +82,7 @@ export class Student {
             },
           };
           item.actor?.setFlag('helveczia', studentSpecialisms[s].flag, true);
-          return createSpecialistSkill(item, skill);
+          return createLockedSkill(item, skill);
         }),
       );
     }
@@ -140,19 +115,19 @@ export class Student {
   }
 
   static async cleanup(actor: HVActor, item: any): Promise<void> {
-    const sourceItemData = item.system as ClassItemData;
+    const sourceItemData = item.system as ClassData;
     if (sourceItemData.specialism) {
       return;
     }
-    Promise.all(
+    await Promise.all(
       Object.keys(studentSpecialisms).map((s) => {
         actor?.setFlag('helveczia', studentSpecialisms[s].flag, false);
-        return deleteSpecialistSkill(actor, game.i18n.localize(`HV.specialisms.student.${s}`));
+        return deleteLockedSkill(actor, game.i18n.localize(`HV.specialisms.student.${s}`), 'magical');
       }),
     );
     await actor.setFlag('helveczia', 'student-class', false);
     const sciences = actor.items.filter(
-      (i) => (i.system as SkillItemData).subtype === 'science' && i.getFlag('helveczia', 'locked') === true,
+      (i) => (i.system as SkillData).subtype === 'science' && i.getFlag('helveczia', 'locked') === true,
     );
     if (sciences.length > 0) {
       for (const science of sciences) {

@@ -1,8 +1,8 @@
 import { HVItem } from './item';
 import { Logger } from '../logger';
 import { HVActor } from './actor';
-import { ClassItemData, SkillItemData } from '../types/item-types';
-import { Utils } from '../utils/utils';
+import { ClassData } from '../types/item-types';
+import { createLockedSkill, deleteLockedSkill } from './class-utils';
 
 const log = new Logger();
 
@@ -27,31 +27,6 @@ const clericSpecialisms = {
 
 const specialistSkills = ['spells', 'exorcism', 'healing'];
 
-async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void> {
-  log.debug(`Cleric.deleteSpecialistSkill() | deleting ${name}`);
-  const skills = actor.items.filter(
-    (i) =>
-      i.type === 'skill' &&
-      i.name === name &&
-      (i.system as SkillItemData).subtype === 'magical' &&
-      (i as HVItem).getFlag('helveczia', 'locked') === true,
-  );
-  log.debug(`Cleric.deleteSpecialistSkill() | matching skills:`, skills);
-  await Utils.deleteEmbeddedArray(skills as any, actor);
-}
-
-async function createSpecialistSkill(item: HVItem, skillData: any): Promise<void> {
-  const itemData = (await item.actor?.createEmbeddedDocuments('Item', [skillData])) ?? [];
-  const id = (itemData[0] as Item).id;
-  if (id) {
-    const i = item.actor?.items.get(id);
-    if (i) {
-      await i.setFlag('helveczia', 'locked', true);
-      await item.actor?.update({});
-    }
-  }
-}
-
 export class Cleric {
   // eslint-disable-next-line @typescript-eslint/ban-types
   static specialisms(): {} {
@@ -64,7 +39,7 @@ export class Cleric {
 
   static async onCreate(item: HVItem): Promise<void> {
     const actor = item.actor;
-    const sourceItemData = item.system as ClassItemData;
+    const sourceItemData = item.system as ClassData;
     if (sourceItemData.specialism) {
       if (!actor?.isCleric()) {
         ui.notifications.error(
@@ -91,7 +66,7 @@ export class Cleric {
     } else {
       log.debug('Cleric.onCreate() | cleric-class flag set to true');
       actor?.setFlag('helveczia', 'cleric-class', true);
-      Promise.all(
+      await Promise.all(
         specialistSkills.map((s) => {
           const skill = {
             name: game.i18n.localize(`HV.specialisms.cleric.${s}`),
@@ -104,14 +79,14 @@ export class Cleric {
             },
           };
           actor?.setFlag('helveczia', clericSpecialisms[s].flag, true);
-          return createSpecialistSkill(item, skill);
+          return createLockedSkill(item, skill);
         }),
       );
     }
   }
 
   static getSkillsBonus(actor: HVActor): number {
-    const doctorateSkill = actor.getFlag('helveczia', 'student-doctorate');
+    const doctorateSkill = actor.getFlag('helveczia', 'cleric-doctorate');
     // base 3 extra to cover Cleric specialist skills. and 1 extra at 6th level
     const bonusSkills = specialistSkills.length;
     return doctorateSkill ? bonusSkills + 1 : bonusSkills;
@@ -134,14 +109,14 @@ export class Cleric {
   }
 
   static async cleanup(actor: HVActor, item: any): Promise<void> {
-    const sourceItemData = item.system as ClassItemData;
+    const sourceItemData = item.system as ClassData;
     if (sourceItemData.specialism) {
       return;
     }
-    Promise.all(
+    await Promise.all(
       Object.keys(clericSpecialisms).map((s) => {
         actor?.setFlag('helveczia', clericSpecialisms[s].flag, false);
-        return deleteSpecialistSkill(actor, game.i18n.localize(`HV.specialisms.cleric.${s}`));
+        return deleteLockedSkill(actor, game.i18n.localize(`HV.specialisms.cleric.${s}`), 'magical');
       }),
     );
     log.debug('Cleric.cleanup() |  cleric-class flag set to false');

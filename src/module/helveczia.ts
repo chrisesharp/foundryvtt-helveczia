@@ -105,11 +105,6 @@ Hooks.once('init', async () => {
 
   // Register custom system settings
   registerSettings();
-  CONFIG.HV.showEffects = game.settings.get('helveczia', 'effects') as boolean;
-  CONFIG.HV.flipTokens = game.settings.get('helveczia', 'token-flip') as boolean;
-  CONFIG.HV.depthTokens = game.settings.get('helveczia', 'token-depth') as boolean;
-  CONFIG.HV.applyEncumbrance = game.settings.get('helveczia', 'encumbrance') as boolean;
-  CONFIG.HV.allowPlayerDeedEdit = game.settings.get('helveczia', 'player-deed-edit') as boolean;
 
   // Register custom handlebar helpers
   registerHandlebarHelpers();
@@ -196,6 +191,13 @@ Hooks.once('setup', async () => {
 
 // When ready
 Hooks.once('ready', async () => {
+  // Populate CONFIG.HV from settings now that game.settings is fully ready
+  CONFIG.HV.showEffects = game.settings.get('helveczia', 'effects') as boolean;
+  CONFIG.HV.flipTokens = game.settings.get('helveczia', 'token-flip') as boolean;
+  CONFIG.HV.depthTokens = game.settings.get('helveczia', 'token-depth') as boolean;
+  CONFIG.HV.applyEncumbrance = game.settings.get('helveczia', 'encumbrance') as boolean;
+  CONFIG.HV.allowPlayerDeedEdit = game.settings.get('helveczia', 'player-deed-edit') as boolean;
+
   // Do anything once the system is ready
   if (game.user?.isGM) {
     // Run migrations AFTER documents are initialized
@@ -323,9 +325,9 @@ Hooks.on('renderSettings', async (_, html) => {
     fv.url = site;
     fv.render(true);
   });
+});
 
-  Hooks.on('preCreateToken', async (_token, data, _action, _id) => {
-    const settings = canvas?.scene?.flags['helveczia'] ?? {};
-    data.elevation = settings.elevation ?? CONFIG.HV.DEFAULT_ELEVATION;
-  });
+Hooks.on('preCreateToken', (_token, data, _action, _id) => {
+  const settings = canvas?.scene?.flags['helveczia'] ?? {};
+  data.elevation = settings.elevation ?? CONFIG.HV.DEFAULT_ELEVATION;
 });

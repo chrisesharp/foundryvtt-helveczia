@@ -1,7 +1,7 @@
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
 import { HVItem } from './item';
-import { SkillItemData } from '../types/item-types';
+import { SkillData } from '../types/item-types';
 import { Logger } from '../logger';
 import { HVActorData } from '../types/actor-types';
 import { Utils } from '../utils/utils';
@@ -52,7 +52,7 @@ export class PeopleItem extends BaseItem {
   }
 
   static async onCreateItalian(item: HVItem): Promise<void> {
-    const currenWealth = foundry.utils.duplicate((item.actor?.system as HVActorData).wealth);
+    const currenWealth = foundry.utils.duplicate((item.actor?.system as HVActorData['system']).wealth);
     const fortune = Math.round(Math.random() * 5) + 1;
     currenWealth.th += fortune;
     await item.actor?.update({ system: { wealth: currenWealth } });
@@ -66,7 +66,7 @@ export class PeopleItem extends BaseItem {
   static async cleanupItalian(actor: HVActor): Promise<void> {
     const fortune = actor.getFlag('helveczia', 'italian-fortune') as number;
     if (fortune) {
-      const currenWealth = foundry.utils.duplicate((actor?.system as HVActorData).wealth);
+      const currenWealth = foundry.utils.duplicate((actor?.system as HVActorData['system']).wealth);
       currenWealth.th -= fortune;
       await actor?.update({ system: { wealth: currenWealth } });
     }
@@ -77,9 +77,7 @@ export class PeopleItem extends BaseItem {
     actor.setFlag('helveczia', 'german-skill', false);
     const crafts = actor.items.filter(
       (i) =>
-        i.type === 'skill' &&
-        (i.system as SkillItemData).subtype === 'craft' &&
-        i.getFlag('helveczia', 'locked') === true,
+        i.type === 'skill' && (i.system as SkillData).subtype === 'craft' && i.getFlag('helveczia', 'locked') === true,
     );
     await Utils.deleteEmbeddedArray(crafts as any, actor);
   }
@@ -160,6 +158,16 @@ export class PeopleItem extends BaseItem {
     return PeopleItem.races[peoplesName];
   }
 
+  static async preCreate(
+    data: DeepPartial<Item['_source']>,
+    _options: DocumentModificationContext,
+    _user: any,
+  ): Promise<void> {
+    if (!data.img) {
+      foundry.utils.setProperty(data, 'img', DEFAULT_TOKEN);
+    }
+  }
+
   static async onCreate(
     item: HVItem,
     itemData: Item['_source'],
@@ -169,15 +177,6 @@ export class PeopleItem extends BaseItem {
     if (!Utils.canModifyActor(game.user, item.actor as any)) {
       return;
     }
-
-    foundry.utils.mergeObject(
-      itemData,
-      {
-        img: DEFAULT_TOKEN,
-      },
-      { overwrite: true },
-    );
-    item.updateSource(itemData);
 
     if (item.parent) {
       const peoples = PeopleItem.findPeoples(itemData);

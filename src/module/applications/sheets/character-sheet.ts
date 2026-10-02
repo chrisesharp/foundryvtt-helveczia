@@ -7,7 +7,6 @@ import { CharacterActorData } from '../../types/actor-types';
 import { HVPDF } from '../pdf';
 import { ContainerItem } from '../../documents/container-item';
 const { TextEditor } = foundry.applications.ux;
-const { FilePicker } = foundry.applications.apps;
 
 const log = new Logger();
 
@@ -15,21 +14,8 @@ export class HVCharacterSheet extends HVActorSheet {
   static [key: string]: any;
   static readonly DEFAULT_OPTIONS: Record<string, any> = {
     classes: ['helveczia', 'sheet', 'actor', 'character'],
-    position: {
-      width: 580,
-      height: 730,
-    },
-    actions: {
-      onEditImage: this._onEditImage,
-    },
     window: {
-      resizable: true,
       controls: [HVPDF.getPDFButton()],
-    },
-    // Custom property that's merged into `this.options`
-    dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
-    form: {
-      submitOnChange: true,
     },
   };
 
@@ -153,7 +139,11 @@ export class HVCharacterSheet extends HVActorSheet {
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.hasBible = data.items.filter((i) => i.name.includes('Bible') || i.name.includes('Szentírás')).length > 0;
     data.effects = prepareActiveEffectCategories(this.actor.allApplicableEffects());
-    data.maxspecialisms = this.actor.isVagabond() ? ((this.actor.system as CharacterActorData).level >= 5 ? 3 : 2) : 1;
+    data.maxspecialisms = this.actor.isVagabond()
+      ? (this.actor.system as CharacterActorData['system']).level >= 5
+        ? 3
+        : 2
+      : 1;
     data.spellslots = (this.actor as HVActor).getSpellSlots();
     data.spellBonus = (this.actor as HVActor).getSpellBonus();
     data.currentBonusSpells = [
@@ -195,43 +185,6 @@ export class HVCharacterSheet extends HVActorSheet {
     }
 
     return { worn: worn, carried: carried, mount: mount };
-  }
-
-  /**
-   * Generates the data for the generic tab navigation template
-   * @param {string[]} parts An array of named template parts to render
-   * @returns {Record<string, Partial<ApplicationTab>>}
-   * @protected
-   */
-  _getTabs(parts) {
-    // If you have sub-tabs this is necessary to change
-    const tabGroup = 'primary';
-    // Default tab for first time it's rendered this session
-    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = 'abilities';
-    return parts.reduce((tabs, partId) => {
-      const tab = {
-        cssClass: '',
-        group: tabGroup,
-        // Matches tab property to
-        id: '',
-        // FontAwesome Icon, if you so choose
-        icon: '',
-        // Run through localization
-        label: 'HV.tabs.',
-      };
-      switch (partId) {
-        case 'header':
-        case 'tabs':
-          return tabs;
-        default:
-          tab.id = partId;
-          tab.label += partId;
-          break;
-      }
-      if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';
-      tabs[partId] = tab;
-      return tabs;
-    }, {});
   }
 
   /** @override */
@@ -382,6 +335,10 @@ export class HVCharacterSheet extends HVActorSheet {
           case 'spell':
             await createdItem.createChatMessage(this.actor, 'HV.SpellMemorize');
             break;
+          case 'class':
+            this.tabGroups['primary'] = this._getDefaultTab();
+            this.render();
+            break;
         }
       }
     }
@@ -436,22 +393,5 @@ export class HVCharacterSheet extends HVActorSheet {
       default:
         return super._onSortItem(event, itemData);
     }
-  }
-
-  static async _onEditImage(_event, target) {
-    const attr = target.dataset.edit;
-    const current = foundry.utils.getProperty(this.document, attr);
-    const { img } = this.document.constructor.getDefaultArtwork?.(this.document.toObject()) ?? {};
-    const fp = new FilePicker({
-      current,
-      type: 'image',
-      redirectToRoot: img ? [img] : [],
-      callback: (path) => {
-        this.document.update({ [attr]: path });
-      },
-      top: this.position.top + 40,
-      left: this.position.left + 10,
-    });
-    return fp.browse();
   }
 }

@@ -13,13 +13,7 @@ export class HVPartySheet extends HVActorSheet {
       remove: HVPartySheet.remove,
       actor: HVPartySheet.getActorSheet,
     },
-    window: {
-      resizable: true,
-    },
     dragDrop: [{ dragSelector: '.directory-item .actor', dropSelector: null }],
-    form: {
-      submitOnChange: true,
-    },
   };
 
   static readonly PARTS = {

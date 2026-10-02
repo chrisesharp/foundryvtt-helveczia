@@ -1,7 +1,7 @@
 import { HVItem } from './item';
 import { Logger } from '../logger';
 import { HVActor } from './actor';
-import { ClassItemData } from '../types/item-types';
+import { ClassData } from '../types/item-types';
 
 const log = new Logger();
 
@@ -16,7 +16,7 @@ export class Fighter {
   }
 
   static async onCreate(item: HVItem): Promise<void> {
-    const itemData = item.system as ClassItemData;
+    const itemData = item.system as ClassData;
     if (itemData.specialism) {
       if (!item.actor?.isFighter()) {
         ui.notifications.error(

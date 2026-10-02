@@ -1,7 +1,7 @@
 import { HVActor } from './actor';
 import { BaseItem } from './base-item';
 import { HVItem } from './item';
-import { ContainerItemData } from '../types/item-types';
+import { ContainerData } from '../types/item-types';
 const { TextEditor } = foundry.applications.ux;
 
 export class ContainerItem extends BaseItem {
@@ -14,13 +14,13 @@ export class ContainerItem extends BaseItem {
     sheetData.coins = CONFIG.HV.coins;
     sheetData.contents = [];
     for (const item of itemSheet.item.system?.contents) {
-      sheetData.contents.push({ id: item.id, link: await TextEditor.enrichHTML(item.id, { async: true }) });
+      sheetData.contents.push({ id: item.id, link: await TextEditor.enrichHTML(item.id) });
     }
     return sheetData;
   }
 
   static async insertItem(container, droppedItem, link) {
-    const contents = foundry.utils.duplicate((container.system as ContainerItemData).contents);
+    const contents = foundry.utils.duplicate((container.system as ContainerData).contents);
     if (droppedItem.parent) {
       await droppedItem.setFlag('helveczia', 'in-container', container.id);
     }
@@ -30,7 +30,7 @@ export class ContainerItem extends BaseItem {
 
   /** @override */
   static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
-    const itemData = item.system as ContainerItemData;
+    const itemData = item.system as ContainerData;
     return `
     <ol class="tag-list">
       <li class="tag-weight" title="${game.i18n.localize(

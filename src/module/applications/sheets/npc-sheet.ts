@@ -5,7 +5,6 @@ import { Logger } from '../../logger';
 import { HVPDF } from '../pdf';
 import { HVActorSheet } from './actor-sheet';
 const { TextEditor } = foundry.applications.ux;
-const { FilePicker } = foundry.applications.apps;
 
 const log = new Logger();
 
@@ -13,21 +12,8 @@ export class HVNPCSheet extends HVActorSheet {
   static [key: string]: any;
   static readonly DEFAULT_OPTIONS: Record<string, any> = {
     classes: ['helveczia', 'sheet', 'actor', 'npc'],
-    position: {
-      width: 580,
-      height: 730,
-    },
-    actions: {
-      onEditImage: this._onEditImage,
-    },
     window: {
-      resizable: true,
       controls: [HVPDF.getPDFButton(), NPCGenerator.getButton()],
-    },
-    // Custom property that's merged into `this.options`
-    dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
-    form: {
-      submitOnChange: true,
     },
   };
 
@@ -120,7 +106,7 @@ export class HVNPCSheet extends HVActorSheet {
     // Add actor, actor data and item
     data.actor = this.actor;
     data.data = data.actor.system;
-    data.items = this.actor.items.map((i) => i.system);
+    data.items = this.actor.items.map((i) => i);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.possessions = data.data.possessions;
     data.effects = prepareActiveEffectCategories(this.actor.allApplicableEffects());
@@ -128,41 +114,9 @@ export class HVNPCSheet extends HVActorSheet {
     return data;
   }
 
-  /**
-   * Generates the data for the generic tab navigation template
-   * @param {string[]} parts An array of named template parts to render
-   * @returns {Record<string, Partial<ApplicationTab>>}
-   * @protected
-   */
-  _getTabs(parts) {
-    // If you have sub-tabs this is necessary to change
-    const tabGroup = 'primary';
-    // Default tab for first time it's rendered this session
-    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = 'combat';
-    return parts.reduce((tabs, partId) => {
-      const tab = {
-        cssClass: '',
-        group: tabGroup,
-        // Matches tab property to
-        id: '',
-        // FontAwesome Icon, if you so choose
-        icon: '',
-        // Run through localization
-        label: 'HV.tabs.',
-      };
-      switch (partId) {
-        case 'header':
-        case 'tabs':
-          return tabs;
-        default:
-          tab.id = partId;
-          tab.label += partId;
-          break;
-      }
-      if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';
-      tabs[partId] = tab;
-      return tabs;
-    }, {});
+  /** @override */
+  protected _getDefaultTab(): string {
+    return 'combat';
   }
 
   /** @override */
@@ -239,22 +193,5 @@ export class HVNPCSheet extends HVActorSheet {
       return items;
     }
     return;
-  }
-
-  static async _onEditImage(_event, target) {
-    const attr = target.dataset.edit;
-    const current = foundry.utils.getProperty(this.document, attr);
-    const { img } = this.document.constructor.getDefaultArtwork?.(this.document.toObject()) ?? {};
-    const fp = new FilePicker({
-      current,
-      type: 'image',
-      redirectToRoot: img ? [img] : [],
-      callback: (path) => {
-        this.document.update({ [attr]: path });
-      },
-      top: this.position.top + 40,
-      left: this.position.left + 10,
-    });
-    return fp.browse();
   }
 }

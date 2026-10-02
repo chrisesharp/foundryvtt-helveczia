@@ -2,6 +2,7 @@ import { HVActor } from './actor';
 import { Logger } from '../logger';
 import { HVItem } from './item';
 import { HVItemData } from '../types/item-types';
+import { HVActorSheet } from '../applications/sheets/actor-sheet';
 
 const log = new Logger();
 
@@ -148,7 +149,7 @@ export abstract class BaseItem {
    * Helper function to create a new item.
    * renderSheet parameter determines if the items' sheet should be rendered.
    */
-  static async createNewItem(itemData, sheet: ActorSheet, renderSheet = true) {
+  static async createNewItem(itemData, sheet: HVActorSheet, renderSheet = true) {
     // Create item and render sheet afterwards
     await sheet.actor.createEmbeddedDocuments('Item', [itemData], { renderSheet: renderSheet });
   }
