@@ -5,13 +5,13 @@ const colours = ['yellow', 'orange', 'red'];
 let combatKeyListenersAdded = false;
 
 export class HVCombat extends Combat {
-  static format(combatTracker, html, data) {
+  static async format(combatTracker, html, data) {
     if (data.combat) {
       const numCombatants = data.combat.combatants.size;
       const turnFraction = 1 / numCombatants;
 
       const current = data.combat?.current ?? 0;
-      html.querySelectorAll('.combatant').forEach(async (ct) => {
+      for (const ct of html.querySelectorAll('.combatant')) {
         const id = ct.dataset.combatantId;
         const cmbtant = combatTracker.viewed.combatants.get(id) as Combatant;
         const actor = cmbtant.actor;
@@ -62,7 +62,7 @@ export class HVCombat extends Combat {
             }
           }
         }
-      });
+      }
     }
 
     HVCombat.addListeners(combatTracker, html, data);
