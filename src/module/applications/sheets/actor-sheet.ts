@@ -124,16 +124,16 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   }
 
   static _itemEdit(_event, element) {
-    const li = element.parentNode.parentNode;
-    const item = this.actor.items.get(li.dataset.itemId);
+    const li = element.closest('[data-item-id]');
+    const item = this.actor.items.get(li?.dataset.itemId);
     item?.sheet?.render(true);
   }
 
   static async _itemDelete(_event, element) {
-    const li = element.parentNode.parentNode;
-    const itemID = li.dataset.itemId;
+    const li = element.closest('[data-item-id]');
+    const itemID = li?.dataset.itemId;
     const item = this.actor.items.get(itemID);
-    await item.delete();
+    await item?.delete();
   }
 
   static async _tokenSync(_event, _target) {
