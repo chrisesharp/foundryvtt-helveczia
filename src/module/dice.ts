@@ -189,7 +189,6 @@ export class HVDice {
     flavour,
     speaker,
   }: HVRollData): Promise<Roll<any>> {
-    let rolled = false;
     const template = `${templatePath}/roll-dialog.hbs`;
     const dialogData = {
       formula: parts.join(' '),
@@ -211,31 +210,30 @@ export class HVDice {
       return HVDice.sendRoll(rollData);
     }
 
-    const buttons = [
-      {
-        label: 'HV.Roll',
-        action: 'ok',
-        icon: 'fas fa-dice-d20',
-        callback: (html) => {
-          rolled = true;
-          rollData.form = html.currentTarget.querySelector('form');
-          roll = HVDice.sendRoll(rollData);
-        },
-      },
-      {
-        action: 'cancel',
-        icon: 'fas fa-times',
-        label: 'HV.Cancel',
-        callback: () => {
-          /*noop */
-        },
-      },
-    ];
-
     const html = await renderTemplate(template, dialogData);
-    let roll: Promise<Roll<any>>;
 
     return new Promise((resolve) => {
+      const buttons = [
+        {
+          label: 'HV.Roll',
+          action: 'ok',
+          icon: 'fas fa-dice-d20',
+          callback: async (event) => {
+            rollData.form = event.currentTarget.querySelector('form');
+            const result = await HVDice.sendRoll(rollData);
+            resolve(result);
+          },
+        },
+        {
+          action: 'cancel',
+          icon: 'fas fa-times',
+          label: 'HV.Cancel',
+          callback: () => {
+            resolve(null as any);
+          },
+        },
+      ];
+
       DialogV2.wait({
         classes: ['helveczia'],
         window: {
@@ -245,13 +243,6 @@ export class HVDice {
         content: html,
         buttons: buttons,
         rejectClose: false,
-        submit: () => {
-          if (rolled) {
-            resolve(roll);
-          } else {
-            PromiseRejectionEvent;
-          }
-        },
       });
     });
   }
