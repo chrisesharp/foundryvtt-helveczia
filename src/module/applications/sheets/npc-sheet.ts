@@ -120,7 +120,7 @@ export class HVNPCSheet extends HVActorSheet {
     // Add actor, actor data and item
     data.actor = this.actor;
     data.data = data.actor.system;
-    data.items = this.actor.items.map((i) => i.system);
+    data.items = this.actor.items.map((i) => i);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.possessions = data.data.possessions;
     data.effects = prepareActiveEffectCategories(this.actor.allApplicableEffects());
