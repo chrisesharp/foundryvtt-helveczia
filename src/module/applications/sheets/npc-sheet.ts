@@ -12,18 +12,8 @@ export class HVNPCSheet extends HVActorSheet {
   static [key: string]: any;
   static readonly DEFAULT_OPTIONS: Record<string, any> = {
     classes: ['helveczia', 'sheet', 'actor', 'npc'],
-    position: {
-      width: 580,
-      height: 730,
-    },
     window: {
-      resizable: true,
       controls: [HVPDF.getPDFButton(), NPCGenerator.getButton()],
-    },
-    // Custom property that's merged into `this.options`
-    dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
-    form: {
-      submitOnChange: true,
     },
   };
 

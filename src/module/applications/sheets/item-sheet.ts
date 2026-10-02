@@ -23,7 +23,7 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
       height: 500,
     },
     actions: {
-      // actor: HVPartySheet.getActorSheet,
+      toggleEffect: this._effectToggle,
     },
     window: {
       resizable: true,

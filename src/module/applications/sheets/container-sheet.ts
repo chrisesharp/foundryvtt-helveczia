@@ -5,17 +5,12 @@ const { fromUuidSync } = foundry.utils;
 export class ContainerSheet extends HVItemSheet {
   static [key: string]: any;
   static readonly DEFAULT_OPTIONS: Record<string, any> = {
-    classes: ['helveczia', 'sheet', 'item'],
     position: {
       width: 450,
       height: 550,
     },
     actions: {
-      toggleEffect: this._effectToggle,
       itemDelete: this._removeItem,
-    },
-    window: {
-      resizable: true,
     },
   };
   static readonly PARTS = {

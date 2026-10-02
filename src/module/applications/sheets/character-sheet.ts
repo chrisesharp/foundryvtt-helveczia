@@ -14,18 +14,8 @@ export class HVCharacterSheet extends HVActorSheet {
   static [key: string]: any;
   static readonly DEFAULT_OPTIONS: Record<string, any> = {
     classes: ['helveczia', 'sheet', 'actor', 'character'],
-    position: {
-      width: 580,
-      height: 730,
-    },
     window: {
-      resizable: true,
       controls: [HVPDF.getPDFButton()],
-    },
-    // Custom property that's merged into `this.options`
-    dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
-    form: {
-      submitOnChange: true,
     },
   };
 

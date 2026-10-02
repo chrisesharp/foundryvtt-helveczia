@@ -2,16 +2,9 @@ import { HVItemSheet } from './item-sheet';
 
 export class WeaponSheet extends HVItemSheet {
   static readonly DEFAULT_OPTIONS: Record<string, any> = {
-    classes: ['helveczia', 'sheet', 'item'],
     position: {
       width: 470,
       height: 470,
-    },
-    actions: {
-      toggleEffect: this._effectToggle,
-    },
-    window: {
-      resizable: true,
     },
   };
   static readonly PARTS = {
