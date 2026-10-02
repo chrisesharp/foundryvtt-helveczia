@@ -143,32 +143,32 @@ export class HVActor extends Actor {
   }
 
   /**
-   * Prepare Character type specific data
+   * Prepare common actor data shared across characters and NPCs.
    */
-  _prepareCharacterData() {
-    const data = this.system;
-
+  _prepareBaseActorData(data: any): void {
     for (const key of Object.keys(data.scores)) {
       this._updateAbility(data.scores[key], key);
     }
-
-    this._calculateCapacity(data);
     this._updateSaves(data);
-    this._updateSkills(data);
     this._updateCombatValues(data);
+  }
+
+  /**
+   * Prepare Character type specific data
+   */
+  _prepareCharacterData(): void {
+    const data = this.system;
+    this._prepareBaseActorData(data);
+    this._calculateCapacity(data);
+    this._updateSkills(data);
   }
 
   /**
    * Prepare NPC type specific data
    */
-  _prepareNPCData() {
+  _prepareNPCData(): void {
     const data = this.system;
-
-    for (const key of Object.keys(data.scores)) {
-      this._updateAbility(data.scores[key], key);
-    }
-    this._updateSaves(data);
-    this._updateCombatValues(data);
+    this._prepareBaseActorData(data);
   }
 
   /**
