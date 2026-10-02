@@ -201,43 +201,6 @@ export class HVCharacterSheet extends HVActorSheet {
     return { worn: worn, carried: carried, mount: mount };
   }
 
-  /**
-   * Generates the data for the generic tab navigation template
-   * @param {string[]} parts An array of named template parts to render
-   * @returns {Record<string, Partial<ApplicationTab>>}
-   * @protected
-   */
-  _getTabs(parts) {
-    // If you have sub-tabs this is necessary to change
-    const tabGroup = 'primary';
-    // Default tab for first time it's rendered this session
-    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = 'abilities';
-    return parts.reduce((tabs, partId) => {
-      const tab = {
-        cssClass: '',
-        group: tabGroup,
-        // Matches tab property to
-        id: '',
-        // FontAwesome Icon, if you so choose
-        icon: '',
-        // Run through localization
-        label: 'HV.tabs.',
-      };
-      switch (partId) {
-        case 'header':
-        case 'tabs':
-          return tabs;
-        default:
-          tab.id = partId;
-          tab.label += partId;
-          break;
-      }
-      if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';
-      tabs[partId] = tab;
-      return tabs;
-    }, {});
-  }
-
   /** @override */
   async _preparePartContext(partId, context) {
     switch (partId) {

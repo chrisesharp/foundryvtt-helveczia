@@ -74,6 +74,45 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     return super._prepareContext(options);
   }
 
+  /**
+   * Returns the tab id that should be active on first render.
+   * Subclasses override this to change their own default.
+   */
+  protected _getDefaultTab(): string {
+    return 'abilities';
+  }
+
+  /**
+   * Generates the data for the generic tab navigation template.
+   * @param {string[]} parts An array of named template parts to render
+   * @returns {Record<string, Partial<ApplicationTab>>}
+   */
+  _getTabs(parts) {
+    const tabGroup = 'primary';
+    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = this._getDefaultTab();
+    return parts.reduce((tabs, partId) => {
+      const tab = {
+        cssClass: '',
+        group: tabGroup,
+        id: '',
+        icon: '',
+        label: 'HV.tabs.',
+      };
+      switch (partId) {
+        case 'header':
+        case 'tabs':
+          return tabs;
+        default:
+          tab.id = partId;
+          tab.label += partId;
+          break;
+      }
+      if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';
+      tabs[partId] = tab;
+      return tabs;
+    }, {});
+  }
+
   async _removePeoples(item): Promise<boolean> {
     if (item.name === this.actor.system.people) return false;
     const peoples = this.actor.itemTypes['people'];
