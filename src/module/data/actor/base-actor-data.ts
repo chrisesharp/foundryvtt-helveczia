@@ -14,6 +14,19 @@ const { TypeDataModel } = foundry.abstract as any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const fields = (foundry.data as any).fields;
 
+/**
+ * Coerces the given keys on `source` from string to number in-place.
+ * Keys that are already numbers, undefined, or non-numeric strings are left unchanged.
+ */
+export function coerceNum(source: Record<string, any>, ...keys: string[]): void {
+  for (const key of keys) {
+    if (source[key] !== undefined && typeof source[key] === 'string') {
+      const n = Number(source[key]);
+      if (!isNaN(n)) source[key] = n;
+    }
+  }
+}
+
 export class BaseActorData extends TypeDataModel {
   static defineSchema() {
     return {
@@ -128,92 +141,35 @@ export class BaseActorData extends TypeDataModel {
    * @returns {object}       Migrated source data
    */
   static migrateData(source: any): any {
-    // Convert string numbers to actual numbers for all numeric fields
-    const numericFields = ['virtue', 'initiative', 'maxskills', 'level'];
+    // Top-level numeric fields
+    coerceNum(source, 'virtue', 'initiative', 'maxskills', 'level');
 
-    for (const field of numericFields) {
-      if (source[field] !== undefined && typeof source[field] === 'string') {
-        const num = Number(source[field]);
-        if (!isNaN(num)) {
-          source[field] = num;
-        }
+    // hp sub-object
+    if (source.hp) coerceNum(source.hp, 'value', 'max', 'hd');
+
+    // scores sub-objects
+    if (source.scores) {
+      for (const ability of ['str', 'dex', 'con', 'int', 'wis', 'cha']) {
+        if (source.scores[ability]) coerceNum(source.scores[ability], 'value', 'base');
       }
     }
 
-    // Convert nested numeric fields
-    if (source.hp) {
-      ['value', 'max', 'hd'].forEach((field) => {
-        if (source.hp[field] !== undefined && typeof source.hp[field] === 'string') {
-          const num = Number(source.hp[field]);
-          if (!isNaN(num)) {
-            source.hp[field] = num;
-          }
-        }
-      });
-    }
-
-    // Convert scores
-    if (source.scores) {
-      ['str', 'dex', 'con', 'int', 'wis', 'cha'].forEach((ability) => {
-        if (source.scores[ability]) {
-          ['value', 'base'].forEach((field) => {
-            if (source.scores[ability][field] !== undefined && typeof source.scores[ability][field] === 'string') {
-              const num = Number(source.scores[ability][field]);
-              if (!isNaN(num)) {
-                source.scores[ability][field] = num;
-              }
-            }
-          });
-        }
-      });
-    }
-
-    // Convert saves
+    // saves sub-objects
     if (source.saves) {
-      ['bravery', 'deftness', 'temptation'].forEach((save) => {
-        if (source.saves[save]) {
-          ['base', 'bonus', 'mod'].forEach((field) => {
-            if (source.saves[save][field] !== undefined && typeof source.saves[save][field] === 'string') {
-              const num = Number(source.saves[save][field]);
-              if (!isNaN(num)) {
-                source.saves[save][field] = num;
-              }
-            }
-          });
-        }
-      });
+      for (const save of ['bravery', 'deftness', 'temptation']) {
+        if (source.saves[save]) coerceNum(source.saves[save], 'base', 'bonus', 'mod');
+      }
     }
 
-    // Convert attack values
+    // attack sub-objects
     if (source.attack) {
-      ['melee', 'ranged', 'cc'].forEach((attackType) => {
-        if (source.attack[attackType]) {
-          ['base', 'bonus', 'mod'].forEach((field) => {
-            if (
-              source.attack[attackType][field] !== undefined &&
-              typeof source.attack[attackType][field] === 'string'
-            ) {
-              const num = Number(source.attack[attackType][field]);
-              if (!isNaN(num)) {
-                source.attack[attackType][field] = num;
-              }
-            }
-          });
-        }
-      });
+      for (const type of ['melee', 'ranged', 'cc']) {
+        if (source.attack[type]) coerceNum(source.attack[type], 'base', 'bonus', 'mod');
+      }
     }
 
-    // Convert wealth
-    if (source.wealth) {
-      ['th', 'pf', 'gr'].forEach((field) => {
-        if (source.wealth[field] !== undefined && typeof source.wealth[field] === 'string') {
-          const num = Number(source.wealth[field]);
-          if (!isNaN(num)) {
-            source.wealth[field] = num;
-          }
-        }
-      });
-    }
+    // wealth sub-object
+    if (source.wealth) coerceNum(source.wealth, 'th', 'pf', 'gr');
 
     return source;
   }

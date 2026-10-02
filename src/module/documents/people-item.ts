@@ -158,6 +158,16 @@ export class PeopleItem extends BaseItem {
     return PeopleItem.races[peoplesName];
   }
 
+  static async preCreate(
+    data: DeepPartial<Item['_source']>,
+    _options: DocumentModificationContext,
+    _user: any,
+  ): Promise<void> {
+    if (!data.img) {
+      foundry.utils.setProperty(data, 'img', DEFAULT_TOKEN);
+    }
+  }
+
   static async onCreate(
     item: HVItem,
     itemData: Item['_source'],
@@ -167,15 +177,6 @@ export class PeopleItem extends BaseItem {
     if (!Utils.canModifyActor(game.user, item.actor as any)) {
       return;
     }
-
-    foundry.utils.mergeObject(
-      itemData,
-      {
-        img: DEFAULT_TOKEN,
-      },
-      { overwrite: true },
-    );
-    item.updateSource(itemData);
 
     if (item.parent) {
       const peoples = PeopleItem.findPeoples(itemData);

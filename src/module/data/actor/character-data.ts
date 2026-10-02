@@ -3,7 +3,7 @@
  * Data model for player character actors
  */
 
-import { BaseActorData } from './base-actor-data';
+import { BaseActorData, coerceNum } from './base-actor-data';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const foundry: any;
@@ -31,31 +31,8 @@ export class CharacterData extends BaseActorData {
    * @returns {object}          Migrated source data
    */
   static migrateData(source: any): any {
-    // First apply base migrations
     source = super.migrateData(source);
-
-    // Convert character-specific numeric fields
-    if (source.experience !== undefined && typeof source.experience === 'string') {
-      const num = Number(source.experience);
-      if (!isNaN(num)) {
-        source.experience = num;
-      }
-    }
-
-    if (source.ac !== undefined && typeof source.ac === 'string') {
-      const num = Number(source.ac);
-      if (!isNaN(num)) {
-        source.ac = num;
-      }
-    }
-
-    if (source.npcModBonus !== undefined && typeof source.npcModBonus === 'string') {
-      const num = Number(source.npcModBonus);
-      if (!isNaN(num)) {
-        source.npcModBonus = num;
-      }
-    }
-
+    coerceNum(source, 'experience', 'ac', 'npcModBonus');
     return source;
   }
 }
