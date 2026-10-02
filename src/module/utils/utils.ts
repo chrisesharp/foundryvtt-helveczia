@@ -59,7 +59,7 @@ export class Utils {
     );
   }
 
-  static migrate() {
+  static async migrate() {
     if (!game.user?.isGM) {
       return;
     }

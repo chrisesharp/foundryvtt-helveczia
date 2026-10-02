@@ -30,9 +30,6 @@ export class HVActor extends Actor {
       case 'npc':
         this.calculateNPCThreatLevel();
         break;
-      case 'party':
-        this.setPartyData();
-        break;
     }
   }
 
@@ -50,11 +47,6 @@ export class HVActor extends Actor {
       threat = groups.threat.length - 1;
     }
     data.experience = CONFIG.HV.challengeAwards[data.level + threat];
-  }
-
-  setPartyData(): void {
-    this.img = this.prototypeToken.texture.src;
-    this.prototypeToken.name = this.name;
   }
 
   /** @override */
