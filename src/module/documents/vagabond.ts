@@ -41,7 +41,7 @@ export class Vagabond {
           log.debug('Vagabond.onCreate() | vagabond-skills flag set to true');
           item.actor?.setFlag('helveczia', 'vagabond-skills', true);
           break;
-        case 'legends':
+        case 'legends': {
           const legendDescription = game.i18n.localize('HV.vagabond.legends');
           const legendsSkill = {
             name: game.i18n.localize(`HV.specialisms.vagabond.${foundName}`),
@@ -54,7 +54,8 @@ export class Vagabond {
           };
           createLockedSkill(item, legendsSkill);
           break;
-        case 'sneak':
+        }
+        case 'sneak': {
           const sneakDescription = game.i18n.localize('HV.vagabond.sneakAttack');
           const sneakSkill = {
             name: game.i18n.localize(`HV.specialisms.vagabond.${foundName}`),
@@ -67,7 +68,8 @@ export class Vagabond {
           };
           createLockedSkill(item, sneakSkill);
           break;
-        case 'luck':
+        }
+        case 'luck': {
           const luckDescription = game.i18n.localize('HV.vagabond.travellersLuck');
           const luckSkill = {
             name: game.i18n.localize(`HV.specialisms.vagabond.${foundName}`),
@@ -80,6 +82,7 @@ export class Vagabond {
           };
           createLockedSkill(item, luckSkill);
           break;
+        }
       }
     } else {
       log.debug('Vagabond.onCreate() | vagabond-class flag set to true');
