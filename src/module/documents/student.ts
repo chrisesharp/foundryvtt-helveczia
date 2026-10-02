@@ -2,7 +2,7 @@ import { HVItem } from './item';
 import { Logger } from '../logger';
 import { HVActor } from './actor';
 import { ClassData, SkillData } from '../types/item-types';
-import { Utils } from '../utils/utils';
+import { createLockedSkill, deleteLockedSkill } from './class-utils';
 
 const log = new Logger();
 
@@ -18,31 +18,6 @@ const studentSpecialisms = {
 };
 
 const specialistSkills = ['spells'];
-
-async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void> {
-  log.debug(`Student.deleteSpecialistSkill() | deleting ${name}`);
-  const skills = actor.items.filter(
-    (i) =>
-      i.type === 'skill' &&
-      i.name === name &&
-      (i.system as SkillData).subtype === 'magical' &&
-      i.getFlag('helveczia', 'locked') === true,
-  );
-  log.debug(`Student.deleteSpecialistSkill() | matching skills:`, skills);
-  await Utils.deleteEmbeddedArray(skills as any, actor);
-}
-
-async function createSpecialistSkill(item: HVItem, skillData: any): Promise<void> {
-  const itemData = (await item.actor?.createEmbeddedDocuments('Item', [skillData])) ?? [];
-  const id = (itemData[0] as Item).id;
-  if (id) {
-    const i = item.actor?.items.get(id);
-    if (i) {
-      await i.setFlag('helveczia', 'locked', true);
-      await item.actor?.update({});
-    }
-  }
-}
 
 export class Student {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -107,7 +82,7 @@ export class Student {
             },
           };
           item.actor?.setFlag('helveczia', studentSpecialisms[s].flag, true);
-          return createSpecialistSkill(item, skill);
+          return createLockedSkill(item, skill);
         }),
       );
     }
@@ -147,7 +122,7 @@ export class Student {
     await Promise.all(
       Object.keys(studentSpecialisms).map((s) => {
         actor?.setFlag('helveczia', studentSpecialisms[s].flag, false);
-        return deleteSpecialistSkill(actor, game.i18n.localize(`HV.specialisms.student.${s}`));
+        return deleteLockedSkill(actor, game.i18n.localize(`HV.specialisms.student.${s}`), 'magical');
       }),
     );
     await actor.setFlag('helveczia', 'student-class', false);

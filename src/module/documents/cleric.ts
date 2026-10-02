@@ -1,8 +1,8 @@
 import { HVItem } from './item';
 import { Logger } from '../logger';
 import { HVActor } from './actor';
-import { ClassData, SkillData } from '../types/item-types';
-import { Utils } from '../utils/utils';
+import { ClassData } from '../types/item-types';
+import { createLockedSkill, deleteLockedSkill } from './class-utils';
 
 const log = new Logger();
 
@@ -26,31 +26,6 @@ const clericSpecialisms = {
 };
 
 const specialistSkills = ['spells', 'exorcism', 'healing'];
-
-async function deleteSpecialistSkill(actor: HVActor, name: string): Promise<void> {
-  log.debug(`Cleric.deleteSpecialistSkill() | deleting ${name}`);
-  const skills = actor.items.filter(
-    (i) =>
-      i.type === 'skill' &&
-      i.name === name &&
-      (i.system as SkillData).subtype === 'magical' &&
-      (i as HVItem).getFlag('helveczia', 'locked') === true,
-  );
-  log.debug(`Cleric.deleteSpecialistSkill() | matching skills:`, skills);
-  await Utils.deleteEmbeddedArray(skills as any, actor);
-}
-
-async function createSpecialistSkill(item: HVItem, skillData: any): Promise<void> {
-  const itemData = (await item.actor?.createEmbeddedDocuments('Item', [skillData])) ?? [];
-  const id = (itemData[0] as Item).id;
-  if (id) {
-    const i = item.actor?.items.get(id);
-    if (i) {
-      await i.setFlag('helveczia', 'locked', true);
-      await item.actor?.update({});
-    }
-  }
-}
 
 export class Cleric {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -104,7 +79,7 @@ export class Cleric {
             },
           };
           actor?.setFlag('helveczia', clericSpecialisms[s].flag, true);
-          return createSpecialistSkill(item, skill);
+          return createLockedSkill(item, skill);
         }),
       );
     }
@@ -141,7 +116,7 @@ export class Cleric {
     await Promise.all(
       Object.keys(clericSpecialisms).map((s) => {
         actor?.setFlag('helveczia', clericSpecialisms[s].flag, false);
-        return deleteSpecialistSkill(actor, game.i18n.localize(`HV.specialisms.cleric.${s}`));
+        return deleteLockedSkill(actor, game.i18n.localize(`HV.specialisms.cleric.${s}`), 'magical');
       }),
     );
     log.debug('Cleric.cleanup() |  cleric-class flag set to false');
