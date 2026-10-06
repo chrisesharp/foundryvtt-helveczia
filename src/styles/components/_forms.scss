@@ -204,7 +204,7 @@ nav.sheet-tabs.side {
     font-size: 14px;
   }
   .chat-header {
-    height: 46px;
+    min-height: 46px;
     margin: 4px 0;
     background: $darkBackground;
     border: 1px solid black;
@@ -215,14 +215,13 @@ nav.sheet-tabs.side {
     .chat-title {
       font-family: $font-primary;
       margin: 4px 0;
-      height: 30px;
-      overflow: hidden;
+      min-height: 30px;
       h2 {
         font-family: $font-primary;
         border: none;
         line-height: 34px;
         margin: 0;
-        text-indent: 10px;
+        padding-left: 10px;
         font-size: 16px;
         word-break: break-all;
         color: $c-white;
