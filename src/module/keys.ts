@@ -1,8 +1,8 @@
 export function registerKeyBindings(): void {
   const scaleFunc = () => {
     const settings = canvas?.scene?.flags['helveczia'] ?? {};
-    const scaleSetting = Math.max(0.05, Math.min(0.95, Math.abs(parseFloat(settings.scale))));
-    return isFinite(scaleSetting) ? scaleSetting : CONFIG.HV.DEFAULT_SCENE_SCALE;
+    const scaleSetting = Math.max(0.05, Math.min(0.95, Math.abs(Number.parseFloat(settings.scale))));
+    return Number.isFinite(scaleSetting) ? scaleSetting : CONFIG.HV.DEFAULT_SCENE_SCALE;
   };
   if (CONFIG.HV.depthTokens) {
     game.keybindings.register('helveczia', 'hv-token-forward', {
@@ -27,10 +27,10 @@ export function registerKeyBindings(): void {
 async function setElevation(elevationChange, scaleChange) {
   const tokens = canvas?.tokens?.controlled ?? [];
   const updates = tokens.map((token) => {
-    const elevation = parseInt(token.document.elevation) + elevationChange;
+    const elevation = Number.parseInt(token.document.elevation) + elevationChange;
     return {
       _id: token.id,
-      elevation: elevation >= 0 ? elevation : 0,
+      elevation: Math.max(elevation, 0),
       texture: {
         scaleX: elevation >= 0 ? token.document.texture.scaleX * scaleChange : token.document.texture.scaleX,
         scaleY: elevation >= 0 ? token.document.texture.scaleY * scaleChange : token.document.texture.scaleY,

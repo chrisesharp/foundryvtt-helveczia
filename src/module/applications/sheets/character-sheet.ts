@@ -137,13 +137,10 @@ export class HVCharacterSheet extends HVActorSheet {
     data.data = this.actor.system;
     data.items = this.actor.items.map((i) => i);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
-    data.hasBible = data.items.filter((i) => i.name.includes('Bible') || i.name.includes('Szentírás')).length > 0;
+    data.hasBible = data.items.some((i) => i.name.includes('Bible') || i.name.includes('Szentírás'));
     data.effects = prepareActiveEffectCategories(this.actor.allApplicableEffects());
-    data.maxspecialisms = this.actor.isVagabond()
-      ? (this.actor.system as CharacterActorData['system']).level >= 5
-        ? 3
-        : 2
-      : 1;
+    const vagabondSpecialisms = (this.actor.system as CharacterActorData['system']).level >= 5 ? 3 : 2;
+    data.maxspecialisms = this.actor.isVagabond() ? vagabondSpecialisms : 1;
     data.spellslots = (this.actor as HVActor).getSpellSlots();
     data.spellBonus = (this.actor as HVActor).getSpellBonus();
     data.currentBonusSpells = [
@@ -205,7 +202,7 @@ export class HVCharacterSheet extends HVActorSheet {
         break;
       case 'possessions':
         context.tab = context.tabs[partId];
-        context.availableSlots = await this._calculateAvailableSlots();
+        context.availableSlots = this._calculateAvailableSlots();
         context.usedSlots = context.data.capacity - context.availableSlots['worn'] - context.availableSlots['carried'];
         context.isEncumbered = context.usedSlots > context.data.capacity;
         await this.actor.setFlag('helveczia', 'encumbered', context.isEncumbered);
@@ -225,12 +222,14 @@ export class HVCharacterSheet extends HVActorSheet {
    *
    * @returns availableSlots : number
    */
-  async _calculateAvailableSlots(): Promise<any> {
+  _calculateAvailableSlots(): { worn: number; carried: number; mount: number } {
     const sheetData = this.categorisePossessions(this.actor.system?.possessions);
     const capacity = this.actor.system.capacity - 8;
-    const wornUsed = sheetData.worn.map((i) => parseInt(i.system.encumbrance)).reduce((acc, n) => acc + n, 0);
-    const carriedUsed = sheetData.carried.map((i) => parseInt(i.system.encumbrance)).reduce((acc, n) => acc + n, 0);
-    const mountUsed = sheetData.mount.map((i) => parseInt(i.system.encumbrance)).reduce((acc, n) => acc + n, 0);
+    const wornUsed = sheetData.worn.map((i) => Number.parseInt(i.system.encumbrance)).reduce((acc, n) => acc + n, 0);
+    const carriedUsed = sheetData.carried
+      .map((i) => Number.parseInt(i.system.encumbrance))
+      .reduce((acc, n) => acc + n, 0);
+    const mountUsed = sheetData.mount.map((i) => Number.parseInt(i.system.encumbrance)).reduce((acc, n) => acc + n, 0);
     const worn = 8 - wornUsed;
     const carried = capacity - carriedUsed;
     const mount = 8 - mountUsed;
@@ -290,7 +289,7 @@ export class HVCharacterSheet extends HVActorSheet {
             return ui.notifications.error(game.i18n.localize('HV.errors.highVirtue'));
           }
         }
-        const level = parseInt(item.system.level);
+        const level = Number.parseInt(item.system.level);
         const spellSlots = this.actor.getSpellSlots();
         // console.log(`spellSlots: ${spellSlots[level-1]}, level:${level},spells.length:${this.actor.system.spells[level-1].length}`, this.actor.system.spells)
         if (this.actor.system.spells[level - 1].length >= spellSlots[level - 1]) {
@@ -301,7 +300,7 @@ export class HVCharacterSheet extends HVActorSheet {
       case 'armour':
       case 'book':
       case 'possession':
-        const capacitySlots = await this._calculateAvailableSlots();
+        const capacitySlots = this._calculateAvailableSlots();
         log.debug('_onDropItem() | carrying capacity:', capacitySlots);
         log.debug('_onDropItem() | item encumbrance:', item.system.encumbrance);
         if (capacitySlots.worn >= item.system.encumbrance) {
@@ -310,8 +309,6 @@ export class HVCharacterSheet extends HVActorSheet {
           //if (capacitySlots.carried >= item.system.encumbrance) {
           position = 'carried';
         }
-        // shouldContinue = capacitySlots.carried + capacitySlots.worn + capacitySlots.mount >= item.system.encumbrance;
-        shouldContinue = true;
         log.debug('_onDropItem() | should continue?:', shouldContinue);
         break;
       case 'container':
@@ -342,7 +339,6 @@ export class HVCharacterSheet extends HVActorSheet {
         }
       }
     }
-    return;
   }
 
   /**
@@ -359,7 +355,7 @@ export class HVCharacterSheet extends HVActorSheet {
       containerTarget = event.target.closest('[data-item-id]')?.dataset.itemId;
     }
     if (!containerTarget) {
-      const availableSlots = await this._calculateAvailableSlots();
+      const availableSlots = this._calculateAvailableSlots();
       log.debug(`_onSortPossession() |encumbrance of item is ${source.system.encumbrance} `);
       // const ok = availableSlots[columnID] - source.system.encumbrance >= 0;
       const ok = !(columnID === 'worn' && availableSlots['worn'] <= 0);
@@ -367,16 +363,15 @@ export class HVCharacterSheet extends HVActorSheet {
       if (ok) source.setFlag('helveczia', 'position', columnID);
       source.unsetFlag('helveczia', 'in-container');
     } else {
-      const container = this.actor.items.filter((i) => i.id === containerTarget && i.type === 'container')[0];
-      const capacity = parseInt(container?.system.capacity) || 0;
+      const container = this.actor.items.find((i) => i.id === containerTarget && i.type === 'container');
+      const capacity = Number.parseInt(container?.system.capacity) || 0;
       const usedSlots = container?.sheet._usedSlots();
       if (capacity - usedSlots > 0) {
-        ContainerItem.insertItem(container, source, source.link);
+        await ContainerItem.insertItem(container, source, source.link);
       } else {
         ui.notifications.warn('HV.items.noSpaceLeft', { localize: true });
       }
     }
-    return;
   }
 
   /** @override */
@@ -388,8 +383,7 @@ export class HVCharacterSheet extends HVActorSheet {
       case 'possession':
       case 'weapon':
       case 'book':
-        this._sortPossession(event, source);
-        return;
+        return this._sortPossession(event, source);
       default:
         return super._onSortItem(event, itemData);
     }

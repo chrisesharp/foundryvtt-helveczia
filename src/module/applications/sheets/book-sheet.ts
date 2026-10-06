@@ -42,7 +42,7 @@ export class BookSheet extends HVItemSheet {
     const updateData = {
       spells: this.item.system.spells.filter((i) => i.id !== itemID),
     };
-    this.item.update({ system: updateData });
+    await this.item.update({ system: updateData });
   }
 
   onDropAllow(actor, data): boolean {

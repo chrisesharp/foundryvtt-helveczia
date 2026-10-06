@@ -37,11 +37,11 @@ export class HVActor extends Actor {
     const data = this.system;
     data.ac = data.baseAC;
     const groups = data.levelBonus.match(/(?<class>[a-zA-Z\s]*)(?<lvl>\d)\+?(?<threat>[\d\*]*)/)?.groups;
-    data.level = parseInt(groups?.lvl ?? 1);
+    data.level = Number.parseInt(groups?.lvl ?? 1);
     let threat = 0;
     data.npcModBonus = 0;
     if (groups?.threat?.length > 0) {
-      const bonus = isNaN(groups.threat[0]) ? 0 : parseInt(groups.threat[0]);
+      const bonus = isNaN(groups.threat[0]) ? 0 : Number.parseInt(groups.threat[0]);
       data.npcModBonus = bonus;
       data.ac -= bonus;
       threat = groups.threat.length - 1;
@@ -183,7 +183,7 @@ export class HVActor extends Actor {
     return (
       Object.entries(CONFIG.HV.XPLevels)
         .filter((x) => x[1] <= experience)
-        .map((e) => parseInt(e[0]))
+        .map((e) => Number.parseInt(e[0]))
         .sort()
         .pop() ?? 1
     );
@@ -252,9 +252,9 @@ export class HVActor extends Actor {
    * Update base & bonus for saves
    */
   _updateSaves(data: any) {
-    const braveMod = parseInt(data.stats?.saves?.bravery ?? 0);
-    const deftMod = parseInt(data.stats?.saves?.deftness ?? 0);
-    const temptMod = parseInt(data.stats?.saves?.temptation ?? 0);
+    const braveMod = Number.parseInt(data.stats?.saves?.bravery ?? 0);
+    const deftMod = Number.parseInt(data.stats?.saves?.deftness ?? 0);
+    const temptMod = Number.parseInt(data.stats?.saves?.temptation ?? 0);
     const customSaves = braveMod !== 0 || deftMod !== 0 || temptMod !== 0;
 
     if (this.type === 'npc' && customSaves) {
@@ -366,7 +366,7 @@ export class HVActor extends Actor {
   _applyBonus(change) {
     const { key, value } = change;
     const currentBonus = foundry.utils.getProperty(this.system, key) ?? 0;
-    foundry.utils.setProperty(this.system, key, currentBonus + parseInt(value));
+    foundry.utils.setProperty(this.system, key, currentBonus + Number.parseInt(value));
   }
 
   _applyRandomSaveBonus(_change) {

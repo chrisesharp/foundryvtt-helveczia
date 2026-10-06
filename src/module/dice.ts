@@ -91,7 +91,7 @@ export class HVDice {
 
     const rolledDie = roll.terms[0] as Die;
     const rolledResult = rolledDie.results[0]?.result;
-    if (rolledResult >= parseInt(critical.range)) {
+    if (rolledResult >= Number.parseInt(critical.range)) {
       result.isSuccess = true;
       result.isCrit = true;
       result.details = game.i18n.format('HV.messages.CriticalSuccess', { vs: against, wp: withWeapon });

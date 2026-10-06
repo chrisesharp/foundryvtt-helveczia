@@ -71,7 +71,7 @@ export class ContainerSheet extends HVItemSheet {
     if (super.onDropAllow(actor, data)) {
       const droppedItem = fromUuidSync(data.uuid);
       if (CONFIG.HV.containableItems.includes(droppedItem?.type)) {
-        const space = parseInt(droppedItem.system.encumbrance) <= this.item.system.capacity - this._usedSlots();
+        const space = Number.parseInt(droppedItem.system.encumbrance) <= this.item.system.capacity - this._usedSlots();
         if (space) return true;
         ui.notifications.warn('HV.items.noSpaceLeft', { localize: true });
       }
@@ -80,6 +80,6 @@ export class ContainerSheet extends HVItemSheet {
   }
 
   _usedSlots(): number {
-    return this.item.system.contents.map((i) => parseInt(i.encumbrance)).reduce((acc, n) => acc + n, 0);
+    return this.item.system.contents.map((i) => Number.parseInt(i.encumbrance)).reduce((acc, n) => acc + n, 0);
   }
 }

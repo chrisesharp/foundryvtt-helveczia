@@ -1,9 +1,9 @@
 import { Cleric } from './documents/cleric';
 import { Student } from './documents/student';
 
-export const registerHandlebarHelpers = async function () {
+export const registerHandlebarHelpers = function () {
   Handlebars.registerHelper('ordinal', function (a) {
-    const level: number = parseInt(a);
+    const level: number = Number.parseInt(a);
     const suffix = getOrdinal(level);
     return `${level}${suffix}`;
   });
@@ -21,7 +21,7 @@ export const registerHandlebarHelpers = async function () {
   });
 
   Handlebars.registerHelper('bonusSkills', function (num, skill, role, lvl) {
-    const level = `${lvl}${getOrdinal(parseInt(lvl))}`;
+    const level = `${lvl}${getOrdinal(Number.parseInt(lvl))}`;
     const localizedRole = game.i18n.localize(role.toLowerCase());
     return game.i18n.format('HV.bonusSkills', { num: num, skill: skill, role: localizedRole, level: level });
   });
@@ -31,7 +31,7 @@ export const registerHandlebarHelpers = async function () {
   });
 
   Handlebars.registerHelper('subtract', function (lh, rh) {
-    return parseInt(lh) - parseInt(rh);
+    return Number.parseInt(lh) - Number.parseInt(rh);
   });
 
   Handlebars.registerHelper('times', function (n, block) {

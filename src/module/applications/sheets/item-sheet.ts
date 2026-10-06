@@ -228,7 +228,7 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
 
   // This is marked as private because there's no real need
   // for subclasses or external hooks to mess with it directly
-  #dragDrop;
+  readonly #dragDrop;
 
   /**
    * Create drag-and-drop workflow handlers for this Application

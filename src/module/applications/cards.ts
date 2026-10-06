@@ -145,7 +145,7 @@ export class HVCardsHand extends CardHandConfig {
         submit: (result) => {
           const from = game.cards?.get(sourceDeck);
           const options = { how: CONST.CARD_DRAW_MODES.RANDOM, updateData: { face: null } };
-          return source.draw(from, parseInt(result), options).catch((err) => {
+          return source.draw(from, Number.parseInt(result), options).catch((err) => {
             ui.notifications.error(err.message);
             return [];
           });

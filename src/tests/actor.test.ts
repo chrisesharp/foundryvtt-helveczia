@@ -119,14 +119,14 @@ export function actorTests(context) {
                 const leftBalance = $html.find('.virtue-balance').find(`.fa-balance-scale${balance}:first-child`);
                 expect(leftBalance.length).to.equal(1);
               }
-              const origVirtue = parseInt($html.find('input[name="system.origVirtue"]').val());
+              const origVirtue = Number.parseInt($html.find('input[name="system.origVirtue"]').val());
               const sins = actor?.system.deeds
                 .filter((d) => d.system.subtype === 'sin')
-                .map((d) => parseInt(d.system.magnitude))
+                .map((d) => Number.parseInt(d.system.magnitude))
                 .reduce((partialSum, a) => partialSum + a, 0);
               const virtues = actor?.system.deeds
                 .filter((d) => d.system.subtype === 'virtue')
-                .map((d) => parseInt(d.system.magnitude))
+                .map((d) => Number.parseInt(d.system.magnitude))
                 .reduce((partialSum, a) => partialSum + a, 0);
               expect(origVirtue + virtues - sins).to.equal(virtue);
             }

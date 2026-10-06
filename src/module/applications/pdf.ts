@@ -287,7 +287,7 @@ export class HVPDF {
       skillTagsTmp.innerHTML = await CONFIG.HV.itemClasses['skill'].getTags(skill, this.char.actor);
       const tagElements = skillTagsTmp.querySelectorAll('li.tag');
       const lastTag = (tagElements[tagElements.length - 1] as HTMLElement)?.innerText.trim() ?? '';
-      const skillBonus = lastTag !== '' ? parseInt(lastTag) : 0;
+      const skillBonus = lastTag !== '' ? Number.parseInt(lastTag) : 0;
       if (skillBonus) {
         this.doc.text(`${skill.name}`, xPos, yPos, { lineHeightFactor: 0.5 });
         this.printTriple(

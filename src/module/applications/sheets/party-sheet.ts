@@ -34,7 +34,7 @@ export class HVPartySheet extends HVActorSheet {
       actor: this.actor,
       party: party,
       virtue: party.length
-        ? Math.round(party.map((i) => parseInt(i.system.virtue)).reduce((acc, n) => acc + n, 0) / party.length)
+        ? Math.round(party.map((i) => Number.parseInt(i.system.virtue)).reduce((acc, n) => acc + n, 0) / party.length)
         : 0,
     };
   }
