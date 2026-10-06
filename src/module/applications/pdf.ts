@@ -106,13 +106,13 @@ export class HVPDF {
     this.printMiddle(x, y);
     this.printSaves(x, y);
     await this.printCombat(x, y);
-    await this.printSpecials(x, y);
+    this.printSpecials(x, y);
 
     x = 20;
     await this.printSkills(x, y + 86);
     this.printVal(x + 15, y + 123, `${this.char.actor.system.experience}`);
     this.printWealth(x, y);
-    await this.printPossessions(x, y + 169);
+    this.printPossessions(x, y + 169);
   }
 
   async printPage2(): Promise<void> {
@@ -126,7 +126,7 @@ export class HVPDF {
       width: 210,
       height: 295,
     });
-    await this.printNotes(25, 38);
+    this.printNotes(25, 38);
     await this.printDeeds(35, 180);
     this.doc.setFontSize(fontSize);
   }
@@ -137,10 +137,10 @@ export class HVPDF {
       .filter((i) => i.system.spells.length > 0)
       .flatMap((i) => i.system.spells);
     if (spellbooks.length) {
-      for (const i of spellbooks) {
-        const uuid = i.id.replace('@UUID[', '').split(']')[0];
-        const spell = (await fromUuid(uuid)) as HVItem;
-        if (spell) memorized.push(spell);
+      const uuids = spellbooks.map((i) => i.id.replace('@UUID[', '').split(']')[0]);
+      const resolved = await Promise.all(uuids.map((uuid) => fromUuid(uuid)));
+      for (const spell of resolved) {
+        if (spell) memorized.push(spell as HVItem);
       }
     }
     const allSpellNames = new Set(memorized.map((i) => i.name ?? ''));
@@ -246,9 +246,14 @@ export class HVPDF {
     this.doc.setFontSize(fontSize - 2);
     let yPos = y;
     let count = 0;
-    for (const weapon of this.char.actor.system.possessions.weapons) {
+    const weapons = this.char.actor.system.possessions.weapons;
+    const weaponTags = await Promise.all(
+      weapons.map((weapon) => CONFIG.HV.itemClasses['weapon'].getTags(weapon, this.char.actor)),
+    );
+    for (let i = 0; i < weapons.length; i++) {
+      const weapon = weapons[i];
       const weaponTagsTmp = document.createElement('div');
-      weaponTagsTmp.innerHTML = await CONFIG.HV.itemClasses['weapon'].getTags(weapon, this.char.actor);
+      weaponTagsTmp.innerHTML = weaponTags[i];
       const skillBonus: string[] = Array.from(weaponTagsTmp.querySelectorAll('li.tag, li.tag-weight')).map((el) =>
         (el as HTMLElement).innerText.trim(),
       );
@@ -263,7 +268,7 @@ export class HVPDF {
     this.doc.setFontSize(fontSize);
   }
 
-  async printArmour(x: number, y: number): Promise<void> {
+  printArmour(x: number, y: number): void {
     const fontSize = this.doc.getFontSize();
     this.doc.setFontSize(fontSize - 2);
     let armourList = '(';
@@ -282,9 +287,14 @@ export class HVPDF {
     let xPos = x;
     const startY = y;
     let count = 0;
-    for (const skill of this.char.actor.itemTypes['skill']) {
+    const skills = this.char.actor.itemTypes['skill'];
+    const skillTagsHtml = await Promise.all(
+      skills.map((skill) => CONFIG.HV.itemClasses['skill'].getTags(skill, this.char.actor)),
+    );
+    for (let i = 0; i < skills.length; i++) {
+      const skill = skills[i];
       const skillTagsTmp = document.createElement('div');
-      skillTagsTmp.innerHTML = await CONFIG.HV.itemClasses['skill'].getTags(skill, this.char.actor);
+      skillTagsTmp.innerHTML = skillTagsHtml[i];
       const tagElements = skillTagsTmp.querySelectorAll('li.tag');
       const lastTag = (tagElements[tagElements.length - 1] as HTMLElement)?.innerText.trim() ?? '';
       const skillBonus = lastTag !== '' ? Number.parseInt(lastTag) : 0;
@@ -309,7 +319,7 @@ export class HVPDF {
     this.doc.setFontSize(fontSize);
   }
 
-  async printPossessions(x: number, y: number) {
+  printPossessions(x: number, y: number) {
     const fontSize = this.doc.getFontSize();
     const worn: HVItem[] = [];
     const carried: HVItem[] = [];
@@ -354,7 +364,7 @@ export class HVPDF {
     return y;
   }
 
-  async printNotes(x: number, y: number): Promise<void> {
+  printNotes(x: number, y: number): void {
     this.printDescription(x, y, this.char.actor.system.description, 7);
   }
 
@@ -363,10 +373,18 @@ export class HVPDF {
     this.doc.setFontSize(fontSize - 2);
     let xPos = x;
     let yPos = y;
-    for (const category of [this.char.actor.system.sins, this.char.actor.system.virtues]) {
-      for (const deed of category) {
+    const categories = [this.char.actor.system.sins, this.char.actor.system.virtues];
+    const categoryTags = await Promise.all(
+      categories.map((category) =>
+        Promise.all(category.map((deed) => CONFIG.HV.itemClasses['deed'].getTags(deed, this.char.actor))),
+      ),
+    );
+    for (let ci = 0; ci < categories.length; ci++) {
+      const category = categories[ci];
+      for (let di = 0; di < category.length; di++) {
+        const deed = category[di];
         const deedTagsTmp = document.createElement('div');
-        deedTagsTmp.innerHTML = await CONFIG.HV.itemClasses['deed'].getTags(deed, this.char.actor);
+        deedTagsTmp.innerHTML = categoryTags[ci][di];
         const deedBonus: string[] = Array.from(deedTagsTmp.querySelectorAll('li.tag')).map((el) =>
           (el as HTMLElement).innerText.trim(),
         );

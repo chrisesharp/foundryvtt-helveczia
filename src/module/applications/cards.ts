@@ -26,15 +26,15 @@ export class HVCardsControl {
         label: 'HV.dialog.createDeckForActor',
         icon: 'fas fa-dice-d20',
         action: 'ok',
-        callback: (html) => {
+        callback: async (html) => {
           const actor = html?.currentTarget?.querySelector('#actor').value;
-          HVCardsHand.createHandsFor(actor);
+          await HVCardsHand.createHandsFor(actor);
         },
       },
     ];
     const actors = game.actors?.filter((a) => a.hasPlayerOwner);
     const html = await renderTemplate('systems/helveczia/templates/cards/dialog-generate.hbs', { actors: actors });
-    DialogV2.wait({
+    return DialogV2.wait({
       classes: ['helveczia'],
       window: {
         title: 'HV.dialog.cardgenerator',
@@ -164,7 +164,7 @@ export class HVCardsHand extends CardHandConfig {
         (c) => c !== source && c.type === 'pile' && c.testUserPermission(user, 'LIMITED'),
       );
       if (!cards?.length) return ui.notifications.warn('CARDS.PassWarnNoTargets', { localize: true });
-      const card = source.cards.filter((c) => c.id === target.dataset.cardId)[0];
+      const card = source.cards.find((c) => c.id === target.dataset.cardId);
       const choices = cards
         .filter((c) => c.name.includes(card.parent.flags.helveczia.playTarget))
         .map((c) => ({ name: c.name, id: c.id }));

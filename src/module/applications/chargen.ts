@@ -28,7 +28,7 @@ export class HVCharacterCreator extends HandlebarsApplicationMixin(ApplicationV2
     con: 0,
   };
 
-  private scores = { A: this.A, B: this.B };
+  private readonly scores = { A: this.A, B: this.B };
   declare actor: HVActor;
 
   static readonly DEFAULT_OPTIONS = {
@@ -118,12 +118,13 @@ export class HVCharacterCreator extends HandlebarsApplicationMixin(ApplicationV2
     if (actorData.type === 'character') {
       // Max hitpoints for first HD
       // e.g. 2nd level = 2D8 -> 1D8 + 8
-      rollParts.push(`${hd}+${con}`); // Max hitpoints for 1 HD, + con bonus
-      rollParts.push(`${level - 1}d${hd}`); // variable remaining HDs
-      rollParts.push(`${con}*${level - 1}`); // remaining con bonuses
+      rollParts.push(
+        `${hd}+${con}`, // Max hitpoints for 1 HD, + con bonus
+        `${level - 1}d${hd}`, // variable remaining HDs
+        `${con}*${level - 1}`, // remaining con bonuses
+      );
     } else {
-      rollParts.push(`${level}d${hd}`);
-      rollParts.push(`${level}*${con}`);
+      rollParts.push(`${level}d${hd}`, `${level}*${con}`);
     }
     if (data.npcModBonus > 0) {
       rollParts.push(`${level}*${data.npcModBonus}`);
@@ -185,7 +186,7 @@ export class HVCharacterCreator extends HandlebarsApplicationMixin(ApplicationV2
       title: game.i18n.format('HV.apps.scores', { actor: this.actor?.name }),
     };
     const content = await renderTemplate('systems/helveczia/templates/chat/roll-creation.hbs', templateData);
-    ChatMessage.create({
+    await ChatMessage.create({
       content: content,
       speaker,
       blind: true,

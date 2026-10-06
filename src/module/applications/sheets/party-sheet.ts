@@ -26,8 +26,8 @@ export class HVPartySheet extends HVActorSheet {
     },
   };
 
-  async _prepareContext(_options) {
-    // NOSONAR typescript:S7503 -- required async override of ApplicationV2 base class lifecycle method
+  // eslint-disable-next-line prettier/prettier
+  async _prepareContext(_options) { // NOSONAR typescript:S7503 -- required async override of ApplicationV2 base class lifecycle method
     const party = this._preparePartyData();
     return {
       config: CONFIG.HV,
@@ -62,18 +62,18 @@ export class HVPartySheet extends HVActorSheet {
   async _onDropActor(_event, actor): Promise<void> {
     if (!this.actor.isOwner) return;
     if (actor) await this._addActorToParty(actor);
-    this.render(true);
+    await this.render(true);
   }
 
   static async remove(_event, target) {
     const actorId = target.parentNode.parentNode.parentNode.dataset.actorId;
     const actor = game.actors?.get(actorId);
     if (actor) await HVPartySheet._removeActorFromParty(actor);
-    this.render(true);
+    await this.render(true);
   }
 
   static async getActorSheet(_event, target) {
     const actorId = target.dataset.actorId;
-    game.actors?.get(actorId)?.sheet?.render(true);
+    await game.actors?.get(actorId)?.sheet?.render(true);
   }
 }
