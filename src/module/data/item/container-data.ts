@@ -39,9 +39,7 @@ export class ContainerData extends BaseItemData {
   static migrateData(source: any): any {
     if (source.contents.length > 0) {
       for (const item of source.contents) {
-        if (item.encumbrance === undefined || item.encumbrance === null) {
-          item.encumbrance = 1;
-        }
+        item.encumbrance ??= 1;
       }
     }
     return source;

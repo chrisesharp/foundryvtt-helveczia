@@ -67,13 +67,13 @@ export class SpellItem extends BaseItem {
   }
 
   /** @override */
-  static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
+  static getTags(item: HVItem, _actor: HVActor): Promise<string> {
     const itemData = item.system as SpellData;
     const tag = itemData.save !== '-' ? game.i18n.localize(`HV.saves.${itemData.save}.long`) : undefined;
     const line = tag ? `<li class="tag" title="${game.i18n.localize('HV.Save')}">${tag}</li>` : '';
-    return `
+    return Promise.resolve(`
     <ol class="tag-list">
       ${line}
-    </ol>`;
+    </ol>`);
   }
 }

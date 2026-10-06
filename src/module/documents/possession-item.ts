@@ -15,13 +15,13 @@ export class PossessionItem extends BaseItem {
   }
 
   /** @override */
-  static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
+  static getTags(item: HVItem, _actor: HVActor): Promise<string> {
     const itemData = item.system as PossessionData;
-    return `
+    return Promise.resolve(`
     <ol class="tag-list">
       <li class="tag-weight" title="${game.i18n.localize(
         'HV.Encumbrance',
       )}"><i class="fas fa-weight-hanging fa-2xs"></i>${itemData.encumbrance ?? 0}</li>
-    </ol>`;
+    </ol>`);
   }
 }

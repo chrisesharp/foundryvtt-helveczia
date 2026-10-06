@@ -36,12 +36,12 @@ export class HVActor extends Actor {
   calculateNPCThreatLevel(): void {
     const data = this.system;
     data.ac = data.baseAC;
-    const groups = data.levelBonus.match(/(?<class>[a-zA-Z\s]*)(?<lvl>\d)\+?(?<threat>[\d\*]*)/)?.groups;
+    const groups = data.levelBonus.match(/(?<class>[a-zA-Z\s]*)(?<lvl>\d)\+?(?<threat>[\d*]*)/)?.groups;
     data.level = Number.parseInt(groups?.lvl ?? 1);
     let threat = 0;
     data.npcModBonus = 0;
     if (groups?.threat?.length > 0) {
-      const bonus = isNaN(groups.threat[0]) ? 0 : Number.parseInt(groups.threat[0]);
+      const bonus = Number.isNaN(groups.threat[0]) ? 0 : Number.parseInt(groups.threat[0]);
       data.npcModBonus = bonus;
       data.ac -= bonus;
       threat = groups.threat.length - 1;
@@ -111,7 +111,7 @@ export class HVActor extends Actor {
     data.possessions = {
       articles: this.itemTypes['possession'].concat(this.itemTypes['book'], this.itemTypes['container']),
       weapons: this.itemTypes['weapon'],
-      armour: this.itemTypes['armour'].sort((a, b) => b.system.bonus - a.system.bonus),
+      armour: this.itemTypes['armour'].toSorted((a, b) => b.system.bonus - a.system.bonus),
     };
     data.skills = this.itemTypes['skill'];
     data.peoples = this.itemTypes['people'];
@@ -184,7 +184,7 @@ export class HVActor extends Actor {
       Object.entries(CONFIG.HV.XPLevels)
         .filter((x) => x[1] <= experience)
         .map((e) => Number.parseInt(e[0]))
-        .sort()
+        .sort((a, b) => a - b)
         .pop() ?? 1
     );
   }
@@ -340,7 +340,7 @@ export class HVActor extends Actor {
     let update = '';
     const lvl = foundry.utils.getProperty(this.system, 'level') ?? null;
     log.debug(`_applySave() | level is ${lvl}`);
-    if (!isNaN(lvl)) {
+    if (!Number.isNaN(lvl)) {
       log.debug('Primary?:', primary);
       update =
         primary === 'true' || primary === true ? current + Math.floor(lvl / 2) + 2 : current + Math.floor(lvl / 2);
@@ -356,7 +356,7 @@ export class HVActor extends Actor {
     const melee = `${key}.melee.base`;
     const ranged = `${key}.ranged.base`;
     const lvl = foundry.utils.getProperty(this.system, 'level') ?? 1;
-    if (!isNaN(lvl)) {
+    if (!Number.isNaN(lvl)) {
       const base = value === 'fighter' ? lvl : Math.floor((lvl * 2) / 3);
       foundry.utils.setProperty(this.system, melee, base);
       foundry.utils.setProperty(this.system, ranged, base);
@@ -574,8 +574,7 @@ export class HVActor extends Actor {
               const skill = item.system as SkillData;
               const bonus = Math.floor(skill.bonus);
               const ability = this.system.scores[skill.ability]?.mod;
-              mod.push(bonus);
-              mod.push(ability);
+              mod.push(bonus, ability);
               longName = item.name ?? game.i18n.localize('HV.skill');
               log.debug(`getRollMods() | name:${longName} - ability=${skill.ability}, bonus=${bonus}`);
             }
@@ -586,8 +585,7 @@ export class HVActor extends Actor {
               const bonus = Math.floor(weapon.bonus);
               const ability = this.system.attack[weapon.attack]?.mod;
               if (weapon.attack === 'melee') dmg.push(this.system.attack.melee?.bonus);
-              mod.push(bonus);
-              mod.push(ability);
+              mod.push(bonus, ability);
               longName = item.name ?? game.i18n.localize('HV.items.weapon');
               log.debug(`getRollMods() | name:${longName} - attack=${weapon.attack}, bonus=${bonus}`);
             }

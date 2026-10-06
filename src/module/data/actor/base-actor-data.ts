@@ -22,7 +22,7 @@ export function coerceNum(source: Record<string, any>, ...keys: string[]): void 
   for (const key of keys) {
     if (source[key] !== undefined && typeof source[key] === 'string') {
       const n = Number(source[key]);
-      if (!isNaN(n)) source[key] = n;
+      if (!Number.isNaN(n)) source[key] = n;
     }
   }
 }

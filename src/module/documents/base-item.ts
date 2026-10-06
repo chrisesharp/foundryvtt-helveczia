@@ -85,8 +85,8 @@ export abstract class BaseItem {
     return { bravery: 0, deftness: 0, temptation: 0 };
   }
 
-  static async getTags(_item: HVItem, _actor: HVActor): Promise<string> {
-    return '';
+  static getTags(_item: HVItem, _actor: HVActor): Promise<string> {
+    return Promise.resolve('');
   }
 
   static async createChatMessage(_actor: HVActor, _message: string, _data: HVItemData): Promise<void> {}

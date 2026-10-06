@@ -32,15 +32,15 @@ export class BookItem extends BaseItem {
   }
 
   /** @override */
-  static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
+  static getTags(item: HVItem, _actor: HVActor): Promise<string> {
     const top = `<ol class="tag-list">`;
     const bottom = `</ol>`;
     const itemData = item.system as BookData;
-    return `
+    return Promise.resolve(`
     ${top}
       <li class="tag-weight" title="${game.i18n.localize(
         'HV.Encumbrance',
       )}"><i class="fas fa-weight-hanging fa-2xs"></i>${itemData.encumbrance ?? 0}</li>
-   ${bottom}`;
+   ${bottom}`);
   }
 }

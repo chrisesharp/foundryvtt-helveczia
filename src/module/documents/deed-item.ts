@@ -64,17 +64,17 @@ export class DeedItem extends BaseItem {
     return sheetData;
   }
 
-  static async getTags(item: HVItem, _actor: HVActor): Promise<string> {
+  static getTags(item: HVItem, _actor: HVActor): Promise<string> {
     const isSin = (item.system as DeedData).subtype === 'sin';
     const mag = isSin
       ? 0 - Math.floor((item.system as DeedData).magnitude)
       : 0 + Math.floor((item.system as DeedData).magnitude);
     const value = mag > 0 ? `+${mag}` : mag;
-    return `
+    return Promise.resolve(`
     <ol class="tag-list">
       <li class="tag">${game.i18n.localize(`HV.deeds.${(item.system as DeedData).subtype}`)}</li>
       <li class="tag">${value}</li>
-    </ol>`;
+    </ol>`);
   }
 
   static calculateEffectChange(item: HVItem) {
