@@ -85,7 +85,8 @@ export class HVNPCSheet extends HVActorSheet {
     }
   }
 
-  async _prepareContext(options) {
+  // eslint-disable-next-line prettier/prettier
+  async _prepareContext(options) { // NOSONAR typescript:S7503 -- required async override of ApplicationV2 base class lifecycle method
     const data: any = {
       owner: this.actor.isOwner,
       fighter_class: this.actor.getFlag('helveczia', 'fighter-class'),
@@ -143,7 +144,7 @@ export class HVNPCSheet extends HVActorSheet {
   }
 
   /** @override */
-  async _calculateAvailableSlots(): Promise<any> {
+  _calculateAvailableSlots(): { worn: number; carried: number; mount: number } {
     const worn = 24;
     const carried = 0;
     const mount = 0;
@@ -185,13 +186,12 @@ export class HVNPCSheet extends HVActorSheet {
           case 'armour':
           case 'book':
           case 'possession':
-            createdItem.setFlag('helveczia', 'position', 'worn');
+            await createdItem.setFlag('helveczia', 'position', 'worn');
             log.debug(`_onDropItem() | set position of item to worn`);
             break;
         }
       }
       return items;
     }
-    return;
   }
 }

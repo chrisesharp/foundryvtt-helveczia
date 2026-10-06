@@ -91,7 +91,8 @@ export class HVCharacterSheet extends HVActorSheet {
   }
 
   /** @override */
-  async _prepareContext(options) {
+  // eslint-disable-next-line prettier/prettier
+  async _prepareContext(options) { // NOSONAR typescript:S7503 -- required async override of ApplicationV2 base class lifecycle method
     const data: any = {
       owner: this.actor.isOwner,
       sex: this.actor.getFlag('helveczia', 'sex') ?? 'male',

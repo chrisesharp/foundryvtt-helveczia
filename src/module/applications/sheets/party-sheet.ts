@@ -27,6 +27,7 @@ export class HVPartySheet extends HVActorSheet {
   };
 
   async _prepareContext(_options) {
+    // NOSONAR typescript:S7503 -- required async override of ApplicationV2 base class lifecycle method
     const party = this._preparePartyData();
     return {
       config: CONFIG.HV,

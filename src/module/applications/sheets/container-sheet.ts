@@ -46,7 +46,7 @@ export class ContainerSheet extends HVItemSheet {
   static async _removeItem(_event, target) {
     const li = target.closest('.item-entry');
     const itemID = li.dataset.itemId;
-    ContainerSheet._removeItemById(this.item, itemID);
+    return ContainerSheet._removeItemById(this.item, itemID);
   }
 
   static async _removeItemById(item, linkID) {

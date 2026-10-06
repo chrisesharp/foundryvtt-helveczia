@@ -142,27 +142,28 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
   async _onDropItem(_event, data) {
     if (!this.isEditable) return false;
     const link = (await TextEditor.getContentLink(data)) ?? '';
-    const myRe = new RegExp('{(.*?)}', 'g');
-    const result = myRe.exec(link);
+    const result = /{(.*?)}/g.exec(link);
 
     const name = result && result.length > 1 ? result[1] : undefined;
     if (name) {
       switch (this.item.type) {
         case 'book':
-          const spells = foundry.utils.duplicate((this.item.system as BookData).spells);
-          if (!spells.find((spell) => spell.name === name)) {
-            spells.push({ id: link, name: name });
-            return this.item.update({ system: { spells: spells } });
+          {
+            const spells = foundry.utils.duplicate((this.item.system as BookData).spells);
+            if (!spells.some((spell) => spell.name === name)) {
+              spells.push({ id: link, name: name });
+              return this.item.update({ system: { spells: spells } });
+            }
           }
           break;
-        case 'container':
+        case 'container': {
           const droppedItem = fromUuidSync(data.uuid);
           return ContainerItem.insertItem(this.item, droppedItem, link);
+        }
         default:
           return;
       }
     }
-    return;
   }
 
   onDropAllow(_actor, data): boolean {
@@ -192,13 +193,6 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
   }
 
   /**
-   * Callback actions which occur when a dragged element is over a drop target.
-   * @param {DragEvent} event       The originating DragEvent
-   * @protected
-   */
-  _onDragOver(_event) {}
-
-  /**
    * Callback actions which occur when a dragged element is dropped on a target.
    * @param {DragEvent} event       The originating DragEvent
    * @protected
@@ -210,11 +204,8 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
     if (!allowed) return;
 
     // Handle different data types
-    switch (data.type) {
-      case 'Item':
-        return this._onDropItem(event, data);
-      default:
-        return;
+    if (data.type === 'Item') {
+      return this._onDropItem(event, data);
     }
   }
 

@@ -9,7 +9,7 @@ export function registerKeyBindings(): void {
       name: 'token-forward',
       editable: [{ key: 'PageDown', modifiers: ['Shift'] }],
       onDown: () => {
-        setElevation(1, 1 + scaleFunc());
+        void setElevation(1, 1 + scaleFunc());
         return true;
       },
     });
@@ -17,7 +17,7 @@ export function registerKeyBindings(): void {
       name: 'token-back',
       editable: [{ key: 'PageUp', modifiers: ['Shift'] }],
       onDown: () => {
-        setElevation(-1, 1 - scaleFunc());
+        void setElevation(-1, 1 - scaleFunc());
         return true;
       },
     });
