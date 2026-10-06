@@ -53,7 +53,7 @@ export class HVItem extends Item {
     userId: string,
   ): void {
     if (CONFIG.HV.itemClasses[this.type]) {
-      CONFIG.HV.itemClasses[this.type]?.onUpdate(this, changed, options, userId);
+      void CONFIG.HV.itemClasses[this.type]?.onUpdate(this, changed, options, userId);
     }
     super._onUpdate(changed, options, userId);
   }
@@ -71,7 +71,7 @@ export class HVItem extends Item {
 
   async createChatMessage(actor: HVActor, message: string): Promise<void> {
     if (CONFIG.HV.itemClasses[this.type]) {
-      CONFIG.HV.itemClasses[this.type].createChatMessage(actor, message, this as any);
+      await CONFIG.HV.itemClasses[this.type].createChatMessage(actor, message, this as any);
     }
   }
 }

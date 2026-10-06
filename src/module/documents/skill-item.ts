@@ -16,17 +16,6 @@ export class SkillItem extends BaseItem {
     return data;
   }
 
-  static async _onRollSkill(e, sheet) {
-    e.preventDefault();
-
-    const dataset = e.currentTarget.dataset;
-    const skill = sheet.actor.items.get(dataset.itemId);
-
-    if (skill) {
-      // await this.rollSkill(sheet, skill);
-    }
-  }
-
   static async getTags(item: HVItem, actor: HVActor): Promise<string> {
     if ((item.system as SkillData).ability.length) {
       return `

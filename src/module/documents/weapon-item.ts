@@ -10,7 +10,7 @@ export class WeaponItem extends BaseItem {
   }
 
   static async preCreate(data: DeepPartial<Item['_source']>, _options: DocumentModificationContext, _user: any) {
-    foundry.utils.mergeObject(
+    await foundry.utils.mergeObject(
       data,
       {
         img: WeaponItem.DEFAULT_TOKEN,

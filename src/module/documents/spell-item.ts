@@ -33,7 +33,7 @@ export class SpellItem extends BaseItem {
       title: title,
     };
     const content = await renderTemplate('systems/helveczia/templates/chat/cast-spell.hbs', templateData);
-    ChatMessage.create({
+    await ChatMessage.create({
       content: content,
       speaker,
       blind: false,
@@ -41,7 +41,7 @@ export class SpellItem extends BaseItem {
   }
 
   static async preCreate(data: DeepPartial<Item['_source']>, _options: DocumentModificationContext, _user: any) {
-    foundry.utils.mergeObject(
+    await foundry.utils.mergeObject(
       data,
       {
         img: SpellItem.DEFAULT_TOKEN,

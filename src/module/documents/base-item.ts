@@ -7,7 +7,9 @@ import { HVActorSheet } from '../applications/sheets/actor-sheet';
 const log = new Logger();
 
 export abstract class BaseItem {
-  static documentName = '';
+  static get documentName() {
+    return '';
+  }
 
   /**
    * Called by HVItem in _preCreate()
@@ -19,7 +21,9 @@ export abstract class BaseItem {
     _data: DeepPartial<Item['_source']>,
     _options: DocumentModificationContext,
     _user: any,
-  ): Promise<void> {}
+  ): Promise<void> {
+    // overide here
+  }
 
   /**
    * Called by HVItem in _onCreate()
@@ -89,7 +93,9 @@ export abstract class BaseItem {
     return Promise.resolve('');
   }
 
-  static async createChatMessage(_actor: HVActor, _message: string, _data: HVItemData): Promise<void> {}
+  static async createChatMessage(_actor: HVActor, _message: string, _data: HVItemData): Promise<void> {
+    // overide here
+  }
 
   static onDelete(_actor, _itemData) {}
 

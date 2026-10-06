@@ -39,7 +39,7 @@ export class Vagabond {
       switch (foundName) {
         case 'vagabondSkills':
           log.debug('Vagabond.onCreate() | vagabond-skills flag set to true');
-          item.actor?.setFlag('helveczia', 'vagabond-skills', true);
+          await item.actor?.setFlag('helveczia', 'vagabond-skills', true);
           break;
         case 'legends': {
           const legendDescription = game.i18n.localize('HV.vagabond.legends');
@@ -52,7 +52,7 @@ export class Vagabond {
               subtype: 'vagabond',
             },
           };
-          createLockedSkill(item, legendsSkill);
+          await createLockedSkill(item, legendsSkill);
           break;
         }
         case 'sneak': {
@@ -66,7 +66,7 @@ export class Vagabond {
               subtype: 'vagabond',
             },
           };
-          createLockedSkill(item, sneakSkill);
+          await createLockedSkill(item, sneakSkill);
           break;
         }
         case 'luck': {
@@ -80,13 +80,13 @@ export class Vagabond {
               subtype: 'vagabond',
             },
           };
-          createLockedSkill(item, luckSkill);
+          await createLockedSkill(item, luckSkill);
           break;
         }
       }
     } else {
       log.debug('Vagabond.onCreate() | vagabond-class flag set to true');
-      item.actor?.setFlag('helveczia', 'vagabond-class', true);
+      await item.actor?.setFlag('helveczia', 'vagabond-class', true);
     }
   }
 
@@ -99,8 +99,10 @@ export class Vagabond {
   }
 
   static hasSpecialistSkills(actor: HVActor): number {
-    const specialistSkills = Vagabond.specialistSkills().map((s) => game.i18n.localize(`HV.specialisms.vagabond.${s}`));
-    const bonuses = actor.system.specialisms.filter((i) => specialistSkills.includes(i.name)).length;
+    const specialistSkills = new Set(
+      Vagabond.specialistSkills().map((s) => game.i18n.localize(`HV.specialisms.vagabond.${s}`)),
+    );
+    const bonuses = actor.system.specialisms.filter((i) => specialistSkills.has(i.name)).length;
     return bonuses;
   }
 
@@ -120,21 +122,21 @@ export class Vagabond {
       log.debug(`Vagabond.cleanup() |  this is a specialism`);
       switch (foundName) {
         case 'vagabondSkills':
-          actor.setFlag('helveczia', 'vagabond-skills', false);
+          await actor.setFlag('helveczia', 'vagabond-skills', false);
           log.debug('Vagabond.cleanup() |  vagabond-skills flag set to false');
           break;
         case 'legends':
-          deleteLockedSkill(actor, item.name, 'vagabond');
+          await deleteLockedSkill(actor, item.name, 'vagabond');
           break;
         case 'luck':
-          deleteLockedSkill(actor, item.name, 'vagabond');
+          await deleteLockedSkill(actor, item.name, 'vagabond');
           break;
         case 'sneak':
-          deleteLockedSkill(actor, item.name, 'vagabond');
+          await deleteLockedSkill(actor, item.name, 'vagabond');
           break;
       }
     } else {
-      actor.setFlag('helveczia', 'vagabond-class', false);
+      await actor.setFlag('helveczia', 'vagabond-class', false);
       log.debug('Vagabond.cleanup() |  vagabond-class flag set to false');
     }
     await actor.sheet?.render(true);

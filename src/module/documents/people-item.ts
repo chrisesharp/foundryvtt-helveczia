@@ -44,7 +44,7 @@ export class PeopleItem extends BaseItem {
   };
 
   static async onCreateGerman(item: HVItem): Promise<void> {
-    item.actor?.setFlag('helveczia', 'german-skill', true);
+    await item.actor?.setFlag('helveczia', 'german-skill', true);
   }
 
   static getGermanSkill(_actor: HVActor): number {
@@ -74,7 +74,7 @@ export class PeopleItem extends BaseItem {
   }
 
   static async cleanupGermanSkill(actor: HVActor): Promise<void> {
-    actor.setFlag('helveczia', 'german-skill', false);
+    await actor.setFlag('helveczia', 'german-skill', false);
     const crafts = actor.items.filter(
       (i) =>
         i.type === 'skill' && (i.system as SkillData).subtype === 'craft' && i.getFlag('helveczia', 'locked') === true,
@@ -83,7 +83,7 @@ export class PeopleItem extends BaseItem {
   }
 
   static async onCreateDutch(item: HVItem): Promise<void> {
-    item.actor?.setFlag('helveczia', 'dutch-skill', true);
+    await item.actor?.setFlag('helveczia', 'dutch-skill', true);
     if (!item.actor?.getFlag('helveczia', 'dutch-onions')) {
       const onions = {
         name: 'Onions',
@@ -99,12 +99,12 @@ export class PeopleItem extends BaseItem {
   }
 
   static async cleanupDutch(actor: HVActor): Promise<void> {
-    actor?.setFlag('helveczia', 'dutch-skill', false);
+    await actor?.setFlag('helveczia', 'dutch-skill', false);
   }
 
   static async onCreateCzech(item: HVItem): Promise<void> {
     const gainedSkill = item.actor?.isCleric() || item.actor?.isStudent();
-    item.actor?.setFlag('helveczia', 'czech-skill', gainedSkill);
+    await item.actor?.setFlag('helveczia', 'czech-skill', gainedSkill);
   }
 
   static getCzechSkill(actor: HVActor): number {
@@ -114,7 +114,7 @@ export class PeopleItem extends BaseItem {
   }
 
   static async cleanupCzechSkill(actor: HVActor): Promise<void> {
-    actor.setFlag('helveczia', 'czech-skill', false);
+    await actor.setFlag('helveczia', 'czech-skill', false);
   }
 
   static get documentName() {
@@ -164,18 +164,18 @@ export class PeopleItem extends BaseItem {
     _user: any,
   ): Promise<void> {
     if (!data.img) {
-      foundry.utils.setProperty(data, 'img', DEFAULT_TOKEN);
+      await foundry.utils.setProperty(data, 'img', DEFAULT_TOKEN);
     }
   }
 
-  static async onCreate(
+  static onCreate(
     item: HVItem,
     itemData: Item['_source'],
     _options: DocumentModificationContext,
     _userId: string,
-  ) {
+  ): Promise<void> {
     if (!Utils.canModifyActor(game.user, item.actor as any)) {
-      return;
+      return Promise.resolve();
     }
 
     if (item.parent) {
@@ -183,6 +183,7 @@ export class PeopleItem extends BaseItem {
       const func = peoples?.onCreate;
       if (func) func(item);
     }
+    return Promise.resolve();
   }
 
   static peoples() {
@@ -213,10 +214,10 @@ export class PeopleItem extends BaseItem {
 
   static async enableHungarianFate(actor: HVActor): Promise<{ mod: number; attr: string }> {
     if (!actor.getFlag('helveczia', 'fate-invoked')) {
-      actor.setFlag('helveczia', 'fate-invoked', true);
+      await actor.setFlag('helveczia', 'fate-invoked', true);
       const randomSave = ['bravery', 'deftness', 'temptation'][Math.floor(Math.random() * 3)];
       await actor.setFlag('helveczia', 'fate-save', randomSave);
-      ChatMessage.create({
+      await ChatMessage.create({
         user: game.user?.id,
         speaker: ChatMessage.getSpeaker({ actor: actor }),
         content: await renderTemplate('systems/helveczia/templates/chat/hungarian-fate.hbs', {

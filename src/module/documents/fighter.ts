@@ -29,10 +29,6 @@ export class Fighter {
       log.debug(`Fighter.onCreate() | fighter-specialism flag set to ${item.name}`);
       const actor = item.actor;
       await actor?.setFlag('helveczia', 'fighter-specialism', item.name);
-      switch (item.name) {
-        case 'Soldier':
-          break;
-      }
     }
     log.debug('Fighter.onCreate() | fighter-class flag set to true');
     await item.actor?.setFlag('helveczia', 'fighter-class', true);

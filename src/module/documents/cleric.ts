@@ -58,16 +58,16 @@ export class Cleric {
       if (isDoctorate) {
         if (item.actor?.system.level == 6) {
           log.debug('Cleric.onCreate() | cleric-doctorate flag set to true');
-          item.actor?.setFlag('helveczia', 'cleric-doctorate', true);
+          await item.actor?.setFlag('helveczia', 'cleric-doctorate', true);
         } else {
           ui.notifications.error(game.i18n.localize('HV.errors.requiredLevel'));
         }
       }
     } else {
       log.debug('Cleric.onCreate() | cleric-class flag set to true');
-      actor?.setFlag('helveczia', 'cleric-class', true);
+      await actor?.setFlag('helveczia', 'cleric-class', true);
       await Promise.all(
-        specialistSkills.map((s) => {
+        specialistSkills.map(async (s) => {
           const skill = {
             name: game.i18n.localize(`HV.specialisms.cleric.${s}`),
             type: 'skill',
@@ -78,7 +78,7 @@ export class Cleric {
               subtype: 'magical',
             },
           };
-          actor?.setFlag('helveczia', clericSpecialisms[s].flag, true);
+          await actor?.setFlag('helveczia', clericSpecialisms[s].flag, true);
           return createLockedSkill(item, skill);
         }),
       );

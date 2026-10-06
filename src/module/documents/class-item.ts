@@ -131,15 +131,21 @@ export class ClassItem extends BaseItem {
     // V1 legacy: base class may not have this method
   }
 
-  static async onCreate(item: HVItem, _data: Item['_source'], _options: DocumentModificationContext, _userId: string) {
+  static onCreate(
+    item: HVItem,
+    _data: Item['_source'],
+    _options: DocumentModificationContext,
+    _userId: string,
+  ): Promise<void> {
     if (!Utils.canModifyActor(game.user, item.actor as any)) {
-      return;
+      return Promise.resolve();
     }
     if (item.actor) {
       const prof = ClassItem.findProfession(item);
       const func = prof?.onCreate;
       if (func) func(item);
     }
+    return Promise.resolve();
   }
 
   static getSheetData(data, _sheet) {

@@ -51,13 +51,12 @@ export class Student {
         if (item.actor.system.level >= reqLevel) {
           log.debug('Student.onCreate() | student-doctorate flag set to true');
           await item.actor?.setFlag('helveczia', 'student-doctorate', true);
-          Math.floor(Math.random());
           const extra_spells = [
             1 + Math.round(Math.random()),
             1 + Math.round(Math.random()),
             1 + Math.round(Math.random()),
           ]
-            .sort()
+            .sort((a, b) => a - b)
             .reverse();
           await item.actor?.setFlag('helveczia', 'student-dr-spells', extra_spells);
           const totalExtra = extra_spells.reduce((acc, val) => acc + val, 0);
@@ -68,9 +67,9 @@ export class Student {
       }
     } else {
       log.debug('Student.onCreate() | student-class flag set to true');
-      item.actor?.setFlag('helveczia', 'student-class', true);
+      await item.actor?.setFlag('helveczia', 'student-class', true);
       await Promise.all(
-        specialistSkills.map((s) => {
+        specialistSkills.map(async (s) => {
           const skill = {
             name: game.i18n.localize(`HV.specialisms.student.${s}`),
             type: 'skill',
@@ -81,7 +80,7 @@ export class Student {
               subtype: 'magical',
             },
           };
-          item.actor?.setFlag('helveczia', studentSpecialisms[s].flag, true);
+          await item.actor?.setFlag('helveczia', studentSpecialisms[s].flag, true);
           return createLockedSkill(item, skill);
         }),
       );
@@ -120,8 +119,8 @@ export class Student {
       return;
     }
     await Promise.all(
-      Object.keys(studentSpecialisms).map((s) => {
-        actor?.setFlag('helveczia', studentSpecialisms[s].flag, false);
+      Object.keys(studentSpecialisms).map(async (s) => {
+        await actor?.setFlag('helveczia', studentSpecialisms[s].flag, false);
         return deleteLockedSkill(actor, game.i18n.localize(`HV.specialisms.student.${s}`), 'magical');
       }),
     );
@@ -130,18 +129,21 @@ export class Student {
       (i) => (i.system as SkillData).subtype === 'science' && i.getFlag('helveczia', 'locked') === true,
     );
     if (sciences.length > 0) {
-      for (const science of sciences) {
-        if (science.id) {
-          const flag =
-            actor.getFlag('helveczia', 'student-skill-generated-1') === science.name
-              ? 'student-skill-generated-1'
-              : 'student-skill-generated-2';
-          await actor.setFlag('helveczia', flag, false);
-          log.debug(`Student.cleanup() |  ${flag} flag set to false`);
-          await actor.deleteEmbeddedDocuments('Item', [science.id]);
-          await actor.sheet?.render(true);
-        }
-      }
+      const scienceIds = sciences.filter((s) => s.id).map((s) => s.id as string);
+      await Promise.all(
+        sciences
+          .filter((science) => science.id)
+          .map((science) => {
+            const flag =
+              actor.getFlag('helveczia', 'student-skill-generated-1') === science.name
+                ? 'student-skill-generated-1'
+                : 'student-skill-generated-2';
+            log.debug(`Student.cleanup() |  ${flag} flag set to false`);
+            return actor.setFlag('helveczia', flag, false);
+          }),
+      );
+      await actor.deleteEmbeddedDocuments('Item', scienceIds);
+      await actor.sheet?.render(true);
     }
   }
 }
