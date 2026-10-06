@@ -38,10 +38,10 @@ const nameMap = {
 export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
   // Allow static methods to access instance props (Foundry V14 action handler pattern)
   static [key: string]: any;
-  private generatedName = '';
-  private sex = 'male';
-  private people = 'german';
-  private helveczian = false;
+  private readonly generatedName = '';
+  private readonly sex = 'male';
+  private readonly people = 'german';
+  private readonly helveczian = false;
 
   static addControl(_object, html): void {
     const control = `
@@ -93,8 +93,8 @@ export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     },
   };
 
-  protected async _prepareContext(_options): Promise<Record<string, unknown>> {
-    return {
+  protected _prepareContext(_options): Promise<Record<string, unknown>> {
+    return Promise.resolve({
       sexes: {
         male: 'HV.Male',
         female: 'HV.Female',
@@ -116,11 +116,11 @@ export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
           action: 'share',
         },
       ],
-    };
+    });
   }
 
   static async showDialog(options = {}): Promise<void> {
-    new HVNameGenerator(options).render(true);
+    await new HVNameGenerator(options).render(true);
   }
 
   static randomName(event, _target) {
@@ -151,8 +151,8 @@ export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     return `${forename} ${surname}`;
   }
 
-  static shareName(_event, _target) {
+  static async shareName(_event, _target) {
     const content = `<h2 class='helveczia generated-name'>${this.generatedName}</h2>`;
-    ChatMessage.create({ content: content });
+    await ChatMessage.create({ content: content });
   }
 }

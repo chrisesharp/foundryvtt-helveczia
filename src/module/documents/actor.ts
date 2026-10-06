@@ -93,9 +93,14 @@ export class HVActor extends Actor {
       }
     }
     if (data.saves) {
-      for (const saveType of Object.keys(data.saves)) {
-        const save = data.saves[saveType];
-        if (save) save.mod = save.base + save.bonus;
+      const hasCustomSaves =
+        this.type === 'npc' &&
+        (data.stats?.saves?.bravery || data.stats?.saves?.deftness || data.stats?.saves?.temptation);
+      if (!hasCustomSaves) {
+        for (const saveType of Object.keys(data.saves)) {
+          const save = data.saves[saveType];
+          if (save) save.mod = save.base + save.bonus;
+        }
       }
     }
   }

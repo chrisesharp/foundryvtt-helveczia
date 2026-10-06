@@ -47,10 +47,10 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     },
   };
 
-  protected async _prepareContext(_options): Promise<Record<string, unknown>> {
-    return {
+  protected _prepareContext(_options): Promise<Record<string, unknown>> {
+    return Promise.resolve({
       buttons: [{ type: 'submit', icon: 'fa-solid fa-save', label: 'HV.Create' }],
-    };
+    });
   }
 
   static getButton() {
@@ -63,7 +63,7 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   static async importNPC() {
-    new NPCGenerator({
+    await new NPCGenerator({
       actor: this.actor,
       top: (this.position.top ?? 0) + 40,
       left: (this.position.left ?? 0) + ((this.position.width ?? 0) - 400) / 2,
@@ -130,11 +130,11 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     if (cls) {
       const specialisms = Utils.findLocalizedPack('specialisms');
       const specialism = await HVCharacterCreator.getDocument(cls, specialisms);
-      if (specialism && specialism.system.specialism) {
+      if (specialism?.system.specialism) {
         const parentClass: string = (specialism.system as any).parentClass ?? '';
         const professionName = parentClass ? parentClass[0].toUpperCase() + parentClass.slice(1).toLowerCase() : '';
-        const hasSpecialism = actor.itemTypes['class'].filter((c) => c.name === specialism.name).length > 0;
-        const hasProfession = actor.itemTypes['class'].filter((c) => c.name === professionName).length > 0;
+        const hasSpecialism = actor.itemTypes['class'].some((c) => c.name === specialism.name);
+        const hasProfession = actor.itemTypes['class'].some((c) => c.name === professionName);
         if (!hasSpecialism) {
           if (!hasProfession) {
             await HVCharacterCreator.setProfession(actor, professionName, false);
@@ -153,31 +153,36 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
 
   async addSkills(actor: HVActor, formData: any): Promise<void> {
     const lvlGroups = formData?.system?.levelBonus.match(levelBonusRegEx)?.groups;
-    const threat = parseInt(lvlGroups?.lvl) ?? 0;
+    const threat = Number.parseInt(lvlGroups?.lvl) ?? 0;
     const skills: Record<string, unknown>[] = [];
     const skillpack = Utils.findLocalizedPack('skills');
     const craftspack = Utils.findLocalizedPack('crafts');
     const sciencepack = Utils.findLocalizedPack('sciences');
     const specialismspack = Utils.findLocalizedPack('specialisms');
 
-    for (const skillText of formData.system?.stats?.skills) {
-      if (/^[A-Z]/.test(skillText)) {
+    const skillEntries = (formData.system?.stats?.skills ?? [])
+      .filter((skillText) => /^[A-Z]/.test(skillText))
+      .map((skillText) => {
         const groups = skillText.match(skillRegEx)?.groups;
         const skillName = groups?.skillName?.trim();
-        const bonus = parseInt(groups?.bonus) - threat;
-        const skill = await HVCharacterCreator.getDocument(
-          skillName,
-          skillpack,
-          craftspack,
-          sciencepack,
-          specialismspack,
-        );
-        if (skill) {
-          const obj = skill.toObject();
-          obj.system.bonus = bonus;
-          skills.push(obj);
-          formData['system'].description = formData?.system?.description.replace(`<p>${skillText}</p>`, '');
-        }
+        const bonus = Number.parseInt(groups?.bonus) - threat;
+        return { skillText, skillName, bonus };
+      });
+
+    const resolvedSkills = await Promise.all(
+      skillEntries.map(({ skillName }) =>
+        HVCharacterCreator.getDocument(skillName, skillpack, craftspack, sciencepack, specialismspack),
+      ),
+    );
+
+    for (let i = 0; i < skillEntries.length; i++) {
+      const skill = resolvedSkills[i];
+      if (skill) {
+        const { skillText, bonus } = skillEntries[i];
+        const obj = skill.toObject();
+        obj.system.bonus = bonus;
+        skills.push(obj);
+        formData['system'].description = formData?.system?.description.replace(`<p>${skillText}</p>`, '');
       }
     }
     if (skills.length > 0) {

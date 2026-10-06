@@ -90,12 +90,12 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
       title: game.i18n.localize('HV.dialog.HolyWrit'),
     };
     const content = await renderTemplate('systems/helveczia/templates/chat/bible-choose.hbs', templateData);
-    ChatMessage.create({
+    await ChatMessage.create({
       content: content,
       blind: false,
     });
     this.random();
-    this.render(true);
+    await this.render(true);
   }
 
   get title() {
@@ -144,8 +144,8 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
       | undefined;
     parts?: string[] | undefined;
     isFirstRender?: boolean | undefined;
-  }): Promise<Record<string, never>> {
-    const data: any = foundry.utils.deepClone(super._prepareContext(options));
+  }): Promise<Record<string, unknown>> {
+    const data: any = foundry.utils.deepClone(await super._prepareContext(options));
     data.user = game.user;
     data.config = CONFIG.HV;
     data.chapter = this.current;
@@ -177,7 +177,7 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
       title: game.i18n.localize('HV.dialog.HolyWritGuides'),
     };
     const content = await renderTemplate('systems/helveczia/templates/chat/bible-verse.hbs', templateData);
-    ChatMessage.create({
+    await ChatMessage.create({
       content: content,
       blind: false,
     });
@@ -211,26 +211,26 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
     const verseId = `li#verse-${this.verse}`;
     marked.use({ renderer });
 
-    this.element.querySelector('.prev-verse')?.addEventListener('click', (ev) => {
+    this.element.querySelector('.prev-verse')?.addEventListener('click', async (ev) => {
       ev.preventDefault();
       this.previousVerse();
-      this.render(true);
+      await this.render(true);
     });
 
-    this.element.querySelector('.next-verse')?.addEventListener('click', (ev) => {
+    this.element.querySelector('.next-verse')?.addEventListener('click', async (ev) => {
       ev.preventDefault();
       this.nextVerse();
-      this.render(true);
+      await this.render(true);
     });
 
-    this.element.querySelector('.rnd')?.addEventListener('click', (ev) => {
+    this.element.querySelector('.rnd')?.addEventListener('click', async (ev) => {
       ev.preventDefault();
-      this.seekGuidance();
+      await this.seekGuidance();
     });
 
-    this.element.querySelector('.send')?.addEventListener('click', (ev) => {
+    this.element.querySelector('.send')?.addEventListener('click', async (ev) => {
       ev.preventDefault();
-      this.sendVerse();
+      await this.sendVerse();
     });
 
     this.content = marked.parse(await fetchHtmlAsText(this.current));
