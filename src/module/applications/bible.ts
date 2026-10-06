@@ -105,10 +105,6 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
   static readonly DEFAULT_OPTIONS = {
     id: 'holy-bible',
     classes: ['helveczia'],
-    form: {
-      handler: KJVBible.onSubmit,
-      closeOnSubmit: true,
-    },
     tag: 'form',
     position: {
       width: 450,
@@ -150,16 +146,6 @@ export class KJVBible extends HandlebarsApplicationMixin(ApplicationV2) {
     data.config = CONFIG.HV;
     data.chapter = this.current;
     return data;
-  }
-
-  /**
-   * This method is called upon form submission after form data is validated
-   * @param event {Event}       The initial triggering submission event
-   * @param formData {Object}   The object of validated form data with which to update the object
-   * @private
-   */
-  async _updateObject(event: Event, _formData: object) {
-    event.preventDefault();
   }
 
   get current() {
