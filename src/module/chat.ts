@@ -19,7 +19,7 @@ const templatePath = 'systems/helveczia/templates/chat/';
 
 export function updateChatMessage(actor, msgId, crit) {
   log.debug('_updateChatMessage() | calling socket as GM for message ', msgId, crit);
-  ChatMessage.create({
+  void ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor: actor }),
     content: (crit as Element).outerHTML,
   });
@@ -33,14 +33,14 @@ export class HVChat {
       const uuid = chatCard.dataset.actorId;
       const actor = await Utils.getActorFromUUID(uuid);
       if (actor?.isOwner) {
-        await HVChat._addCritButton(msg, actor, chatCard);
+        HVChat._addCritButton(msg, actor, chatCard);
       }
     } catch (e) {
       // log.debug('addChatCriticalButton() | error caught: ', e);
     }
   }
 
-  static async _addCritButton(msg, actor, msgContent): Promise<void> {
+  static _addCritButton(msg, actor, msgContent) {
     const cb = msgContent.querySelector('.critical-roll');
     const msgId = msg.id;
     const dmgResult = cb.dataset.dmgResult;
@@ -52,7 +52,7 @@ export class HVChat {
     )}</button></div>`;
     cb.innerHTML += button;
     cb.querySelector('button[data-action="critroll"]').addEventListener('click', (ev) => {
-      HVChat._onCritClick(ev, actor, msgContent);
+      void HVChat._onCritClick(ev, actor, msgContent);
     });
   }
 

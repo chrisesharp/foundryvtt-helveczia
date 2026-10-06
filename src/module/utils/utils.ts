@@ -4,7 +4,7 @@ import { Logger } from '../logger';
 const { fromUuid } = foundry.utils;
 
 const log = new Logger();
-const uuidRegex = new RegExp('(?<actorId>Actor.[a-zA-Z0-9]+)?.?(?<itemId>Item.[a-zA-Z0-9]+)');
+const uuidRegex = /(?<actorId>Actor.[a-zA-Z0-9]+)?.?(?<itemId>Item.[a-zA-Z0-9]+)/;
 
 type EmbeddedSubject = HVItem | HVActor;
 
@@ -23,7 +23,7 @@ const migrations = {
 };
 
 export class Utils {
-  static async deleteEmbeddedArray(arr: EmbeddedObjectType[], subject: EmbeddedSubject) {
+  static deleteEmbeddedArray(arr: EmbeddedObjectType[], subject: EmbeddedSubject) {
     const docType = arr[0] instanceof Item ? 'Item' : 'ActiveEffect';
     return subject.deleteEmbeddedDocuments(
       docType,
@@ -51,7 +51,7 @@ export class Utils {
   }
 
   static canModifyActor(user: StoredDocument<User> | null, actor: HVActor | null): boolean {
-    return user != null && actor != null && actor.testUserPermission(user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER);
+    return user != null && actor?.testUserPermission(user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER);
   }
 
   static async migrate() {
@@ -63,9 +63,7 @@ export class Utils {
     const pending = Object.keys(migrations).filter(
       (key) => !currentVersion || foundry.utils.isNewerVersion(key, currentVersion),
     );
-    for (const key of pending) {
-      await migrations[key](key);
-    }
+    await pending.reduce((chain, key) => chain.then(() => migrations[key](key)), Promise.resolve());
   }
 
   static findLocalizedPack(pack: string): CompendiumCollection<any> | undefined {
@@ -77,9 +75,7 @@ export class Utils {
 async function migrateTo3_1_0() {
   const options = { permanent: true };
   ui.notifications.warn('Migrating your data to version 3.1.0. Please, wait until it finishes.', options);
-  for (const actor of game.actors?.contents) {
-    await migrateTo3_1_Actor(actor);
-  }
+  await Promise.all((game.actors?.contents ?? []).map((actor) => migrateTo3_1_Actor(actor)));
   await game.settings.set('helveczia', 'systemMigrationVersion', game.system.version);
   ui.notifications.info('Data migrated to version 3.1.0.', options);
 }
@@ -87,9 +83,7 @@ async function migrateTo3_1_0() {
 async function migrateTo4_0_6() {
   const options = { permanent: true };
   ui.notifications.warn('Migrating your data to version 4.0.6 Please, wait until it finishes.', options);
-  for (const actor of game.actors?.contents) {
-    await migrateTo4_0_6_Actor(actor);
-  }
+  await Promise.all((game.actors?.contents ?? []).map((actor) => migrateTo4_0_6_Actor(actor)));
   await game.settings.set('helveczia', 'systemMigrationVersion', game.system.version);
   ui.notifications.info('Data migrated to version 4.0.6', options);
 }
@@ -101,15 +95,13 @@ async function migrateTo6_0_1() {
   // In 6.0.0 the pack JSONs used "parent" which is a reserved DataModel property;
   // it was renamed to "parentClass" after the tag. Any item imported at 6.0.0 has
   // the old field name stored in _source and needs it rewritten.
-  for (const item of game.items?.contents ?? []) {
-    await migrateTo6_0_1_Item(item);
-  }
+  await Promise.all((game.items?.contents ?? []).map((item) => migrateTo6_0_1_Item(item)));
   // Also fix specialisms embedded inside actors.
-  for (const actor of game.actors?.contents ?? []) {
-    for (const item of actor.items?.contents ?? []) {
-      await migrateTo6_0_1_Item(item);
-    }
-  }
+  await Promise.all(
+    (game.actors?.contents ?? []).flatMap((actor) =>
+      (actor.items?.contents ?? []).map((item) => migrateTo6_0_1_Item(item)),
+    ),
+  );
   await game.settings.set('helveczia', 'systemMigrationVersion', game.system.version);
   ui.notifications.info('Data migrated to version 6.0.1.', options);
 }
@@ -139,7 +131,7 @@ async function migrateTo4_0_6_Actor(actor: HVActor) {
 
   const effects = actor.effects.filter((i) => i.name === 'Sin' || i.name === 'Virtue');
   log.debug(`utils.migrateTo4_0_6_Actor() | updating ${actor.name}`);
-  return Utils.deleteEmbeddedArray(effects, actor);
+  return await Utils.deleteEmbeddedArray(effects, actor);
 }
 
 async function migrateTo6_0_1_Item(item: HVItem) {
@@ -161,11 +153,11 @@ async function migrateTo6_0_6() {
   // Remove the redundant "Saves" active effect (id JJZAEtiB0B7DOteB) from Vagabond
   // class items embedded on actors.  Save bases are now computed entirely by
   // _updateSaves() → getSaveBase(); the effect was double-applying the calculation.
-  for (const actor of game.actors?.contents ?? []) {
-    for (const item of actor.items?.contents ?? []) {
-      await migrateRemoveVagabondSaveEffect(item);
-    }
-  }
+  await Promise.all(
+    (game.actors?.contents ?? []).flatMap((actor) =>
+      (actor.items?.contents ?? []).map((item) => migrateRemoveVagabondSaveEffect(item)),
+    ),
+  );
   await game.settings.set('helveczia', 'systemMigrationVersion', game.system.version);
   ui.notifications.info('Data migrated to version 6.0.6.', options);
 }
