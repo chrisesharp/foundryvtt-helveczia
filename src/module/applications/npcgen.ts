@@ -2,10 +2,10 @@ import { HVActor } from '../documents/actor';
 import { Utils } from '../utils/utils';
 import { HVCharacterCreator } from './chargen';
 
-const levelBonusRegEx = /(?<class>[a-zA-Z\s]*)(?<lvl>\d)\+?(?<threat>[\d\*]*)/;
-const skillRegEx = /(?<skillName>[\w’\/\s]+)(?<bonus>[\-\+]\d)*/;
+const levelBonusRegEx = /(?<class>[a-zA-Z\s]*)(?<lvl>\d)\+?(?<threat>\d*\*?)/;
+const skillRegEx = /(?<skillName>[\w'/\s]+)(?<bonus>[-+]\d)*/;
 
-const weaponRegEx = /(?<bonus>\+\d)+(?<weaponName>[a-zA-Z\s]*)+(?<dmg>\dd\d+([\+][\d]+)*)*(?<notes>.*)/;
+const weaponRegEx = /(?<bonus>\+\d)+(?<weaponName>[a-zA-Z ]*)+(?<dmg>\dd\d+([+]\d+)*)*(?<notes>.*)/;
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
@@ -72,7 +72,7 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static async _onSubmit(event: Event, _form: object, _formData: object) {
     event.preventDefault();
-    const statblock = this.element.querySelector('textarea#statblock').value;
+    const statblock = this.element.querySelector('textarea#statblock')?.value;
     let updateData = {};
     try {
       const npc = new Parser(statblock).npc;
@@ -104,7 +104,9 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
           stats: npc,
         },
       };
-    } catch (err) {}
+    } catch (err) {
+      throw new Error(game.i18n.localize('HV.errors.npcParseError'), { cause: err });
+    }
     await this.createNPC(event, updateData);
   }
 
@@ -127,27 +129,29 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
   async setProfession(actor: HVActor, formData: any): Promise<void> {
     const groups = formData?.system?.levelBonus.match(levelBonusRegEx)?.groups;
     const cls = groups?.class?.trim();
-    if (cls) {
-      const specialisms = Utils.findLocalizedPack('specialisms');
-      const specialism = await HVCharacterCreator.getDocument(cls, specialisms);
-      if (specialism?.system.specialism) {
-        const parentClass: string = (specialism.system as any).parentClass ?? '';
-        const professionName = parentClass ? parentClass[0].toUpperCase() + parentClass.slice(1).toLowerCase() : '';
-        const hasSpecialism = actor.itemTypes['class'].some((c) => c.name === specialism.name);
-        const hasProfession = actor.itemTypes['class'].some((c) => c.name === professionName);
-        if (!hasSpecialism) {
-          if (!hasProfession) {
-            await HVCharacterCreator.setProfession(actor, professionName, false);
-          }
-          await HVCharacterCreator.setSpecialism(actor, specialism.name, false);
-        }
-      } else {
-        const professions = Utils.findLocalizedPack('classes');
-        const profession = await HVCharacterCreator.getDocument(cls, professions);
-        if (profession && actor.itemTypes['class'].filter((c) => c.name === profession.name).length == 0) {
-          await HVCharacterCreator.setProfession(actor, profession.name, false);
-        }
+    if (!cls) return;
+
+    const specialism = await HVCharacterCreator.getDocument(cls, Utils.findLocalizedPack('specialisms'));
+    if (specialism?.system.specialism) {
+      return this.setSpecialistProfession(actor, specialism);
+    } else {
+      const profession = await HVCharacterCreator.getDocument(cls, Utils.findLocalizedPack('classes'));
+      if (profession && actor.itemTypes['class'].filter((c) => c.name === profession.name).length == 0) {
+        await HVCharacterCreator.setProfession(actor, profession.name, false);
       }
+    }
+  }
+
+  async setSpecialistProfession(actor: HVActor, specialism: any) {
+    const parentClass: string = (specialism.system as any).parentClass ?? '';
+    const professionName = parentClass ? parentClass[0].toUpperCase() + parentClass.slice(1).toLowerCase() : '';
+    const hasSpecialism = actor.itemTypes['class'].some((c) => c.name === specialism.name);
+    const hasProfession = actor.itemTypes['class'].some((c) => c.name === professionName);
+    if (!hasSpecialism) {
+      if (!hasProfession) {
+        await HVCharacterCreator.setProfession(actor, professionName, false);
+      }
+      await HVCharacterCreator.setSpecialism(actor, specialism.name, false);
     }
   }
 
@@ -193,22 +197,25 @@ export class NPCGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
   async addWeapons(actor: HVActor, formData: any): Promise<void> {
     const weapons: Record<string, unknown>[] = [];
     const weaponpacks = Utils.findLocalizedPack('weapons');
+    const atkEntries = formData.system.stats.atk;
 
-    for (const weaponData of formData.system.stats.atk) {
+    const resolvedWeapons = await Promise.all(
+      atkEntries.map((weaponData) => HVCharacterCreator.getDocument(weaponData.name.capitalize(), weaponpacks)),
+    );
+
+    for (let i = 0; i < atkEntries.length; i++) {
+      const weaponData = atkEntries[i];
       const weaponName = weaponData.name.capitalize();
       const description = weaponData.details;
-      let weapon = await HVCharacterCreator.getDocument(weaponName, weaponpacks);
-      if (!weapon) {
-        weapon = {
-          name: weaponName,
-          type: 'weapon',
-          description: description,
-          system: {
-            attack: 'melee',
-            damage: weaponData.dmg,
-          },
-        };
-      }
+      const weapon = resolvedWeapons[i] ?? {
+        name: weaponName,
+        type: 'weapon',
+        description: description,
+        system: {
+          attack: 'melee',
+          damage: weaponData.dmg,
+        },
+      };
       weapons.push(weapon);
       formData['system'].description = formData?.system?.description.replace(
         `<p>${weaponData.attack_bonus} ${weaponData.name} ${weaponData.dmg} ${weaponData.details ?? ''}</p>`,
@@ -258,12 +265,12 @@ export class Parser {
     skills: [],
   };
 
-  private AttackReg = /[ ]*(Atk|Attack)[ :]/;
+  private readonly AttackReg = /[ ]*(Atk|Attack)[ :]/;
 
   constructor(input: string) {
-    this.input = input.replace(/-\n/g, '');
-    this.input = this.input.replace(/\n/g, ' ');
-    this.input = this.input.replace(/(Spells:\s+([0-9+\+\/]*;))/, 'Spells:');
+    this.input = input.replaceAll('-\n', '');
+    this.input = this.input.replaceAll('\n', ' ');
+    this.input = this.input.replace(/(Spells:\s+([0-9+/]*;))/, 'Spells:');
     this.input = this.input.replace(/\.\sHp\s/g, '; Hp ');
     this.input = this.input.replace(/\.[\s]+/g, ';');
     this.parse();
@@ -279,35 +286,27 @@ export class Parser {
 
     for (let section of sections) {
       section = section.trim();
-      switch (section) {
-        case section.match(/^AC/)?.input:
-          this.parseArmour(section);
-          break;
-        case section.match(/^V[\s0-9]/)?.input:
-          this.parseVirtue(section);
-          break;
-        case section.match(/[\w\s]*[+-]\d\/[\w\s]*[+-]\d\/[\w\s]*[+-]\d/)?.input:
-          this.parseSaves(section);
-          break;
-        case section.match(this.AttackReg)?.input:
-          this.parseAttacks(section);
-          break;
-        case section.match(/^Spec/)?.input:
-          this.parseSkills(section);
-          break;
-        case section.match(/^Hp/)?.input:
-          this.parseHp(section);
-          break;
-        default:
-          this.npc.notes.push(section.trim());
-          break;
+      if (/^AC/.exec(section)) {
+        this.parseArmour(section);
+      } else if (/^V[\s0-9]/.exec(section)) {
+        this.parseVirtue(section);
+      } else if (/[\w\s]*[+-]\d\/[\w\s]*[+-]\d\/[\w\s]*[+-]\d/.exec(section)) {
+        this.parseSaves(section);
+      } else if (this.AttackReg.exec(section)) {
+        this.parseAttacks(section);
+      } else if (/^Spec/.exec(section)) {
+        this.parseSkills(section);
+      } else if (/^Hp/.exec(section)) {
+        this.parseHp(section);
+      } else {
+        this.npc.notes.push(section.trim());
       }
     }
   }
 
   parseArmour(section: string) {
     const tokens = section.replace('AC ', '').split('(');
-    this.npc.AC = parseInt(tokens[0]);
+    this.npc.AC = Number.parseInt(tokens[0]);
     this.npc.armour = tokens[1]?.replace(')', '') ?? '';
   }
 
@@ -326,10 +325,10 @@ export class Parser {
   parseAttacks(section: string) {
     const options = section.replace(this.AttackReg, '').split(' or ');
     for (const option of options) {
-      const groups = option.match(weaponRegEx)?.groups;
+      const groups = weaponRegEx.exec(option)?.groups;
       if (groups) {
         let weaponName = groups?.weaponName?.trim();
-        if (weaponName.length == 0) weaponName = 'Unarmed';
+        if (weaponName?.length == 0) weaponName = 'Unarmed';
         const weapon: Weapon = {
           name: weaponName,
           attack_bonus: groups?.bonus?.trim(),
@@ -343,15 +342,17 @@ export class Parser {
   }
 
   parseSkills(section: string) {
-    const skills = section.replace('Spec ', '').match(new RegExp(skillRegEx, 'g'));
-    if (skills) {
-      for (const skill of skills) {
-        this.npc.skills.push(skill.trim());
-      }
+    const skills = section
+      .replace('Spec ', '')
+      .split(',')
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+    for (const skill of skills) {
+      this.npc.skills.push(skill);
     }
   }
 
   parseHp(section: string) {
-    this.npc.hp = parseInt(section.replace('Hp', ''));
+    this.npc.hp = Number.parseInt(section.replace('Hp', ''));
   }
 }

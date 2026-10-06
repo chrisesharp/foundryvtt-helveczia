@@ -337,7 +337,8 @@
       "areVagabond": "A vagabond cannot acquire this skill!",
       "maxSpells": "You already have as many level {level} spells as you can remember!",
       "requiredProfession": "You must be a {requiredProfession} for this specialism",
-      "requiredLevel": "You must be 6th level for this specialism"
+      "requiredLevel": "You must be 6th level for this specialism",
+      "npcParseError": "Could not parse the statblock correctly looking for LVL"
     },
     "warnings": {
       "alreadyCast": "you have already cast this spell and need to re-memorize it.",
