@@ -11,6 +11,7 @@ export class HVCombat extends Combat {
       const turnFraction = 1 / numCombatants;
 
       const current = data.combat?.current ?? 0;
+      const flagUpdates: Promise<unknown>[] = [];
       for (const ct of html.querySelectorAll('.combatant')) {
         const id = ct.dataset.combatantId;
         const cmbtant = combatTracker.viewed.combatants.get(id) as Combatant;
@@ -32,18 +33,25 @@ export class HVCombat extends Combat {
           const reloadTrigger = actor.getFlag('helveczia', 'reload-trigger') as number;
           if (reloadTrigger > 0 && game.user?.isGM) {
             log.debug(`HVCombat.format() | id:${id} reloadTrigger = ${reloadTrigger}`);
-            await actor.unsetFlag('helveczia', 'reload-trigger');
-            await cmbtant.setFlag('helveczia', 'reloaded', currentTurn + parseFloat(`${reloadTrigger}`));
-            log.debug(
-              `HVCombat.format() |id:${id} unset reload-trigger and set reloaded to ${cmbtant.getFlag(
-                'helveczia',
-                'reloaded',
-              )}`,
+            flagUpdates.push(
+              actor
+                .unsetFlag('helveczia', 'reload-trigger')
+                .then(() =>
+                  cmbtant.setFlag('helveczia', 'reloaded', currentTurn + Number.parseFloat(`${reloadTrigger}`)),
+                )
+                .then(() =>
+                  log.debug(
+                    `HVCombat.format() |id:${id} unset reload-trigger and set reloaded to ${cmbtant.getFlag(
+                      'helveczia',
+                      'reloaded',
+                    )}`,
+                  ),
+                ),
             );
           }
         }
         let reload = cmbtant.getFlag('helveczia', 'reloaded') as number;
-        if (!isNaN(reload)) {
+        if (!Number.isNaN(reload)) {
           reload = reload - currentTurn;
           log.debug(`HVCombat.format() |id:${id} reload = ${reload}`);
           // Append colored flag
@@ -55,14 +63,13 @@ export class HVCombat extends Combat {
               `<a class='combatant-control flag' style='color:${colour}' title="${reload.toFixed(
                 1,
               )} turns to reload."><i class='fas fa-redo'></i></a>` + controls.innerHTML;
-          } else {
-            if (game.user?.isGM) {
-              await cmbtant.unsetFlag('helveczia', 'reloaded');
-              log.debug(`HVCombat.format() |id:${id} unset reloaded`);
-            }
+          } else if (game.user?.isGM) {
+            flagUpdates.push(cmbtant.unsetFlag('helveczia', 'reloaded'));
+            log.debug(`HVCombat.format() |id:${id} unset reloaded`);
           }
         }
       }
+      await Promise.all(flagUpdates);
     }
 
     HVCombat.addListeners(combatTracker, html, data);

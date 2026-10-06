@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export class Logger {
-  private service: string;
-
-  constructor() {
-    this.service = 'helveczia';
-  }
+  private readonly service: string = 'helveczia';
 
   debugMode() {
     return game.settings.get(this.service, 'debug') || false;

@@ -234,7 +234,7 @@ export class HVDice {
         },
       ];
 
-      DialogV2.wait({
+      void DialogV2.wait({
         classes: ['helveczia'],
         window: {
           title: title ?? '',

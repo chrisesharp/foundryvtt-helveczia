@@ -14,7 +14,7 @@ import { BookItem } from './documents/book-item';
 import { KJVBible } from './applications/bible';
 
 export interface HelvecziaConfig {
-  createCardsFor?: (string) => void;
+  createCardsFor?: (name: string) => Promise<void>;
   DEFAULT_TOKEN: string;
   DEFAULT_PARTY: string;
   DEFAULT_ELEVATION: number;

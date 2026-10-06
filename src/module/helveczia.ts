@@ -163,7 +163,7 @@ Hooks.once('init', async () => {
 });
 
 // Setup system
-Hooks.once('setup', async () => {
+Hooks.once('setup', () => {
   // Do anything after initialization but before ready
   // Only override uiConfig colour scheme for Helveczia worlds.
   // core.uiConfig is a client-scoped (localStorage) setting, so it would otherwise
@@ -201,23 +201,25 @@ Hooks.once('ready', async () => {
   // Do anything once the system is ready
   if (game.user?.isGM) {
     // Run migrations AFTER documents are initialized
-    Utils.migrate();
+    await Utils.migrate();
 
     const hungarians = game.actors?.filter((i) => i.isHungarian());
     if (hungarians?.length) {
-      Promise.all(hungarians?.map(async (actor) => await actor.setFlag('helveczia', 'fate-invoked', false)));
+      await Promise.all(hungarians?.map(async (actor) => await actor.setFlag('helveczia', 'fate-invoked', false)));
       log.info('Fate of Hungarians reset');
     }
   }
 
-  CONFIG.HV.createCardsFor = HVCardsHand.createHandsFor;
+  CONFIG.HV.createCardsFor = async (name: string): Promise<void> => {
+    await HVCardsHand.createHandsFor(name);
+  };
 });
 
 // Add any additional hooks if necessary
 Hooks.on('HV.Cards.genCards', HVCardsControl.showDialog);
 Hooks.on('HV.Names.genName', HVNameGenerator.showDialog);
 
-Hooks.on('preUpdateToken', async (tokenDocument, change, options, _userid) => {
+Hooks.on('preUpdateToken', (tokenDocument, change, options, _userid) => {
   if (!CONFIG.HV.flipTokens) return;
   if (change.rotation === 90 || change.rotation === 270) {
     change.texture = { scaleX: 0 - tokenDocument.texture.scaleX };
@@ -233,11 +235,11 @@ Hooks.on('preUpdateActor', async (actor, _change, _options, _id) => {
   }
 });
 
-Hooks.on('refreshToken', async (token, _options) => {
+Hooks.on('refreshToken', (token, _options) => {
   if (CONFIG.HV.depthTokens) token.tooltip.text = '';
 });
 
-Hooks.on('applyActiveEffect', async (actor, changeData) => {
+Hooks.on('applyActiveEffect', (actor, changeData) => {
   if (!Utils.canModifyActor(game.user, actor)) {
     return;
   }
@@ -266,18 +268,15 @@ Hooks.on('preCreateCombatant', (combatant, _data, _options, _userId) => {
     }
     return false;
   }
-  return;
 });
 
 Hooks.on('addPartyToCombat', async (members, combatant) => {
   const combat = combatant.combat;
   await combat.setFlag('helveczia', 'party-token', combatant.tokenId);
   if (members) {
-    const combatants: Combatant[] = [];
     await Promise.all(
       members.map(async (a) => {
-        const combatant = await Combatant.create({ actorId: a.id, combat: combat }, { parent: combat });
-        if (combatant) combatants.push(combatant);
+        await Combatant.create({ actorId: a.id, combat: combat }, { parent: combat });
       }),
     );
   }
@@ -286,12 +285,12 @@ Hooks.on('addPartyToCombat', async (members, combatant) => {
 Hooks.on('removePartyFromCombat', async (members: Actor[], combatant: Combatant) => {
   const combat = combatant.combat;
   await combat?.unsetFlag('helveczia', 'party-token');
-  const actorIds = members.filter((a) => a.id != null).map((a) => a.id);
+  const actorIds = new Set(members.filter((a) => a.id != null).map((a) => a.id));
   if (members && combat) {
     const combatantIds = combat.combatants
       .filter((a) => {
         const id = a.actorId;
-        return (id != null && actorIds.includes(id)) as boolean;
+        return (id != null && actorIds.has(id)) as boolean;
       })
       .map((c) => c.id ?? '');
     await combat?.deleteEmbeddedDocuments('Combatant', combatantIds);
@@ -299,11 +298,11 @@ Hooks.on('removePartyFromCombat', async (members: Actor[], combatant: Combatant)
 });
 
 // License and KOFI infos
-Hooks.on('renderActorDirectory', async (object, html) => {
+Hooks.on('renderActorDirectory', (object, html) => {
   HVNameGenerator.addControl(object, html);
 });
 
-Hooks.on('renderCardsDirectory', async (object, html) => {
+Hooks.on('renderCardsDirectory', (object, html) => {
   HVCardsControl.addControl(object, html);
 });
 
@@ -323,7 +322,7 @@ Hooks.on('renderSettings', async (_, html) => {
   html.querySelector('button[data-action="userguide"]').addEventListener('click', () => {
     const fv = new FrameView({ url: site });
     fv.url = site;
-    fv.render(true);
+    void fv.render(true);
   });
 });
 
