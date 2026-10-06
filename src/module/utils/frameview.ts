@@ -1,9 +1,5 @@
 const { ApplicationV2 } = foundry.applications.api;
 export class FrameView extends ApplicationV2 {
-  constructor(...args) {
-    super(...args);
-  }
-
   /* -------------------------------------------- */
 
   /** @inheritDoc */
