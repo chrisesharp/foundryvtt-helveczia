@@ -159,8 +159,8 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     const html = this.element;
 
     // Seek Guidance.
-    html.querySelector('.holy-bible')?.addEventListener('click', (_ev) => {
-      CONFIG.HV.applications.holyBible?.seekGuidance(this.actor);
+    html.querySelector('.holy-bible')?.addEventListener('click', async (_ev) => {
+      await CONFIG.HV.applications.holyBible?.seekGuidance(this.actor);
     });
   }
 
@@ -188,8 +188,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     }
 
     // eslint-disable-next-line prettier/prettier
-    const regex = new RegExp('/assets\/people\/(fe)*male/');
-    const match = token.match(regex);
+    const match = /\/assets\/people\/(fe)*male\//.exec(token);
     const extraSubfolder = match ? 'lg/' : '';
     step = path.shift();
     token += `${extraSubfolder}${step}`;
@@ -370,10 +369,11 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     let description = '<div class="contents-list flexrow"';
     if (containerId) description += ' data-container-id="' + containerId + '"';
     description += '><ol class="item-list">';
-    for (const item of itemList) {
+    const enriched = await Promise.all(itemList.map((item) => TextEditor.enrichHTML(item.id)));
+    for (const [item, html] of itemList.map((item, i) => [item, enriched[i]])) {
       description += '<li class="item-entry flexcol" data-item-id="' + item.name + '">';
       description += '<div class="item flexrow">';
-      description += await TextEditor.enrichHTML(item.id);
+      description += html;
       description += '</div></li>';
     }
     description += '</ol></div>';
@@ -405,7 +405,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   static _generateAbilities(event) {
     event.preventDefault();
-    new HVCharacterCreator({
+    void new HVCharacterCreator({
       actor: this.actor,
       top: (this.position.top ?? 0) + 40,
       left: (this.position.left ?? 0) + ((this.position.width ?? 0) - 400) / 2,
@@ -420,7 +420,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     };
 
     const content = await renderTemplate('systems/helveczia/templates/actor/dialogs/choose-origin.hbs', templateData);
-    DialogV2.wait({
+    await DialogV2.wait({
       classes: ['helveczia'],
       window: {
         title: 'HV.ChooseOriginClass',
@@ -433,10 +433,14 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
           icon: 'fas fa-check',
           label: 'HV.Confirm',
           action: 'submit',
-          callback: async (html) => {
-            const people = html?.currentTarget?.querySelector('#orig option:checked').text;
-            const profession = html?.currentTarget?.querySelector('#class option:checked').text;
-            HVCharacterCreator.setOrigins(this.actor, people, profession);
+          callback: async (html: MouseEvent) => {
+            const people = (
+              (html?.currentTarget as HTMLElement)?.querySelector('#orig option:checked') as HTMLOptionElement
+            )?.text;
+            const profession = (
+              (html?.currentTarget as HTMLElement)?.querySelector('#class option:checked') as HTMLOptionElement
+            )?.text;
+            await HVCharacterCreator.setOrigins(this.actor, people, profession);
           },
         },
       ],
@@ -456,7 +460,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       'systems/helveczia/templates/actor/dialogs/choose-specialism.hbs',
       templateData,
     );
-    DialogV2.wait({
+    await DialogV2.wait({
       classes: ['helveczia'],
       window: {
         title: `${game.i18n.localize('HV.Choose')} ${game.i18n.localize('HV.Specialism')}`,
@@ -469,9 +473,11 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
           icon: 'fas fa-check',
           label: 'HV.Confirm',
           action: 'submit',
-          callback: async (html) => {
-            const specialism = html?.currentTarget?.querySelector('#specialism option:checked').text;
-            HVCharacterCreator.setSpecialism(this.actor, specialism);
+          callback: async (html: MouseEvent) => {
+            const specialism = (
+              (html?.currentTarget as HTMLElement)?.querySelector('#specialism option:checked') as HTMLOptionElement
+            )?.text;
+            await HVCharacterCreator.setSpecialism(this.actor, specialism);
           },
         },
       ],
@@ -498,13 +504,11 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     event.preventDefault();
     const actorId = button?.dataset?.actorId;
     const title = `${game.i18n.localize('HV.RollVirtue')}`;
-    const formula = `${this.actor.system.origVirtue}`.match(/(\dd\d[\+\-]?\d*)/g)
-      ? this.actor.system.origVirtue
-      : '3d6';
+    const formula = `${this.actor.system.origVirtue}`.match(/(\dd\d[+-]?\d*)/g) ? this.actor.system.origVirtue : '3d6';
     const content = await renderTemplate('systems/helveczia/templates/actor/dialogs/roll-virtue.hbs', {
       formula: formula,
     });
-    DialogV2.wait({
+    await DialogV2.wait({
       classes: ['helveczia'],
       window: {
         title: title,
@@ -516,9 +520,10 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
           icon: 'fas fa-check',
           label: 'HV.Roll',
           action: 'submit',
-          callback: async (html) => {
+          callback: async (html: MouseEvent) => {
             const actor = game.actors?.get(actorId);
-            const rollFormula = html?.currentTarget?.querySelector('#formula').value;
+            const rollFormula = ((html?.currentTarget as HTMLElement)?.querySelector('#formula') as HTMLInputElement)
+              ?.value;
             const rollData = {
               actor: actor,
               roll: {
@@ -695,7 +700,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   // This is marked as private because there's no real need
   // for subclasses or external hooks to mess with it directly
-  #dragDrop;
+  readonly #dragDrop;
 
   /**
    * Create drag-and-drop workflow handlers for this Application
@@ -719,7 +724,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   onDropAllow(_actor, data): boolean {
     // Prevent folders being dragged onto the sheet
-    return !(data.type === 'Folder');
+    return data.type !== 'Folder';
   }
 
   async _onDropItem(event, item) {
@@ -731,7 +736,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     const containerId = sourceElement?.dataset?.containerId || dataTransferred['from'];
     if (containerId) {
       const container = this.actor.items.find((i) => i.type === 'container' && i.id === containerId);
-      if (container) ContainerSheet._removeItemById(container, item.id);
+      if (container) await ContainerSheet._removeItemById(container, item.id);
     }
 
     // Handle item sorting within the same Actor
@@ -754,8 +759,8 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
    * @returns {Promise<Item[]>}
    * @private
    */
-  async _onDropItemCreate(itemData, _event) {
-    itemData = itemData instanceof Array ? itemData : [itemData];
+  _onDropItemCreate(itemData, _event) {
+    itemData = Array.isArray(itemData) ? itemData : [itemData];
     return this.actor.createEmbeddedDocuments('Item', itemData);
   }
 
@@ -769,7 +774,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     } else return console.warn('Could not find document class');
   }
 
-  static async _onEditImage(_event, target) {
+  static _onEditImage(_event, target) {
     const attr = target.dataset.edit;
     const current = foundry.utils.getProperty(this.document, attr);
     const { img } = this.document.constructor.getDefaultArtwork?.(this.document.toObject()) ?? {};
