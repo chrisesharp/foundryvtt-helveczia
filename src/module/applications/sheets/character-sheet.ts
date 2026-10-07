@@ -245,77 +245,8 @@ export class HVCharacterSheet extends HVActorSheet {
   /** @override */
   async _onDropItem(event: DragEvent, item: Item): Promise<unknown> {
     log.debug('_onDropItem() | ', event, item);
-    let shouldContinue = true;
-    let position = 'mount';
-    switch (item?.type) {
-      case 'people':
-        shouldContinue = await this._removePeoples(item);
-        log.debug('_onDropItem() | should continue?:', shouldContinue);
-        break;
-      case 'class':
-        shouldContinue = await this._removeClasses(item);
-        log.debug('_onDropItem() | should continue?:', shouldContinue);
-        break;
-      case 'skill':
-        if (this.actor.items.getName(item.name)) {
-          log.debug('_onDropItem() | already got this skill.');
-          return;
-        }
-        if (this.actor.system.skills.length == this.actor.system.maxskills) {
-          return ui.notifications.error(game.i18n.localize('HV.errors.fullSkills'));
-        }
-        if (item.system.subtype === 'magical' && !(this.actor.isCleric() || this.actor.isStudent())) {
-          return ui.notifications.error(game.i18n.localize('HV.errors.notMagical'));
-        }
-        if (item.system.subtype === 'vagabond' && !this.actor.isVagabond()) {
-          return ui.notifications.error(game.i18n.localize('HV.errors.notVagabond'));
-        }
-        if ((item.system.subtype === 'craft' || item.system.subtype === 'science') && this.actor.isVagabond()) {
-          return ui.notifications.error(game.i18n.localize('HV.errors.areVagabond'));
-        }
-        break;
-      case 'spell':
-        if (item.system.class === 'cleric') {
-          if (!this.actor.isCleric()) {
-            return ui.notifications.error(game.i18n.localize('HV.errors.notCleric'));
-          }
-          if (this.actor.isLowVirtue()) {
-            return ui.notifications.error(game.i18n.localize('HV.errors.lowVirtue'));
-          }
-        } else if (item.system.class === 'student') {
-          if (!this.actor.isStudent()) {
-            return ui.notifications.error(game.i18n.localize('HV.errors.notStudent'));
-          }
-          if (this.actor.isHighVirtue()) {
-            return ui.notifications.error(game.i18n.localize('HV.errors.highVirtue'));
-          }
-        }
-        const level = Number.parseInt(item.system.level);
-        const spellSlots = this.actor.getSpellSlots();
-        // console.log(`spellSlots: ${spellSlots[level-1]}, level:${level},spells.length:${this.actor.system.spells[level-1].length}`, this.actor.system.spells)
-        if (this.actor.system.spells[level - 1].length >= spellSlots[level - 1]) {
-          return ui.notifications.error(game.i18n.format('HV.errors.maxSpells', { level: level }));
-        }
-        break;
-      case 'weapon':
-      case 'armour':
-      case 'book':
-      case 'possession':
-        const capacitySlots = this._calculateAvailableSlots();
-        log.debug('_onDropItem() | carrying capacity:', capacitySlots);
-        log.debug('_onDropItem() | item encumbrance:', item.system.encumbrance);
-        if (capacitySlots.worn >= item.system.encumbrance) {
-          position = 'worn';
-        } else {
-          //if (capacitySlots.carried >= item.system.encumbrance) {
-          position = 'carried';
-        }
-        log.debug('_onDropItem() | should continue?:', shouldContinue);
-        break;
-      case 'container':
-        break;
-    }
-    if (shouldContinue) {
+    const result = await this._determineDroppedType(item);
+    if (result.shouldContinue) {
       const items = (await super._onDropItem(event, item)) as HVItem[];
       const createdItem = items?.length ? items[0] : null;
       log.debug('_onDropItem() | created item:', createdItem);
@@ -326,20 +257,111 @@ export class HVCharacterSheet extends HVActorSheet {
           case 'book':
           case 'possession':
           case 'container':
-            createdItem.setFlag('helveczia', 'position', position);
-            createdItem.unsetFlag('helveczia', 'in-container');
-            log.debug(`_onDropItem() | set position of item to ${position}`);
+            await createdItem.setFlag('helveczia', 'position', result.position);
+            await createdItem.unsetFlag('helveczia', 'in-container');
+            log.debug(`_onDropItem() | set position of item to ${result.position}`);
             break;
           case 'spell':
             await createdItem.createChatMessage(this.actor, 'HV.SpellMemorize');
             break;
           case 'class':
             this.tabGroups['primary'] = this._getDefaultTab();
-            this.render();
+            await this.render();
             break;
         }
       }
+      return items;
     }
+  }
+
+  async _determineDroppedType(item: Item): Promise<{ position: string; shouldContinue: boolean }> {
+    const result = {
+      position: 'mount',
+      shouldContinue: true,
+    };
+    switch (item?.type) {
+      case 'people':
+        result.shouldContinue = await this._removePeoples(item);
+        break;
+      case 'class':
+        result.shouldContinue = await this._removeClasses(item);
+        break;
+      case 'skill':
+        result.shouldContinue = await this._determineDroppedSkill(item);
+        break;
+      case 'spell':
+        result.shouldContinue = await this._determineDroppedSpell(item);
+        break;
+      case 'weapon':
+      case 'armour':
+      case 'book':
+      case 'possession': {
+        const capacitySlots = this._calculateAvailableSlots();
+        log.debug('_onDropItem() | carrying capacity:', capacitySlots);
+        log.debug('_onDropItem() | item encumbrance:', item.system.encumbrance);
+        if (capacitySlots.worn >= item.system.encumbrance) {
+          result.position = 'worn';
+        } else {
+          result.position = 'carried';
+        }
+        break;
+      }
+    }
+    log.debug('_onDetermineDroppedType() | should continue?:', result.shouldContinue);
+    return result;
+  }
+
+  async _determineDroppedSkill(item: Item): Promise<boolean> {
+    if (this.actor.items.getName(item.name)) {
+      log.debug('_onDropItem() | already got this skill.');
+      return false;
+    }
+    if (this.actor.system.skills.length == this.actor.system.maxskills) {
+      await ui.notifications.error(game.i18n.localize('HV.errors.fullSkills'));
+      return false;
+    }
+    if (item.system.subtype === 'magical' && !(this.actor.isCleric() || this.actor.isStudent())) {
+      await ui.notifications.error(game.i18n.localize('HV.errors.notMagical'));
+      return false;
+    }
+    if (item.system.subtype === 'vagabond' && !this.actor.isVagabond()) {
+      await ui.notifications.error(game.i18n.localize('HV.errors.notVagabond'));
+      return false;
+    }
+    if ((item.system.subtype === 'craft' || item.system.subtype === 'science') && this.actor.isVagabond()) {
+      await ui.notifications.error(game.i18n.localize('HV.errors.areVagabond'));
+      return false;
+    }
+    return true;
+  }
+
+  async _determineDroppedSpell(item: Item): Promise<boolean> {
+    if (item.system.class === 'cleric') {
+      if (!this.actor.isCleric()) {
+        await ui.notifications.error(game.i18n.localize('HV.errors.notCleric'));
+        return false;
+      }
+      if (this.actor.isLowVirtue()) {
+        await ui.notifications.error(game.i18n.localize('HV.errors.lowVirtue'));
+        return false;
+      }
+    } else if (item.system.class === 'student') {
+      if (!this.actor.isStudent()) {
+        await ui.notifications.error(game.i18n.localize('HV.errors.notStudent'));
+        return false;
+      }
+      if (this.actor.isHighVirtue()) {
+        await ui.notifications.error(game.i18n.localize('HV.errors.highVirtue'));
+        return false;
+      }
+    }
+    const level = Number.parseInt(item.system.level);
+    const spellSlots = this.actor.getSpellSlots();
+    if (this.actor.system.spells[level - 1].length >= spellSlots[level - 1]) {
+      await ui.notifications.error(game.i18n.format('HV.errors.maxSpells', { level: level }));
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -348,7 +370,7 @@ export class HVCharacterSheet extends HVActorSheet {
    * @param source
    * @returns
    */
-  async _sortPossession(event, source): Promise<undefined> {
+  async _sortPossession(event, source): Promise<void> {
     const positionTarget = event.target.closest('[data-column]');
     const columnID = positionTarget ? positionTarget.dataset.column : 'mount';
     let containerTarget;
@@ -376,7 +398,7 @@ export class HVCharacterSheet extends HVActorSheet {
   }
 
   /** @override */
-  _onSortItem(event, itemData): Promise<HVItem[]> | undefined {
+  _onSortItem(event, itemData): Promise<HVItem[] | void> | undefined {
     const source = this.actor.items.get(itemData._id);
 
     switch (source?.type) {

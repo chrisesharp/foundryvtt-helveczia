@@ -747,7 +747,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     return this._onDropItemCreate(item, event);
   }
 
-  _onSortItem(_event, _itemData): Promise<HVItem[]> | undefined {
+  _onSortItem(_event, _itemData): Promise<HVItem[] | void> | undefined {
     // Noop for abstract class
     return;
   }
