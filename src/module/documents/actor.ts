@@ -87,20 +87,28 @@ export class HVActor extends Actor {
     // Recalculate .mod for attack and saves after effects may have modified .base or .bonus.
     const data = this.system;
     if (data.attack) {
-      for (const type of ['melee', 'ranged', 'cc'] as const) {
-        const atk = data.attack[type];
-        if (atk) atk.mod = atk.base + atk.bonus;
-      }
+      this._applyAttackEffects(data.attack);
     }
     if (data.saves) {
-      const hasCustomSaves =
-        this.type === 'npc' &&
-        (data.stats?.saves?.bravery || data.stats?.saves?.deftness || data.stats?.saves?.temptation);
-      if (!hasCustomSaves) {
-        for (const saveType of Object.keys(data.saves)) {
-          const save = data.saves[saveType];
-          if (save) save.mod = save.base + save.bonus;
-        }
+      this._applySaveEffects(data);
+    }
+  }
+
+  _applyAttackEffects(attack: any): void {
+    for (const type of ['melee', 'ranged', 'cc'] as const) {
+      const atk = attack[type];
+      if (atk) atk.mod = atk.base + atk.bonus;
+    }
+  }
+
+  _applySaveEffects(data: any): void {
+    const hasCustomSaves =
+      this.type === 'npc' &&
+      (data.stats?.saves?.bravery || data.stats?.saves?.deftness || data.stats?.saves?.temptation);
+    if (!hasCustomSaves) {
+      for (const saveType of Object.keys(data.saves)) {
+        const save = data.saves[saveType];
+        if (save) save.mod = save.base + save.bonus;
       }
     }
   }
@@ -422,27 +430,17 @@ export class HVActor extends Actor {
     // Apply defaults BEFORE calling super
     if (options.creation) {
       const defaultToken = source.type === 'party' ? CONFIG.HV.DEFAULT_PARTY : CONFIG.HV.DEFAULT_TOKEN;
-
       const disposition = source.type !== 'npc' ? CONST.TOKEN_DISPOSITIONS.FRIENDLY : CONST.TOKEN_DISPOSITIONS.HOSTILE;
-
-      // Set img default
-      if (!source.img) {
-        source.img = defaultToken;
-      }
-
-      // Set prototypeToken defaults
-      if (!source.prototypeToken) {
-        source.prototypeToken = {};
-      }
+      source.img ||= defaultToken;
+      source.prototypeToken ||= {};
 
       const pt = source.prototypeToken;
-      if (!pt.displayName) pt.displayName = CONST.TOKEN_DISPLAY_MODES.HOVER;
+      pt.displayName ||= CONST.TOKEN_DISPLAY_MODES.HOVER;
+      pt.disposition ||= disposition;
+      pt.texture ||= {};
+      pt.texture.src ||= defaultToken;
       if (pt.actorLink === undefined) pt.actorLink = true;
-      if (!pt.disposition) pt.disposition = disposition;
       if (pt.lockRotation === undefined) pt.lockRotation = true;
-
-      if (!pt.texture) pt.texture = {};
-      if (!pt.texture.src) pt.texture.src = defaultToken;
     }
 
     // NOW call super - it will see your defaults are already set
@@ -526,36 +524,8 @@ export class HVActor extends Actor {
     const dmg: string[] = [];
     const mod: number[] = [];
     const item = data?.itemId ? this.items.get(`${data.itemId}`) : undefined;
-    switch (data.roll) {
-      case 'attr':
-        data.resource = 'scores';
-        break;
-      case 'save':
-        data.resource = 'saves';
-        if (this.isHungarian()) {
-          const fated = await PeopleItem.enableHungarianFate(this);
-          if (data.attr === fated.attr) mod.push(fated.mod);
-        }
-        break;
-      case 'skill':
-        data.resource = '';
-        mod.push(this.system.level);
-        break;
-      case 'weapon':
-        data.resource = '';
-        if (item) {
-          dmg.push((item.system as WeaponData).damage);
-        } else {
-          dmg.push('1d3');
-        }
-        break;
-      case 'attack':
-        data.resource = 'attack';
-        if (data.attr !== 'cc') dmg.push('1d3');
-        break;
-      default:
-        break;
-    }
+    await this._determineRollResource(data, item, mod, dmg);
+
     const attribute = data.attr;
     const resource = data.resource;
     if (resource !== '' && attribute) {
@@ -598,6 +568,39 @@ export class HVActor extends Actor {
       }
     }
     return { mods: mod, longName: longName, dmg: dmg, item: item as any };
+  }
+
+  async _determineRollResource(data: any, item: Item, mod: number[], dmg: string[]): Promise<void> {
+    switch (data.roll) {
+      case 'attr':
+        data.resource = 'scores';
+        break;
+      case 'save':
+        data.resource = 'saves';
+        if (this.isHungarian()) {
+          const fated = await PeopleItem.enableHungarianFate(this);
+          if (data.attr === fated.attr) mod.push(fated.mod);
+        }
+        break;
+      case 'skill':
+        data.resource = '';
+        mod.push(this.system.level);
+        break;
+      case 'weapon':
+        data.resource = '';
+        if (item) {
+          dmg.push((item.system as WeaponData).damage);
+        } else {
+          dmg.push('1d3');
+        }
+        break;
+      case 'attack':
+        data.resource = 'attack';
+        if (data.attr !== 'cc') dmg.push('1d3');
+        break;
+      default:
+        break;
+    }
   }
 
   async getItemRollMod(itemID: string): Promise<string> {
