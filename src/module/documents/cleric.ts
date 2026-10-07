@@ -114,8 +114,8 @@ export class Cleric {
       return;
     }
     await Promise.all(
-      Object.keys(clericSpecialisms).map((s) => {
-        actor?.setFlag('helveczia', clericSpecialisms[s].flag, false);
+      Object.keys(clericSpecialisms).map(async (s) => {
+        await actor?.setFlag('helveczia', clericSpecialisms[s].flag, false);
         return deleteLockedSkill(actor, game.i18n.localize(`HV.specialisms.cleric.${s}`), 'magical');
       }),
     );

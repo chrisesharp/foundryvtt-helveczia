@@ -12,10 +12,12 @@ export class ContainerItem extends BaseItem {
   /** @override */
   static async getSheetData(sheetData, itemSheet) {
     sheetData.coins = CONFIG.HV.coins;
-    sheetData.contents = [];
-    for (const item of itemSheet.item.system?.contents) {
-      sheetData.contents.push({ id: item.id, link: await TextEditor.enrichHTML(item.id) });
-    }
+    sheetData.contents = await Promise.all(
+      (itemSheet.item.system?.contents ?? []).map(async (item) => ({
+        id: item.id,
+        link: await TextEditor.enrichHTML(item.id),
+      })),
+    );
     return sheetData;
   }
 

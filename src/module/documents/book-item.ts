@@ -11,7 +11,7 @@ export class BookItem extends BaseItem {
   }
 
   static async preCreate(data: DeepPartial<Item['_source']>, _options: DocumentModificationContext, _user: any) {
-    foundry.utils.mergeObject(
+    await foundry.utils.mergeObject(
       data,
       {
         img: BookItem.DEFAULT_TOKEN,
@@ -24,10 +24,10 @@ export class BookItem extends BaseItem {
   static async getSheetData(sheetData, itemSheet) {
     sheetData.coins = CONFIG.HV.coins;
     // sheetData.spells = item.object.system?.spells;
-    sheetData.spells = [];
-    for (const spell of itemSheet.item.system?.spells) {
-      sheetData.spells.push({ id: spell.id, link: await TextEditor.enrichHTML(spell.id) });
-    }
+    const spells = itemSheet.item.system?.spells ?? [];
+    sheetData.spells = await Promise.all(
+      spells.map(async (spell) => ({ id: spell.id, link: await TextEditor.enrichHTML(spell.id) })),
+    );
     return sheetData;
   }
 
