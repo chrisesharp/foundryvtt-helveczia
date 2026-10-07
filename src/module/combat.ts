@@ -7,72 +7,80 @@ let combatKeyListenersAdded = false;
 export class HVCombat extends Combat {
   static async format(combatTracker, html, data) {
     if (data.combat) {
-      const numCombatants = data.combat.combatants.size;
-      const turnFraction = 1 / numCombatants;
-
-      const current = data.combat?.current ?? 0;
       const flagUpdates: Promise<unknown>[] = [];
       for (const ct of html.querySelectorAll('.combatant')) {
-        const id = ct.dataset.combatantId;
-        const cmbtant = combatTracker.viewed.combatants.get(id) as Combatant;
-        const actor = cmbtant.actor;
-        const initBonus = (cmbtant.getFlag('helveczia', 'init-bonus') as number) ?? 0;
-        const initiativeCtrl = ct.querySelector('.token-initiative');
-        const currentTurn = current.round + current.turn * turnFraction;
-        log.debug(`HVCombat.format() | currentTurn = ${currentTurn}`);
-        const toRoll = ct.querySelectorAll('.combatant-control.roll').length > 0;
-        if (actor !== null) {
-          if (game.user?.isGM && toRoll) {
-            initiativeCtrl.style.display = 'flex';
-            initiativeCtrl.innerHTML =
-              `<div class='init-bonus-ctrl'>
-                <a class='combatant-control init-change'><i class='init-mod fas fa-plus fa-xs' title="increase bonus"></i><i class='init-mod fas fa-minus fa-xs' style='display:none;' title="decrease bonus"></i></a>
-                <a class='combatant-control init' style="color:white" title="additional initiative bonus">${initBonus}</a>
-              </div>` + initiativeCtrl.innerHTML;
-          }
-          const reloadTrigger = actor.getFlag('helveczia', 'reload-trigger') as number;
-          if (reloadTrigger > 0 && game.user?.isGM) {
-            log.debug(`HVCombat.format() | id:${id} reloadTrigger = ${reloadTrigger}`);
-            flagUpdates.push(
-              actor
-                .unsetFlag('helveczia', 'reload-trigger')
-                .then(() =>
-                  cmbtant.setFlag('helveczia', 'reloaded', currentTurn + Number.parseFloat(`${reloadTrigger}`)),
-                )
-                .then(() =>
-                  log.debug(
-                    `HVCombat.format() |id:${id} unset reload-trigger and set reloaded to ${cmbtant.getFlag(
-                      'helveczia',
-                      'reloaded',
-                    )}`,
-                  ),
-                ),
-            );
-          }
-        }
-        let reload = cmbtant.getFlag('helveczia', 'reloaded') as number;
-        if (!Number.isNaN(reload)) {
-          reload = reload - currentTurn;
-          log.debug(`HVCombat.format() |id:${id} reload = ${reload}`);
-          // Append colored flag
-          if (reload >= 0) {
-            const index = Math.min(2, Math.round(reload));
-            const colour = colours[index];
-            const controls = ct.querySelector('.combatant-controls');
-            controls.innerHTML =
-              `<a class='combatant-control flag' style='color:${colour}' title="${reload.toFixed(
-                1,
-              )} turns to reload."><i class='fas fa-redo'></i></a>` + controls.innerHTML;
-          } else if (game.user?.isGM) {
-            flagUpdates.push(cmbtant.unsetFlag('helveczia', 'reloaded'));
-            log.debug(`HVCombat.format() |id:${id} unset reloaded`);
-          }
-        }
+        HVCombat._setCombatantControls(combatTracker, data.combat, ct, flagUpdates);
       }
       await Promise.all(flagUpdates);
     }
 
     HVCombat.addListeners(combatTracker, html, data);
+  }
+
+  static _setCombatantControls(
+    combatTracker: any,
+    combat: any,
+    ct: HTMLElement,
+    flagUpdates: Promise<unknown>[],
+  ): void {
+    const id = ct.dataset.combatantId;
+    const toRoll = ct.querySelectorAll('.combatant-control.roll').length > 0;
+    const initiativeCtrl = ct.querySelector('.token-initiative') as HTMLElement | null;
+    const cmbtant = combatTracker.viewed.combatants.get(id) as Combatant;
+    const initBonus = (cmbtant.getFlag('helveczia', 'init-bonus') as number) ?? 0;
+    const actor = cmbtant.actor;
+    const numCombatants = combat.combatants.size;
+    const turnFraction = 1 / numCombatants;
+    const current = combat?.current ?? 0;
+    const currentTurn = current.round + current.turn * turnFraction;
+    if (game.user?.isGM && toRoll) {
+      initiativeCtrl.style.display = 'flex';
+      initiativeCtrl.innerHTML =
+        `<div class='init-bonus-ctrl'>
+                <a class='combatant-control init-change'><i class='init-mod fas fa-plus fa-xs' title="increase bonus"></i><i class='init-mod fas fa-minus fa-xs' style='display:none;' title="decrease bonus"></i></a>
+                <a class='combatant-control init' style="color:white" title="additional initiative bonus">${initBonus}</a>
+              </div>` + initiativeCtrl.innerHTML;
+    }
+    if (actor !== null) {
+      const reloadTrigger = actor.getFlag('helveczia', 'reload-trigger') as number;
+      if (reloadTrigger > 0 && game.user?.isGM) {
+        log.debug(`HVCombat.format() | id:${id} reloadTrigger = ${reloadTrigger}`);
+        flagUpdates.push(
+          actor
+            .unsetFlag('helveczia', 'reload-trigger')
+            .then(() => cmbtant.setFlag('helveczia', 'reloaded', currentTurn + Number.parseFloat(`${reloadTrigger}`)))
+            .then(() =>
+              log.debug(
+                `HVCombat.format() |id:${id} unset reload-trigger and set reloaded to ${cmbtant.getFlag(
+                  'helveczia',
+                  'reloaded',
+                )}`,
+              ),
+            ),
+        );
+      }
+      let reload = cmbtant.getFlag('helveczia', 'reloaded') as number;
+      if (!Number.isNaN(reload)) {
+        reload = reload - currentTurn;
+        log.debug(`HVCombat.format() |id:${id} reload = ${reload}`);
+        if (reload >= 0) {
+          HVCombat._appendReloadFlag(ct, reload);
+        } else if (game.user?.isGM) {
+          flagUpdates.push(cmbtant.unsetFlag('helveczia', 'reloaded'));
+          log.debug(`HVCombat.format() |id:${id} unset reloaded`);
+        }
+      }
+    }
+  }
+
+  static _appendReloadFlag(ct: HTMLElement, reload: number) {
+    const index = Math.min(2, Math.round(reload));
+    const colour = colours[index];
+    const controls = ct.querySelector('.combatant-controls');
+    controls.innerHTML =
+      `<a class='combatant-control flag' style='color:${colour}' title="${reload.toFixed(
+        1,
+      )} turns to reload."><i class='fas fa-redo'></i></a>` + controls.innerHTML;
   }
 
   static addListeners(combatTracker, html, data) {
