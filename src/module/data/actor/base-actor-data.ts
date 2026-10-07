@@ -141,36 +141,42 @@ export class BaseActorData extends TypeDataModel {
    * @returns {object}       Migrated source data
    */
   static migrateData(source: any): any {
-    // Top-level numeric fields
     coerceNum(source, 'virtue', 'initiative', 'maxskills', 'level');
 
-    // hp sub-object
     if (source.hp) coerceNum(source.hp, 'value', 'max', 'hd');
 
-    // scores sub-objects
     if (source.scores) {
-      for (const ability of ['str', 'dex', 'con', 'int', 'wis', 'cha']) {
-        if (source.scores[ability]) coerceNum(source.scores[ability], 'value', 'base');
-      }
+      BaseActorData.migrateScores(source);
     }
 
-    // saves sub-objects
     if (source.saves) {
-      for (const save of ['bravery', 'deftness', 'temptation']) {
-        if (source.saves[save]) coerceNum(source.saves[save], 'base', 'bonus', 'mod');
-      }
+      BaseActorData.migrateSaves(source);
     }
 
-    // attack sub-objects
     if (source.attack) {
-      for (const type of ['melee', 'ranged', 'cc']) {
-        if (source.attack[type]) coerceNum(source.attack[type], 'base', 'bonus', 'mod');
-      }
+      BaseActorData.migrateAttacks(source);
     }
 
-    // wealth sub-object
     if (source.wealth) coerceNum(source.wealth, 'th', 'pf', 'gr');
 
     return source;
+  }
+
+  static migrateScores(source: any) {
+    for (const ability of ['str', 'dex', 'con', 'int', 'wis', 'cha']) {
+      if (source.scores[ability]) coerceNum(source.scores[ability], 'value', 'base');
+    }
+  }
+
+  static migrateSaves(source: any) {
+    for (const save of ['bravery', 'deftness', 'temptation']) {
+      if (source.saves[save]) coerceNum(source.saves[save], 'base', 'bonus', 'mod');
+    }
+  }
+
+  static migrateAttacks(source: any) {
+    for (const type of ['melee', 'ranged', 'cc']) {
+      if (source.attack[type]) coerceNum(source.attack[type], 'base', 'bonus', 'mod');
+    }
   }
 }
