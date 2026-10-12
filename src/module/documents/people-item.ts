@@ -17,6 +17,7 @@ type PeoplesEntry = {
 };
 
 export class PeopleItem extends BaseItem {
+  static readonly DEFAULT_TOKEN = DEFAULT_TOKEN;
   static readonly races: {
     [key: string]: PeoplesEntry;
   } = {

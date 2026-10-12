@@ -2,6 +2,17 @@ import { HVActor } from '../documents/actor';
 import { HVItemData } from '../types/item-types';
 
 export class HVItem extends Item {
+  /**
+   * In Foundry V14 the `img` field's initial value comes from getDefaultArtwork() when the
+   * document is constructed, before _preCreate runs. Changing createData inside _preCreate
+   * does not change what gets persisted, so per-type default images must be supplied here.
+   * @override
+   */
+  static getDefaultArtwork(itemData: { type?: string }): { img: string } {
+    const img = CONFIG.HV?.itemClasses?.[itemData?.type ?? '']?.DEFAULT_TOKEN;
+    return img ? { img } : super.getDefaultArtwork(itemData);
+  }
+
   protected async _preCreate(
     data: DeepPartial<Item['_source']>,
     options: DocumentModificationContext,
@@ -11,9 +22,8 @@ export class HVItem extends Item {
     if (CONFIG.HV.itemClasses[this.type]) {
       await CONFIG.HV.itemClasses[this.type].preCreate(data, options, user);
     }
-    // Note: do NOT call this.updateSource(data) here. In Foundry V14, _preCreate operates on
-    // createData which is sent to the server as-is; updateSource only modifies the ephemeral
-    // temp document and has no effect on what gets persisted.
+    // Note: in Foundry V14 the pending document instance (not createData) is sent to the server,
+    // so changes to `data` here are not persisted. Default images are handled by getDefaultArtwork().
   }
 
   protected async _onCreate(

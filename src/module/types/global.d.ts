@@ -160,6 +160,8 @@ declare global {
   }
 
   declare class Item {
+    static DEFAULT_ICON: string;
+    static getDefaultArtwork(itemData: Record<string, unknown>): { img: string };
     name: string;
     type: string;
     id: string | null;

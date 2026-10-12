@@ -7,6 +7,9 @@ import { HVActorSheet } from '../applications/sheets/actor-sheet';
 const log = new Logger();
 
 export abstract class BaseItem {
+  /** Default image for newly created items of this type (see HVItem.getDefaultArtwork) */
+  static readonly DEFAULT_TOKEN?: string;
+
   static get documentName() {
     return '';
   }
