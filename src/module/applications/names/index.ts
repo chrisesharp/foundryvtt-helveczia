@@ -38,10 +38,10 @@ const nameMap = {
 export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
   // Allow static methods to access instance props (Foundry V14 action handler pattern)
   static [key: string]: any;
-  private readonly generatedName = '';
-  private readonly sex = 'male';
-  private readonly people = 'german';
-  private readonly helveczian = false;
+  private generatedName = '';
+  private sex = 'male';
+  private people = 'german';
+  private helveczian = false;
 
   static addControl(_object, html): void {
     const control = `
@@ -119,16 +119,25 @@ export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     });
   }
 
-  static async showDialog(options = {}): Promise<void> {
-    await new HVNameGenerator(options).render(true);
+  static async showDialog(options = {}): Promise<HVNameGenerator> {
+    const dialog = new HVNameGenerator(options);
+    await dialog.render(true);
+    return dialog;
   }
 
-  static randomName(event, _target) {
-    this.sex = event.currentTarget?.querySelector('#sex').value;
-    this.people = event.currentTarget?.querySelector('#people').value;
-    this.helveczian = event.currentTarget?.querySelector('[type=checkbox]').checked;
+  static async randomName(this: HVNameGenerator, event = null, _target = null) {
+    const root = this.element;
+    const sexSelect = root?.querySelector<HTMLSelectElement>('#sex') ?? event?.currentTarget?.querySelector('#sex');
+    const peopleSelect =
+      root?.querySelector<HTMLSelectElement>('#people') ?? event?.currentTarget?.querySelector('#people');
+    const helvCheck =
+      root?.querySelector<HTMLInputElement>('#helveczian, [type=checkbox]') ??
+      event?.currentTarget?.querySelector('[type=checkbox]');
+    this.sex = sexSelect?.value ?? this.sex;
+    this.people = peopleSelect?.value ?? this.people;
+    this.helveczian = helvCheck?.checked ?? this.helveczian;
     this.generatedName = HVNameGenerator.findName(this.sex, this.people, this.helveczian);
-    this.render(true);
+    return await this.render(true);
   }
   static findName(sex: string, people: string, helveczian: boolean): string {
     for (const r in PeopleItem.races) {
@@ -151,8 +160,8 @@ export class HVNameGenerator extends HandlebarsApplicationMixin(ApplicationV2) {
     return `${forename} ${surname}`;
   }
 
-  static async shareName(_event, _target) {
+  static async shareName(this: HVNameGenerator, _event = null, _target = null) {
     const content = `<h2 class='helveczia generated-name'>${this.generatedName}</h2>`;
-    await ChatMessage.create({ content: content });
+    return await ChatMessage.create({ content: content });
   }
 }

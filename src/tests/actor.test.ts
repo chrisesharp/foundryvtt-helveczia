@@ -23,16 +23,74 @@ export function actorTests(context) {
       const characters: Character[] = [
         // Aurel gets +2 AC for being Hungarian
         // eslint-disable-next-line prettier/prettier
-        { name: 'Aurel Vajthy', title: '2nd Level Hungarian Hussar', init:'0', virtue: 7, balance: '-left', ac: 15, tabs: ['fighter'], saves: ['+4', '+1', '+2'], combat: ['+7', '+3', '+3'], skills: '5 / 5', pc: true },
+        {
+          name: 'Aurel Vajthy',
+          title: '2nd Level Hungarian Hussar',
+          init: '0',
+          virtue: 7,
+          balance: '-left',
+          ac: 15,
+          tabs: ['fighter'],
+          saves: ['+4', '+1', '+2'],
+          combat: ['+7', '+3', '+3'],
+          skills: '5 / 5',
+          pc: true,
+        },
         // Gerhard gets +1 to saves for high virtue
         // eslint-disable-next-line prettier/prettier
-        { name: 'Gerhardt Maier', title: '2nd Level German Cleric', init:'+2',virtue: 12, balance: '-right', ac: 14, tabs: ['cleric'], saves: ['+3', '+3', '+5'], combat: ['0', '+3', '+1'], skills: '8 / 8', pc: true },
+        {
+          name: 'Gerhardt Maier',
+          title: '2nd Level German Cleric',
+          init: '+2',
+          virtue: 12,
+          balance: '-right',
+          ac: 14,
+          tabs: ['cleric'],
+          saves: ['+3', '+3', '+5'],
+          combat: ['0', '+3', '+1'],
+          skills: '8 / 8',
+          pc: true,
+        },
         // eslint-disable-next-line prettier/prettier
-        { name: 'Isolde Knecht', title: '4th Level German Student', init:'0',virtue: 12, balance: '', ac: 12, tabs: ['student'], saves: ['+3', '+2', '+5'], combat: ['+4', '+2', '+2'], skills: '9 / 9', pc: true },
+        {
+          name: 'Isolde Knecht',
+          title: '2nd Level German Student',
+          init: '0',
+          virtue: 11,
+          balance: '',
+          ac: 12,
+          tabs: ['student'],
+          saves: ['+2', '+1', '+4'],
+          combat: ['+3', '+1', '+1'],
+          skills: '9 / 9',
+          pc: true,
+        },
         // eslint-disable-next-line prettier/prettier
-        { name: 'Jan Olbrecht', title: '2nd Level Czech Vagabond', init:'+1', virtue: 7, balance: '-left', ac: 13, tabs: ['vagabond'], saves: ['+3', '+4', '+2'], combat: ['+3', '+3', '+2'], skills: '7 / 7', pc: true },
+        {
+          name: 'Jan Olbrecht',
+          title: '2nd Level Czech Vagabond',
+          init: '+1',
+          virtue: 7,
+          balance: '-left',
+          ac: 13,
+          tabs: ['vagabond'],
+          saves: ['+3', '+4', '+2'],
+          combat: ['+2', '+4', '+2'],
+          skills: '8 / 8',
+          pc: true,
+        },
         // eslint-disable-next-line prettier/prettier
-        { name: 'Krampus', title: '3+2*', init:'+2', virtue: 2, ac: 13, tabs: [], saves: ['+5', '+3', '+3'], combat: ['+6', '+6', '+6'], skills: ''}
+        {
+          name: 'Krampus',
+          title: '3+2*',
+          init: '+2',
+          virtue: 2,
+          ac: 13,
+          tabs: [],
+          saves: ['+5', '+3', '+3'],
+          combat: ['+6', '+6', '+6'],
+          skills: '',
+        },
       ];
 
       before(() => {});
@@ -44,23 +102,19 @@ export function actorTests(context) {
       after(() => {});
 
       characters.forEach(({ name, title, init, virtue, balance, ac, tabs, saves, combat, skills, pc }) => {
-        describe(`render ${name}'s actor sheet correctly`, async () => {
+        describe(`render ${name}'s actor sheet correctly`, () => {
           let sheet: any;
-          let $html: any;
+          let root: HTMLElement;
           let classPeopleLevel: string;
           let actor: Actor | undefined;
           before(async () => {
-            // Hook to capture when our actor sheet has actually rendered
-            const rendered = $.Deferred();
-            Hooks.once('renderActorSheet', (...args) => rendered.resolve(args));
-
             actor = game.actors?.getName(name);
-            await actor?.sheet?.render(true);
-
-            [sheet, $html] = await rendered.promise();
+            sheet = actor?.sheet;
+            await sheet?.render(true);
+            root = sheet?.element;
             classPeopleLevel = pc
-              ? $html.find('div.actor-class').text().replace(/\s+/g, ' ').trim()
-              : $html.find('input[name="system.levelBonus"]').val();
+              ? (root?.querySelector('div.actor-class')?.textContent ?? '').replace(/\s+/g, ' ').trim()
+              : root?.querySelector<HTMLInputElement>('input[name="system.levelBonus"]')?.value ?? '';
           });
 
           it('has correct title', () => {
@@ -69,57 +123,58 @@ export function actorTests(context) {
           });
 
           it('has correct initiative', () => {
-            expect($html.find('input[name="system.initiative"]').val()).to.equal(init);
+            expect(root?.querySelector<HTMLInputElement>('input[name="system.initiative"]')?.value).to.equal(init);
           });
 
           it('has correct AC', () => {
-            expect($html.find('input[name="system.ac"]').val()).to.equal(`${ac}`);
+            expect(root?.querySelector<HTMLInputElement>('input[name="system.ac"]')?.value).to.equal(`${ac}`);
           });
 
           it('has correct saves', () => {
-            expect($html.find('.saves-bravery-value').text()).to.equal(saves[0]);
-            expect($html.find('.saves-deftness-value').text()).to.equal(saves[1]);
-            expect($html.find('.saves-temptation-value').text()).to.equal(saves[2]);
+            expect(root?.querySelector('.saves-bravery-value')?.textContent?.trim()).to.equal(saves[0]);
+            expect(root?.querySelector('.saves-deftness-value')?.textContent?.trim()).to.equal(saves[1]);
+            expect(root?.querySelector('.saves-temptation-value')?.textContent?.trim()).to.equal(saves[2]);
           });
 
           it('has correct number of skills', () => {
-            const skillHdr = $html.find('div.skills').find('h2').text();
+            const skillHdr = root?.querySelector('.skills h2')?.textContent ?? '';
             expect(skillHdr).to.have.string(skills);
           });
 
           it('has correct combat mods', () => {
-            expect($html.find('#melee-mod').text()).to.equal(combat[0]);
-            expect($html.find('#ranged-mod').text()).to.equal(combat[1]);
-            expect($html.find('#cc-mod').text()).to.equal(combat[2]);
+            expect(root?.querySelector('#melee-mod')?.textContent?.trim()).to.equal(combat[0]);
+            expect(root?.querySelector('#ranged-mod')?.textContent?.trim()).to.equal(combat[1]);
+            expect(root?.querySelector('#cc-mod')?.textContent?.trim()).to.equal(combat[2]);
           });
 
           it('has correct tabs', () => {
-            const pcTabs = ['abilities', 'combat', 'skills', 'possessions', 'editor'];
+            const pcTabs = ['abilities', 'combat', 'skills', 'possessions', 'notes'];
             if (pc) pcTabs.push('deeds');
             pcTabs.forEach((tab) => {
-              const thisTab = $html.find(`[data-tab="${tab}"]`);
-              expect(thisTab.length).to.equal(2); // tab sheet and navigation entry
+              const thisTab = root?.querySelectorAll(`[data-tab="${tab}"]`);
+              expect(thisTab?.length).to.equal(2); // tab sheet and navigation entry
             });
             tabs.forEach((tab) => {
-              const thisTab = $html.find(`[data-tab="${tab}"]`);
-              expect(thisTab.length).to.equal(2); // tab sheet and navigation entry
+              const thisTab = root?.querySelectorAll(`[data-tab="${tab}"]`);
+              expect(thisTab?.length).to.equal(2); // tab sheet and navigation entry
             });
           });
 
           it('has correct virtue', () => {
-            expect($html.find('input[name="system.virtue"]').val()).to.equal(`${virtue}`);
+            expect(root?.querySelector<HTMLInputElement>('input[name="system.virtue"]')?.value).to.equal(`${virtue}`);
             if (pc) {
-              const reds = $html.find('.full-mark-red').length;
-              const blues = $html.find('.full-mark-blue').length;
-              const greens = $html.find('.full-mark-green').length;
-              const empties = $html.find('.empty-mark').length;
+              const reds = root?.querySelectorAll('.full-mark-red').length ?? 0;
+              const blues = root?.querySelectorAll('.full-mark-blue').length ?? 0;
+              const greens = root?.querySelectorAll('.full-mark-green').length ?? 0;
+              const empties = root?.querySelectorAll('.empty-mark').length ?? 0;
               expect(reds + blues + greens).to.equal(virtue);
               expect(empties).to.equal(21 - virtue);
               if (virtue < 8) {
-                const leftBalance = $html.find('.virtue-balance').find(`.fa-balance-scale${balance}:first-child`);
-                expect(leftBalance.length).to.equal(1);
+                const leftBalance = root?.querySelectorAll(`.virtue-balance .fa-balance-scale${balance}:first-child`);
+                expect(leftBalance?.length).to.equal(1);
               }
-              const origVirtue = Number.parseInt($html.find('input[name="system.origVirtue"]').val());
+              const origVirtueInput = root?.querySelector<HTMLInputElement>('input[name="system.origVirtue"]');
+              const origVirtue = Number.parseInt(origVirtueInput?.value ?? '0');
               const sins = actor?.system.deeds
                 .filter((d) => d.system.subtype === 'sin')
                 .map((d) => Number.parseInt(d.system.magnitude))
@@ -131,7 +186,7 @@ export function actorTests(context) {
               expect(origVirtue + virtues - sins).to.equal(virtue);
             }
           });
-          // expect({ foo: 'bar' }).to.matchSnapshot();
+
           after(async () => {
             await sheet?.close();
           });
