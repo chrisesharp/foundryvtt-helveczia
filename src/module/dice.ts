@@ -137,7 +137,37 @@ export class HVDice {
       dmgRoll = await new Roll(data.roll.dmg.join('+'), data).evaluate();
     }
 
-    // Convert the roll to a chat message and return the roll
+    HVDice.setRollMode(form, data, chatData);
+
+    templateData.result = data.roll.dmg?.length
+      ? await HVDice.digestAttackResult(data, roll)
+      : HVDice.digestResult(data, roll);
+
+    templateData.rollHV = await roll.render();
+    templateData.dmgResult = dmgRoll?.total;
+    templateData.rollDamage = dmgRoll ? await dmgRoll.render() : undefined;
+
+    chatData.content = await renderTemplate(template, templateData);
+
+    if (game['dice3d']) {
+      await HVDice.showDSN(roll, chatData, templateData, dmgRoll);
+    } else {
+      chatData.sound = CONFIG.sounds.dice;
+    }
+
+    await ChatMessage.create(chatData);
+    return roll;
+  }
+
+  private static async showDSN(roll: Roll<any>, chatData: any, templateData: any, dmgRoll: Roll<any>) {
+    await game['dice3d'].showForRoll(roll, game.user, true, chatData.whisper, chatData.blind);
+    if (templateData.result.isSuccess && dmgRoll) {
+      templateData.result.dmg = dmgRoll.total;
+      await game['dice3d'].showForRoll(dmgRoll, game.user, true, chatData.whisper, chatData.blind);
+    }
+  }
+
+  private static setRollMode(form, data, chatData) {
     let rollMode = game.settings.get('core', 'rollMode');
     rollMode = form ? form.rollMode.value : rollMode;
 
@@ -152,31 +182,6 @@ export class HVDice {
       chatData['blind'] = true;
       data.roll.blindroll = true;
     }
-
-    templateData.result = data.roll.dmg?.length
-      ? await HVDice.digestAttackResult(data, roll)
-      : HVDice.digestResult(data, roll);
-
-    templateData.rollHV = await roll.render();
-    templateData.dmgResult = dmgRoll?.total;
-    templateData.rollDamage = dmgRoll ? await dmgRoll.render() : undefined;
-
-    const content = await renderTemplate(template, templateData);
-    chatData.content = content;
-
-    // 2 Step Dice So Nice
-    if (game['dice3d']) {
-      await game['dice3d'].showForRoll(roll, game.user, true, chatData.whisper, chatData.blind);
-      if (templateData.result.isSuccess && dmgRoll) {
-        templateData.result.dmg = dmgRoll.total;
-        await game['dice3d'].showForRoll(dmgRoll, game.user, true, chatData.whisper, chatData.blind);
-      }
-    } else {
-      chatData.sound = CONFIG.sounds.dice;
-    }
-
-    await ChatMessage.create(chatData);
-    return roll;
   }
 
   static async Roll({
