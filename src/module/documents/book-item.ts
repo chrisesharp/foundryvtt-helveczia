@@ -26,7 +26,10 @@ export class BookItem extends BaseItem {
     // sheetData.spells = item.object.system?.spells;
     const spells = itemSheet.item.system?.spells ?? [];
     sheetData.spells = await Promise.all(
-      spells.map(async (spell) => ({ id: spell.id, link: await TextEditor.enrichHTML(spell.id) })),
+      spells.map(async (spell) => ({
+        id: spell.id,
+        link: await foundry.applications.ux.TextEditor.enrichHTML(spell.id),
+      })),
     );
     return sheetData;
   }

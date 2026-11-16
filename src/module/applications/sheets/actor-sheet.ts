@@ -349,7 +349,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
           description = await HVActorSheet.createSummaryList(item.system?.spells, undefined);
           break;
         default:
-          description = await TextEditor.enrichHTML(item.system.description);
+          description = await foundry.applications.ux.TextEditor.enrichHTML(item.system.description);
       }
       // Add item tags
       let section = `
@@ -369,7 +369,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     let description = '<div class="contents-list flexrow"';
     if (containerId) description += ' data-container-id="' + containerId + '"';
     description += '><ol class="item-list">';
-    const enriched = await Promise.all(itemList.map((item) => TextEditor.enrichHTML(item.id)));
+    const enriched = await Promise.all(itemList.map((item) => foundry.applications.ux.TextEditor.enrichHTML(item.id)));
     for (const [item, html] of itemList.map((item, i) => [item, enriched[i]])) {
       description += '<li class="item-entry flexcol" data-item-id="' + item.name + '">';
       description += '<div class="item flexrow">';
@@ -389,7 +389,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     // Toggle summary
     if (!li.querySelector('.item-summary')) {
       const keys = (effect as any).changes.map((e) => e.key.replace(/^system\./, '')).join(', ');
-      const targets = await TextEditor.enrichHTML(keys);
+      const targets = await foundry.applications.ux.TextEditor.enrichHTML(keys);
       // Add item tags
       let section = `
       <div class="item-summary" style='display:none;'>`;
@@ -729,7 +729,7 @@ export class HVActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   async _onDropItem(event, item) {
     if (!this.actor.isOwner) return false;
-    const dataTransferred = TextEditor.getDragEventData(event);
+    const dataTransferred = foundry.applications.ux.TextEditor.getDragEventData(event);
     // const item = await Item.implementation.fromDropData(data);
 
     const sourceElement = event.srcElement.closest('div.possessions')?.querySelector('.contents-list');

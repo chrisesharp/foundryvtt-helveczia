@@ -93,12 +93,15 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
     switch (partId) {
       case 'notes':
         context.tab = context.tabs[partId];
-        context.enrichedDescription = await TextEditor.enrichHTML(this.item.system.description, {
-          secrets: this.document.isOwner,
-          rollData: this.item.getRollData(),
-          // Relative UUID resolution
-          relativeTo: this.item,
-        });
+        context.enrichedDescription = await foundry.applications.ux.TextEditor.enrichHTML(
+          this.item.system.description,
+          {
+            secrets: this.document.isOwner,
+            rollData: this.item.getRollData(),
+            // Relative UUID resolution
+            relativeTo: this.item,
+          },
+        );
         break;
       case 'effects':
         context.tab = context.tabs[partId];
@@ -141,7 +144,7 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
 
   async _onDropItem(_event, data) {
     if (!this.isEditable) return false;
-    const link = (await TextEditor.getContentLink(data)) ?? '';
+    const link = (await foundry.applications.ux.TextEditor.getContentLink(data)) ?? '';
     const result = /{(.*?)}/g.exec(link);
 
     const name = result && result.length > 1 ? result[1] : undefined;
@@ -198,7 +201,7 @@ export class HVItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
    * @protected
    */
   async _onDrop(event) {
-    const data = TextEditor.getDragEventData(event);
+    const data = foundry.applications.ux.TextEditor.getDragEventData(event);
     const item = this.item;
     const allowed = Hooks.call('dropItemSheetData', item, this, data);
     if (!allowed) return;

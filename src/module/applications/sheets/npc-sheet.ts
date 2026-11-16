@@ -125,12 +125,15 @@ export class HVNPCSheet extends HVActorSheet {
     switch (partId) {
       case 'notes':
         context.tab = context.tabs[partId];
-        context.enrichedDescription = await TextEditor.enrichHTML(this.actor.system.description, {
-          secrets: this.document.isOwner,
-          rollData: this.actor.getRollData(),
-          // Relative UUID resolution
-          relativeTo: this.actor,
-        });
+        context.enrichedDescription = await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.description,
+          {
+            secrets: this.document.isOwner,
+            rollData: this.actor.getRollData(),
+            // Relative UUID resolution
+            relativeTo: this.actor,
+          },
+        );
         break;
       case 'effects':
         context.tab = context.tabs[partId];

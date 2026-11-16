@@ -15,7 +15,7 @@ export class ContainerItem extends BaseItem {
     sheetData.contents = await Promise.all(
       (itemSheet.item.system?.contents ?? []).map(async (item) => ({
         id: item.id,
-        link: await TextEditor.enrichHTML(item.id),
+        link: await foundry.applications.ux.TextEditor.enrichHTML(item.id),
       })),
     );
     return sheetData;
