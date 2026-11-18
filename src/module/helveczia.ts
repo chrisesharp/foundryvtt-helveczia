@@ -109,9 +109,6 @@ Hooks.once('init', async () => {
   // Register custom handlebar helpers
   registerHandlebarHelpers();
 
-  // Register special keys
-  registerKeyBindings();
-
   CONFIG.Combat.initiative = {
     formula: '1d20+@initiative',
     decimals: 2,
@@ -165,6 +162,11 @@ Hooks.once('init', async () => {
 // Setup system
 Hooks.once('setup', () => {
   // Do anything after initialization but before ready
+
+  // Register special keys here rather than in `init`: the world setting they depend on is not readable at `init`,
+  // and Foundry only closes keybinding registration when it initializes the keyboard, after this hook.
+  registerKeyBindings();
+
   // Only override uiConfig colour scheme for Helveczia worlds.
   // core.uiConfig is a client-scoped (localStorage) setting, so it would otherwise
   // persist into every other world/system the user opens in the same browser.

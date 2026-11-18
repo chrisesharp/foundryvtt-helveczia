@@ -4,7 +4,9 @@ export function registerKeyBindings(): void {
     const scaleSetting = Math.max(0.05, Math.min(0.95, Math.abs(Number.parseFloat(settings.scale))));
     return Number.isFinite(scaleSetting) ? scaleSetting : CONFIG.HV.DEFAULT_SCENE_SCALE;
   };
-  if (CONFIG.HV.depthTokens) {
+  // Called from the `setup` hook: world settings are readable by then, and keybindings can still be registered
+  // (registration is only closed once Game#initializeKeyboard runs, after `setup`).
+  if (game.settings.get('helveczia', 'token-depth')) {
     game.keybindings.register('helveczia', 'hv-token-forward', {
       name: 'token-forward',
       editable: [{ key: 'PageDown', modifiers: ['Shift'] }],
